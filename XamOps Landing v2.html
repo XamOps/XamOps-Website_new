@@ -1,0 +1,1908 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>XamOps — The Cognitive Cloud Operating System</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+<style>
+  :root {
+    /* Names preserved from v1 — values reskinned to dark theme from PDF */
+    --parchment: #0b0d12;   /* page bg */
+    --ivory:     #11141b;   /* card / surface */
+    --ivory-2:   #161a23;   /* surface-2 / hover */
+    --terracotta:#7c5cff;   /* primary accent (violet) */
+    --terracotta-deep:#9b82ff; /* primary hover (lighter for dark bg) */
+    --ink:       #ecedf2;   /* primary text */
+    --ink-2:     #d6d8e0;   /* secondary text-on-dark / ink button hover surface */
+    --olive:     #8b90a0;   /* muted text */
+    --olive-2:   #5b6173;   /* very muted */
+    --rule:      #1f2430;   /* dividers on light surfaces */
+    --rule-dark: #262c39;   /* dividers on dark surfaces */
+    --moss:      #2bd4a8;   /* success / mint */
+    --ochre:     #f0b341;   /* warning / amber */
+  }
+
+  html, body { background: var(--parchment); color: var(--ink); }
+  body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    font-feature-settings: "ss01", "cv11";
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  .serif { font-family: Georgia, 'Times New Roman', serif; font-weight: 500; letter-spacing: -0.01em; }
+  .mono  { font-family: 'JetBrains Mono', ui-monospace, monospace; }
+
+  /* Section variants — names preserved from v1, dark-themed */
+  .sec-light { background: var(--parchment); color: var(--ink); }
+  .sec-card  { background: var(--ivory);     color: var(--ink); }
+  .sec-dark  { background: #06080c;          color: var(--ink); }
+
+  /* 1px ring instead of shadow */
+  .ring-soft { box-shadow: 0 0 0 1px var(--rule); }
+  .ring-soft-dark { box-shadow: 0 0 0 1px var(--rule-dark); }
+
+  /* Reveal lines */
+  .reveal-line { overflow: hidden; }
+  .reveal-line > span { display: inline-block; transform: translateY(110%); }
+
+  /* CTA */
+  .btn-primary {
+    background: var(--terracotta); color: #fff;
+    border-radius: 8px; padding: 12px 18px;
+    font-weight: 500; font-size: 14px;
+    transition: background .25s ease, transform .25s ease, box-shadow .25s ease;
+    display: inline-flex; align-items: center; gap: 8px;
+    box-shadow: 0 0 0 1px rgba(124,92,255,0.4), 0 8px 24px -8px rgba(124,92,255,0.6);
+  }
+  .btn-primary:hover { background: var(--terracotta-deep); transform: translateY(-1px); box-shadow: 0 0 0 1px rgba(155,130,255,0.5), 0 12px 28px -8px rgba(124,92,255,0.7); }
+  /* Was: dark filled CTA on light bg. Now: light filled CTA on dark bg. */
+  .btn-dark {
+    background: var(--ink); color: var(--parchment);
+    border-radius: 8px; padding: 12px 18px;
+    font-weight: 500; font-size: 14px;
+    transition: background .25s ease, transform .25s ease;
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  .btn-dark:hover { background: #ffffff; transform: translateY(-1px); }
+  .btn-ghost {
+    color: var(--ink); border-radius: 8px; padding: 10px 14px;
+    font-weight: 500; font-size: 14px;
+    box-shadow: 0 0 0 1px var(--rule-dark);
+    transition: background .2s, box-shadow .2s;
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(255,255,255,0.02);
+  }
+  .btn-ghost:hover { background: rgba(255,255,255,0.05); box-shadow: 0 0 0 1px #3a4256; }
+  .btn-ghost-dark {
+    color: var(--ink); border-radius: 8px; padding: 10px 14px;
+    font-weight: 500; font-size: 14px;
+    box-shadow: 0 0 0 1px var(--rule-dark);
+    transition: background .2s, box-shadow .2s;
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  .btn-ghost-dark:hover { background: rgba(255,255,255,0.04); box-shadow: 0 0 0 1px #3a4256; }
+
+  /* Hero grain (now light-on-dark) */
+  .grain::before {
+    content: ""; position: absolute; inset: 0; pointer-events: none;
+    background-image:
+      radial-gradient(rgba(255,255,255,0.04) 1px, transparent 1px);
+    background-size: 4px 4px;
+    opacity: 0.6;
+  }
+
+  /* Eyebrow tag */
+  .eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--olive);
+  }
+  .eyebrow-dark { color: var(--olive-2); }
+
+  /* Ticker */
+  @keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+  .ticker-track { animation: ticker 60s linear infinite; }
+
+  /* Marquee gradient masks */
+  .mask-x { mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent); -webkit-mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent); }
+
+  /* Diagonal stripe placeholder (both now light-on-dark) */
+  .stripe-light {
+    background:
+      repeating-linear-gradient(135deg, rgba(255,255,255,0.04) 0 1px, transparent 1px 12px),
+      var(--ivory);
+  }
+  .stripe-dark {
+    background:
+      repeating-linear-gradient(135deg, rgba(255,255,255,0.05) 0 1px, transparent 1px 12px),
+      #06080c;
+  }
+
+  /* Card hover */
+  .hcard { transition: transform .35s ease, box-shadow .35s ease; }
+  .hcard:hover { transform: translateY(-3px); }
+
+  /* Smooth scroll feel */
+  html { scroll-behavior: smooth; }
+
+  /* Hide scrollbar polish */
+  ::-webkit-scrollbar { width: 10px; height: 10px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: #2a3142; border-radius: 8px; }
+  ::-webkit-scrollbar-thumb:hover { background: #3a4256; }
+
+  /* Live dot */
+  .live-dot {
+    width: 6px; height: 6px; border-radius: 999px;
+    background: var(--moss); box-shadow: 0 0 0 3px rgba(43,212,168,0.22);
+    animation: pulse 1.8s ease-in-out infinite;
+    display: inline-block;
+  }
+  @keyframes pulse { 50% { box-shadow: 0 0 0 6px rgba(43,212,168,0); } }
+
+  /* Nav blur */
+  .nav-blur { backdrop-filter: blur(12px) saturate(140%); -webkit-backdrop-filter: blur(12px) saturate(140%); }
+
+  /* Hero floating chips */
+  .chip {
+    background: var(--ivory); color: var(--ink);
+    padding: 6px 10px; border-radius: 999px;
+    font-size: 12px; box-shadow: 0 0 0 1px var(--rule);
+    display: inline-flex; align-items: center; gap: 6px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  /* Underline anim */
+  .ulink { position: relative; }
+  .ulink::after {
+    content: ""; position: absolute; left: 0; bottom: -2px;
+    height: 1px; width: 100%; background: currentColor;
+    transform: scaleX(0); transform-origin: right;
+    transition: transform .35s ease;
+  }
+  .ulink:hover::after { transform: scaleX(1); transform-origin: left; }
+
+  /* Section labels */
+  .sec-label {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 4px 10px; border-radius: 999px;
+    font-family: 'JetBrains Mono', monospace; font-size: 11px;
+    letter-spacing: 0.16em; text-transform: uppercase;
+    box-shadow: 0 0 0 1px var(--rule); color: var(--olive);
+    background: var(--ivory);
+  }
+  .sec-label.dark { background: rgba(255,255,255,0.04); color: var(--olive-2); box-shadow: 0 0 0 1px var(--rule-dark); }
+
+  /* Faux dashboard */
+  .faux-grid {
+    background-image:
+      linear-gradient(var(--rule) 1px, transparent 1px),
+      linear-gradient(90deg, var(--rule) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+  .faux-grid-dark {
+    background-image:
+      linear-gradient(var(--rule-dark) 1px, transparent 1px),
+      linear-gradient(90deg, var(--rule-dark) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+
+  /* For accessibility focus */
+  :focus-visible { outline: 2px solid var(--terracotta); outline-offset: 2px; border-radius: 4px; }
+
+  /* Big numeric */
+  .big-num { font-family: Georgia, serif; font-weight: 500; letter-spacing: -0.04em; }
+
+  /* Horiz scroll */
+  .hs-card { flex: 0 0 auto; width: 460px; height: 540px; }
+  @media (max-width: 700px) { .hs-card { width: 320px; height: 460px; } }
+</style>
+</head>
+<body>
+
+<div id="root"></div>
+
+<script type="text/babel" data-presets="react">
+const { useEffect, useRef, useState, useLayoutEffect, useContext } = React;
+gsap.registerPlugin(ScrollTrigger);
+
+/* ---------- Icons (line-style, original) ---------- */
+const Icon = {
+  Spot:   (p) => (<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" {...p}><path d="M4 14l4-4 3 3 6-7"/><path d="M14 6h4v4"/><circle cx="6" cy="18" r="1.2"/><circle cx="12" cy="18" r="1.2"/><circle cx="18" cy="18" r="1.2"/></svg>),
+  Disk:   (p) => (<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" {...p}><ellipse cx="12" cy="6" rx="7" ry="2.2"/><path d="M5 6v6c0 1.2 3.1 2.2 7 2.2s7-1 7-2.2V6"/><path d="M5 12v6c0 1.2 3.1 2.2 7 2.2s7-1 7-2.2v-6"/></svg>),
+  DB:     (p) => (<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" {...p}><rect x="3" y="4" width="18" height="6" rx="1"/><rect x="3" y="14" width="18" height="6" rx="1"/><circle cx="7" cy="7" r="0.6" fill="currentColor"/><circle cx="7" cy="17" r="0.6" fill="currentColor"/></svg>),
+  Sec:    (p) => (<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" {...p}><path d="M12 3l8 3v5c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6l8-3z"/><path d="M9 12l2 2 4-4"/></svg>),
+  Cost:   (p) => (<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" {...p}><path d="M3 19V5"/><path d="M3 19h18"/><path d="M7 15l3-4 3 2 5-7"/></svg>),
+  SRE:    (p) => (<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" {...p}><circle cx="12" cy="12" r="3"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M5.6 18.4l2.1-2.1M16.3 7.7l2.1-2.1"/></svg>),
+  Arrow:  (p) => (<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" {...p}><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg>),
+  Check:  (p) => (<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" {...p}><path d="M5 12l4 4 10-10"/></svg>),
+  Dot:    (p) => (<svg viewBox="0 0 24 24" fill="currentColor" {...p}><circle cx="12" cy="12" r="3"/></svg>),
+  Plus:   (p) => (<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" {...p}><path d="M12 5v14M5 12h14"/></svg>),
+};
+
+/* ---------- Logo ---------- */
+function Logo({ dark = false, size = 22 }) {
+  const fg = '#ecedf2';
+  const accent = '#7c5cff';
+  return (
+    <div className="flex items-center gap-2">
+      <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+        <path d="M3 4l6 8-6 8" stroke={fg} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+        <path d="M21 4l-6 8 6 8" stroke={fg} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+        <circle cx="12" cy="12" r="2" fill={accent}/>
+      </svg>
+      <span className="serif text-[18px] tracking-tight" style={{color: fg}}>XamOps</span>
+    </div>
+  );
+}
+
+/* ---------- Hash router ---------- */
+const RouterCtx = React.createContext({ path: '/', go: () => {} });
+function readHash() { const h = window.location.hash || '#/'; return h.replace(/^#/, '') || '/'; }
+function RouterProvider({ children }) {
+  const [path, setPath] = useState(readHash());
+  useEffect(() => {
+    const onHash = () => { setPath(readHash()); window.scrollTo({ top: 0, behavior: 'instant' }); };
+    window.addEventListener('hashchange', onHash);
+    if (!window.location.hash) window.location.hash = '#/';
+    return () => window.removeEventListener('hashchange', onHash);
+  }, []);
+  const go = (to) => { window.location.hash = '#' + to; };
+  return <RouterCtx.Provider value={{ path, go }}>{children}</RouterCtx.Provider>;
+}
+function useRouter() { return useContext(RouterCtx); }
+function Link({ to, className, children, ...rest }) {
+  const { go, path } = useRouter();
+  return (
+    <a href={'#' + to} className={className} aria-current={path === to ? 'page' : undefined}
+       onClick={(e) => { e.preventDefault(); go(to); }} {...rest}>{children}</a>
+  );
+}
+
+/* ---------- Nav ---------- */
+function Nav() {
+  const [open, setOpen] = useState(null);
+  const [scrolled, setScrolled] = useState(false);
+  const { path } = useRouter();
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 8);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
+  const platform = [
+    ['Spot Automation', '/platform/spot-automation', 'AutoSpotting across AWS, GCP, Azure'],
+    ['Disk Rightsizing', '/platform/disk-rightsizing', 'The only automated disk rightsizing'],
+    ['DBOps', '/platform/dbops', 'Database operations on autopilot'],
+    ['SecOps', '/platform/secops', 'Continuous posture and remediation'],
+    ['Cost Analytics', '/platform/cost-analytics', 'Real-time savings dashboards'],
+    ['SRE Investigation', '/platform/sre', 'AI-assisted incident intelligence'],
+  ];
+  const solutions = [
+    ['For DevOps Engineers', '/solutions/devops', 'Ship, don’t babysit'],
+    ['For FinOps Teams', '/solutions/finops', 'Cut waste, prove savings'],
+    ['For SRE Teams', '/solutions/sre', 'From alert to root cause, faster'],
+  ];
+  const isActive = (p) => path === p || path.startsWith(p + '/');
+
+  return (
+    <header
+      className={`fixed top-0 left-0 right-0 z-50 nav-blur transition-colors`}
+      style={{
+        background: scrolled ? 'rgba(11,13,18,0.78)' : 'rgba(11,13,18,0.4)',
+        boxShadow: scrolled ? '0 1px 0 #1f2430' : 'none',
+      }}
+      onMouseLeave={() => setOpen(null)}
+    >
+      <div className="max-w-[1240px] mx-auto px-6 md:px-10 h-[64px] flex items-center justify-between">
+        <Link to="/"><Logo /></Link>
+        <nav className="hidden md:flex items-center gap-1 text-[14px]" style={{color: 'var(--ink)'}}>
+          {[
+            ['Platform', '/platform', platform],
+            ['Solutions', '/solutions', solutions],
+          ].map(([label, base, items]) => (
+            <div key={base} className="relative" onMouseEnter={() => setOpen(base)}>
+              <Link to={base} className={`px-3 py-2 rounded-md hover:bg-[var(--ivory)] flex items-center gap-1 ${isActive(base) ? 'font-medium' : ''}`}>
+                {label}
+                <svg width="10" height="10" viewBox="0 0 10 10"><path d="M2 3.5L5 6.5l3-3" stroke="currentColor" fill="none" strokeWidth="1.4" strokeLinecap="round"/></svg>
+              </Link>
+              {open === base && (
+                <div className="absolute left-0 top-full pt-2">
+                  <div className="ring-soft rounded-xl p-2 w-[420px]" style={{background:'var(--ivory)'}}>
+                    {items.map(([n, to, d]) => (
+                      <Link key={n} to={to} className="block px-3 py-2.5 rounded-lg hover:bg-[var(--parchment)]">
+                        <div className="text-[14px]">{n}</div>
+                        <div className="text-[12px]" style={{color:'var(--olive)'}}>{d}</div>
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          ))}
+          <Link to="/pricing" className={`px-3 py-2 rounded-md hover:bg-[var(--ivory)] ${isActive('/pricing') ? 'font-medium' : ''}`}>Pricing</Link>
+          <Link to="/about" className={`px-3 py-2 rounded-md hover:bg-[var(--ivory)] ${isActive('/about') ? 'font-medium' : ''}`}>About</Link>
+          <Link to="/blog" className={`px-3 py-2 rounded-md hover:bg-[var(--ivory)] ${isActive('/blog') ? 'font-medium' : ''}`}>Blog</Link>
+        </nav>
+        <div className="flex items-center gap-2">
+          <Link to="/demo" className="hidden sm:inline-flex btn-primary">Book Demo</Link>
+          <Link to="/demo" className="btn-dark">Sign Up <Icon.Arrow width="14" height="14"/></Link>
+        </div>
+      </div>
+    </header>
+  );
+}
+
+/* ---------- Reveal helper ---------- */
+function useReveal(ref, opts = {}) {
+  useLayoutEffect(() => {
+    if (!ref.current) return;
+    const ctx = gsap.context(() => {
+      const lines = ref.current.querySelectorAll('.reveal-line > span');
+      if (lines.length) {
+        gsap.fromTo(lines, { y: '110%' }, {
+          y: '0%', duration: 1.05, ease: 'power3.out', stagger: 0.08,
+          scrollTrigger: { trigger: ref.current, start: opts.start || 'top 82%', invalidateOnRefresh: true }
+        });
+      }
+      const fades = ref.current.querySelectorAll('[data-fade]');
+      if (fades.length) {
+        gsap.fromTo(fades, { y: 24, opacity: 0 }, {
+          y: 0, opacity: 1, duration: 0.9, ease: 'power3.out', stagger: 0.08,
+          scrollTrigger: { trigger: ref.current, start: opts.start || 'top 82%', invalidateOnRefresh: true }
+        });
+      }
+    }, ref);
+    return () => ctx.revert();
+  }, []);
+}
+
+/* ---------- Hero ---------- */
+function Hero() {
+  const ref = useRef();
+  const bgRef = useRef();
+
+  useLayoutEffect(() => {
+    const ctx = gsap.context(() => {
+      const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+      tl.from('.hero-eyebrow', { y: 14, opacity: 0, duration: 0.7 })
+        .to('.hero-line > span', { y: '0%', duration: 1.1, stagger: 0.09 }, '-=0.4')
+        .from('.hero-sub', { y: 16, opacity: 0, duration: 0.8 }, '-=0.6')
+        .from('.hero-ctas > *', { y: 14, opacity: 0, duration: 0.7, stagger: 0.08 }, '-=0.5')
+        .from('.hero-strip', { y: 20, opacity: 0, duration: 0.8 }, '-=0.4')
+        .from('.hero-floats > *', { y: 14, opacity: 0, duration: 0.7, stagger: 0.08 }, '-=0.6');
+
+      gsap.to(bgRef.current, {
+        yPercent: 18, ease: 'none',
+        scrollTrigger: { trigger: ref.current, start: 'top top', end: 'bottom top', scrub: true }
+      });
+    }, ref);
+    return () => ctx.revert();
+  }, []);
+
+  return (
+    <section ref={ref} className="sec-light relative grain pt-[120px] pb-20 overflow-hidden">
+      {/* Parallax canvas */}
+      <div ref={bgRef} aria-hidden className="absolute inset-0 pointer-events-none">
+        <svg className="absolute inset-0 w-full h-full" preserveAspectRatio="none">
+          <defs>
+            <pattern id="dots" width="22" height="22" patternUnits="userSpaceOnUse">
+              <circle cx="1" cy="1" r="1" fill="rgba(255,255,255,0.05)"/>
+            </pattern>
+          </defs>
+          <rect width="100%" height="100%" fill="url(#dots)"/>
+        </svg>
+        <div className="absolute -top-20 -left-20 w-[480px] h-[480px] rounded-full"
+             style={{background:'radial-gradient(closest-side, rgba(201,100,66,0.18), transparent 70%)'}}/>
+        <div className="absolute top-40 right-0 w-[520px] h-[520px] rounded-full"
+             style={{background:'radial-gradient(closest-side, rgba(180,138,60,0.12), transparent 70%)'}}/>
+      </div>
+
+      <div className="max-w-[1240px] mx-auto px-6 md:px-10 relative">
+        <div className="hero-eyebrow eyebrow flex items-center gap-2 mb-8">
+          <span className="live-dot"/> Now in private beta · v1.0
+        </div>
+
+        <h1 className="serif text-[clamp(48px,8vw,116px)] leading-[0.95] tracking-tight max-w-[14ch]">
+          <div className="reveal-line"><span className="hero-line">The Cognitive</span></div>
+          <div className="reveal-line"><span className="hero-line" style={{color:'var(--terracotta)'}}>Cloud Operating</span></div>
+          <div className="reveal-line"><span className="hero-line">System.</span></div>
+        </h1>
+
+        <p className="hero-sub mt-8 text-[18px] md:text-[20px] leading-[1.55] max-w-[640px]" style={{color:'var(--olive)'}}>
+          Automate cloud operations across <span style={{color:'var(--ink)'}}>AWS</span>, <span style={{color:'var(--ink)'}}>GCP</span>, and <span style={{color:'var(--ink)'}}>Azure</span>. Cut costs by up to 70%. Eliminate toil. Move faster than your infrastructure can drift.
+        </p>
+
+        <div className="hero-ctas mt-10 flex flex-wrap items-center gap-3">
+          <a href="#demo" className="btn-primary">Book a demo <Icon.Arrow width="14" height="14"/></a>
+          <a href="#" className="btn-dark">Sign up free</a>
+          <a href="#" className="btn-ghost">
+            <span className="mono text-[12px]" style={{color:'var(--olive)'}}>$ </span>
+            See live savings
+          </a>
+        </div>
+
+        {/* Hero strip — faux dashboard */}
+        <div className="hero-strip mt-16 ring-soft rounded-[28px] overflow-hidden" style={{background:'var(--ivory)'}}>
+          <div className="flex items-center justify-between px-5 py-3 border-b" style={{borderColor:'var(--rule)'}}>
+            <div className="flex items-center gap-2">
+              <span className="w-2.5 h-2.5 rounded-full" style={{background:'#ff6b6b'}}/>
+              <span className="w-2.5 h-2.5 rounded-full" style={{background:'#f0b341'}}/>
+              <span className="w-2.5 h-2.5 rounded-full" style={{background:'#2bd4a8'}}/>
+              <span className="ml-3 mono text-[12px]" style={{color:'var(--olive)'}}>console.xamops.com / overview</span>
+            </div>
+            <div className="mono text-[11px]" style={{color:'var(--olive)'}}>aws · gcp · azure</div>
+          </div>
+          <div className="grid grid-cols-12 gap-px" style={{background:'var(--rule)'}}>
+            {/* left */}
+            <div className="col-span-12 md:col-span-3 p-6" style={{background:'var(--ivory)'}}>
+              <div className="eyebrow">Monthly savings</div>
+              <div className="serif text-[56px] leading-none mt-3">$1.84M</div>
+              <div className="mt-2 text-[13px]" style={{color:'var(--olive)'}}>+18.2% vs last month</div>
+              <div className="mt-6 space-y-2.5">
+                {[
+                  ['Spot Automation', 68],
+                  ['Disk Rightsizing', 22],
+                  ['Reservation Coverage', 7],
+                  ['DBOps', 3],
+                ].map(([n, v]) => (
+                  <div key={n}>
+                    <div className="flex items-center justify-between text-[12px]">
+                      <span>{n}</span><span className="mono" style={{color:'var(--olive)'}}>{v}%</span>
+                    </div>
+                    <div className="h-1 rounded-full mt-1" style={{background:'var(--rule)'}}>
+                      <div className="h-1 rounded-full" style={{width:`${v}%`, background:'var(--terracotta)'}}/>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+            {/* center chart */}
+            <div className="col-span-12 md:col-span-6 p-6 relative" style={{background:'var(--ivory)'}}>
+              <div className="flex items-center justify-between">
+                <div>
+                  <div className="eyebrow">Hourly compute spend · 7 days</div>
+                  <div className="serif text-[20px] mt-1">Spot conversion in progress</div>
+                </div>
+                <div className="flex items-center gap-2 text-[12px]">
+                  <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full" style={{background:'#ecedf2'}}/>On-demand</span>
+                  <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full" style={{background:'var(--terracotta)'}}/>Spot</span>
+                </div>
+              </div>
+              <svg viewBox="0 0 600 220" className="w-full mt-4 faux-grid rounded-md" style={{background:'var(--parchment)'}}>
+                {/* baseline area */}
+                <path d="M0,120 C 60,100 100,140 160,110 C 220,80 260,150 320,120 C 380,90 420,140 480,100 C 540,70 580,110 600,90 L600,220 L0,220 Z" fill="rgba(124,92,255,0.1)"/>
+                <path d="M0,120 C 60,100 100,140 160,110 C 220,80 260,150 320,120 C 380,90 420,140 480,100 C 540,70 580,110 600,90" fill="none" stroke="#ecedf2" strokeWidth="1.6"/>
+                {/* spot trail */}
+                <path d="M0,180 C 80,170 120,170 200,160 C 280,150 320,140 400,120 C 480,100 520,80 600,60" fill="none" stroke="#7c5cff" strokeWidth="2"/>
+                {/* dots */}
+                {[80,200,320,440,560].map((x,i) => (
+                  <circle key={i} cx={x} cy={[170,160,140,110,75][i]} r="3" fill="#7c5cff"/>
+                ))}
+              </svg>
+              <div className="grid grid-cols-3 gap-3 mt-5">
+                {[['Instances replaced', '2,418'],['Eviction rate', '0.34%'],['Coverage', '92.1%']].map(([k,v])=>(
+                  <div key={k} className="ring-soft rounded-lg p-3" style={{background:'var(--parchment)'}}>
+                    <div className="eyebrow">{k}</div>
+                    <div className="serif text-[22px] mt-0.5">{v}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+            {/* right log */}
+            <div className="col-span-12 md:col-span-3 p-6" style={{background:'var(--ivory)'}}>
+              <div className="eyebrow flex items-center gap-2"><span className="live-dot"/> Live activity</div>
+              <ul className="mt-4 space-y-3 mono text-[12px]" style={{color:'var(--ink)'}}>
+                {[
+                  ['08:21:04', 'asg-prod-api ↗ converted 14 → spot'],
+                  ['08:20:51', 'ebs-vol-09a3 resized 500→160 GB'],
+                  ['08:20:32', 'rds-orders ↺ minor-version patch'],
+                  ['08:19:58', 'gke-batch ↗ scaled 18 → 26'],
+                  ['08:19:14', 'iam policy drift remediated'],
+                  ['08:18:02', 'reservation cov. → 84% (+2.1)'],
+                ].map(([t, m]) => (
+                  <li key={t} className="flex gap-3">
+                    <span style={{color:'var(--olive)'}}>{t}</span>
+                    <span className="truncate">{m}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        {/* Floating chips */}
+        <div className="hero-floats mt-6 flex flex-wrap gap-2">
+          <span className="chip">aws.ec2 · spot</span>
+          <span className="chip">gcp.mig · preemptible</span>
+          <span className="chip">azure.vmss</span>
+          <span className="chip">k8s · soon</span>
+          <span className="chip">finops · ri/cud</span>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ---------- Logo bar ---------- */
+function LogoBar() {
+  const items = ['AWS','Microsoft Azure','Google Cloud','Kubernetes','Terraform','OpenObserve','Prometheus','PagerDuty','Datadog','Snowflake','Atlassian','GitHub'];
+  return (
+    <section className="sec-light pt-4 pb-12">
+      <div className="max-w-[1240px] mx-auto px-6 md:px-10">
+        <div className="text-center eyebrow mb-6">Trusted by teams running on AWS · GCP · Azure</div>
+        <div className="mask-x overflow-hidden">
+          <div className="flex gap-12 ticker-track" style={{width:'max-content'}}>
+            {[...items, ...items, ...items].map((n,i)=>(
+              <div key={i} className="serif text-[24px] whitespace-nowrap" style={{color:'#5b6173'}}>{n}</div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ---------- Platform overview strip ---------- */
+function PlatformStrip() {
+  const ref = useRef();
+  useReveal(ref);
+  const items = [
+    { I: Icon.Spot,   name: 'Spot Automation',   sub: 'Up to 70% off compute' },
+    { I: Icon.Disk,   name: 'Disk Rightsizing',  sub: 'Industry-only automation' },
+    { I: Icon.DB,     name: 'DBOps',             sub: 'Database autopilot' },
+    { I: Icon.Sec,    name: 'SecOps',            sub: 'Continuous posture' },
+    { I: Icon.Cost,   name: 'Cost Analytics',    sub: 'No more spreadsheets' },
+    { I: Icon.SRE,    name: 'SRE Investigation', sub: 'From alert to RCA' },
+  ];
+  return (
+    <section ref={ref} className="sec-light py-24 border-t" style={{borderColor:'var(--rule)'}}>
+      <div className="max-w-[1240px] mx-auto px-6 md:px-10">
+        <div className="flex items-end justify-between flex-wrap gap-6 mb-12">
+          <div>
+            <div data-fade className="sec-label mb-4">[ 01 ] Platform</div>
+            <h2 className="serif text-[clamp(34px,5vw,64px)] leading-[1.02] max-w-[18ch]">
+              <div className="reveal-line"><span>One platform.</span></div>
+              <div className="reveal-line"><span>Every layer of</span></div>
+              <div className="reveal-line"><span>your cloud. Automated.</span></div>
+            </h2>
+          </div>
+          <a href="#" data-fade className="btn-ghost">Explore the platform <Icon.Arrow width="14" height="14"/></a>
+        </div>
+
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-px ring-soft rounded-2xl overflow-hidden" style={{background:'var(--rule)'}}>
+          {items.map(({ I, name, sub }, i) => (
+            <a href="#" key={name} data-fade className="hcard p-7 group" style={{background:'var(--ivory)'}}>
+              <div className="flex items-start justify-between">
+                <I width="22" height="22" style={{color:'var(--ink)'}}/>
+                <span className="mono text-[11px]" style={{color:'var(--olive)'}}>0{i+1}</span>
+              </div>
+              <div className="serif text-[24px] mt-10">{name}</div>
+              <div className="text-[14px] mt-2" style={{color:'var(--olive)'}}>{sub}</div>
+              <div className="mt-8 inline-flex items-center gap-1.5 text-[13px]">
+                Learn more <Icon.Arrow width="14" height="14"/>
+              </div>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ---------- Generic feature section ---------- */
+function FeatureSection({ index, eyebrow, title, body, dark, visual, side = 'right', metric }) {
+  const ref = useRef();
+  useReveal(ref);
+  return (
+    <section ref={ref} className={`relative py-28 ${dark ? 'sec-dark' : 'sec-light'}`}>
+      <div className="max-w-[1240px] mx-auto px-6 md:px-10">
+        <div className={`grid md:grid-cols-12 gap-10 items-center ${side === 'left' ? 'md:[&>*:first-child]:order-2' : ''}`}>
+          <div className="md:col-span-5">
+            <div data-fade className={`sec-label ${dark ? 'dark' : ''} mb-6`}>[ {String(index).padStart(2,'0')} ] {eyebrow}</div>
+            <h3 className="serif text-[clamp(32px,4.4vw,56px)] leading-[1.04] max-w-[16ch]">
+              {title.map((t, i) => (
+                <div key={i} className="reveal-line"><span style={t.accent ? {color:'var(--terracotta)'} : null}>{t.text}</span></div>
+              ))}
+            </h3>
+            <p data-fade className="mt-6 text-[17px] leading-[1.6] max-w-[42ch]" style={{color: dark ? 'var(--olive-2)' : 'var(--olive)'}}>{body}</p>
+            {metric && (
+              <div data-fade className="mt-8 grid grid-cols-3 gap-px rounded-xl overflow-hidden" style={{background: dark ? 'var(--rule-dark)' : 'var(--rule)'}}>
+                {metric.map(([n,v]) => (
+                  <div key={n} className="p-5" style={{background: dark ? 'var(--ivory)' : 'var(--ivory)'}}>
+                    <div className={`eyebrow ${dark ? 'eyebrow-dark' : ''}`}>{n}</div>
+                    <div className="big-num text-[32px] mt-1">{v}</div>
+                  </div>
+                ))}
+              </div>
+            )}
+            <div data-fade className="mt-8 flex gap-3">
+              <a href="#" className={dark ? 'btn-ghost-dark' : 'btn-ghost'}>Learn more <Icon.Arrow width="14" height="14"/></a>
+              <a href="#" className="btn-primary">Book demo</a>
+            </div>
+          </div>
+          <div className="md:col-span-7" data-fade>
+            {visual}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ---------- Visuals for each feature ---------- */
+function SpotVisual() {
+  return (
+    <div className="ring-soft rounded-3xl p-6" style={{background:'var(--ivory)'}}>
+      <div className="flex items-center justify-between">
+        <div className="eyebrow">Replacement loop</div>
+        <span className="mono text-[11px]" style={{color:'var(--olive)'}}>autospotting v3.2</span>
+      </div>
+      <div className="mt-6 grid grid-cols-5 gap-2">
+        {['Validate','Convert','Scale','Verify','Replace'].map((s, i) => (
+          <div key={s} className="text-center">
+            <div className="mx-auto w-9 h-9 rounded-full flex items-center justify-center"
+                 style={{background: i < 4 ? 'var(--terracotta)' : 'var(--parchment)', color: i < 4 ? '#fff' : 'var(--ink)', boxShadow: i >= 4 ? '0 0 0 1px var(--rule)' : 'none'}}>
+              {i < 4 ? <Icon.Check width="14" height="14"/> : <Icon.Dot width="10" height="10"/>}
+            </div>
+            <div className="text-[12px] mt-2">{s}</div>
+          </div>
+        ))}
+      </div>
+      <div className="mt-6 ring-soft rounded-xl overflow-hidden">
+        <div className="px-4 py-2 flex items-center justify-between" style={{background:'var(--parchment)', borderBottom:'1px solid var(--rule)'}}>
+          <div className="mono text-[12px]" style={{color:'var(--olive)'}}>asg-prod-api · 64 instances</div>
+          <div className="flex items-center gap-1.5 text-[12px]"><span className="live-dot"/>converting</div>
+        </div>
+        <div className="grid grid-cols-16 gap-1 p-4" style={{gridTemplateColumns:'repeat(16, minmax(0,1fr))'}}>
+          {Array.from({length: 64}).map((_, i) => {
+            const conv = i < 44;
+            return <div key={i} className="aspect-square rounded-sm" style={{
+              background: conv ? 'var(--terracotta)' : '#e3d6c4',
+              opacity: conv ? (0.5 + (i%6)/12) : 0.7
+            }}/>;
+          })}
+        </div>
+      </div>
+      <div className="mt-4 grid grid-cols-3 gap-3">
+        {[['Spot ratio','86%'],['Eviction','0.34%'],['Min regular','4']].map(([k,v]) => (
+          <div key={k} className="rounded-lg p-3 ring-soft" style={{background:'var(--parchment)'}}>
+            <div className="eyebrow">{k}</div>
+            <div className="serif text-[22px] mt-0.5">{v}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function DiskVisual() {
+  return (
+    <div className="rounded-3xl p-6 relative overflow-hidden" style={{background:'var(--ivory)', boxShadow:'0 0 0 1px var(--rule-dark)'}}>
+      <div className="flex items-center justify-between">
+        <div className="eyebrow eyebrow-dark">Volume rightsizing</div>
+        <div className="flex items-center gap-2 mono text-[11px]" style={{color:'var(--olive-2)'}}>
+          <span>EBS</span><span>·</span><span>PD</span><span>·</span><span>Managed Disk</span>
+        </div>
+      </div>
+      <div className="grid grid-cols-12 gap-3 mt-5">
+        <div className="col-span-12 md:col-span-7 rounded-xl p-4 faux-grid-dark" style={{background:'var(--parchment)', boxShadow:'0 0 0 1px var(--rule-dark)'}}>
+          <div className="text-[13px]" style={{color:'var(--ivory)'}}>Volume utilization</div>
+          <svg viewBox="0 0 360 160" className="w-full mt-2">
+            <path d="M0,120 L40,118 L40,80 L80,80 L80,90 L120,90 L120,60 L160,60 L160,90 L200,90 L200,40 L240,40 L240,90 L280,90 L280,70 L320,70 L320,100 L360,100"
+              fill="none" stroke="#7c5cff" strokeWidth="1.8"/>
+            <path d="M0,140 L360,140" stroke="#262c39" strokeDasharray="2 4"/>
+            <text x="0" y="138" fill="#8b90a0" fontSize="10" fontFamily="JetBrains Mono">avg use 18%</text>
+          </svg>
+          <div className="mt-3 text-[13px]" style={{color:'var(--olive-2)'}}>Provisioned 500 GB · Recommended 160 GB</div>
+        </div>
+        <div className="col-span-12 md:col-span-5 rounded-xl p-4" style={{background:'var(--parchment)', boxShadow:'0 0 0 1px var(--rule-dark)'}}>
+          <div className="eyebrow eyebrow-dark">Plan</div>
+          <ul className="mt-3 text-[13px] space-y-2">
+            <li className="flex justify-between"><span>Snapshot</span><span className="mono" style={{color:'var(--olive-2)'}}>00:14</span></li>
+            <li className="flex justify-between"><span>Modify volume</span><span className="mono" style={{color:'var(--olive-2)'}}>00:42</span></li>
+            <li className="flex justify-between"><span>Filesystem resize</span><span className="mono" style={{color:'var(--olive-2)'}}>01:08</span></li>
+            <li className="flex justify-between"><span>Verify IOPS</span><span className="mono" style={{color:'var(--olive-2)'}}>00:30</span></li>
+          </ul>
+          <div className="mt-4 pt-3" style={{borderTop:'1px dashed #262c39'}}>
+            <div className="text-[13px]">Estimated savings</div>
+            <div className="serif text-[40px] leading-none mt-1" style={{color:'var(--terracotta)'}}>$3,420<span className="text-[16px]" style={{color:'var(--olive-2)'}}>/mo</span></div>
+          </div>
+        </div>
+      </div>
+      <div className="mt-4 flex items-center justify-between text-[12px] mono" style={{color:'var(--olive-2)'}}>
+        <span>vol-09a3f1c5b · prod-orders-db</span>
+        <span className="flex items-center gap-1.5"><span className="live-dot"/> auto-resize scheduled · 02:00 UTC</span>
+      </div>
+    </div>
+  );
+}
+
+function DBVisual() {
+  return (
+    <div className="rounded-3xl p-6 ring-soft" style={{background:'var(--ivory)'}}>
+      <div className="grid grid-cols-12 gap-4">
+        {[
+          ['rds-prod-orders','PostgreSQL 16','healthy', 'replicas 2 · qps 4.2k'],
+          ['cloudsql-billing','MySQL 8','healthy', 'replicas 1 · qps 1.1k'],
+          ['azure-cosmos-cart','Cosmos NoSQL','optimizing','RU/s 18k → 9k'],
+          ['rds-staging-api','PostgreSQL 16','patching', 'minor 16.2 → 16.4'],
+        ].map(([n, e, s, m]) => (
+          <div key={n} className="col-span-12 md:col-span-6 ring-soft rounded-xl p-4" style={{background:'var(--parchment)'}}>
+            <div className="flex items-center justify-between">
+              <div className="serif text-[18px]">{n}</div>
+              <span className="text-[11px] mono px-2 py-0.5 rounded-full"
+                style={{
+                  background: s === 'healthy' ? 'rgba(43,212,168,0.18)' : s === 'optimizing' ? 'rgba(124,92,255,0.18)' : 'rgba(240,179,65,0.18)',
+                  color: s === 'healthy' ? '#2bd4a8' : s === 'optimizing' ? '#a48dff' : '#f0b341'
+                }}>{s}</span>
+            </div>
+            <div className="text-[12px] mt-1" style={{color:'var(--olive)'}}>{e}</div>
+            <div className="text-[13px] mt-3">{m}</div>
+            <div className="mt-3 h-1.5 rounded-full" style={{background:'var(--rule)'}}>
+              <div className="h-1.5 rounded-full" style={{width: s === 'healthy' ? '68%' : s === 'optimizing' ? '46%' : '22%', background: 'var(--terracotta)'}}/>
+            </div>
+          </div>
+        ))}
+      </div>
+      <div className="mt-5 ring-soft rounded-xl p-4 flex items-center justify-between" style={{background:'var(--parchment)'}}>
+        <div className="text-[13px]"><span className="serif text-[16px]">Last 24h</span> · 0 manual interventions · 12 routines automated</div>
+        <span className="mono text-[12px]" style={{color:'var(--olive)'}}>0 pages</span>
+      </div>
+    </div>
+  );
+}
+
+function SecOpsVisual() {
+  return (
+    <div className="rounded-3xl p-6 ring-soft-dark" style={{background:'var(--ivory)'}}>
+      <div className="grid grid-cols-12 gap-4">
+        <div className="col-span-12 md:col-span-7">
+          <div className="eyebrow eyebrow-dark">Posture timeline · 30 days</div>
+          <svg viewBox="0 0 600 180" className="w-full mt-2">
+            {Array.from({length: 30}).map((_, i) => {
+              const findings = Math.max(0, 14 - i * 0.4 + (i%5 === 0 ? 4 : 0));
+              const h = findings * 8;
+              return <rect key={i} x={i*20} y={170 - h} width="14" height={h} fill={i > 25 ? '#2bd4a8' : 'rgba(124,92,255,0.6)'}/>;
+            })}
+          </svg>
+          <div className="flex justify-between text-[11px] mono mt-1" style={{color:'var(--olive-2)'}}>
+            <span>Apr 04</span><span>May 04</span>
+          </div>
+        </div>
+        <div className="col-span-12 md:col-span-5">
+          <div className="eyebrow eyebrow-dark">Auto-remediations</div>
+          <ul className="mt-3 space-y-3 text-[13px]">
+            {[
+              ['Public S3 bucket', 'access removed', '02:14'],
+              ['Open security group :22', 'restricted', '02:08'],
+              ['Stale IAM key (>90d)', 'rotated', '01:55'],
+              ['IMDSv1 instance', 'enforced v2', '01:40'],
+            ].map(([k,a,t]) => (
+              <li key={k} className="flex items-start gap-3">
+                <Icon.Check width="14" height="14" style={{color:'#2bd4a8', marginTop:3}}/>
+                <div className="flex-1">
+                  <div>{k}</div>
+                  <div className="mono text-[11px]" style={{color:'var(--olive-2)'}}>{a} · {t}</div>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+      <div className="mt-5 grid grid-cols-3 gap-3">
+        {[['CIS coverage','94%'],['Critical findings','0'],['MTTR','4m 12s']].map(([k,v])=>(
+          <div key={k} className="rounded-xl p-3" style={{background:'var(--parchment)', boxShadow:'0 0 0 1px var(--rule-dark)'}}>
+            <div className="eyebrow eyebrow-dark">{k}</div>
+            <div className="serif text-[22px] mt-0.5">{v}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function CostVisual() {
+  return (
+    <div className="rounded-3xl p-6 ring-soft" style={{background:'var(--ivory)'}}>
+      <div className="flex items-center justify-between">
+        <div className="eyebrow">Reservation coverage · this quarter</div>
+        <div className="mono text-[12px]" style={{color:'var(--olive)'}}>RIs · CUDs · Savings Plans</div>
+      </div>
+      <div className="mt-4 grid grid-cols-12 gap-4">
+        <div className="col-span-12 md:col-span-5">
+          <svg viewBox="0 0 200 200" className="w-full max-w-[260px] mx-auto">
+            <circle cx="100" cy="100" r="78" fill="none" stroke="var(--rule)" strokeWidth="22"/>
+            <circle cx="100" cy="100" r="78" fill="none" stroke="var(--terracotta)" strokeWidth="22"
+              strokeDasharray="490" strokeDashoffset="98" strokeLinecap="butt" transform="rotate(-90 100 100)"/>
+            <text x="100" y="98" textAnchor="middle" fontFamily="Georgia" fontSize="42" fill="#ecedf2">80%</text>
+            <text x="100" y="120" textAnchor="middle" fontFamily="JetBrains Mono" fontSize="11" fill="#8b90a0">covered</text>
+          </svg>
+        </div>
+        <div className="col-span-12 md:col-span-7">
+          <div className="space-y-3">
+            {[
+              ['On-demand','$612k','22%'],
+              ['Reserved','$1.4M','51%'],
+              ['Savings Plans','$760k','27%'],
+            ].map(([k,v,p],i) => (
+              <div key={k} className="ring-soft rounded-xl p-3" style={{background:'var(--parchment)'}}>
+                <div className="flex justify-between text-[13px]"><span>{k}</span><span className="mono" style={{color:'var(--olive)'}}>{v}</span></div>
+                <div className="h-1.5 rounded-full mt-2" style={{background:'var(--rule)'}}>
+                  <div className="h-1.5 rounded-full" style={{width: p, background: ['#8b90a0','var(--terracotta)','#f0b341'][i]}}/>
+                </div>
+              </div>
+            ))}
+          </div>
+          <div className="mt-4 ring-soft rounded-xl p-3 flex items-center justify-between" style={{background:'var(--parchment)'}}>
+            <div className="text-[13px]"><span className="serif text-[16px]">Forecast Q3</span> · $7.8M ↘ $5.1M with optimizations</div>
+            <Icon.Arrow width="14" height="14"/>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function SREVisual() {
+  return (
+    <div className="rounded-3xl p-6 ring-soft" style={{background:'var(--ivory)'}}>
+      <div className="flex items-center justify-between">
+        <div>
+          <div className="eyebrow">Investigation · INC-2147</div>
+          <div className="serif text-[20px] mt-1">api-orders p99 spike</div>
+        </div>
+        <span className="text-[11px] mono px-2 py-0.5 rounded-full" style={{background:'rgba(240,179,65,0.18)', color:'#f0b341'}}>investigating</span>
+      </div>
+
+      <div className="mt-5 relative pl-6">
+        <div className="absolute left-2 top-1 bottom-1 w-px" style={{background:'var(--rule)'}}/>
+        {[
+          ['09:14:02','Anomaly detected', 'p99 latency 1.2s → 4.6s', 'olive'],
+          ['09:14:18','Correlated metrics', 'CPU on rds-prod-orders +62%', 'olive'],
+          ['09:14:34','Logs scanned', '12,403 lines · 3 candidate causes', 'olive'],
+          ['09:14:51','Root cause hypothesis', 'index miss on orders.created_at after migration v218', 'terracotta'],
+          ['09:15:03','Suggested fix', 'CREATE INDEX CONCURRENTLY ix_orders_created_at', 'terracotta'],
+        ].map(([t,h,m,c],i) => (
+          <div key={i} className="mb-4 relative">
+            <span className="absolute -left-[18px] top-1.5 w-2.5 h-2.5 rounded-full" style={{background: c === 'terracotta' ? 'var(--terracotta)' : '#8b90a0'}}/>
+            <div className="mono text-[11px]" style={{color:'var(--olive)'}}>{t}</div>
+            <div className="text-[14px]">{h}</div>
+            <div className="text-[13px]" style={{color:'var(--olive)'}}>{m}</div>
+          </div>
+        ))}
+      </div>
+
+      <div className="mt-3 flex gap-2">
+        <button className="btn-primary">Apply fix</button>
+        <button className="btn-ghost">Open in OpenObserve</button>
+      </div>
+    </div>
+  );
+}
+
+/* ---------- Pinned horizontal scroll ---------- */
+function HorizontalScroll() {
+  const sectionRef = useRef();
+  const trackRef = useRef();
+  const headRef = useRef();
+
+  useLayoutEffect(() => {
+    const ctx = gsap.context(() => {
+      const track = trackRef.current;
+      const section = sectionRef.current;
+
+      const getDistance = () => track.scrollWidth - window.innerWidth + 80;
+
+      const tween = gsap.to(track, {
+        x: () => -getDistance(),
+        ease: 'none',
+        scrollTrigger: {
+          trigger: section,
+          start: 'top top',
+          end: () => '+=' + getDistance(),
+          pin: true,
+          scrub: 1,
+          invalidateOnRefresh: true,
+          anticipatePin: 1,
+        }
+      });
+
+      // progress bar
+      const bar = section.querySelector('.hs-progress > i');
+      ScrollTrigger.create({
+        trigger: section,
+        start: 'top top',
+        end: () => '+=' + getDistance(),
+        scrub: true,
+        onUpdate: (self) => { if (bar) bar.style.transform = `scaleX(${self.progress})`; },
+      });
+
+      gsap.from(headRef.current.querySelectorAll('[data-fade]'), {
+        y: 24, opacity: 0, duration: 0.9, ease: 'power3.out', stagger: 0.08,
+        scrollTrigger: { trigger: section, start: 'top 80%' }
+      });
+    }, sectionRef);
+    return () => ctx.revert();
+  }, []);
+
+  const cards = [
+    {
+      tag: '01 · Spot Automation',
+      title: 'Compute, 70% off.',
+      body: 'Replace on-demand with spot across AWS ASGs, GCP MIGs and Azure VMSS. Per-instance SKU rules, eviction handling, and a guaranteed minimum of regular VMs.',
+      stat: ['$1.2M', 'saved last month'],
+      accent: 'terracotta',
+      href: '/platform/spot-automation',
+    },
+    {
+      tag: '02 · Disk Rightsizing',
+      title: 'Pay for what you use.',
+      body: 'Continuous volume monitoring, recommendation engine, and automated resize with safe filesystem expansion. EBS, Persistent Disk, Managed Disk.',
+      stat: ['38%', 'avg storage reduction'],
+      accent: 'ochre',
+      href: '/platform/disk-rightsizing',
+    },
+    {
+      tag: '03 · DBOps',
+      title: 'Databases on autopilot.',
+      body: 'Automated scaling, backup verification, performance tuning and patch windows for RDS, Cloud SQL, Cosmos DB and beyond.',
+      stat: ['0', 'manual pages last 30 days'],
+      accent: 'moss',
+      href: '/platform/dbops',
+    },
+    {
+      tag: '04 · SecOps',
+      title: 'Security at deploy speed.',
+      body: 'Continuous CIS posture checks, drift detection and automated remediation that runs alongside your CI/CD, not after the fact.',
+      stat: ['4m 12s', 'mean time to remediation'],
+      accent: 'terracotta',
+      href: '/platform/secops',
+    },
+    {
+      tag: '05 · Cost Analytics',
+      title: 'Spreadsheets, retired.',
+      body: 'Real-time savings dashboards, daily aggregations, and reservation/commitment coverage for RIs, CUDs and Savings Plans.',
+      stat: ['80%', 'reservation coverage'],
+      accent: 'ochre',
+      href: '/platform/cost-analytics',
+    },
+    {
+      tag: '06 · SRE Investigation',
+      title: 'Alert to root cause.',
+      body: 'AI-assisted log triage, anomaly detection and an investigation timeline that connects metrics, logs and traces across your stack.',
+      stat: ['11×', 'faster RCAs'],
+      accent: 'moss',
+      href: '/platform/sre-investigation',
+    },
+    {
+      tag: '+ Coming soon',
+      title: 'Agentic SRE.',
+      body: 'A fully autonomous SRE agent that investigates, diagnoses and resolves incidents without paging anyone. Joining XamOps in Q3.',
+      stat: ['Q3', 'private alpha'],
+      accent: 'ink',
+      href: '/platform',
+    },
+  ];
+
+  const accentColor = {
+    terracotta: 'var(--terracotta)',
+    ochre: 'var(--ochre)',
+    moss: 'var(--moss)',
+    ink: 'var(--ink)',
+  };
+
+  return (
+    <section ref={sectionRef} className="sec-light relative h-screen overflow-hidden">
+      <div className="h-full flex flex-col">
+        <div ref={headRef} className="max-w-[1240px] mx-auto px-6 md:px-10 pt-24 pb-8 w-full">
+          <div className="flex items-end justify-between flex-wrap gap-6">
+            <div>
+              <div data-fade className="sec-label mb-4">[ 02 ] Capabilities</div>
+              <h2 data-fade className="serif text-[clamp(34px,5vw,64px)] leading-[1.02] max-w-[20ch]">
+                Six automations. <span style={{color:'var(--terracotta)'}}>One control plane.</span>
+              </h2>
+            </div>
+            <div data-fade className="text-[14px]" style={{color:'var(--olive)'}}>
+              <div className="mono text-[11px] uppercase tracking-widest" style={{color:'var(--olive-2)'}}>Scroll →</div>
+              Translate vertical scroll into horizontal motion.
+            </div>
+          </div>
+          <div className="hs-progress mt-6 h-px w-full overflow-hidden" style={{background:'var(--rule)'}}>
+            <i className="block h-px w-full origin-left" style={{transform:'scaleX(0)', background:'var(--terracotta)'}}/>
+          </div>
+        </div>
+
+        <div className="flex-1 flex items-center overflow-hidden">
+          <div ref={trackRef} className="flex gap-6 px-6 md:px-10 will-change-transform" style={{paddingRight: '40vw'}}>
+            {cards.map((c, i) => (
+              <div key={i} className="hs-card relative ring-soft rounded-3xl overflow-hidden hcard"
+                   style={{background:'var(--ivory)'}}>
+                <div className="absolute inset-x-0 top-0 h-1" style={{background: accentColor[c.accent]}}/>
+                <Link to={c.href} className="p-8 h-full flex flex-col block" style={{color:'inherit', textDecoration:'none'}}>
+                  <div className="flex items-start justify-between">
+                    <div className="eyebrow">{c.tag}</div>
+                    <span className="mono text-[11px]" style={{color:'var(--olive)'}}>0{i+1}/{cards.length}</span>
+                  </div>
+                  <h3 className="serif text-[44px] leading-[1.05] mt-8 max-w-[14ch]" style={{color: c.accent === 'ink' ? 'var(--ink)' : 'inherit'}}>
+                    {c.title}
+                  </h3>
+                  <p className="mt-4 text-[15px] leading-[1.6]" style={{color:'var(--olive)'}}>{c.body}</p>
+
+                  <div className="mt-auto pt-6">
+                    <div className="rounded-2xl p-5 mb-4" style={{background:'var(--parchment)', boxShadow:'0 0 0 1px var(--rule)'}}>
+                      <div className="big-num text-[44px] leading-none" style={{color: accentColor[c.accent]}}>{c.stat[0]}</div>
+                      <div className="text-[13px] mt-1" style={{color:'var(--olive)'}}>{c.stat[1]}</div>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-[14px] inline-flex items-center gap-2 ulink">
+                        Read deep-dive <Icon.Arrow width="14" height="14"/>
+                      </span>
+                      <span className="mono text-[11px]" style={{color:'var(--olive)'}}>aws · gcp · azure</span>
+                    </div>
+                  </div>
+                </Link>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ---------- Coming soon (dark) ---------- */
+function ComingSoon() {
+  const ref = useRef();
+  useReveal(ref);
+  const items = [
+    { name: 'AI-Powered Recommendations', body: 'XamOps learns your cloud patterns and recommends optimizations before you notice the problem.' },
+    { name: 'Agentic SRE', body: 'A fully autonomous SRE agent that investigates, diagnoses and resolves incidents without paging anyone.' },
+    { name: 'Complete Kubernetes Automation', body: 'Full K8s lifecycle management — scaling, cost, security — automated end to end.' },
+  ];
+  return (
+    <section ref={ref} className="sec-dark py-28 relative overflow-hidden">
+      <div className="absolute inset-0 pointer-events-none opacity-60">
+        <svg className="w-full h-full" preserveAspectRatio="none">
+          <defs>
+            <pattern id="dots-d" width="22" height="22" patternUnits="userSpaceOnUse">
+              <circle cx="1" cy="1" r="1" fill="rgba(250,249,245,0.05)"/>
+            </pattern>
+          </defs>
+          <rect width="100%" height="100%" fill="url(#dots-d)"/>
+        </svg>
+      </div>
+      <div className="max-w-[1240px] mx-auto px-6 md:px-10 relative">
+        <div className="flex items-end justify-between flex-wrap gap-6 mb-14">
+          <div>
+            <div data-fade className="sec-label dark mb-4">[ 03 ] Roadmap</div>
+            <h2 className="serif text-[clamp(34px,5vw,64px)] leading-[1.02] max-w-[18ch]">
+              <div className="reveal-line"><span>The cognitive layer,</span></div>
+              <div className="reveal-line"><span style={{color:'var(--terracotta)'}}>arriving soon.</span></div>
+            </h2>
+          </div>
+          <p data-fade className="max-w-[40ch] text-[16px]" style={{color:'var(--olive-2)'}}>
+            We’re building toward a cloud that runs itself. Here is what is shipping next on the XamOps roadmap.
+          </p>
+        </div>
+
+        <div className="grid md:grid-cols-3 gap-px ring-soft-dark rounded-2xl overflow-hidden" style={{background:'var(--rule-dark)'}}>
+          {items.map((c, i) => (
+            <div key={c.name} data-fade className="p-8 hcard" style={{background:'var(--ivory)'}}>
+              <div className="flex items-center justify-between">
+                <span className="mono text-[11px]" style={{color:'var(--olive-2)'}}>0{i+1}</span>
+                <span className="text-[11px] mono px-2 py-0.5 rounded-full"
+                  style={{background:'rgba(201,100,66,0.15)', color:'#e0a48b'}}>Q{i+2} · 2026</span>
+              </div>
+              <div className="serif text-[28px] mt-10 leading-tight">{c.name}</div>
+              <p className="mt-3 text-[15px] leading-[1.6]" style={{color:'var(--olive-2)'}}>{c.body}</p>
+              <div className="mt-8 flex items-center gap-2 text-[13px]" style={{color:'#e0a48b'}}>
+                Join the waitlist <Icon.Arrow width="14" height="14"/>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ---------- Metrics strip ---------- */
+function Metrics() {
+  const ref = useRef();
+  useLayoutEffect(() => {
+    const ctx = gsap.context(() => {
+      ref.current.querySelectorAll('[data-num]').forEach(el => {
+        const target = parseFloat(el.dataset.num);
+        const dec = parseInt(el.dataset.dec || '0');
+        const suf = el.dataset.suf || '';
+        const pre = el.dataset.pre || '';
+        const o = { v: 0 };
+        gsap.to(o, {
+          v: target, duration: 1.6, ease: 'power3.out',
+          onUpdate: () => { el.textContent = pre + o.v.toFixed(dec) + suf; },
+          scrollTrigger: { trigger: el, start: 'top 85%', once: true }
+        });
+      });
+    }, ref);
+    return () => ctx.revert();
+  }, []);
+  return (
+    <section ref={ref} className="sec-light py-24 border-t border-b" style={{borderColor:'var(--rule)'}}>
+      <div className="max-w-[1240px] mx-auto px-6 md:px-10 grid md:grid-cols-4 gap-px rounded-2xl overflow-hidden ring-soft" style={{background:'var(--rule)'}}>
+        {[
+          { k:'Compute savings', n:'70', suf:'%', dec:0 },
+          { k:'Clouds supported', n:'3', suf:'', dec:0 },
+          { k:'Manual toil', n:'0', suf:'', dec:0 },
+          { k:'Avg ROI', n:'9.2', suf:'×', dec:1 },
+        ].map((m, i) => (
+          <div key={m.k} className="p-8" style={{background:'var(--ivory)'}}>
+            <div className="eyebrow">{m.k}</div>
+            <div className="big-num text-[clamp(48px,6vw,80px)] leading-none mt-4" data-num={m.n} data-suf={m.suf} data-dec={m.dec}>0</div>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+/* ---------- Final CTA ---------- */
+function FinalCTA() {
+  const ref = useRef();
+  useReveal(ref);
+  return (
+    <section ref={ref} id="demo" className="sec-light py-28">
+      <div className="max-w-[1240px] mx-auto px-6 md:px-10">
+        <div className="rounded-[32px] p-10 md:p-16 relative overflow-hidden ring-soft" style={{background:'var(--ivory)'}}>
+          <div className="absolute -right-20 -bottom-20 w-[420px] h-[420px] rounded-full pointer-events-none"
+               style={{background:'radial-gradient(closest-side, rgba(201,100,66,0.18), transparent 70%)'}}/>
+          <div className="grid md:grid-cols-12 gap-10 relative">
+            <div className="md:col-span-7">
+              <div data-fade className="sec-label mb-6">[ 04 ] Ready</div>
+              <h3 className="serif text-[clamp(36px,5.5vw,72px)] leading-[1.02] tracking-tight">
+                <div className="reveal-line"><span>Ready to operate</span></div>
+                <div className="reveal-line"><span style={{color:'var(--terracotta)'}}>smarter?</span></div>
+              </h3>
+              <p data-fade className="mt-6 text-[17px] max-w-[44ch]" style={{color:'var(--olive)'}}>
+                Thirty minutes. We’ll connect to a sandbox account and show your cloud automated live — no slides, no theater.
+              </p>
+              <div data-fade className="mt-8 flex flex-wrap gap-3">
+                <a href="#" className="btn-primary">Book a demo <Icon.Arrow width="14" height="14"/></a>
+                <a href="#" className="btn-dark">Sign up free</a>
+              </div>
+              <div data-fade className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-2 text-[13px]" style={{color:'var(--olive)'}}>
+                <span className="flex items-center gap-2"><Icon.Check width="14" height="14" style={{color:'var(--moss)'}}/> No credit card</span>
+                <span className="flex items-center gap-2"><Icon.Check width="14" height="14" style={{color:'var(--moss)'}}/> SOC 2 Type II</span>
+                <span className="flex items-center gap-2"><Icon.Check width="14" height="14" style={{color:'var(--moss)'}}/> Read-only by default</span>
+              </div>
+            </div>
+            <div className="md:col-span-5" data-fade>
+              <form className="rounded-2xl p-6 ring-soft" style={{background:'var(--parchment)'}}>
+                <div className="eyebrow mb-3">Quick form</div>
+                {[
+                  ['Work email','you@company.com'],
+                  ['Company','Acme Inc.'],
+                  ['Cloud providers','aws, gcp, azure'],
+                ].map(([l,p]) => (
+                  <label key={l} className="block mb-3">
+                    <div className="text-[12px] mb-1" style={{color:'var(--olive)'}}>{l}</div>
+                    <input className="w-full rounded-[12px] px-3.5 py-3 text-[14px] outline-none" style={{background:'var(--ivory)', boxShadow:'0 0 0 1px var(--rule)'}} placeholder={p}/>
+                  </label>
+                ))}
+                <button type="button" className="btn-primary w-full justify-center mt-2">Schedule 30-min demo</button>
+                <div className="mono text-[11px] mt-3 text-center" style={{color:'var(--olive)'}}>or email demo@xamops.com</div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ---------- Footer ---------- */
+function Footer() {
+  return (
+    <footer className="sec-dark pt-24 pb-10">
+      <div className="max-w-[1240px] mx-auto px-6 md:px-10">
+        <div className="grid md:grid-cols-12 gap-10 pb-16 border-b" style={{borderColor:'var(--rule-dark)'}}>
+          <div className="md:col-span-4">
+            <Logo dark size={26}/>
+            <p className="mt-5 text-[15px] max-w-[36ch]" style={{color:'var(--olive-2)'}}>
+              The Cognitive Cloud Operating System. Built by Xammer Technologies in Delhi.
+            </p>
+            <div className="mt-6 flex items-center gap-3">
+              <a href="#" className="btn-primary">Book demo</a>
+              <a href="#" className="btn-ghost-dark">Contact</a>
+            </div>
+          </div>
+          {[
+            ['Platform', ['Spot Automation','Disk Rightsizing','DBOps','SecOps','Cost Analytics','SRE Investigation']],
+            ['Solutions', ['For DevOps','For FinOps','For SRE','Pricing','Customers']],
+            ['Company',  ['About','Blog','Careers','Contact','Security']],
+          ].map(([h, items]) => (
+            <div key={h} className="md:col-span-2">
+              <div className="eyebrow eyebrow-dark mb-4">{h}</div>
+              <ul className="space-y-2.5 text-[14px]">
+                {items.map(i => <li key={i}><a href="#" className="ulink" style={{color:'var(--ivory)'}}>{i}</a></li>)}
+              </ul>
+            </div>
+          ))}
+        </div>
+        <div className="pt-8 flex flex-wrap items-center justify-between gap-4 text-[12px] mono" style={{color:'var(--olive-2)'}}>
+          <div>© 2026 Xammer Technologies · xamops.com</div>
+          <div className="flex items-center gap-6">
+            <a href="#">Terms</a><a href="#">Privacy</a><a href="#">Status</a>
+            <span className="flex items-center gap-2"><span className="live-dot"/> All systems operational</span>
+          </div>
+        </div>
+      </div>
+    </footer>
+  );
+}
+
+/* ---------- HomePage ---------- */
+function HomePage() {
+  return (
+    <>
+      <Hero/>
+      <LogoBar/>
+      <PlatformStrip/>
+      <FeatureSection index={1} eyebrow="Spot Automation"
+        title={[{text:'70% savings'},{text:'on compute,'},{text:'automated.', accent:true}]}
+        body="AutoSpotting replaces on-demand instances with spot capacity across AWS Auto Scaling Groups, GCP Managed Instance Groups and Azure VMSS. Per-instance SKU rules, eviction handling, and a guaranteed minimum of regular VMs."
+        metric={[['Avg savings','68%'],['Eviction','0.34%'],['Coverage','92%']]} visual={<SpotVisual/>} />
+      <FeatureSection index={2} eyebrow="Disk Rightsizing"
+        title={[{text:'Stop paying for'},{text:'disk you don’t', accent:true},{text:'use.'}]} dark side="left"
+        body="No other platform automates this. Continuous volume monitoring, recommendations, and safe automated resize for AWS EBS, GCP Persistent Disk and Azure Managed Disks — including filesystem expansion."
+        metric={[['Avg reduction','38%'],['Volumes','12,400+'],['Downtime','0s']]} visual={<DiskVisual/>} />
+      <FeatureSection index={3} eyebrow="DBOps"
+        title={[{text:'Database operations'},{text:'on autopilot.', accent:true}]}
+        body="Automated scaling, backup verification, performance optimization, and patch windows — across RDS, Cloud SQL, Cosmos and beyond. Stop being on-call for routine database work."
+        metric={[['Manual pages','0'],['Routines','12/day'],['DBs','340+']]} visual={<DBVisual/>} />
+      <FeatureSection index={4} eyebrow="SecOps"
+        title={[{text:'Security automation'},{text:'that ships with', accent:true},{text:'your code.'}]} dark side="left"
+        body="Continuous CIS posture checks, drift detection, and automated remediation that runs alongside CI/CD instead of after the fact. Multi-cloud coverage, single policy plane."
+        metric={[['CIS coverage','94%'],['Critical','0'],['MTTR','4m']]} visual={<SecOpsVisual/>} />
+      <HorizontalScroll/>
+      <FeatureSection index={5} eyebrow="Cost Analytics"
+        title={[{text:'See exactly'},{text:'what you spend.'},{text:'Cut the rest.', accent:true}]}
+        body="Real-time savings dashboards, daily aggregations, reservation/commitment coverage for RIs, CUDs and Savings Plans, and forecasting that engineering managers actually trust."
+        metric={[['Coverage','80%'],['Forecast Δ','±2%'],['Reports','Live']]} visual={<CostVisual/>} />
+      <FeatureSection index={6} eyebrow="SRE Investigation"
+        title={[{text:'From alert to'},{text:'root cause.', accent:true},{text:'Faster.'}]} side="left"
+        body="AI-assisted log triage, anomaly detection, and an investigation timeline that stitches metrics, logs and traces. Native OpenObserve integration, with auto-detected incident feeds."
+        metric={[['Faster RCAs','11×'],['Logs/sec','1.2M'],['Recall','98%']]} visual={<SREVisual/>} />
+      <ComingSoon/>
+      <Metrics/>
+      <FinalCTA/>
+    </>
+  );
+}
+
+/* ---------- Page primitives ---------- */
+function PageHero({ eyebrow, title, body, cta = true }) {
+  return (
+    <section className="sec-light pt-[140px] pb-20 relative overflow-hidden">
+      <div className="absolute -top-20 -right-20 w-[420px] h-[420px] rounded-full pointer-events-none"
+        style={{ background: 'radial-gradient(closest-side, rgba(201,100,66,0.14), transparent 70%)' }} />
+      <div className="max-w-[1240px] mx-auto px-6 md:px-10 relative">
+        <div className="eyebrow mb-5">{eyebrow}</div>
+        <h1 className="serif text-[clamp(40px,6.5vw,84px)] leading-[1.02] tracking-tight max-w-[18ch]">
+          {title.map((t, i) => (
+            <span key={i} style={t.accent ? { color: 'var(--terracotta)' } : null}>
+              {t.text}{i < title.length - 1 ? ' ' : ''}
+            </span>
+          ))}
+        </h1>
+        {body && <p className="mt-6 text-[18px] leading-[1.6] max-w-[60ch]" style={{ color: 'var(--olive)' }}>{body}</p>}
+        {cta && (
+          <div className="mt-8 flex flex-wrap gap-3">
+            <Link to="/demo" className="btn-primary">Book a demo <Icon.Arrow width="14" height="14" /></Link>
+            <Link to="/platform" className="btn-ghost">Explore the platform</Link>
+          </div>
+        )}
+      </div>
+    </section>
+  );
+}
+
+function CTABanner({ heading = 'Ready to operate smarter?', sub = '30-minute demo. We connect to a sandbox and show your cloud automated live.' }) {
+  return (
+    <section className="sec-light py-24">
+      <div className="max-w-[1240px] mx-auto px-6 md:px-10">
+        <div className="rounded-[32px] p-10 md:p-14 ring-soft relative overflow-hidden" style={{ background: 'var(--ivory)' }}>
+          <div className="absolute -right-20 -bottom-20 w-[420px] h-[420px] rounded-full pointer-events-none"
+            style={{ background: 'radial-gradient(closest-side, rgba(201,100,66,0.18), transparent 70%)' }} />
+          <div className="grid md:grid-cols-12 gap-8 relative items-center">
+            <div className="md:col-span-8">
+              <h3 className="serif text-[clamp(30px,4.4vw,56px)] leading-[1.04] tracking-tight max-w-[20ch]">{heading}</h3>
+              <p className="mt-4 text-[16px] max-w-[60ch]" style={{ color: 'var(--olive)' }}>{sub}</p>
+            </div>
+            <div className="md:col-span-4 flex flex-wrap gap-3 md:justify-end">
+              <Link to="/demo" className="btn-primary">Book a demo <Icon.Arrow width="14" height="14" /></Link>
+              <Link to="/pricing" className="btn-ghost">Pricing</Link>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Steps({ steps, dark }) {
+  return (
+    <section className={`py-24 ${dark ? 'sec-dark' : 'sec-light'}`}>
+      <div className="max-w-[1240px] mx-auto px-6 md:px-10">
+        <div className={`sec-label ${dark ? 'dark' : ''} mb-6`}>How it works</div>
+        <div className="grid md:grid-cols-4 gap-px ring-soft rounded-2xl overflow-hidden" style={{ background: dark ? 'var(--rule-dark)' : 'var(--rule)' }}>
+          {steps.map((s, i) => (
+            <div key={s[0]} className="p-7" style={{ background: dark ? 'var(--ivory)' : 'var(--ivory)' }}>
+              <div className="mono text-[11px]" style={{ color: dark ? 'var(--olive-2)' : 'var(--olive)' }}>0{i + 1}</div>
+              <div className="serif text-[22px] mt-6">{s[0]}</div>
+              <div className="text-[14px] mt-2" style={{ color: dark ? 'var(--olive-2)' : 'var(--olive)' }}>{s[1]}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function FeatureGrid({ title, items, dark }) {
+  return (
+    <section className={`py-24 ${dark ? 'sec-dark' : 'sec-light'}`}>
+      <div className="max-w-[1240px] mx-auto px-6 md:px-10">
+        {title && <h2 className="serif text-[clamp(28px,3.6vw,42px)] leading-[1.05] mb-10 max-w-[24ch]">{title}</h2>}
+        <div className="grid md:grid-cols-3 gap-px ring-soft rounded-2xl overflow-hidden" style={{ background: dark ? 'var(--rule-dark)' : 'var(--rule)' }}>
+          {items.map(([k, v], i) => (
+            <div key={k} className="p-6" style={{ background: dark ? 'var(--ivory)' : 'var(--ivory)' }}>
+              <div className="mono text-[11px] mb-4" style={{ color: dark ? 'var(--olive-2)' : 'var(--olive)' }}>0{i + 1}</div>
+              <div className="serif text-[20px]">{k}</div>
+              <div className="text-[14px] mt-2" style={{ color: dark ? 'var(--olive-2)' : 'var(--olive)' }}>{v}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Cloud3({ items }) {
+  return (
+    <section className="sec-light py-16 border-t border-b" style={{ borderColor: 'var(--rule)' }}>
+      <div className="max-w-[1240px] mx-auto px-6 md:px-10">
+        <div className="eyebrow mb-4">Works on</div>
+        <div className="flex flex-wrap gap-3">
+          {items.map((s) => <span key={s} className="chip">{s}</span>)}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ---------- Pages ---------- */
+function PlatformPage() {
+  const cats = [
+    { I: Icon.Spot,  to: '/platform/spot-automation', name: 'Spot Automation',    body: 'Replace on-demand with spot capacity across AWS ASGs, GCP MIGs, Azure VMSS. Up to 70% off compute.' },
+    { I: Icon.Disk,  to: '/platform/disk-rightsizing',name: 'Disk Rightsizing',   body: 'The only platform that automates disk rightsizing at scale across EBS, Persistent Disk, Managed Disks.' },
+    { I: Icon.DB,    to: '/platform/dbops',           name: 'DBOps',              body: 'Automated scaling, backup verification, performance tuning and patch windows for managed DBs.' },
+    { I: Icon.Sec,   to: '/platform/secops',          name: 'SecOps',             body: 'Continuous CIS posture, drift detection and automated remediation alongside your CI/CD.' },
+    { I: Icon.Cost,  to: '/platform/cost-analytics',  name: 'Cost Analytics',     body: 'Real-time savings dashboards, daily aggregations, RI/CUD/Savings Plan coverage and forecasting.' },
+    { I: Icon.SRE,   to: '/platform/sre',             name: 'SRE Investigation',  body: 'AI-assisted log triage and an investigation timeline that connects metrics, logs and traces.' },
+  ];
+  return (
+    <>
+      <PageHero eyebrow="Platform"
+        title={[{ text: 'One platform.' }, { text: 'Every layer of your cloud.', accent: true }, { text: 'Fully automated.' }]}
+        body="XamOps unifies six automations into a single control plane that runs across AWS, GCP and Azure — so engineers stop babysitting infrastructure and managers stop signing oversized cloud bills." />
+      <section className="sec-light pb-24">
+        <div className="max-w-[1240px] mx-auto px-6 md:px-10">
+          <div className="grid md:grid-cols-2 gap-px ring-soft rounded-2xl overflow-hidden" style={{ background: 'var(--rule)' }}>
+            {cats.map(({ I, to, name, body }, i) => (
+              <Link to={to} key={name} className="p-8 hcard block" style={{ background: 'var(--ivory)' }}>
+                <div className="flex items-start justify-between">
+                  <I width="24" height="24" />
+                  <span className="mono text-[11px]" style={{ color: 'var(--olive)' }}>0{i + 1}</span>
+                </div>
+                <div className="serif text-[28px] mt-10">{name}</div>
+                <div className="text-[15px] mt-3 leading-[1.6]" style={{ color: 'var(--olive)' }}>{body}</div>
+                <div className="mt-6 inline-flex items-center gap-2 text-[14px]">Learn more <Icon.Arrow width="14" height="14" /></div>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+      <CTABanner />
+    </>
+  );
+}
+
+function ProductPage({ eyebrow, title, body, Visual, dark, steps, features, clouds, cta }) {
+  return (
+    <>
+      <PageHero eyebrow={eyebrow} title={title} body={body} />
+      <section className="sec-light pb-16">
+        <div className="max-w-[1240px] mx-auto px-6 md:px-10"><Visual /></div>
+      </section>
+      {steps && <Steps steps={steps} dark={dark} />}
+      {clouds && <Cloud3 items={clouds} />}
+      {features && <FeatureGrid items={features} dark={!dark} />}
+      <CTABanner heading={cta} />
+    </>
+  );
+}
+
+function SpotPage() {
+  return <ProductPage
+    eyebrow="Platform · Spot Automation"
+    title={[{ text: 'Cut your compute bill' }, { text: 'by up to 70%.', accent: true }, { text: 'Automatically.' }]}
+    body="AutoSpotting safely replaces on-demand instances with spot capacity across AWS Auto Scaling Groups, GCP Managed Instance Groups and Azure VMSS."
+    Visual={SpotVisual} dark
+    steps={[
+      ['Validate',  'Inspect ASG/MIG/VMSS configuration, capacity strategy and workload tolerances.'],
+      ['Convert',   'Stage replacements one instance at a time, watching health checks and signals.'],
+      ['Scale',     'Maintain a minimum of regular VMs and a target spot ratio per group.'],
+      ['Verify',    'Drain, terminate, and verify before continuing the loop.'],
+    ]}
+    clouds={['aws.autoscaling', 'gcp.mig.preemptible', 'azure.vmss', 'spot fleet · mixed instance']}
+    features={[
+      ['Per-instance SKU rules', 'Define which instance types are eligible per ASG, with preferred fallbacks.'],
+      ['Spot ratio targets',     'Hold a configurable spot percentage per group.'],
+      ['Min regular VMs',        'Always keep N on-demand instances for stability-critical capacity.'],
+      ['Eviction handling',      'Pre-emption signals trigger graceful drain and replacement.'],
+      ['Multi-cloud capacity',   'AWS, GCP and Azure spot pools blended in one policy.'],
+      ['Audit trail',            'Every conversion logged with reason, savings and replacement target.'],
+    ]}
+    cta="See spot savings on your account in 30 minutes." />;
+}
+
+function DiskPage() {
+  return <ProductPage
+    eyebrow="Platform · Disk Rightsizing"
+    title={[{ text: 'Stop paying for' }, { text: 'disk you don’t use.', accent: true }]}
+    body="No other platform automates this at scale. Continuous monitoring, recommendations, and safe automated resize across AWS EBS, GCP Persistent Disk and Azure Managed Disks."
+    Visual={DiskVisual}
+    steps={[
+      ['Monitor',     'Continuous IOPS, throughput and free-space telemetry per volume.'],
+      ['Recommend',   'Suggest right-sized capacity with confidence intervals and risk score.'],
+      ['Schedule',    'Pick a maintenance window with snapshot-and-rollback safety net.'],
+      ['Resize',      'Shrink/grow the volume and expand the filesystem in place.'],
+    ]}
+    clouds={['aws.ebs gp3 · io2', 'gcp.persistent-disk', 'azure.managed-disk', 'lvm · ext4 · xfs · ntfs']}
+    features={[
+      ['38% avg reduction',    'Real customer averages across 12,400+ volumes managed.'],
+      ['Zero downtime',        'Snapshot, resize, expand filesystem — without taking workloads offline.'],
+      ['Rollback ready',       'Every action has a defined rollback path.'],
+      ['Filesystem aware',     'Handles ext4, xfs, ntfs and LVM volumes natively.'],
+      ['Maintenance windows',  'Schedule resize during low-traffic hours per workload.'],
+      ['Multi-cloud',          'EBS, Persistent Disk, Managed Disk — single policy.'],
+    ]}
+    cta="Disk costs you can finally cut." />;
+}
+
+function DBOpsPage() {
+  return <ProductPage
+    eyebrow="Platform · DBOps"
+    title={[{ text: 'Database operations' }, { text: 'on autopilot.', accent: true }]}
+    body="Automated scaling, backup verification, performance optimization, and minor-version patching for RDS, Cloud SQL, Cosmos DB and beyond."
+    Visual={DBVisual} dark
+    features={[
+      ['Auto-scaling',           'Reactive and predictive scaling for read replicas and storage.'],
+      ['Backup verification',    'Restore-test backups on a schedule.'],
+      ['Performance tuning',     'Index suggestions, slow-query analysis, connection-pool tuning.'],
+      ['Patch windows',          'Minor-version patches applied during low-traffic windows.'],
+      ['Failover drills',        'Game-day exercises run automatically.'],
+      ['Multi-cloud',            'RDS, Aurora, Cloud SQL, Cosmos, Memorystore, ElastiCache.'],
+    ]}
+    clouds={['aws.rds · aurora', 'gcp.cloudsql', 'azure.cosmos', 'self-managed · postgres · mysql']}
+    cta="Stop paging your DBA at 3am." />;
+}
+
+function SecOpsPage() {
+  return <ProductPage
+    eyebrow="Platform · SecOps"
+    title={[{ text: 'Security automation' }, { text: 'that ships with', accent: true }, { text: 'your code.' }]}
+    body="Continuous CIS posture checks, drift detection and automated remediation alongside CI/CD."
+    Visual={SecOpsVisual}
+    features={[
+      ['CIS benchmarks',         'AWS, GCP, Azure baseline coverage. Continuous evaluation.'],
+      ['Auto-remediation',       'Scoped playbooks fix common violations with audit trail.'],
+      ['IAM hygiene',            'Stale keys, over-permissive roles, unused credentials.'],
+      ['Network exposure',       'Open security groups, public buckets, orphan endpoints.'],
+      ['Policy as code',         'Version-controlled with PR-based review.'],
+      ['Compliance reports',     'SOC 2, ISO, HIPAA evidence collected automatically.'],
+    ]}
+    clouds={['aws.guardduty · config', 'gcp.scc', 'azure.defender', 'cis · soc2 · iso27001']}
+    cta="Drift catches you. Or XamOps does first." />;
+}
+
+function CostPage() {
+  return <ProductPage
+    eyebrow="Platform · Cost Analytics"
+    title={[{ text: 'See exactly' }, { text: 'what you spend.' }, { text: 'Cut the rest.', accent: true }]}
+    body="Real-time savings dashboards, daily aggregations, RI/CUD/Savings Plan coverage and forecasting."
+    Visual={CostVisual} dark
+    features={[
+      ['Live dashboards',        'No 24-hour CUR delay.'],
+      ['Daily aggregations',     'Roll-ups by team, environment, service, tag, account.'],
+      ['Commitment coverage',    'Optimal RI / CUD / SP plan with break-even analysis.'],
+      ['Forecasts',              'Per-team forecasts within ±2% accuracy at 30 days.'],
+      ['Anomaly alerts',         'Spend spike detection with workload attribution.'],
+      ['Showback / chargeback',  'Reports finance will accept.'],
+    ]}
+    cta="Retire the cost spreadsheet." />;
+}
+
+function SREPage() {
+  return <ProductPage
+    eyebrow="Platform · SRE Investigation"
+    title={[{ text: 'From alert to' }, { text: 'root cause.', accent: true }, { text: 'Faster.' }]}
+    body="AI-assisted log triage, anomaly detection, and an investigation timeline that stitches metrics, logs and traces."
+    Visual={SREVisual}
+    features={[
+      ['Anomaly detection',      'Per-service baselines that learn seasonality.'],
+      ['Log triage',             'AI-narrated summaries ranked by likelihood.'],
+      ['Incident timeline',      'Metrics, logs, traces, deploys stitched into one view.'],
+      ['OpenObserve',            'Native explorer, retention, saved searches.'],
+      ['Auto-detected incidents','Group related anomalies automatically.'],
+      ['Postmortem drafts',      'Pre-filled timelines and action items.'],
+    ]}
+    cta="Faster RCAs. Quieter pagers." />;
+}
+
+function SolutionPage({ eyebrow, title, body, before, after, relevant }) {
+  return (
+    <>
+      <PageHero eyebrow={eyebrow} title={title} body={body} />
+      <section className="sec-light py-16">
+        <div className="max-w-[1240px] mx-auto px-6 md:px-10 grid md:grid-cols-2 gap-10">
+          <div className="ring-soft rounded-2xl p-8" style={{ background: 'var(--ivory)' }}>
+            <div className="eyebrow mb-3">A typical week</div>
+            <ul className="space-y-3 text-[15px]">
+              {before.map((b) => (
+                <li key={b} className="flex items-start gap-3">
+                  <span className="mono text-[11px] mt-1" style={{ color: 'var(--olive)' }}>—</span><span>{b}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="ring-soft rounded-2xl p-8" style={{ background: 'var(--ivory)' }}>
+            <div className="eyebrow mb-3">With XamOps</div>
+            <ul className="space-y-3 text-[15px]">
+              {after.map((a) => (
+                <li key={a} className="flex items-start gap-3">
+                  <Icon.Check width="14" height="14" style={{ color: 'var(--moss)', marginTop: 5 }} /> <span>{a}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </section>
+      <FeatureGrid title="Most relevant capabilities" items={relevant} dark />
+      <CTABanner />
+    </>
+  );
+}
+
+function DevOpsPage() {
+  return <SolutionPage
+    eyebrow="Solutions · For DevOps Engineers"
+    title={[{ text: 'You manage 3 clouds.' }, { text: 'Toil never ends.', accent: true }]}
+    body="XamOps automates the operations layer so platform engineers ship platforms — not babysit instances, disks and patch windows."
+    before={['Manual ASG/MIG capacity tuning across regions.','Disk usage tickets queued every Monday.','Out-of-band DB patching on Friday nights.','Drift detection runs… some of the time.']}
+    after={['Spot conversions and capacity rules run themselves.','Disk rightsizing scheduled with snapshot-rollback.','DB minor patches applied automatically.','Drift caught and remediated before a PR closes.']}
+    relevant={[['Spot Automation','Cut compute up to 70% with safe staged conversions.'],['Disk Rightsizing','Continuous resize with filesystem expansion.'],['DBOps','Automate scaling, backups and patch windows.']]} />;
+}
+
+function FinOpsPage() {
+  return <SolutionPage
+    eyebrow="Solutions · For FinOps Teams"
+    title={[{ text: 'Cloud bills grow.' }, { text: 'Visibility is a spreadsheet.', accent: true }]}
+    body="Real-time cost dashboards, automated rightsizing, and reservation coverage that doesn’t leak."
+    before={['Monthly bill arrives with surprises.','CUDs and RIs underused; commitments leak.','No per-team showback.','Forecasts are best-effort guesses.']}
+    after={['Live spend dashboards per team and service.','Optimal RI/CUD/SP plan with break-even.','Showback automated; chargeback finance accepts.','Forecasts within ±2% at 30 days.']}
+    relevant={[['Cost Analytics','Live dashboards, anomalies, forecasts.'],['Disk Rightsizing','38% average storage spend reduction.'],['Spot Automation','Up to 70% off compute, automated.']]} />;
+}
+
+function SRESolutionPage() {
+  return <SolutionPage
+    eyebrow="Solutions · For SRE Teams"
+    title={[{ text: 'Always firefighting.' }, { text: 'Every incident takes hours.', accent: true }]}
+    body="Agentic investigation, anomaly feeds, and log intelligence — so RCAs are minutes, not afternoons."
+    before={['Alert storms; correlation by hand.','Log queries copy-pasted between dashboards.','Postmortems take days.','Same incident type keeps recurring.']}
+    after={['Auto-detected incidents group anomalies.','AI-narrated log summaries.','Postmortems drafted with timeline.','Recurring patterns flagged.']}
+    relevant={[['SRE Investigation','Metrics, logs, traces in one timeline.'],['SecOps','Auto-remediation removes a class of pages.'],['Agentic SRE — soon','Autonomous resolution.']]} />;
+}
+
+function PricingPage() {
+  const tiers = [
+    { name: 'Starter',    price: 'Contact us', tag: 'For small teams getting started', features: ['Up to 50 instances','Spot Automation (1 cloud)','Cost Analytics dashboards','Email support'] },
+    { name: 'Growth',     price: 'Contact us', tag: 'For multi-cloud teams scaling fast', highlight: true, features: ['Unlimited instances','All Platform automations','Multi-cloud (AWS · GCP · Azure)','SecOps auto-remediation','Slack support'] },
+    { name: 'Enterprise', price: 'Contact us', tag: 'For regulated, large-scale orgs',  features: ['SSO / SAML','Custom SLAs','Dedicated CSM','Audit log export','On-prem connector','24/7 support'] },
+  ];
+  return (
+    <>
+      <PageHero eyebrow="Pricing"
+        title={[{ text: 'Simple,' }, { text: 'outcome-based pricing.', accent: true }]}
+        body="We price on outcomes — savings delivered, toil eliminated — not on seat counts." cta={false} />
+      <section className="sec-light pb-24">
+        <div className="max-w-[1240px] mx-auto px-6 md:px-10 grid md:grid-cols-3 gap-6">
+          {tiers.map((t) => (
+            <div key={t.name} className="rounded-2xl p-8 ring-soft relative" style={{ background: t.highlight ? 'var(--ink)' : 'var(--ivory)', color: t.highlight ? 'var(--ivory)' : 'var(--ink)' }}>
+              {t.highlight && <span className="absolute top-5 right-5 text-[11px] mono px-2 py-0.5 rounded-full" style={{ background: 'var(--terracotta)', color: '#fff' }}>Most teams</span>}
+              <div className="serif text-[28px]">{t.name}</div>
+              <div className="text-[13px] mt-1" style={{ color: t.highlight ? 'var(--olive-2)' : 'var(--olive)' }}>{t.tag}</div>
+              <div className="serif text-[42px] mt-8 leading-none">{t.price}</div>
+              <ul className="mt-6 space-y-2.5 text-[14px]">
+                {t.features.map((f) => (
+                  <li key={f} className="flex items-start gap-2">
+                    <Icon.Check width="14" height="14" style={{ color: t.highlight ? 'var(--terracotta)' : 'var(--moss)', marginTop: 4 }} /> {f}
+                  </li>
+                ))}
+              </ul>
+              <Link to="/demo" className={`mt-8 w-full justify-center ${t.highlight ? 'btn-primary' : 'btn-dark'}`}>Talk to us</Link>
+            </div>
+          ))}
+        </div>
+      </section>
+    </>
+  );
+}
+
+function AboutPage() {
+  const team = [
+    ['Vivek Yadav',  'Founder & CEO',     'Cloud architect · 12 years building DevOps platforms.'],
+    ['Aanya Sharma', 'Co-founder & CTO',  'Ex-AWS · designed AutoSpotting at scale.'],
+    ['Rohan Mehta',  'Head of SRE',       'Built incident systems for fintech unicorns.'],
+    ['Ishita Kapur', 'Head of FinOps',    'CFO whisperer. Ran cloud finance at hyperscaler customer.'],
+  ];
+  return (
+    <>
+      <PageHero eyebrow="About"
+        title={[{ text: 'Built by' }, { text: 'Xammer Technologies.', accent: true }]}
+        body="We believe cloud operations should be autonomous, not manual. Founded in Delhi in 2016, Xammer has spent a decade running DevOps platforms for global teams." cta={false} />
+      <section className="sec-light pb-24">
+        <div className="max-w-[1240px] mx-auto px-6 md:px-10 grid md:grid-cols-3 gap-px ring-soft rounded-2xl overflow-hidden" style={{ background: 'var(--rule)' }}>
+          {[['10+','years'],['1,000+','projects shipped'],['180','engineers'],['99.9%','uptime SLA'],['40%','avg cost reduction'],['3','cloud providers']].map(([n, l]) => (
+            <div key={l} className="p-7" style={{ background: 'var(--ivory)' }}>
+              <div className="big-num text-[44px] leading-none">{n}</div>
+              <div className="eyebrow mt-3">{l}</div>
+            </div>
+          ))}
+        </div>
+      </section>
+      <section className="sec-dark py-24">
+        <div className="max-w-[1240px] mx-auto px-6 md:px-10">
+          <div className="sec-label dark mb-5">Mission</div>
+          <h2 className="serif text-[clamp(28px,4vw,52px)] leading-[1.06] max-w-[28ch]">
+            We believe cloud operations should be <span style={{ color: 'var(--terracotta)' }}>autonomous, not manual.</span> Engineers should ship products, not run scripts.
+          </h2>
+        </div>
+      </section>
+      <section className="sec-light py-24">
+        <div className="max-w-[1240px] mx-auto px-6 md:px-10">
+          <div className="sec-label mb-6">Team</div>
+          <div className="grid md:grid-cols-4 gap-6">
+            {team.map(([n, role, bio]) => (
+              <div key={n} className="ring-soft rounded-2xl p-5" style={{ background: 'var(--ivory)' }}>
+                <div className="aspect-[4/3] rounded-xl mb-4 flex items-end p-3"
+                  style={{ backgroundImage: 'repeating-linear-gradient(135deg, rgba(255,255,255,0.05) 0 1px, transparent 1px 12px)', backgroundColor: 'var(--parchment)' }}>
+                  <span className="mono text-[10px]" style={{ color: 'var(--olive)' }}>portrait_placeholder.png</span>
+                </div>
+                <div className="serif text-[18px]">{n}</div>
+                <div className="text-[13px]" style={{ color: 'var(--olive)' }}>{role}</div>
+                <div className="text-[13px] mt-2 leading-[1.55]">{bio}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+      <CTABanner heading="Want to build the future of cloud ops with us?" sub="We’re hiring across SRE, ML and platform engineering — open roles in Delhi and remote." />
+    </>
+  );
+}
+
+function DemoPage() {
+  return (
+    <section className="sec-light pt-[140px] pb-24">
+      <div className="max-w-[1240px] mx-auto px-6 md:px-10 grid md:grid-cols-12 gap-10">
+        <div className="md:col-span-6">
+          <div className="eyebrow mb-5">Book a demo</div>
+          <h1 className="serif text-[clamp(40px,6vw,72px)] leading-[1.02] tracking-tight">
+            30 minutes. <span style={{ color: 'var(--terracotta)' }}>See your cloud automated live.</span>
+          </h1>
+          <p className="mt-6 text-[17px] leading-[1.6] max-w-[52ch]" style={{ color: 'var(--olive)' }}>
+            We connect to a sandbox account and show real spot conversions, disk rightsizing recommendations and cost savings — on infrastructure that looks like yours. No slideware.
+          </p>
+          <ul className="mt-8 space-y-3 text-[15px]">
+            {[['Read-only by default','We only get the access you grant. Revoke anytime.'],['Bring your own scenario','Show us a real workload and we’ll map savings.'],['Engineers in the room','Your call is with the people who built this.'],['SOC 2 Type II','Full evidence pack available pre-call.']].map(([k, v]) => (
+              <li key={k} className="flex items-start gap-3">
+                <Icon.Check width="16" height="16" style={{ color: 'var(--moss)', marginTop: 3 }} />
+                <div><div className="font-medium">{k}</div><div className="text-[13px]" style={{ color: 'var(--olive)' }}>{v}</div></div>
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div className="md:col-span-6">
+          <form className="ring-soft rounded-2xl p-7" style={{ background: 'var(--ivory)' }} onSubmit={(e) => { e.preventDefault(); alert('Demo request received — we\'ll email you within 1 business day.'); }}>
+            <div className="serif text-[24px] mb-5">Tell us about your stack</div>
+            {[['Full name','Aarya Patel','text'],['Work email','you@company.com','email'],['Company','Acme Cloud','text'],['Team size','20','number']].map(([l, p, t]) => (
+              <label key={l} className="block mb-3">
+                <div className="text-[12px] mb-1" style={{ color: 'var(--olive)' }}>{l}</div>
+                <input required type={t} className="w-full rounded-[12px] px-3.5 py-3 text-[14px] outline-none" style={{ background: 'var(--parchment)', boxShadow: '0 0 0 1px var(--rule)' }} placeholder={p} />
+              </label>
+            ))}
+            <div className="text-[12px] mb-1 mt-2" style={{ color: 'var(--olive)' }}>Cloud providers</div>
+            <div className="flex flex-wrap gap-2 mb-4">
+              {['AWS','GCP','Azure','On-prem'].map((c) => (
+                <label key={c} className="chip cursor-pointer">
+                  <input type="checkbox" className="accent-[var(--terracotta)]" /> {c}
+                </label>
+              ))}
+            </div>
+            <label className="block mb-4">
+              <div className="text-[12px] mb-1" style={{ color: 'var(--olive)' }}>What would you like to see?</div>
+              <textarea rows="3" className="w-full rounded-[12px] px-3.5 py-3 text-[14px] outline-none" style={{ background: 'var(--parchment)', boxShadow: '0 0 0 1px var(--rule)' }} placeholder="Spot conversion on prod-api ASG, disk rightsizing across staging…"></textarea>
+            </label>
+            <button type="submit" className="btn-primary w-full justify-center">Request demo <Icon.Arrow width="14" height="14" /></button>
+            <div className="mono text-[11px] mt-3 text-center" style={{ color: 'var(--olive)' }}>or email demo@xamops.com</div>
+          </form>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function BlogPage() {
+  const posts = [
+    { tag: 'Spot',   title: 'How Spot Automation saves teams 70% on compute', excerpt: 'A walk-through of the staged replacement loop, eviction handling and minimum-regular-VM safety net.', read: '8 min', date: 'Apr 28, 2026' },
+    { tag: 'FinOps', title: 'Disk Rightsizing: the cost saving everyone ignores', excerpt: 'Compute gets all the FinOps press. Disks quietly waste 30–40%.', read: '6 min', date: 'Apr 14, 2026' },
+    { tag: 'Vision', title: 'What is a Cognitive Cloud OS?', excerpt: 'A definition, a manifesto, and a roadmap for the next decade of cloud operations.', read: '12 min', date: 'Apr 02, 2026' },
+  ];
+  return (
+    <>
+      <PageHero eyebrow="Blog"
+        title={[{ text: 'Notes from' }, { text: 'the cognitive layer.', accent: true }]}
+        body="Engineering deep-dives, FinOps math, and the occasional opinion from the people building XamOps." cta={false} />
+      <section className="sec-light pb-24">
+        <div className="max-w-[1240px] mx-auto px-6 md:px-10 grid md:grid-cols-3 gap-6">
+          {posts.map((p) => (
+            <a key={p.title} href="#" className="ring-soft rounded-2xl overflow-hidden hcard block" style={{ background: 'var(--ivory)' }}>
+              <div className="aspect-[16/10]" style={{ backgroundImage: 'repeating-linear-gradient(135deg, rgba(255,255,255,0.05) 0 1px, transparent 1px 12px)', backgroundColor: 'var(--parchment)' }} />
+              <div className="p-6">
+                <div className="flex items-center gap-3 eyebrow"><span>{p.tag}</span><span>·</span><span>{p.date}</span></div>
+                <div className="serif text-[22px] mt-3 leading-[1.18]">{p.title}</div>
+                <div className="text-[14px] mt-3 leading-[1.55]" style={{ color: 'var(--olive)' }}>{p.excerpt}</div>
+                <div className="text-[13px] mt-5 inline-flex items-center gap-2 ulink">Read · {p.read} <Icon.Arrow width="14" height="14" /></div>
+              </div>
+            </a>
+          ))}
+        </div>
+      </section>
+    </>
+  );
+}
+
+function ContactPage() {
+  return (
+    <section className="sec-light pt-[140px] pb-24">
+      <div className="max-w-[1240px] mx-auto px-6 md:px-10 grid md:grid-cols-12 gap-10">
+        <div className="md:col-span-5">
+          <div className="eyebrow mb-5">Contact</div>
+          <h1 className="serif text-[clamp(36px,5.5vw,64px)] leading-[1.05] tracking-tight">Talk to us.</h1>
+          <p className="mt-5 text-[17px] leading-[1.6]" style={{ color: 'var(--olive)' }}>
+            General enquiries, partnerships, press, or just to say hello — we read everything.
+          </p>
+          <div className="mt-8 space-y-4 text-[15px]">
+            <div><div className="eyebrow mb-1">Email</div><a href="mailto:support@xammer.in" className="ulink">support@xammer.in</a></div>
+            <div><div className="eyebrow mb-1">Sales</div><a href="mailto:demo@xamops.com" className="ulink">demo@xamops.com</a></div>
+            <div><div className="eyebrow mb-1">Office</div>Xammer Technologies · New Delhi, India</div>
+          </div>
+        </div>
+        <div className="md:col-span-7">
+          <form className="ring-soft rounded-2xl p-7" style={{ background: 'var(--ivory)' }} onSubmit={(e) => { e.preventDefault(); alert('Message sent — we’ll get back within 1 business day.'); }}>
+            {[['Name','Aarya Patel','text'],['Email','you@company.com','email']].map(([l, p, t]) => (
+              <label key={l} className="block mb-3">
+                <div className="text-[12px] mb-1" style={{ color: 'var(--olive)' }}>{l}</div>
+                <input required type={t} className="w-full rounded-[12px] px-3.5 py-3 text-[14px] outline-none" style={{ background: 'var(--parchment)', boxShadow: '0 0 0 1px var(--rule)' }} placeholder={p} />
+              </label>
+            ))}
+            <label className="block mb-4">
+              <div className="text-[12px] mb-1" style={{ color: 'var(--olive)' }}>Message</div>
+              <textarea required rows="6" className="w-full rounded-[12px] px-3.5 py-3 text-[14px] outline-none" style={{ background: 'var(--parchment)', boxShadow: '0 0 0 1px var(--rule)' }} placeholder="What can we help with?"></textarea>
+            </label>
+            <button type="submit" className="btn-primary">Send message <Icon.Arrow width="14" height="14" /></button>
+          </form>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function NotFoundPage() {
+  return (
+    <section className="sec-light pt-[140px] pb-24">
+      <div className="max-w-[1240px] mx-auto px-6 md:px-10">
+        <div className="eyebrow">404</div>
+        <h1 className="serif text-[clamp(40px,6vw,84px)] leading-[1.02] mt-3">Page not found.</h1>
+        <p className="mt-4 text-[17px]" style={{ color: 'var(--olive)' }}>That URL drifted. Our drift detection has been notified.</p>
+        <Link to="/" className="btn-primary mt-8">Back home <Icon.Arrow width="14" height="14" /></Link>
+      </div>
+    </section>
+  );
+}
+
+const ROUTES = {
+  '/':                          HomePage,
+  '/platform':                  PlatformPage,
+  '/platform/spot-automation':  SpotPage,
+  '/platform/disk-rightsizing': DiskPage,
+  '/platform/dbops':            DBOpsPage,
+  '/platform/secops':           SecOpsPage,
+  '/platform/cost-analytics':   CostPage,
+  '/platform/sre':              SREPage,
+  '/solutions':                 PlatformPage,
+  '/solutions/devops':          DevOpsPage,
+  '/solutions/finops':          FinOpsPage,
+  '/solutions/sre':             SRESolutionPage,
+  '/pricing':                   PricingPage,
+  '/about':                     AboutPage,
+  '/demo':                      DemoPage,
+  '/blog':                      BlogPage,
+  '/contact':                   ContactPage,
+};
+
+/* ---------- App ---------- */
+function RoutedApp() {
+  const { path } = useRouter();
+  const Page = ROUTES[path] || NotFoundPage;
+  const firstRun = useRef(true);
+  useEffect(() => {
+    // On first render, components are still mounting & registering their triggers.
+    // Don't kill them — just refresh once they're laid out.
+    if (!firstRun.current) {
+      ScrollTrigger.getAll().forEach((t) => t.kill());
+    }
+    firstRun.current = false;
+    window.scrollTo(0, 0);
+    const t1 = setTimeout(() => ScrollTrigger.refresh(), 250);
+    const t2 = setTimeout(() => ScrollTrigger.refresh(), 900);
+    return () => { clearTimeout(t1); clearTimeout(t2); };
+  }, [path]);
+  return (
+    <>
+      <Nav/>
+      <main key={path}><Page/></main>
+      <Footer/>
+    </>
+  );
+}
+
+function App() {
+  return (
+    <RouterProvider>
+      <RoutedApp/>
+    </RouterProvider>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script>
+
+</body>
+</html>

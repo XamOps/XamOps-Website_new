@@ -1,4 +1,4 @@
-import * as faceapi from 'face-api.js';
+let faceapi = null;
 import { BloomEffect, ChromaticAberrationEffect, EffectComposer, EffectPass, RenderPass } from 'postprocessing';
 import { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
@@ -486,6 +486,7 @@ export const GridScan = ({
     let canceled = false;
     const load = async () => {
       try {
+        faceapi = await import('face-api.js');
         await Promise.all([
           faceapi.nets.tinyFaceDetector.loadFromUri(modelsPath),
           faceapi.nets.faceLandmark68TinyNet.loadFromUri(modelsPath),

@@ -22,9 +22,9 @@ export default function FeatureSection({ index, eyebrow, title, body, dark, visu
             {metric && (
               <div data-fade className="mt-8 grid grid-cols-3 gap-px rounded-xl overflow-hidden" style={{background: dark ? 'var(--rule-dark)' : 'var(--rule)'}}>
                 {metric.map(([n,v]) => (
-                  <div key={n} className="p-5" style={{background:'var(--ivory)'}}>
-                    <div className={`eyebrow ${dark ? 'eyebrow-dark' : ''}`}>{n}</div>
-                    <div className="big-num text-[32px] mt-1">{v}</div>
+                  <div key={n} className="p-3 md:p-5" style={{background:'var(--ivory)'}}>
+                    <div className={`eyebrow ${dark ? 'eyebrow-dark' : ''} leading-tight text-[9px] md:text-[10px]`}>{n}</div>
+                    <div className="big-num text-[clamp(20px,4vw,32px)] mt-1 leading-none">{v}</div>
                   </div>
                 ))}
               </div>

@@ -62,27 +62,27 @@ function Hero() {
              style={{background:'radial-gradient(closest-side, rgba(43,212,168,0.06), transparent 70%)'}}/>
       </div>
 
-      <div className="max-w-[1240px] mx-auto px-6 md:px-10 relative">
-        <div className="hero-eyebrow eyebrow flex items-center gap-2 mb-8">
+      <div className="max-w-[1240px] mx-auto px-5 md:px-10 relative">
+        <div className="hero-eyebrow eyebrow flex items-center gap-2 mb-6 md:mb-8">
           <span className="live-dot"/> Now in private beta · v1.0
         </div>
 
-        <h1 className="serif text-[clamp(48px,8vw,116px)] leading-[0.95] tracking-tight max-w-[14ch]">
+        <h1 className="serif text-[clamp(40px,7vw,110px)] leading-[0.95] tracking-tight max-w-[14ch]">
           <div className="reveal-line"><span className="hero-line">The Cognitive</span></div>
           <div className="reveal-line"><span className="hero-line" style={{color:'var(--terracotta)'}}>Cloud Operating</span></div>
           <div className="reveal-line"><span className="hero-line">System.</span></div>
         </h1>
 
-        <p className="hero-sub mt-8 text-[18px] md:text-[20px] leading-[1.55] max-w-[640px]" style={{color:'var(--olive)'}}>
+        <p className="hero-sub mt-6 md:mt-8 text-[16px] md:text-[20px] leading-[1.55] max-w-[580px]" style={{color:'var(--olive)'}}>
           Automate cloud operations across <span style={{color:'var(--ink)'}}>AWS</span>, <span style={{color:'var(--ink)'}}>GCP</span>, and <span style={{color:'var(--ink)'}}>Azure</span>. Cut costs by up to 70%. Eliminate toil. Move faster than your infrastructure can drift.
         </p>
 
-        <div className="hero-ctas mt-10 flex flex-wrap items-center gap-3">
+        <div className="hero-ctas mt-8 flex flex-wrap items-center gap-3">
           <Link to="/demo" className="btn-primary">Book a demo <Icon.Arrow width="14" height="14"/></Link>
           <Link to="/demo" className="btn-dark">Sign up free</Link>
         </div>
 
-        <div className="hero-strip mt-16 ring-soft rounded-[28px] overflow-hidden" style={{background:'var(--ivory)'}}>
+        <div className="hero-strip mt-10 md:mt-16 ring-soft rounded-[20px] md:rounded-[28px] overflow-x-auto" style={{background:'var(--ivory)'}}>
           <div className="flex items-center justify-between px-5 py-3 border-b" style={{borderColor:'var(--rule)'}}>
             <div className="flex items-center gap-2">
               <span className="w-2.5 h-2.5 rounded-full" style={{background:'#ff6b6b'}}/>
@@ -92,7 +92,7 @@ function Hero() {
             </div>
             <div className="mono text-[11px]" style={{color:'var(--olive)'}}>aws · gcp · azure</div>
           </div>
-          <div className="grid grid-cols-12 gap-px" style={{background:'var(--rule)'}}>
+          <div className="grid grid-cols-12 gap-px" style={{background:'var(--rule)', minWidth:'760px'}}>
             <div className="col-span-12 md:col-span-3 p-6" style={{background:'var(--ivory)'}}>
               <div className="eyebrow">Monthly savings</div>
               <div className="serif text-[56px] leading-none mt-3">$1.84M</div>
@@ -293,7 +293,6 @@ function HorizontalScroll() {
             </div>
             <div data-fade className="text-[14px]" style={{color:'var(--olive)'}}>
               <div className="mono text-[11px] uppercase tracking-widest" style={{color:'var(--olive-2)'}}>Scroll →</div>
-              Translate vertical scroll into horizontal motion.
             </div>
           </div>
           <div className="hs-progress mt-6 h-px w-full overflow-hidden" style={{background:'var(--rule)'}}>

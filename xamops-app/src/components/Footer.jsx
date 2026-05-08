@@ -21,14 +21,14 @@ export default function Footer() {
             ['Company',   ['About','Blog','Careers','Contact','Security']],
           ].map(([h, items]) => (
             <div key={h} className="md:col-span-2">
-              <div className="eyebrow mb-4" style={{color:'var(--ink-2)'}}>{h}</div>
+              <div className="eyebrow mb-4" style={{color:'var(--ink)'}}>{h}</div>
               <ul className="space-y-2.5 text-[14px]">
-                {items.map(i => <li key={i}><a href="#" className="ulink" style={{color:'var(--olive)'}}>{i}</a></li>)}
+                {items.map(i => <li key={i}><a href="#" className="ulink" style={{color:'var(--ink-2)'}}>{i}</a></li>)}
               </ul>
             </div>
           ))}
         </div>
-        <div className="pt-8 flex flex-wrap items-center justify-between gap-4 text-[12px] mono" style={{color:'var(--olive)'}}>
+        <div className="pt-8 flex flex-wrap items-center justify-between gap-4 text-[12px] mono" style={{color:'var(--ink-2)'}}>
           <div>© 2026 Xammer Technologies · xamops.com</div>
           <div className="flex items-center gap-6">
             <a href="#">Terms</a><a href="#">Privacy</a><a href="#">Status</a>

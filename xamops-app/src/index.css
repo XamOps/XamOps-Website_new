@@ -2,6 +2,23 @@
 
 @import "tailwindcss";
 
+@theme {
+  --color-background: #0b0d12;
+  --color-foreground: #ecedf2;
+  --color-muted-foreground: #8b90a0;
+  --color-primary: #7c5cff;
+  --color-primary-foreground: #ffffff;
+  --color-secondary: #161a23;
+  --color-secondary-foreground: #ecedf2;
+  --color-destructive: #ef4444;
+  --color-destructive-foreground: #ffffff;
+  --color-accent: #1f2430;
+  --color-accent-foreground: #ecedf2;
+  --color-border: #1f2430;
+  --color-input: #1f2430;
+  --color-ring: #7c5cff;
+}
+
 :root {
   --parchment: #0b0d12;
   --ivory:     #11141b;
@@ -190,4 +207,10 @@ html { scroll-behavior: smooth; }
 .big-num { font-family: Georgia, serif; font-weight: 500; letter-spacing: -0.04em; }
 
 .hs-card { flex: 0 0 auto; width: 460px; height: 580px; }
-@media (max-width: 700px) { .hs-card { width: 320px; height: 500px; } }
+@media (max-width: 700px) { .hs-card { width: 300px; height: 520px; } }
+
+/* Responsive container padding */
+@media (max-width: 640px) {
+  .btn-primary, .btn-dark, .btn-ghost, .btn-ghost-dark { padding: 10px 14px; font-size: 13px; }
+  .sec-label { font-size: 11px; padding: 4px 9px; }
+}

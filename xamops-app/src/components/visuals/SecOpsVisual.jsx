@@ -29,7 +29,7 @@ export default function SecOpsVisual() {
               );
             })}
           </svg>
-          <div className="flex justify-between text-[11px] mono mt-1" style={{color:'var(--olive-2)'}}>
+          <div className="flex justify-between text-[11px] mono mt-1" style={{color:'var(--olive)'}}>
             <span>Apr 04</span><span>May 04</span>
           </div>
         </div>

@@ -7,13 +7,13 @@ export default function DiskVisual() {
     <div ref={ref} className="rounded-3xl p-6 relative overflow-hidden" style={{background:'var(--ivory)', boxShadow:'0 0 0 1px var(--rule-dark)'}}>
       <div className="flex items-center justify-between">
         <div className="eyebrow eyebrow-dark">Volume rightsizing</div>
-        <div className="flex items-center gap-2 mono text-[11px]" style={{color:'var(--olive-2)'}}>
+        <div className="flex items-center gap-2 mono text-[11px]" style={{color:'var(--olive)'}}>
           <span>EBS</span><span>·</span><span>PD</span><span>·</span><span>Managed Disk</span>
         </div>
       </div>
       <div className="grid grid-cols-12 gap-3 mt-5">
         <div className="col-span-12 md:col-span-7 rounded-xl p-4 faux-grid-dark" style={{background:'var(--parchment)', boxShadow:'0 0 0 1px var(--rule-dark)'}}>
-          <div className="text-[13px]" style={{color:'var(--ivory)'}}>Volume utilization</div>
+          <div className="text-[13px]" style={{color:'var(--ink-2)'}}>Volume utilization</div>
           <svg viewBox="0 0 360 160" className="w-full mt-2">
             {/* Path draws in using pathLength */}
             <path
@@ -29,7 +29,7 @@ export default function DiskVisual() {
             <path d="M0,140 L360,140" stroke="#262c39" strokeDasharray="2 4"/>
             <text x="0" y="138" fill="#8b90a0" fontSize="10" fontFamily="JetBrains Mono">avg use 18%</text>
           </svg>
-          <div className="mt-3 text-[13px]" style={{color:'var(--olive-2)'}}>Provisioned 500 GB · Recommended 160 GB</div>
+          <div className="mt-3 text-[13px]" style={{color:'var(--olive)'}}>Provisioned 500 GB · Recommended 160 GB</div>
         </div>
 
         <div className="col-span-12 md:col-span-5 rounded-xl p-4" style={{background:'var(--parchment)', boxShadow:'0 0 0 1px var(--rule-dark)'}}>
@@ -61,7 +61,7 @@ export default function DiskVisual() {
           </div>
         </div>
       </div>
-      <div className="mt-4 flex items-center justify-between text-[12px] mono" style={{color:'var(--olive-2)'}}>
+      <div className="mt-4 flex items-center justify-between text-[12px] mono" style={{color:'var(--olive)'}}>
         <span>vol-09a3f1c5b · prod-orders-db</span>
         <span className="flex items-center gap-1.5"><span className="live-dot"/> auto-resize scheduled · 02:00 UTC</span>
       </div>

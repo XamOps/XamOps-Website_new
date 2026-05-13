@@ -74,7 +74,7 @@ function Hero() {
           <span className="live-dot"/> Now in private beta · v1.0
         </div>
 
-        <h1 className="serif text-[clamp(40px,7vw,110px)] leading-[0.95] tracking-tight max-w-[14ch]">
+        <h1 className="serif text-[clamp(56px,9vw,148px)] leading-[0.95] tracking-tight max-w-[14ch]">
           <div className="reveal-line"><span className="hero-line">The Cognitive</span></div>
           <div className="reveal-line"><span className="hero-line" style={{color:'var(--terracotta)'}}>Cloud Operating</span></div>
           <div className="reveal-line"><span className="hero-line">System.</span></div>
@@ -201,7 +201,7 @@ function PlatformStrip() {
         <div className="flex items-end justify-between flex-wrap gap-6 mb-12">
           <div>
             <div className="sec-label mb-4">[ 01 ] Platform</div>
-            <h2 className="serif text-[clamp(40px,5.5vw,72px)] leading-[1.02] max-w-[18ch]">
+            <h2 className="serif text-[clamp(48px,6.5vw,90px)] leading-[1.02] max-w-[18ch]">
               One platform.<br/>Every layer of<br/><span style={{color:'var(--terracotta)'}}>your cloud. Automated.</span>
             </h2>
           </div>
@@ -294,7 +294,7 @@ function HorizontalScroll() {
           <div className="flex items-end justify-between flex-wrap gap-6">
             <div>
               <div data-fade className="sec-label mb-4">[ 02 ] Capabilities</div>
-              <h2 data-fade className="serif text-[clamp(40px,5.5vw,72px)] leading-[1.02] max-w-[20ch]">
+              <h2 data-fade className="serif text-[clamp(48px,6.5vw,90px)] leading-[1.02] max-w-[20ch]">
                 Six automations. <span style={{color:'var(--terracotta)'}}>One control plane.</span>
               </h2>
             </div>
@@ -362,7 +362,7 @@ function ComingSoon() {
         <div className="flex items-end justify-between flex-wrap gap-6 mb-14">
           <div>
             <div data-fade className="sec-label dark mb-4">[ 03 ] Roadmap</div>
-            <h2 className="serif text-[clamp(40px,5.5vw,72px)] leading-[1.02] max-w-[18ch]">
+            <h2 className="serif text-[clamp(48px,6.5vw,90px)] leading-[1.02] max-w-[18ch]">
               <div className="reveal-line"><span>The cognitive layer,</span></div>
               <div className="reveal-line"><span style={{color:'var(--terracotta)'}}>arriving soon.</span></div>
             </h2>
@@ -441,7 +441,7 @@ function FinalCTA() {
           <div className="grid md:grid-cols-12 gap-10 relative">
             <div className="md:col-span-7">
               <div data-fade className="sec-label mb-6">[ 04 ] Ready</div>
-              <h3 className="serif text-[clamp(36px,5.5vw,72px)] leading-[1.02] tracking-tight">
+              <h3 className="serif text-[clamp(44px,6vw,82px)] leading-[1.02] tracking-tight">
                 <div className="reveal-line"><span>Ready to operate</span></div>
                 <div className="reveal-line"><span style={{color:'var(--terracotta)'}}>smarter?</span></div>
               </h3>

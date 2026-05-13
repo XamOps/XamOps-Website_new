@@ -58,7 +58,7 @@ export default function Nav() {
           <Link to="/"><Logo /></Link>
 
           {/* Desktop nav */}
-          <nav className="hidden md:flex items-center gap-1 text-[14px]" style={{color:'var(--ink)'}}>
+          <nav className="hidden md:flex items-center gap-1 text-[16px]" style={{color:'var(--ink)'}}>
             {[['Platform','/platform',platform],['Solutions','/solutions',solutions]].map(([label, base, items]) => (
               <div key={base} className="relative" onMouseEnter={() => setOpen(base)}>
                 <Link to={base} className={`px-3 py-2 rounded-md hover:bg-[var(--ivory)] flex items-center gap-1 ${isActive(base) ? 'font-medium' : ''}`}>
@@ -70,8 +70,8 @@ export default function Nav() {
                     <div className="ring-soft rounded-xl p-2 w-[400px]" style={{background:'var(--ivory)'}}>
                       {items.map(([n, to, d]) => (
                         <Link key={n} to={to} onClick={() => setOpen(null)} className="block px-3 py-2.5 rounded-lg hover:bg-[var(--parchment)]">
-                          <div className="text-[14px]">{n}</div>
-                          <div className="text-[12px]" style={{color:'var(--olive)'}}>{d}</div>
+                          <div className="text-[15px]">{n}</div>
+                          <div className="text-[13px]" style={{color:'var(--olive)'}}>{d}</div>
                         </Link>
                       ))}
                     </div>

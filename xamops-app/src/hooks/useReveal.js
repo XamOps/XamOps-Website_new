@@ -1,12 +1,13 @@
-import { useLayoutEffect } from 'react';
+import { useEffect } from 'react';
 import gsap from 'gsap';
 import ScrollTrigger from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
 
 export default function useReveal(ref, opts = {}) {
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (!ref.current) return;
+    if (window.matchMedia('(max-width: 767px)').matches) return;
     const ctx = gsap.context(() => {
       const lines = ref.current.querySelectorAll('.reveal-line > span');
       if (lines.length) {

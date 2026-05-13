@@ -1,11 +1,13 @@
-import { useRef, useLayoutEffect } from 'react';
+import { useRef, useLayoutEffect, lazy, Suspense } from 'react';
 import { Link } from 'react-router-dom';
 import gsap from 'gsap';
 import ScrollTrigger from 'gsap/ScrollTrigger';
 import { Icon } from '../components/Icons';
 import useReveal from '../hooks/useReveal';
 import FeatureSection from '../components/shared/FeatureSection';
-import { GridScan } from '../components/GridScan/GridScan';
+
+const GridScan = lazy(() => import('../components/GridScan/GridScan').then(m => ({ default: m.GridScan })));
+const isMobile = typeof window !== 'undefined' && window.matchMedia('(max-width: 767px)').matches;
 import SpotVisual from '../components/visuals/SpotVisual';
 import DiskVisual from '../components/visuals/DiskVisual';
 import DBVisual from '../components/visuals/DBVisual';
@@ -20,6 +22,7 @@ function Hero() {
   const bgRef = useRef();
 
   useLayoutEffect(() => {
+    if (isMobile) return;
     const ctx = gsap.context(() => {
       const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
       tl.from('.hero-eyebrow', { y: 14, opacity: 0, duration: 0.7 })
@@ -40,22 +43,26 @@ function Hero() {
   return (
     <section ref={ref} className="sec-light relative grain pt-[120px] pb-10 overflow-hidden">
       <div ref={bgRef} aria-hidden className="absolute inset-0 pointer-events-none">
-        <GridScan
-          sensitivity={0.55}
-          lineThickness={1}
-          linesColor="#1f2430"
-          gridScale={0.1}
-          scanColor="#7c5cff"
-          scanOpacity={0.18}
-          enablePost
-          bloomIntensity={0.18}
-          chromaticAberration={0.001}
-          noiseIntensity={0.005}
-          scanDuration={2.5}
-          scanDelay={1.5}
-          scanGlow={0.3}
-          scanSoftness={2}
-        />
+        {!isMobile && (
+          <Suspense fallback={null}>
+            <GridScan
+              sensitivity={0.55}
+              lineThickness={1}
+              linesColor="#1f2430"
+              gridScale={0.1}
+              scanColor="#7c5cff"
+              scanOpacity={0.18}
+              enablePost
+              bloomIntensity={0.18}
+              chromaticAberration={0.001}
+              noiseIntensity={0.005}
+              scanDuration={2.5}
+              scanDelay={1.5}
+              scanGlow={0.3}
+              scanSoftness={2}
+            />
+          </Suspense>
+        )}
         <div className="absolute -top-20 -left-20 w-[480px] h-[480px] rounded-full pointer-events-none"
              style={{background:'radial-gradient(closest-side, rgba(124,92,255,0.12), transparent 70%)'}}/>
         <div className="absolute top-40 right-0 w-[520px] h-[520px] rounded-full pointer-events-none"

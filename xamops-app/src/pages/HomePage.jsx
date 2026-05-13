@@ -201,7 +201,7 @@ function PlatformStrip() {
         <div className="flex items-end justify-between flex-wrap gap-6 mb-12">
           <div>
             <div className="sec-label mb-4">[ 01 ] Platform</div>
-            <h2 className="serif text-[clamp(34px,5vw,64px)] leading-[1.02] max-w-[18ch]">
+            <h2 className="serif text-[clamp(40px,5.5vw,72px)] leading-[1.02] max-w-[18ch]">
               One platform.<br/>Every layer of<br/><span style={{color:'var(--terracotta)'}}>your cloud. Automated.</span>
             </h2>
           </div>
@@ -290,11 +290,11 @@ function HorizontalScroll() {
   return (
     <section ref={sectionRef} className="sec-light relative h-screen overflow-hidden">
       <div className="h-full flex flex-col">
-        <div ref={headRef} className="max-w-[1240px] mx-auto px-6 md:px-10 pt-24 pb-8 w-full">
+        <div ref={headRef} className="max-w-[1240px] mx-auto px-6 md:px-10 pt-16 pb-8 w-full">
           <div className="flex items-end justify-between flex-wrap gap-6">
             <div>
               <div data-fade className="sec-label mb-4">[ 02 ] Capabilities</div>
-              <h2 data-fade className="serif text-[clamp(34px,5vw,64px)] leading-[1.02] max-w-[20ch]">
+              <h2 data-fade className="serif text-[clamp(40px,5.5vw,72px)] leading-[1.02] max-w-[20ch]">
                 Six automations. <span style={{color:'var(--terracotta)'}}>One control plane.</span>
               </h2>
             </div>
@@ -347,7 +347,7 @@ function ComingSoon() {
     { name: 'Complete Kubernetes Automation', body: 'Full K8s lifecycle management — scaling, cost, security — automated end to end.' },
   ];
   return (
-    <section ref={ref} className="sec-dark py-28 relative overflow-hidden">
+    <section ref={ref} className="sec-dark py-20 relative overflow-hidden">
       <div className="absolute inset-0 pointer-events-none opacity-60">
         <svg className="w-full h-full" preserveAspectRatio="none">
           <defs>
@@ -362,7 +362,7 @@ function ComingSoon() {
         <div className="flex items-end justify-between flex-wrap gap-6 mb-14">
           <div>
             <div data-fade className="sec-label dark mb-4">[ 03 ] Roadmap</div>
-            <h2 className="serif text-[clamp(34px,5vw,64px)] leading-[1.02] max-w-[18ch]">
+            <h2 className="serif text-[clamp(40px,5.5vw,72px)] leading-[1.02] max-w-[18ch]">
               <div className="reveal-line"><span>The cognitive layer,</span></div>
               <div className="reveal-line"><span style={{color:'var(--terracotta)'}}>arriving soon.</span></div>
             </h2>
@@ -411,7 +411,7 @@ function Metrics() {
     return () => ctx.revert();
   }, []);
   return (
-    <section ref={ref} className="sec-light py-24 border-t border-b" style={{borderColor:'var(--rule)'}}>
+    <section ref={ref} className="sec-light py-16 border-t border-b" style={{borderColor:'var(--rule)'}}>
       <div className="max-w-[1240px] mx-auto px-6 md:px-10 grid md:grid-cols-4 gap-px rounded-2xl overflow-hidden ring-soft" style={{background:'var(--rule)'}}>
         {[
           { k:'Compute savings', n:'70', suf:'%', dec:0 },
@@ -433,7 +433,7 @@ function FinalCTA() {
   const ref = useRef();
   useReveal(ref);
   return (
-    <section ref={ref} id="demo" className="sec-light py-28">
+    <section ref={ref} id="demo" className="sec-light py-20">
       <div className="max-w-[1240px] mx-auto px-6 md:px-10">
         <div className="rounded-[32px] p-10 md:p-16 relative overflow-hidden ring-soft" style={{background:'var(--ivory)'}}>
           <div className="absolute -right-20 -bottom-20 w-[420px] h-[420px] rounded-full pointer-events-none"

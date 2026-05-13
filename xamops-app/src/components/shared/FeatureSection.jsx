@@ -6,12 +6,12 @@ export default function FeatureSection({ index, eyebrow, title, body, dark, visu
   const ref = useRef();
   useReveal(ref);
   return (
-    <section ref={ref} className={`relative py-16 ${dark ? 'sec-dark' : 'sec-light'}`}>
+    <section ref={ref} className={`relative py-12 ${dark ? 'sec-dark' : 'sec-light'}`}>
       <div className="max-w-[1240px] mx-auto px-6 md:px-10">
         <div className={`grid md:grid-cols-12 gap-10 items-center ${side === 'left' ? 'md:[&>*:first-child]:order-2' : ''}`}>
           <div className="md:col-span-5">
             <div className={`sec-label ${dark ? 'dark' : ''} mb-6`}>[ {String(index).padStart(2,'0')} ] {eyebrow}</div>
-            <h2 className="serif text-[clamp(32px,4.4vw,56px)] leading-[1.04] max-w-[16ch]">
+            <h2 className="serif text-[clamp(40px,5.5vw,68px)] leading-[1.04] max-w-[16ch]">
               {title.map((t, i) => (
                 <span key={i} style={t.accent ? {color:'var(--terracotta)'} : null}>
                   {t.text}{i < title.length - 1 ? ' ' : ''}

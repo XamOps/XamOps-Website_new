@@ -1,6 +1,6 @@
 export default function Steps({ steps, dark }) {
   return (
-    <section className={`py-24 ${dark ? 'sec-dark' : 'sec-light'}`}>
+    <section className={`py-16 ${dark ? 'sec-dark' : 'sec-light'}`}>
       <div className="max-w-[1240px] mx-auto px-6 md:px-10">
         <div className={`sec-label ${dark ? 'dark' : ''} mb-6`}>How it works</div>
         <div className="grid md:grid-cols-4 gap-px ring-soft rounded-2xl overflow-hidden" style={{ background: dark ? 'var(--rule-dark)' : 'var(--rule)' }}>

@@ -2,12 +2,14 @@ import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import Logo from './Logo';
 import { Icon } from './Icons';
+import useTheme from '../hooks/useTheme';
 
 export default function Nav() {
   const [open, setOpen] = useState(null);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const { pathname } = useLocation();
+  const [theme, toggleTheme] = useTheme();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -47,8 +49,8 @@ export default function Nav() {
       <header
         className="fixed top-0 left-0 right-0 z-50 nav-blur transition-colors"
         style={{
-          background: scrolled || mobileOpen ? 'rgba(11,13,18,0.95)' : 'rgba(11,13,18,0.4)',
-          boxShadow: scrolled ? '0 1px 0 #1f2430' : 'none',
+          background: scrolled || mobileOpen ? 'var(--nav-bg-scrolled)' : 'var(--nav-bg)',
+          boxShadow: scrolled ? '0 1px 0 var(--nav-border)' : 'none',
         }}
         onMouseLeave={() => setOpen(null)}
       >
@@ -83,6 +85,18 @@ export default function Nav() {
           </nav>
 
           <div className="flex items-center gap-2">
+            <button
+              onClick={toggleTheme}
+              aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+              className="w-8 h-8 flex items-center justify-center rounded-md transition-colors"
+              style={{color:'var(--olive)', background:'transparent'}}
+              onMouseEnter={e => e.currentTarget.style.background='var(--ivory)'}
+              onMouseLeave={e => e.currentTarget.style.background='transparent'}
+            >
+              {theme === 'dark'
+                ? <Icon.Sun  width="16" height="16" />
+                : <Icon.Moon width="16" height="16" />}
+            </button>
             <Link to="/demo" className="hidden sm:inline-flex btn-primary text-[13px] px-4 py-2.5">Book Demo</Link>
             <a href="https://live.xamops.com" className="hidden sm:inline-flex btn-dark text-[13px] px-4 py-2.5">Sign In <Icon.Arrow width="13" height="13"/></a>
             {/* Hamburger — mobile only */}
@@ -139,6 +153,9 @@ export default function Nav() {
             <div className="pt-6 flex flex-col gap-3">
               <Link to="/demo" className="btn-primary justify-center">Book Demo</Link>
               <a href="https://live.xamops.com" className="btn-dark justify-center">Sign In <Icon.Arrow width="14" height="14"/></a>
+              <button onClick={toggleTheme} className="flex items-center justify-center gap-2 py-3 text-[14px] rounded-lg" style={{color:'var(--olive)', background:'var(--ivory)'}}>
+                {theme === 'dark' ? <><Icon.Sun width="15" height="15"/> Light mode</> : <><Icon.Moon width="15" height="15"/> Dark mode</>}
+              </button>
             </div>
           </div>
         </div>

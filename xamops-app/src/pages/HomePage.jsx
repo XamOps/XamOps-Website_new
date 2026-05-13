@@ -86,7 +86,7 @@ function Hero() {
 
         <div className="hero-ctas mt-8 flex flex-wrap items-center gap-3">
           <Link to="/demo" className="btn-primary">Book a demo <Icon.Arrow width="14" height="14"/></Link>
-          <Link to="/demo" className="btn-dark">Sign up free</Link>
+          <a href="https://live.xamops.com" className="btn-dark">Sign in <Icon.Arrow width="14" height="14"/></a>
         </div>
 
         <div className="hero-strip mt-10 md:mt-16 ring-soft rounded-[20px] md:rounded-[28px] overflow-x-auto" style={{background:'var(--ivory)'}}>
@@ -450,7 +450,7 @@ function FinalCTA() {
               </p>
               <div data-fade className="mt-8 flex flex-wrap gap-3">
                 <Link to="/demo" className="btn-primary">Book a demo <Icon.Arrow width="14" height="14"/></Link>
-                <Link to="/demo" className="btn-dark">Sign up free</Link>
+                <a href="https://live.xamops.com" className="btn-dark">Sign in <Icon.Arrow width="14" height="14"/></a>
               </div>
               <div data-fade className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-2 text-[13px]" style={{color:'var(--olive)'}}>
                 <span className="flex items-center gap-2"><Icon.Check width="14" height="14" style={{color:'var(--moss)'}}/> No credit card</span>

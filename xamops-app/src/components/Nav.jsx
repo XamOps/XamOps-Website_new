@@ -84,7 +84,7 @@ export default function Nav() {
 
           <div className="flex items-center gap-2">
             <Link to="/demo" className="hidden sm:inline-flex btn-primary text-[13px] px-4 py-2.5">Book Demo</Link>
-            <Link to="/demo" className="hidden sm:inline-flex btn-dark text-[13px] px-4 py-2.5">Sign Up <Icon.Arrow width="13" height="13"/></Link>
+            <a href="https://live.xamops.com" className="hidden sm:inline-flex btn-dark text-[13px] px-4 py-2.5">Sign In <Icon.Arrow width="13" height="13"/></a>
             {/* Hamburger — mobile only */}
             <button
               className="md:hidden flex flex-col justify-center items-center w-9 h-9 gap-[5px] rounded-md"
@@ -138,7 +138,7 @@ export default function Nav() {
 
             <div className="pt-6 flex flex-col gap-3">
               <Link to="/demo" className="btn-primary justify-center">Book Demo</Link>
-              <Link to="/demo" className="btn-dark justify-center">Sign Up <Icon.Arrow width="14" height="14"/></Link>
+              <a href="https://live.xamops.com" className="btn-dark justify-center">Sign In <Icon.Arrow width="14" height="14"/></a>
             </div>
           </div>
         </div>

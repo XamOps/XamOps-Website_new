@@ -13,7 +13,7 @@ export default function CTABanner({
             style={{ background: 'radial-gradient(closest-side, rgba(201,100,66,0.18), transparent 70%)' }} />
           <div className="grid md:grid-cols-12 gap-8 relative items-center">
             <div className="md:col-span-8">
-              <h3 className="serif text-[clamp(30px,4.4vw,56px)] leading-[1.04] tracking-tight max-w-[20ch]">{heading}</h3>
+              <h2 className="serif text-[clamp(30px,4.4vw,56px)] leading-[1.04] tracking-tight max-w-[20ch]">{heading}</h2>
               <p className="mt-4 text-[16px] max-w-[60ch]" style={{ color: 'var(--olive)' }}>{sub}</p>
             </div>
             <div className="md:col-span-4 flex flex-wrap gap-3 md:justify-end">

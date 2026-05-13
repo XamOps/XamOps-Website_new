@@ -11,13 +11,13 @@ export default function FeatureSection({ index, eyebrow, title, body, dark, visu
         <div className={`grid md:grid-cols-12 gap-10 items-center ${side === 'left' ? 'md:[&>*:first-child]:order-2' : ''}`}>
           <div className="md:col-span-5">
             <div className={`sec-label ${dark ? 'dark' : ''} mb-6`}>[ {String(index).padStart(2,'0')} ] {eyebrow}</div>
-            <h3 className="serif text-[clamp(32px,4.4vw,56px)] leading-[1.04] max-w-[16ch]">
+            <h2 className="serif text-[clamp(32px,4.4vw,56px)] leading-[1.04] max-w-[16ch]">
               {title.map((t, i) => (
                 <span key={i} style={t.accent ? {color:'var(--terracotta)'} : null}>
                   {t.text}{i < title.length - 1 ? ' ' : ''}
                 </span>
               ))}
-            </h3>
+            </h2>
             <p data-fade className="mt-6 text-[17px] leading-[1.6] max-w-[42ch]" style={{color: dark ? 'var(--olive-2)' : 'var(--olive)'}}>{body}</p>
             {metric && (
               <div data-fade className="mt-8 grid grid-cols-3 gap-px rounded-xl overflow-hidden" style={{background: dark ? 'var(--rule-dark)' : 'var(--rule)'}}>

@@ -18,7 +18,7 @@ export default function FeatureSection({ index, eyebrow, title, body, dark, visu
                 </span>
               ))}
             </h2>
-            <p data-fade className="mt-6 text-[17px] leading-[1.6] max-w-[42ch]" style={{color: dark ? 'var(--olive-2)' : 'var(--olive)'}}>{body}</p>
+            <p data-fade className="mt-6 text-[17px] leading-[1.6] max-w-[42ch]" style={{color: 'var(--olive)'}}>{body}</p>
             {metric && (
               <div data-fade className="mt-8 grid grid-cols-3 gap-px rounded-xl overflow-hidden" style={{background: dark ? 'var(--rule-dark)' : 'var(--rule)'}}>
                 {metric.map(([n,v]) => (

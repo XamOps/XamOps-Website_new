@@ -299,7 +299,7 @@ function HorizontalScroll() {
               </h2>
             </div>
             <div data-fade className="text-[14px]" style={{color:'var(--olive)'}}>
-              <div className="mono text-[11px] uppercase tracking-widest" style={{color:'var(--olive-2)'}}>Scroll →</div>
+              <div className="mono text-[11px] uppercase tracking-widest" style={{color:'var(--olive)'}}>Scroll →</div>
             </div>
           </div>
           <div className="hs-progress mt-6 h-px w-full overflow-hidden" style={{background:'var(--rule)'}}>
@@ -367,7 +367,7 @@ function ComingSoon() {
               <div className="reveal-line"><span style={{color:'var(--terracotta)'}}>arriving soon.</span></div>
             </h2>
           </div>
-          <p data-fade className="max-w-[40ch] text-[16px]" style={{color:'var(--olive-2)'}}>
+          <p data-fade className="max-w-[40ch] text-[16px]" style={{color:'var(--olive)'}}>
             We're building toward a cloud that runs itself. Here is what is shipping next on the XamOps roadmap.
           </p>
         </div>
@@ -375,11 +375,11 @@ function ComingSoon() {
           {items.map((c, i) => (
             <div key={c.name} data-fade className="p-8 hcard" style={{background:'var(--ivory)'}}>
               <div className="flex items-center justify-between">
-                <span className="mono text-[11px]" style={{color:'var(--olive-2)'}}>0{i+1}</span>
+                <span className="mono text-[11px]" style={{color:'var(--olive)'}}>0{i+1}</span>
                 <span className="text-[11px] mono px-2 py-0.5 rounded-full" style={{background:'rgba(201,100,66,0.15)', color:'#e0a48b'}}>Q{i+2} · 2026</span>
               </div>
               <div className="serif text-[28px] mt-10 leading-tight">{c.name}</div>
-              <p className="mt-3 text-[15px] leading-[1.6]" style={{color:'var(--olive-2)'}}>{c.body}</p>
+              <p className="mt-3 text-[15px] leading-[1.6]" style={{color:'var(--olive)'}}>{c.body}</p>
               <div className="mt-8 flex items-center gap-2 text-[13px]" style={{color:'#e0a48b'}}>
                 Join the waitlist <Icon.Arrow width="14" height="14"/>
               </div>

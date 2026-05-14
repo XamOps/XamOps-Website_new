@@ -48,7 +48,7 @@ jobs:
  
       - name: Restart server
         run: |
-          ssh -i ~/.ssh/deploy_key ec2-user@${{ secrets.SSH_HOST }} \
+          ssh -i ~/.ssh/deploy_key ec2-user@${{ secrets.SSH_HOST }} \ 
             "cd ~/deploy-scripts && bash deploy.sh restart-only"
  
       - name: Check deployment log

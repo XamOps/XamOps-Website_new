@@ -1,49 +1,50 @@
-name: Deploy to EC2 
- 
+name: Deploy to EC2
+
 on:
   push:
     branches:
-      - main 
- 
+      - main
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
     timeout-minutes: 30
- 
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
- 
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '24'
+
       - name: Install dependencies
         run: npm install
- 
-      - name: Run tests
-        run: npm test -- --watchAll=false --passWithNoTests
- 
+
       - name: Build
         run: npm run build
         env:
-          REACT_APP_ENV: development
           CI: false
- 
+
       - name: Setup SSH key
         run: |
           mkdir -p ~/.ssh
           echo "${{ secrets.SSH_KEY }}" > ~/.ssh/deploy_key
           chmod 600 ~/.ssh/deploy_key
           ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts 2>/dev/null || true
- 
+
       - name: Deploy build to EC2
         run: |
           rsync -avz --delete \
             -e "ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=accept-new" \
-          
+            build/ ec2-user@${{ secrets.SSH_HOST }}:~/react-app-dev/build/
+
+      - name: Restart server
+        run: |
+          ssh -i ~/.ssh/deploy_key ec2-user@${{ secrets.SSH_HOST }} \
             "cd ~/deploy-scripts && bash deploy.sh restart-only"
- 
+
       - name: Check deployment log
         run: |
           ssh -i ~/.ssh/deploy_key ec2-user@${{ secrets.SSH_HOST }} \

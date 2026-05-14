@@ -19,26 +19,31 @@ jobs:
         with:
           node-version: '20'
           cache: 'npm'
-          cache-dependency-path: package-lock.json
+          cache-dependency-path: XamOps-Website_new/uploads/xamops.com/package-lock.json
 
       - name: Install dependencies
-        run: npm ci
+        run: |
+          cd XamOps-Website_new/uploads/xamops.com
+          npm install
 
       - name: Build
-        run: npm run build
+        run: |
+          cd XamOps-Website_new/uploads/xamops.com
+          npm run build
 
       - name: Setup SSH key
         run: |
           mkdir -p ~/.ssh
           echo "${{ secrets.SSH_KEY }}" > ~/.ssh/deploy_key
           chmod 600 ~/.ssh/deploy_key
-          ssh-keyscan -H 40.192.38.4 >> ~/.ssh/known_hosts 2>/dev/null || true
+          ssh-keyscan -H 18.61.83.164 >> ~/.ssh/known_hosts 2>/dev/null || true
 
       - name: Deploy dist to EC2
         run: |
           rsync -avz --delete \
             -e "ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=accept-new" \
-            dist/ ec2-user@18.61.83.164:~/XamOps-Website_new/dist/
+            XamOps-Website_new/uploads/xamops.com/dist/ \
+            ec2-user@18.61.83.164:~/XamOps-Website_new/dist/
 
       - name: Restart server
         run: |
@@ -47,4 +52,5 @@ jobs:
 
       - name: Check deployment log
         run: |
-          ssh -i ~/.ssh/deploy_key ec2-user@18.61.83.164 "tail -5 ~/deploy-scripts/deploy.log"
+          ssh -i ~/.ssh/deploy_key ec2-user@18.61.83.164 \
+            "tail -5 ~/deploy-scripts/deploy.log"

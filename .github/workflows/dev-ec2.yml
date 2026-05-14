@@ -41,11 +41,7 @@ jobs:
         run: |
           rsync -avz --delete \
             -e "ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=accept-new" \
-            build/ ec2-user@${{ secrets.SSH_HOST }}:~/react-app-dev/build/
- 
-      - name: Restart server
-        run: |
-          ssh -i ~/.ssh/deploy_key ec2-user@${{ secrets.SSH_HOST }} \ 
+          
             "cd ~/deploy-scripts && bash deploy.sh restart-only"
  
       - name: Check deployment log

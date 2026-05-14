@@ -41,4 +41,12 @@ jobs:
           rsync -avz --delete \
             -e "ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=accept-new" \
            xamops-app/dist/ ec2-user@18.61.83.164:~/XamOps-Website_new/dist/
+             - name: Restart server
+         run: |
+          ssh -i ~/.ssh/deploy_key ec2-user@18.61.83.164  \
+            "cd ~/deploy-scripts && bash deploy.sh restart-only"
+
+      - name: Check deployment log
+        run: |
+          ssh -i ~/.ssh/deploy_key ec2-user@18.61.83.164  "tail -5 ~/deploy-scripts/deploy.log"
 

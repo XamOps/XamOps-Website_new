@@ -40,7 +40,7 @@ jobs:
         run: |
           rsync -avz --delete \
             -e "ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=accept-new" \
-            dist/ ec2-user@18.61.83.164:~/Xammer-ventures/dist/ 
+            dist/ ec2-user@18.61.83.164:~/XamOps-Website_new/dist/ 
 
       - name: Restart server
         run: |

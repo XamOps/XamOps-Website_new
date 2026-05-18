@@ -50,8 +50,8 @@
   --rule-dark:      #c8c6c2;
   --moss:           #1a9e7a;
   --ochre:          #c8880a;
-  --nav-bg:         rgba(245,244,240,0.6);
-  --nav-bg-scrolled:rgba(245,244,240,0.96);
+  --nav-bg:         rgba(245,244,240,1);
+  --nav-bg-scrolled:rgba(245,244,240,1);
   --nav-border:     #d8d6d2;
 }
 
@@ -73,10 +73,28 @@ body {
 .sec-card  { background: var(--ivory);     color: var(--ink); }
 .sec-dark  { background: #06080c; color: #ecedf2; }
 
+/* Keep dark-section text readable regardless of active theme */
+[data-theme="light"] .sec-dark {
+  --ink:       #ecedf2;
+  --ink-2:     #d6d8e0;
+  --olive:     #8b90a0;
+  --olive-2:   #5b6173;
+  --rule:      #1f2430;
+  --rule-dark: #262c39;
+  --ivory:     #11141b;
+  --parchment: #0b0d12;
+}
+
+/* Grain always uses white dots inside always-dark sections */
+[data-theme="light"] .sec-dark.grain::before,
+[data-theme="light"] .sec-dark .grain::before {
+  background-image: radial-gradient(rgba(255,255,255,0.04) 1px, transparent 1px);
+}
+
 .ring-soft { box-shadow: 0 0 0 1px var(--rule); }
 .ring-soft-dark { box-shadow: 0 0 0 1px var(--rule-dark); }
 
-.reveal-line { overflow: hidden; }
+.reveal-line { overflow: hidden; padding-bottom: 0.15em; margin-bottom: -0.15em; }
 .reveal-line > span { display: inline-block; transform: translateY(110%); }
 
 @media (max-width: 767px) {

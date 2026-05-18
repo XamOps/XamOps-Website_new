@@ -41,7 +41,7 @@ function Hero() {
   }, []);
 
   return (
-    <section ref={ref} className="sec-light relative grain pt-[120px] pb-10 overflow-hidden">
+    <section ref={ref} className="sec-dark relative grain pt-[120px] pb-10 overflow-hidden">
       <div ref={bgRef} aria-hidden className="absolute inset-0 pointer-events-none">
         {!isMobile && (
           <Suspense fallback={null}>
@@ -129,13 +129,13 @@ function Hero() {
                   <div className="serif text-[20px] mt-1">Spot conversion in progress</div>
                 </div>
                 <div className="flex items-center gap-2 text-[12px]">
-                  <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full" style={{background:'#ecedf2'}}/>On-demand</span>
+                  <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full" style={{background:'var(--ink)'}}/>On-demand</span>
                   <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full" style={{background:'var(--terracotta)'}}/>Spot</span>
                 </div>
               </div>
               <svg viewBox="0 0 600 220" className="w-full mt-4 faux-grid rounded-md" style={{background:'var(--parchment)'}}>
                 <path d="M0,120 C 60,100 100,140 160,110 C 220,80 260,150 320,120 C 380,90 420,140 480,100 C 540,70 580,110 600,90 L600,220 L0,220 Z" fill="rgba(124,92,255,0.1)"/>
-                <path d="M0,120 C 60,100 100,140 160,110 C 220,80 260,150 320,120 C 380,90 420,140 480,100 C 540,70 580,110 600,90" fill="none" stroke="#ecedf2" strokeWidth="1.6"/>
+                <path d="M0,120 C 60,100 100,140 160,110 C 220,80 260,150 320,120 C 380,90 420,140 480,100 C 540,70 580,110 600,90" fill="none" style={{stroke:'var(--ink)'}} strokeWidth="1.6"/>
                 <path d="M0,180 C 80,170 120,170 200,160 C 280,150 320,140 400,120 C 480,100 520,80 600,60" fill="none" stroke="#7c5cff" strokeWidth="2"/>
                 {[80,200,320,440,560].map((x,i) => (
                   <circle key={i} cx={x} cy={[170,160,140,110,75][i]} r="3" fill="#7c5cff"/>

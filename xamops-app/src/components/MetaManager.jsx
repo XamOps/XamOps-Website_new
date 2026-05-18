@@ -26,16 +26,12 @@ function setLink(rel, href) {
 }
 
 function injectSchemas(schemas) {
-  // Remove previous dynamic schemas
   document.querySelectorAll('script[data-meta-manager]').forEach(s => s.remove());
-
   if (!schemas?.length) return;
-
   schemas.forEach(schema => {
     const s = document.createElement('script');
     s.type = 'application/ld+json';
     s.setAttribute('data-meta-manager', 'true');
-    // Wrap in @context if not already present
     const data = schema['@context'] ? schema : { '@context': 'https://schema.org', ...schema };
     s.textContent = JSON.stringify(data, null, 0);
     document.head.appendChild(s);
@@ -48,33 +44,27 @@ export default function MetaManager() {
   useEffect(() => {
     const meta = PAGE_META[pathname] || DEFAULT_META;
 
-    // Title
     document.title = meta.title;
 
-    // Standard meta
     setMeta('description', meta.description);
     setMeta('keywords', meta.keywords || '');
     setMeta('robots', 'index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1');
 
-    // Canonical
     setLink('canonical', meta.canonical || `${BASE}${pathname}`);
 
-    // Open Graph
     setMeta('og:url',         meta.canonical || `${BASE}${pathname}`, 'property');
     setMeta('og:title',       meta.title,       'property');
     setMeta('og:description', meta.description, 'property');
     setMeta('og:image',       meta.ogImage || OG_IMG, 'property');
     setMeta('og:type',        'website',        'property');
-    setMeta('og:site_name',   'Xamops',         'property');
+    setMeta('og:site_name',   'XamOps',         'property');
     setMeta('og:locale',      'en_US',          'property');
 
-    // Twitter
-    setMeta('twitter:title',       meta.title,       'name');
-    setMeta('twitter:description', meta.description, 'name');
+    setMeta('twitter:title',       meta.title,            'name');
+    setMeta('twitter:description', meta.description,      'name');
     setMeta('twitter:image',       meta.ogImage || OG_IMG, 'name');
     setMeta('twitter:card',        'summary_large_image', 'name');
 
-    // JSON-LD schemas
     injectSchemas(meta.schemas);
   }, [pathname]);
 

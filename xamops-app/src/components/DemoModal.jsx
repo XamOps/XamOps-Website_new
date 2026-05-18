@@ -80,14 +80,15 @@ export default function DemoModal() {
               alert('Demo request received — we\'ll email you within 1 business day.');
             }}>
               {[
-                ['Full name',  'Aarya Patel',   'text'],
-                ['Work email', 'you@company.com','email'],
-                ['Company',    'Acme Cloud',     'text'],
-                ['Team size',  '20',             'number'],
-              ].map(([l, p, t]) => (
-                <label key={l} className="block mb-3">
+                ['Full name',  'modal-name',    'name',      'name',         'Aarya Patel',    'text'],
+                ['Work email', 'modal-email',   'email',     'email',        'you@company.com','email'],
+                ['Company',    'modal-company', 'company',   'organization', 'Acme Cloud',     'text'],
+                ['Team size',  'modal-size',    'team_size', 'off',          '20',             'number'],
+              ].map(([l, id, name, autoComplete, p, t]) => (
+                <label key={id} htmlFor={id} className="block mb-3">
                   <div className="text-[12px] mb-1" style={{ color: 'var(--olive)' }}>{l}</div>
                   <input
+                    id={id} name={name} autoComplete={autoComplete}
                     required type={t}
                     className="w-full rounded-[12px] px-3.5 py-2.5 text-[14px] outline-none"
                     style={{ background: 'var(--ivory)', boxShadow: '0 0 0 1px var(--rule)', color: 'var(--ink)' }}
@@ -100,7 +101,7 @@ export default function DemoModal() {
               <div className="flex flex-wrap gap-2 mb-4">
                 {['AWS', 'GCP', 'Azure', 'On-prem'].map((c) => (
                   <label key={c} className="chip cursor-pointer">
-                    <input type="checkbox" className="accent-[var(--terracotta)]" /> {c}
+                    <input type="checkbox" id={`modal-provider-${c.toLowerCase()}`} name="providers" value={c} className="accent-[var(--terracotta)]" /> {c}
                   </label>
                 ))}
               </div>
@@ -108,6 +109,7 @@ export default function DemoModal() {
               <label className="block mb-5">
                 <div className="text-[12px] mb-1" style={{ color: 'var(--olive)' }}>What would you like to see?</div>
                 <textarea
+                  id="modal-message" name="message" autoComplete="off"
                   rows="3"
                   className="w-full rounded-[12px] px-3.5 py-2.5 text-[14px] outline-none resize-none"
                   style={{ background: 'var(--ivory)', boxShadow: '0 0 0 1px var(--rule)', color: 'var(--ink)' }}

@@ -429,13 +429,13 @@ function FinalCTA() {
               <form className="rounded-2xl p-6 ring-soft" style={{background:'var(--parchment)'}}>
                 <div className="eyebrow mb-3">Quick form</div>
                 {[
-                  ['Work email','you@company.com'],
-                  ['Company','Acme Inc.'],
-                  ['Cloud providers','aws, gcp, azure'],
-                ].map(([l,p]) => (
-                  <label key={l} className="block mb-3">
+                  ['Work email',     'quick-email',    'email',   'email',        'you@company.com'],
+                  ['Company',        'quick-company',  'company', 'organization', 'Acme Inc.'],
+                  ['Cloud providers','quick-providers','providers','off',         'aws, gcp, azure'],
+                ].map(([l, id, name, autoComplete, p]) => (
+                  <label key={id} htmlFor={id} className="block mb-3">
                     <div className="text-[12px] mb-1" style={{color:'var(--olive)'}}>{l}</div>
-                    <input className="w-full rounded-[12px] px-3.5 py-3 text-[14px] outline-none" style={{background:'var(--ivory)', boxShadow:'0 0 0 1px var(--rule)'}} placeholder={p}/>
+                    <input id={id} name={name} autoComplete={autoComplete} className="w-full rounded-[12px] px-3.5 py-3 text-[14px] outline-none" style={{background:'var(--ivory)', boxShadow:'0 0 0 1px var(--rule)'}} placeholder={p}/>
                   </label>
                 ))}
                 <button type="button" onClick={() => setOpen(true)} className="btn-primary w-full justify-center mt-2">Schedule 30-min demo</button>

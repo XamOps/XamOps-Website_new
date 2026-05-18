@@ -19,16 +19,21 @@ export default function ContactPage() {
         <div className="md:col-span-7">
           <form className="ring-soft rounded-2xl p-5 md:p-7" style={{ background: 'var(--ivory)' }}
             onSubmit={(e) => { e.preventDefault(); alert('Message sent — we\'ll get back within 1 business day.'); }}>
-            {[['Name','Aarya Patel','text'],['Email','you@company.com','email']].map(([l, p, t]) => (
-              <label key={l} className="block mb-3">
+            {[
+              ['Name',  'contact-name',  'name',  'name',  'Aarya Patel',       'text'],
+              ['Email', 'contact-email', 'email', 'email', 'you@company.com',   'email'],
+            ].map(([l, id, name, autoComplete, p, t]) => (
+              <label key={id} htmlFor={id} className="block mb-3">
                 <div className="text-[12px] mb-1" style={{ color: 'var(--olive)' }}>{l}</div>
-                <input required type={t} className="w-full rounded-[12px] px-3.5 py-3.5 text-[14px] outline-none"
+                <input id={id} name={name} autoComplete={autoComplete} required type={t}
+                  className="w-full rounded-[12px] px-3.5 py-3.5 text-[14px] outline-none"
                   style={{ background: 'var(--parchment)', boxShadow: '0 0 0 1px var(--rule)', color: 'var(--ink)' }} placeholder={p} />
               </label>
             ))}
-            <label className="block mb-4">
+            <label htmlFor="contact-message" className="block mb-4">
               <div className="text-[12px] mb-1" style={{ color: 'var(--olive)' }}>Message</div>
-              <textarea required rows="6" className="w-full rounded-[12px] px-3.5 py-3 text-[14px] outline-none"
+              <textarea id="contact-message" name="message" autoComplete="off" required rows="6"
+                className="w-full rounded-[12px] px-3.5 py-3 text-[14px] outline-none"
                 style={{ background: 'var(--parchment)', boxShadow: '0 0 0 1px var(--rule)', color: 'var(--ink)' }}
                 placeholder="What can we help with?"></textarea>
             </label>

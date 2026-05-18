@@ -30,10 +30,16 @@ export default function DemoPage() {
           <form className="ring-soft rounded-2xl p-7" style={{ background: 'var(--ivory)' }}
             onSubmit={(e) => { e.preventDefault(); alert('Demo request received — we\'ll email you within 1 business day.'); }}>
             <div className="serif text-[clamp(18px,5vw,24px)] mb-5">Tell us about your stack</div>
-            {[['Full name','Aarya Patel','text'],['Work email','you@company.com','email'],['Company','Acme Cloud','text'],['Team size','20','number']].map(([l, p, t]) => (
-              <label key={l} className="block mb-3">
+            {[
+              ['Full name',  'demo-name',    'name',      'name',         'Aarya Patel',    'text'],
+              ['Work email', 'demo-email',   'email',     'email',        'you@company.com','email'],
+              ['Company',    'demo-company', 'company',   'organization', 'Acme Cloud',     'text'],
+              ['Team size',  'demo-size',    'team_size', 'off',          '20',             'number'],
+            ].map(([l, id, name, autoComplete, p, t]) => (
+              <label key={id} htmlFor={id} className="block mb-3">
                 <div className="text-[12px] mb-1" style={{ color: 'var(--olive)' }}>{l}</div>
-                <input required type={t} className="w-full rounded-[12px] px-3.5 py-3.5 text-[14px] outline-none"
+                <input id={id} name={name} autoComplete={autoComplete} required type={t}
+                  className="w-full rounded-[12px] px-3.5 py-3.5 text-[14px] outline-none"
                   style={{ background: 'var(--parchment)', boxShadow: '0 0 0 1px var(--rule)', color: 'var(--ink)' }} placeholder={p} />
               </label>
             ))}
@@ -41,13 +47,14 @@ export default function DemoPage() {
             <div className="flex flex-wrap gap-2 mb-4">
               {['AWS','GCP','Azure','On-prem'].map((c) => (
                 <label key={c} className="chip cursor-pointer">
-                  <input type="checkbox" className="accent-[var(--terracotta)]" /> {c}
+                  <input type="checkbox" id={`demo-provider-${c.toLowerCase()}`} name="providers" value={c} className="accent-[var(--terracotta)]" /> {c}
                 </label>
               ))}
             </div>
-            <label className="block mb-4">
+            <label htmlFor="demo-message" className="block mb-4">
               <div className="text-[12px] mb-1" style={{ color: 'var(--olive)' }}>What would you like to see?</div>
-              <textarea rows="3" className="w-full rounded-[12px] px-3.5 py-3 text-[14px] outline-none"
+              <textarea id="demo-message" name="message" autoComplete="off" rows="3"
+                className="w-full rounded-[12px] px-3.5 py-3 text-[14px] outline-none"
                 style={{ background: 'var(--parchment)', boxShadow: '0 0 0 1px var(--rule)', color: 'var(--ink)' }}
                 placeholder="Spot conversion on prod-api ASG, disk rightsizing across staging…"></textarea>
             </label>

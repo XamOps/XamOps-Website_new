@@ -54,7 +54,6 @@ export default function Nav() {
           background: scrolled || mobileOpen ? 'var(--nav-bg-scrolled)' : 'var(--nav-bg)',
           boxShadow: scrolled ? '0 1px 0 var(--nav-border)' : 'none',
         }}
-        onMouseLeave={() => setOpen(null)}
       >
         <div className="max-w-[1240px] mx-auto px-5 md:px-10 h-[64px] flex items-center justify-between">
           <Link to="/"><Logo /></Link>
@@ -62,28 +61,44 @@ export default function Nav() {
           {/* Desktop nav */}
           <nav className="hidden md:flex items-center gap-1 text-[16px]" style={{color:'var(--ink)'}}>
             {[['Platform','/platform',platform],['Solutions','/solutions',solutions]].map(([label, base, items]) => (
-              <div key={base} className="relative" onMouseEnter={() => setOpen(base)}>
-                <Link to={base} className={`px-3 py-2 rounded-md hover:bg-[var(--ivory)] flex items-center gap-1 ${isActive(base) ? 'font-medium' : ''}`}>
+              <div key={base} className="relative" onMouseEnter={() => setOpen(base)} onMouseLeave={() => setOpen(null)}>
+                <Link to={base} className={`px-3 py-2 rounded-md hover:bg-[var(--ivory-2)] flex items-center gap-1.5 ${isActive(base) ? 'font-medium' : ''}`}>
                   {label}
-                  <svg width="10" height="10" viewBox="0 0 10 10"><path d="M2 3.5L5 6.5l3-3" stroke="currentColor" fill="none" strokeWidth="1.4" strokeLinecap="round"/></svg>
+                  <svg
+                    width="10" height="10" viewBox="0 0 10 10"
+                    style={{transition:'transform 0.2s ease', transform: open === base ? 'rotate(180deg)' : 'rotate(0deg)', flexShrink:0}}
+                  >
+                    <path d="M2 3.5L5 6.5l3-3" stroke="currentColor" fill="none" strokeWidth="1.6" strokeLinecap="round"/>
+                  </svg>
                 </Link>
-                {open === base && (
-                  <div className="absolute left-0 top-full pt-2">
-                    <div className="ring-soft rounded-xl p-2 w-[400px]" style={{background:'var(--ivory)'}}>
-                      {items.map(([n, to, d]) => (
-                        <Link key={n} to={to} onClick={() => setOpen(null)} className="block px-3 py-2.5 rounded-lg hover:bg-[var(--parchment)]">
-                          <div className="text-[15px]">{n}</div>
-                          <div className="text-[13px]" style={{color:'var(--olive)'}}>{d}</div>
-                        </Link>
-                      ))}
-                    </div>
+                {/* Always rendered — open/close via CSS transition */}
+                <div className={`nav-dd absolute left-0 top-full pt-3 z-50${open === base ? ' nav-dd--open' : ''}`}>
+                  <div className="nav-dd-panel rounded-2xl p-2 w-[420px]" style={{
+                    background: 'var(--ivory)',
+                    boxShadow: '0 0 0 1px var(--rule), 0 8px 40px -8px rgba(0,0,0,0.35)',
+                  }}>
+                    {items.map(([n, to, d]) => (
+                      <Link key={n} to={to} onClick={() => setOpen(null)}
+                        className="nav-dd-item flex items-start gap-3 px-3 py-3 rounded-xl"
+                        style={{textDecoration:'none', color:'inherit'}}
+                      >
+                        <div className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5"
+                          style={{background:'var(--parchment)', boxShadow:'0 0 0 1px var(--rule)'}}>
+                          <span className="w-2 h-2 rounded-full" style={{background:'var(--terracotta)'}}/>
+                        </div>
+                        <div>
+                          <div className="text-[14px] font-medium leading-snug">{n}</div>
+                          <div className="text-[12px] mt-0.5 leading-relaxed" style={{color:'var(--olive)'}}>{d}</div>
+                        </div>
+                      </Link>
+                    ))}
                   </div>
-                )}
+                </div>
               </div>
             ))}
-            <Link to="/pricing" className={`px-3 py-2 rounded-md hover:bg-[var(--ivory)] ${isActive('/pricing') ? 'font-medium' : ''}`}>Pricing</Link>
-            <Link to="/about"   className={`px-3 py-2 rounded-md hover:bg-[var(--ivory)] ${isActive('/about')   ? 'font-medium' : ''}`}>About</Link>
-            <Link to="/blog"    className={`px-3 py-2 rounded-md hover:bg-[var(--ivory)] ${isActive('/blog')    ? 'font-medium' : ''}`}>Blog</Link>
+            <Link to="/pricing" className={`px-3 py-2 rounded-md hover:bg-[var(--ivory-2)] ${isActive('/pricing') ? 'font-medium' : ''}`}>Pricing</Link>
+            <Link to="/about"   className={`px-3 py-2 rounded-md hover:bg-[var(--ivory-2)] ${isActive('/about')   ? 'font-medium' : ''}`}>About</Link>
+            <Link to="/blog"    className={`px-3 py-2 rounded-md hover:bg-[var(--ivory-2)] ${isActive('/blog')    ? 'font-medium' : ''}`}>Blog</Link>
           </nav>
 
           <div className="flex items-center gap-2">

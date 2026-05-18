@@ -109,8 +109,8 @@ export default function Nav() {
                 ? <Icon.Sun  width="16" height="16" />
                 : <Icon.Moon width="16" height="16" />}
             </button>
-            <button onClick={() => openDemo(true)} className="hidden sm:inline-flex btn-primary text-[13px] px-4 py-2.5">Book Demo</button>
-            <a href="https://live.xamops.com" className="hidden sm:inline-flex btn-dark text-[13px] px-4 py-2.5">Sign In <Icon.Arrow width="13" height="13"/></a>
+            <button onClick={() => openDemo(true)} className="hidden md:inline-flex btn-primary text-[13px] px-4 py-2.5">Book Demo</button>
+            <a href="https://live.xamops.com" className="hidden md:inline-flex btn-dark text-[13px] px-4 py-2.5">Sign In <Icon.Arrow width="13" height="13"/></a>
             {/* Hamburger — mobile only */}
             <button
               className="md:hidden flex flex-col justify-center items-center w-9 h-9 gap-[5px] rounded-md"

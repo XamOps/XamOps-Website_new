@@ -2,8 +2,8 @@ import { Icon } from '../components/Icons';
 
 export default function DemoPage() {
   return (
-    <section className="sec-light pt-[140px] pb-24">
-      <div className="max-w-[1240px] mx-auto px-6 md:px-10 grid md:grid-cols-12 gap-10">
+    <section className="sec-light pt-24 md:pt-[140px] pb-16 md:pb-24">
+      <div className="max-w-[1240px] mx-auto px-4 sm:px-6 md:px-10 grid md:grid-cols-12 gap-6 md:gap-10">
         <div className="md:col-span-6">
           <div className="eyebrow mb-5">Book a demo</div>
           <h1 className="serif text-[clamp(40px,6vw,72px)] leading-[1.02] tracking-tight">
@@ -29,11 +29,11 @@ export default function DemoPage() {
         <div className="md:col-span-6">
           <form className="ring-soft rounded-2xl p-7" style={{ background: 'var(--ivory)' }}
             onSubmit={(e) => { e.preventDefault(); alert('Demo request received — we\'ll email you within 1 business day.'); }}>
-            <div className="serif text-[24px] mb-5">Tell us about your stack</div>
+            <div className="serif text-[clamp(18px,5vw,24px)] mb-5">Tell us about your stack</div>
             {[['Full name','Aarya Patel','text'],['Work email','you@company.com','email'],['Company','Acme Cloud','text'],['Team size','20','number']].map(([l, p, t]) => (
               <label key={l} className="block mb-3">
                 <div className="text-[12px] mb-1" style={{ color: 'var(--olive)' }}>{l}</div>
-                <input required type={t} className="w-full rounded-[12px] px-3.5 py-3 text-[14px] outline-none"
+                <input required type={t} className="w-full rounded-[12px] px-3.5 py-3.5 text-[14px] outline-none"
                   style={{ background: 'var(--parchment)', boxShadow: '0 0 0 1px var(--rule)', color: 'var(--ink)' }} placeholder={p} />
               </label>
             ))}

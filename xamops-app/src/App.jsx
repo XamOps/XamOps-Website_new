@@ -1,4 +1,4 @@
-import { useRef, useEffect, lazy, Suspense } from 'react';
+import { useRef, useEffect, useState, lazy, Suspense } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import gsap from 'gsap';
 import ScrollTrigger from 'gsap/ScrollTrigger';
@@ -6,6 +6,8 @@ import ScrollTrigger from 'gsap/ScrollTrigger';
 import Nav from './components/Nav';
 import Footer from './components/Footer';
 import MetaManager from './components/MetaManager';
+import DemoModal from './components/DemoModal';
+import { DemoModalCtx } from './lib/demoModal';
 
 const HomePage         = lazy(() => import('./pages/HomePage'));
 const PlatformPage     = lazy(() => import('./pages/platform/PlatformPage'));
@@ -30,6 +32,7 @@ gsap.registerPlugin(ScrollTrigger);
 export default function App() {
   const location = useLocation();
   const firstRun = useRef(true);
+  const [demoOpen, setDemoOpen] = useState(false);
 
   useEffect(() => {
     if (!firstRun.current) {
@@ -44,7 +47,8 @@ export default function App() {
   }, [location.pathname]);
 
   return (
-    <>
+    <DemoModalCtx.Provider value={{ open: demoOpen, setOpen: setDemoOpen }}>
+      <DemoModal />
       <MetaManager />
       <Nav />
       <main key={location.pathname}>
@@ -72,6 +76,6 @@ export default function App() {
         </Suspense>
       </main>
       <Footer />
-    </>
+    </DemoModalCtx.Provider>
   );
 }

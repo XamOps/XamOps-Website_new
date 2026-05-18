@@ -1,10 +1,12 @@
 import { useRef } from 'react';
 import { Icon } from '../Icons';
 import useReveal from '../../hooks/useReveal';
+import { useDemoModal } from '../../lib/demoModal';
 
 export default function FeatureSection({ index, eyebrow, title, body, dark, visual, side = 'right', metric }) {
   const ref = useRef();
   useReveal(ref);
+  const { setOpen } = useDemoModal();
   return (
     <section ref={ref} className={`relative py-12 ${dark ? 'sec-dark' : 'sec-light'}`}>
       <div className="max-w-[1240px] mx-auto px-6 md:px-10">
@@ -31,7 +33,7 @@ export default function FeatureSection({ index, eyebrow, title, body, dark, visu
             )}
             <div data-fade className="mt-8 flex gap-3">
               <a href="#" className={dark ? 'btn-ghost-dark' : 'btn-ghost'}>Learn more <Icon.Arrow width="14" height="14"/></a>
-              <a href="#" className="btn-primary">Book demo</a>
+              <button onClick={() => setOpen(true)} className="btn-primary">Book demo</button>
             </div>
           </div>
           <div className="md:col-span-7" data-fade>

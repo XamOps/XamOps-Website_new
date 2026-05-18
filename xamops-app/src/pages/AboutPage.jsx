@@ -14,10 +14,10 @@ export default function AboutPage() {
         title={[{ text: 'Built by' }, { text: 'Xammer Technologies.', accent: true }]}
         body="We believe cloud operations should be autonomous, not manual. Founded in Delhi in 2016, Xammer has spent a decade running DevOps platforms for global teams." cta={false} />
       <section className="sec-light pb-24">
-        <div className="max-w-[1240px] mx-auto px-6 md:px-10 grid md:grid-cols-3 gap-px ring-soft rounded-2xl overflow-hidden" style={{ background: 'var(--rule)' }}>
+        <div className="max-w-[1240px] mx-auto px-6 md:px-10 grid grid-cols-2 md:grid-cols-3 gap-px ring-soft rounded-2xl overflow-hidden" style={{ background: 'var(--rule)' }}>
           {[['10+','years'],['1,000+','projects shipped'],['180','engineers'],['99.9%','uptime SLA'],['40%','avg cost reduction'],['3','cloud providers']].map(([n, l]) => (
-            <div key={l} className="p-7" style={{ background: 'var(--ivory)' }}>
-              <div className="big-num text-[44px] leading-none">{n}</div>
+            <div key={l} className="p-5 md:p-7" style={{ background: 'var(--ivory)' }}>
+              <div className="big-num text-[clamp(28px,8vw,44px)] leading-none">{n}</div>
               <div className="eyebrow mt-3">{l}</div>
             </div>
           ))}
@@ -34,7 +34,7 @@ export default function AboutPage() {
       <section className="sec-light py-24">
         <div className="max-w-[1240px] mx-auto px-6 md:px-10">
           <div className="sec-label mb-6">Team</div>
-          <div className="grid md:grid-cols-4 gap-6">
+          <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
             {team.map(([n, role, bio]) => (
               <div key={n} className="ring-soft rounded-2xl p-5" style={{ background: 'var(--ivory)' }}>
                 <div className="aspect-[4/3] rounded-xl mb-4 flex items-end p-3"

@@ -1,10 +1,11 @@
-import { useRef, useLayoutEffect, lazy, Suspense } from 'react';
+import { useRef, useLayoutEffect, useEffect, lazy, Suspense } from 'react';
 import { Link } from 'react-router-dom';
 import gsap from 'gsap';
 import ScrollTrigger from 'gsap/ScrollTrigger';
 import { Icon } from '../components/Icons';
 import useReveal from '../hooks/useReveal';
 import FeatureSection from '../components/shared/FeatureSection';
+import { useDemoModal } from '../lib/demoModal';
 
 const GridScan = lazy(() => import('../components/GridScan/GridScan').then(m => ({ default: m.GridScan })));
 const isMobile = typeof window !== 'undefined' && window.matchMedia('(max-width: 767px)').matches;
@@ -20,6 +21,7 @@ gsap.registerPlugin(ScrollTrigger);
 function Hero() {
   const ref = useRef();
   const bgRef = useRef();
+  const { setOpen } = useDemoModal();
 
   useLayoutEffect(() => {
     if (isMobile) return;
@@ -41,7 +43,7 @@ function Hero() {
   }, []);
 
   return (
-    <section ref={ref} className="sec-dark relative grain pt-[120px] pb-10 overflow-hidden">
+    <section ref={ref} className="sec-dark relative grain pt-24 md:pt-[120px] pb-10 overflow-hidden">
       <div ref={bgRef} aria-hidden className="absolute inset-0 pointer-events-none">
         {!isMobile && (
           <Suspense fallback={null}>
@@ -74,7 +76,7 @@ function Hero() {
           <span className="live-dot"/> Now in private beta · v1.0
         </div>
 
-        <h1 className="serif text-[clamp(56px,9vw,148px)] leading-[0.95] tracking-tight max-w-[14ch]">
+        <h1 className="serif text-[clamp(42px,11vw,148px)] leading-[0.95] tracking-tight max-w-[14ch]">
           <div className="reveal-line"><span className="hero-line">The Cognitive</span></div>
           <div className="reveal-line"><span className="hero-line" style={{color:'var(--terracotta)'}}>Cloud Operating</span></div>
           <div className="reveal-line"><span className="hero-line">System.</span></div>
@@ -85,7 +87,7 @@ function Hero() {
         </p>
 
         <div className="hero-ctas mt-8 flex flex-wrap items-center gap-3">
-          <Link to="/demo" className="btn-primary">Book a demo <Icon.Arrow width="14" height="14"/></Link>
+          <button onClick={() => setOpen(true)} className="btn-primary">Book a demo <Icon.Arrow width="14" height="14"/></button>
           <a href="https://live.xamops.com" className="btn-dark">Sign in <Icon.Arrow width="14" height="14"/></a>
         </div>
 
@@ -209,14 +211,14 @@ function PlatformStrip() {
         </div>
         <div className="grid grid-cols-2 md:grid-cols-3 gap-px ring-soft rounded-2xl overflow-hidden" style={{background:'var(--rule)'}}>
           {items.map(({ I, name, sub, to }, i) => (
-            <Link to={to} key={name} data-fade className="hcard p-7 group block" style={{background:'var(--ivory)'}}>
+            <Link to={to} key={name} data-fade className="hcard p-5 md:p-7 group block" style={{background:'var(--ivory)'}}>
               <div className="flex items-start justify-between">
                 <I width="22" height="22" style={{color:'var(--ink)'}}/>
                 <span className="mono text-[11px]" style={{color:'var(--olive)'}}>0{i+1}</span>
               </div>
-              <div className="serif text-[24px] mt-10">{name}</div>
-              <div className="text-[14px] mt-2" style={{color:'var(--olive)'}}>{sub}</div>
-              <div className="mt-8 inline-flex items-center gap-1.5 text-[13px]">
+              <div className="serif text-[18px] md:text-[24px] mt-6 md:mt-10">{name}</div>
+              <div className="text-[13px] md:text-[14px] mt-1.5" style={{color:'var(--olive)'}}>{sub}</div>
+              <div className="mt-5 md:mt-8 inline-flex items-center gap-1.5 text-[13px]">
                 Learn more <Icon.Arrow width="14" height="14"/>
               </div>
             </Link>
@@ -228,51 +230,22 @@ function PlatformStrip() {
 }
 
 function HorizontalScroll() {
-  const sectionRef = useRef();
   const trackRef = useRef();
   const headRef = useRef();
+  useReveal(headRef);
 
-  useLayoutEffect(() => {
-    let ctx;
-    const id = setTimeout(() => {
-      ctx = gsap.context(() => {
-        const track = trackRef.current;
-        const section = sectionRef.current;
-        if (!track || !section) return;
-        const getDistance = () => track.scrollWidth - window.innerWidth + 80;
-
-        gsap.to(track, {
-          x: () => -getDistance(),
-          ease: 'none',
-          scrollTrigger: {
-            trigger: section,
-            start: 'top top',
-            end: () => '+=' + getDistance(),
-            pin: true,
-            pinSpacing: true,
-            scrub: 0.5,
-            invalidateOnRefresh: true,
-          }
-        });
-
-        const bar = section.querySelector('.hs-progress > i');
-        ScrollTrigger.create({
-          trigger: section,
-          start: 'top top',
-          end: () => '+=' + getDistance(),
-          scrub: 0.5,
-          onUpdate: (self) => { if (bar) bar.style.transform = `scaleX(${self.progress})`; },
-        });
-
-        gsap.from(headRef.current.querySelectorAll('[data-fade]'), {
-          y: 24, opacity: 0, duration: 0.9, ease: 'power3.out', stagger: 0.08,
-          scrollTrigger: { trigger: section, start: 'top 80%' }
-        });
-
-        ScrollTrigger.refresh();
-      }, sectionRef);
-    }, 250);
-    return () => { clearTimeout(id); ctx && ctx.revert(); };
+  useEffect(() => {
+    const track = trackRef.current;
+    if (!track) return;
+    const bar = track.closest('section')?.querySelector('.hs-progress > i');
+    const onScroll = () => {
+      if (!bar) return;
+      const { scrollLeft, scrollWidth, clientWidth } = track;
+      const progress = scrollWidth > clientWidth ? scrollLeft / (scrollWidth - clientWidth) : 0;
+      bar.style.transform = `scaleX(${progress})`;
+    };
+    track.addEventListener('scroll', onScroll, { passive: true });
+    return () => track.removeEventListener('scroll', onScroll);
   }, []);
 
   const cards = [
@@ -288,51 +261,44 @@ function HorizontalScroll() {
   const accentColor = { terracotta: 'var(--terracotta)', ochre: 'var(--ochre)', moss: 'var(--moss)', ink: 'var(--ink)' };
 
   return (
-    <section ref={sectionRef} className="sec-light relative h-screen overflow-hidden">
-      <div className="h-full flex flex-col">
-        <div ref={headRef} className="max-w-[1240px] mx-auto px-6 md:px-10 pt-16 pb-8 w-full">
-          <div className="flex items-end justify-between flex-wrap gap-6">
-            <div>
-              <div data-fade className="sec-label mb-4">[ 02 ] Capabilities</div>
-              <h2 data-fade className="serif text-[clamp(48px,6.5vw,90px)] leading-[1.02] max-w-[20ch]">
-                Six automations. <span style={{color:'var(--terracotta)'}}>One control plane.</span>
-              </h2>
-            </div>
-            <div data-fade className="text-[14px]" style={{color:'var(--olive)'}}>
-              <div className="mono text-[11px] uppercase tracking-widest" style={{color:'var(--olive)'}}>Scroll →</div>
-            </div>
-          </div>
-          <div className="hs-progress mt-6 h-px w-full overflow-hidden" style={{background:'var(--rule)'}}>
-            <i className="block h-px w-full origin-left" style={{transform:'scaleX(0)', background:'var(--terracotta)'}}/>
+    <section className="sec-light relative py-16">
+      <div ref={headRef} className="max-w-[1240px] mx-auto px-6 md:px-10 pb-8 w-full">
+        <div className="flex items-end justify-between flex-wrap gap-6">
+          <div>
+            <div data-fade className="sec-label mb-4">[ 02 ] Capabilities</div>
+            <h2 data-fade className="serif text-[clamp(48px,6.5vw,90px)] leading-[1.02] max-w-[20ch]">
+              Six automations. <span style={{color:'var(--terracotta)'}}>One control plane.</span>
+            </h2>
           </div>
         </div>
-        <div className="flex-1 flex items-center overflow-hidden" style={{maskImage:'linear-gradient(90deg, transparent 0%, #000 6%, #000 94%, transparent 100%)', WebkitMaskImage:'linear-gradient(90deg, transparent 0%, #000 6%, #000 94%, transparent 100%)'}}>
-          <div ref={trackRef} className="flex gap-6 px-6 md:px-10 will-change-transform" style={{paddingRight:'40vw'}}>
-            {cards.map((c, i) => (
-              <div key={i} className="hs-card relative ring-soft rounded-3xl overflow-hidden hcard" style={{background:'var(--ivory)'}}>
-                <div className="absolute inset-x-0 top-0 h-1" style={{background: accentColor[c.accent]}}/>
-                <Link to={c.href} className="p-8 h-full flex flex-col" style={{color:'inherit', textDecoration:'none'}}>
-                  <div className="flex items-start justify-between">
-                    <div className="eyebrow">{c.tag}</div>
-                    <span className="mono text-[11px]" style={{color:'var(--olive)'}}>0{i+1}/{cards.length}</span>
-                  </div>
-                  <h3 className="serif text-[44px] leading-[1.05] mt-8 max-w-[14ch]">{c.title}</h3>
-                  <p className="mt-4 text-[15px] leading-[1.6]" style={{color:'var(--olive)'}}>{c.body}</p>
-                  <div className="mt-auto pt-6">
-                    <div className="rounded-2xl p-5 mb-4" style={{background:'var(--parchment)', boxShadow:'0 0 0 1px var(--rule)'}}>
-                      <div className="big-num text-[44px] leading-none" style={{color: accentColor[c.accent]}}>{c.stat[0]}</div>
-                      <div className="text-[13px] mt-1" style={{color:'var(--olive)'}}>{c.stat[1]}</div>
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <span className="text-[14px] inline-flex items-center gap-2 ulink">Read deep-dive <Icon.Arrow width="14" height="14"/></span>
-                      <span className="mono text-[11px]" style={{color:'var(--olive)'}}>aws · gcp · azure</span>
-                    </div>
-                  </div>
-                </Link>
+        <div className="hs-progress mt-6 h-px w-full overflow-hidden" style={{background:'var(--rule)'}}>
+          <i className="block h-px w-full origin-left" style={{transform:'scaleX(0)', background:'var(--terracotta)'}}/>
+        </div>
+      </div>
+      <div ref={trackRef} className="hs-track flex gap-6 px-6 md:px-10 overflow-x-auto pb-4">
+        {cards.map((c, i) => (
+          <div key={i} className="hs-card relative ring-soft rounded-3xl overflow-hidden hcard" style={{background:'var(--ivory)'}}>
+            <div className="absolute inset-x-0 top-0 h-1" style={{background: accentColor[c.accent]}}/>
+            <Link to={c.href} className="p-8 h-full flex flex-col" style={{color:'inherit', textDecoration:'none'}}>
+              <div className="flex items-start justify-between">
+                <div className="eyebrow">{c.tag}</div>
+                <span className="mono text-[11px]" style={{color:'var(--olive)'}}>0{i+1}/{cards.length}</span>
               </div>
-            ))}
+              <h3 className="serif text-[clamp(28px,7vw,44px)] leading-[1.05] mt-6 max-w-[14ch]">{c.title}</h3>
+              <p className="mt-4 text-[15px] leading-[1.6]" style={{color:'var(--olive)'}}>{c.body}</p>
+              <div className="mt-auto pt-6">
+                <div className="rounded-2xl p-5 mb-4" style={{background:'var(--parchment)', boxShadow:'0 0 0 1px var(--rule)'}}>
+                  <div className="big-num text-[clamp(28px,7vw,44px)] leading-none" style={{color: accentColor[c.accent]}}>{c.stat[0]}</div>
+                  <div className="text-[13px] mt-1" style={{color:'var(--olive)'}}>{c.stat[1]}</div>
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className="text-[14px] inline-flex items-center gap-2 ulink">Read deep-dive <Icon.Arrow width="14" height="14"/></span>
+                  <span className="mono text-[11px]" style={{color:'var(--olive)'}}>aws · gcp · azure</span>
+                </div>
+              </div>
+            </Link>
           </div>
-        </div>
+        ))}
       </div>
     </section>
   );
@@ -373,12 +339,12 @@ function ComingSoon() {
         </div>
         <div className="grid md:grid-cols-3 gap-px ring-soft-dark rounded-2xl overflow-hidden" style={{background:'var(--rule-dark)'}}>
           {items.map((c, i) => (
-            <div key={c.name} data-fade className="p-8 hcard" style={{background:'var(--ivory)'}}>
+            <div key={c.name} data-fade className="p-6 md:p-8 hcard" style={{background:'var(--ivory)'}}>
               <div className="flex items-center justify-between">
                 <span className="mono text-[11px]" style={{color:'var(--olive)'}}>0{i+1}</span>
                 <span className="text-[11px] mono px-2 py-0.5 rounded-full" style={{background:'rgba(201,100,66,0.15)', color:'#e0a48b'}}>Q{i+2} · 2026</span>
               </div>
-              <div className="serif text-[28px] mt-10 leading-tight">{c.name}</div>
+              <div className="serif text-[clamp(20px,5vw,28px)] mt-7 md:mt-10 leading-tight">{c.name}</div>
               <p className="mt-3 text-[15px] leading-[1.6]" style={{color:'var(--olive)'}}>{c.body}</p>
               <div className="mt-8 flex items-center gap-2 text-[13px]" style={{color:'#e0a48b'}}>
                 Join the waitlist <Icon.Arrow width="14" height="14"/>
@@ -412,14 +378,14 @@ function Metrics() {
   }, []);
   return (
     <section ref={ref} className="sec-light py-16 border-t border-b" style={{borderColor:'var(--rule)'}}>
-      <div className="max-w-[1240px] mx-auto px-6 md:px-10 grid md:grid-cols-4 gap-px rounded-2xl overflow-hidden ring-soft" style={{background:'var(--rule)'}}>
+      <div className="max-w-[1240px] mx-auto px-6 md:px-10 grid grid-cols-2 md:grid-cols-4 gap-px rounded-2xl overflow-hidden ring-soft" style={{background:'var(--rule)'}}>
         {[
           { k:'Compute savings', n:'70', suf:'%', dec:0 },
           { k:'Clouds supported', n:'3',  suf:'',  dec:0 },
           { k:'Manual toil',     n:'0',  suf:'',  dec:0 },
           { k:'Avg ROI',         n:'9.2',suf:'×', dec:1 },
         ].map((m) => (
-          <div key={m.k} className="p-8" style={{background:'var(--ivory)'}}>
+          <div key={m.k} className="p-6 md:p-8" style={{background:'var(--ivory)'}}>
             <div className="eyebrow">{m.k}</div>
             <div className="big-num text-[clamp(48px,6vw,80px)] leading-none mt-4" data-num={m.n} data-suf={m.suf} data-dec={m.dec}>0</div>
           </div>
@@ -432,10 +398,11 @@ function Metrics() {
 function FinalCTA() {
   const ref = useRef();
   useReveal(ref);
+  const { setOpen } = useDemoModal();
   return (
     <section ref={ref} id="demo" className="sec-light py-20">
       <div className="max-w-[1240px] mx-auto px-6 md:px-10">
-        <div className="rounded-[32px] p-10 md:p-16 relative overflow-hidden ring-soft" style={{background:'var(--ivory)'}}>
+        <div className="rounded-2xl md:rounded-[32px] p-6 sm:p-10 md:p-16 relative overflow-hidden ring-soft" style={{background:'var(--ivory)'}}>
           <div className="absolute -right-20 -bottom-20 w-[420px] h-[420px] rounded-full pointer-events-none"
                style={{background:'radial-gradient(closest-side, rgba(201,100,66,0.18), transparent 70%)'}}/>
           <div className="grid md:grid-cols-12 gap-10 relative">
@@ -449,7 +416,7 @@ function FinalCTA() {
                 Thirty minutes. We'll connect to a sandbox account and show your cloud automated live — no slides, no theater.
               </p>
               <div data-fade className="mt-8 flex flex-wrap gap-3">
-                <Link to="/demo" className="btn-primary">Book a demo <Icon.Arrow width="14" height="14"/></Link>
+                <button onClick={() => setOpen(true)} className="btn-primary">Book a demo <Icon.Arrow width="14" height="14"/></button>
                 <a href="https://live.xamops.com" className="btn-dark">Sign in <Icon.Arrow width="14" height="14"/></a>
               </div>
               <div data-fade className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-2 text-[13px]" style={{color:'var(--olive)'}}>
@@ -471,7 +438,7 @@ function FinalCTA() {
                     <input className="w-full rounded-[12px] px-3.5 py-3 text-[14px] outline-none" style={{background:'var(--ivory)', boxShadow:'0 0 0 1px var(--rule)'}} placeholder={p}/>
                   </label>
                 ))}
-                <button type="button" className="btn-primary w-full justify-center mt-2">Schedule 30-min demo</button>
+                <button type="button" onClick={() => setOpen(true)} className="btn-primary w-full justify-center mt-2">Schedule 30-min demo</button>
                 <div className="mono text-[11px] mt-3 text-center" style={{color:'var(--olive)'}}>or email demo@xamops.com</div>
               </form>
             </div>

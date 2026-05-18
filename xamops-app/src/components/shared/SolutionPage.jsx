@@ -8,8 +8,8 @@ export default function SolutionPage({ eyebrow, title, body, before, after, rele
     <>
       <PageHero eyebrow={eyebrow} title={title} body={body} />
       <section className="sec-light py-16">
-        <div className="max-w-[1240px] mx-auto px-6 md:px-10 grid md:grid-cols-2 gap-10">
-          <div className="ring-soft rounded-2xl p-8" style={{ background: 'var(--ivory)' }}>
+        <div className="max-w-[1240px] mx-auto px-4 sm:px-6 md:px-10 grid md:grid-cols-2 gap-4 md:gap-10">
+          <div className="ring-soft rounded-2xl p-5 md:p-8" style={{ background: 'var(--ivory)' }}>
             <div className="eyebrow mb-3">A typical week</div>
             <ul className="space-y-3 text-[15px]">
               {before.map((b) => (
@@ -19,7 +19,7 @@ export default function SolutionPage({ eyebrow, title, body, before, after, rele
               ))}
             </ul>
           </div>
-          <div className="ring-soft rounded-2xl p-8" style={{ background: 'var(--ivory)' }}>
+          <div className="ring-soft rounded-2xl p-5 md:p-8" style={{ background: 'var(--ivory)' }}>
             <div className="eyebrow mb-3">With XamOps</div>
             <ul className="space-y-3 text-[15px]">
               {after.map((a) => (

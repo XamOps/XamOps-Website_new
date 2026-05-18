@@ -1,6 +1,8 @@
 import Logo from './Logo';
+import { useDemoModal } from '../lib/demoModal';
 
 export default function Footer() {
+  const { setOpen } = useDemoModal();
   return (
     <footer className="sec-dark pt-24 pb-10">
       <div className="max-w-[1240px] mx-auto px-6 md:px-10">
@@ -11,7 +13,7 @@ export default function Footer() {
               The Cognitive Cloud Operating System. Built by Xammer Technologies in Delhi.
             </p>
             <div className="mt-6 flex items-center gap-3">
-              <a href="#" className="btn-primary">Book demo</a>
+              <button onClick={() => setOpen(true)} className="btn-primary">Book demo</button>
               <a href="#" className="btn-ghost-dark">Contact</a>
             </div>
           </div>

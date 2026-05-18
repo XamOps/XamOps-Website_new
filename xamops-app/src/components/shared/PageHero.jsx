@@ -1,9 +1,11 @@
 import { Link } from 'react-router-dom';
 import { Icon } from '../Icons';
+import { useDemoModal } from '../../lib/demoModal';
 
 export default function PageHero({ eyebrow, title, body, cta = true }) {
+  const { setOpen } = useDemoModal();
   return (
-    <section className="sec-light pt-[140px] pb-20 relative overflow-hidden">
+    <section className="sec-light pt-24 md:pt-[140px] pb-16 md:pb-20 relative overflow-hidden">
       <div className="absolute -top-20 -right-20 w-[420px] h-[420px] rounded-full pointer-events-none"
         style={{ background: 'radial-gradient(closest-side, rgba(201,100,66,0.14), transparent 70%)' }} />
       <div className="max-w-[1240px] mx-auto px-6 md:px-10 relative">
@@ -18,7 +20,7 @@ export default function PageHero({ eyebrow, title, body, cta = true }) {
         {body && <p className="mt-6 text-[18px] leading-[1.6] max-w-[60ch]" style={{ color: 'var(--olive)' }}>{body}</p>}
         {cta && (
           <div className="mt-8 flex flex-wrap gap-3">
-            <Link to="/demo" className="btn-primary">Book a demo <Icon.Arrow width="14" height="14" /></Link>
+            <button onClick={() => setOpen(true)} className="btn-primary">Book a demo <Icon.Arrow width="14" height="14" /></button>
             <Link to="/platform" className="btn-ghost">Explore the platform</Link>
           </div>
         )}

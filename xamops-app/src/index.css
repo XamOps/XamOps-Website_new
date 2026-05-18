@@ -183,9 +183,16 @@ body {
 }
 
 .hcard { transition: transform .35s ease, box-shadow .35s ease; }
-.hcard:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 0 0 1px rgba(124,92,255,0.35), 0 16px 48px -12px rgba(124,92,255,0.22);
+@media (hover: hover) {
+  .hcard:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 0 0 1px rgba(124,92,255,0.35), 0 16px 48px -12px rgba(124,92,255,0.22);
+  }
+}
+@media (hover: none) {
+  .hcard:active {
+    box-shadow: 0 0 0 1px rgba(124,92,255,0.35);
+  }
 }
 
 @keyframes fadeSlideUp {
@@ -260,8 +267,29 @@ html { scroll-behavior: smooth; }
 
 .big-num { font-family: Georgia, serif; font-weight: 500; letter-spacing: -0.04em; }
 
-.hs-card { flex: 0 0 auto; width: 460px; height: 580px; }
-@media (max-width: 700px) { .hs-card { width: 300px; height: 520px; } }
+.hs-track {
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.hs-track::-webkit-scrollbar { display: none; }
+
+.hs-card {
+  flex: 0 0 auto;
+  width: 460px;
+  height: 580px;
+  scroll-snap-align: start;
+}
+@media (max-width: 700px) {
+  .hs-card { width: calc(100vw - 48px); height: auto; min-height: 480px; }
+}
+
+@keyframes demo-modal-in {
+  from { opacity: 0; transform: scale(0.96) translateY(10px); }
+  to   { opacity: 1; transform: scale(1)    translateY(0); }
+}
+.demo-modal-panel { animation: demo-modal-in 0.22s cubic-bezier(0.16,1,0.3,1) forwards; }
 
 /* Responsive container padding */
 @media (max-width: 640px) {

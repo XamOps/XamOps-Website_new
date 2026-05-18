@@ -1,10 +1,12 @@
 import { Link } from 'react-router-dom';
 import { Icon } from '../Icons';
+import { useDemoModal } from '../../lib/demoModal';
 
 export default function CTABanner({
   heading = 'Ready to operate smarter?',
   sub = '30-minute demo. We connect to a sandbox and show your cloud automated live.'
 }) {
+  const { setOpen } = useDemoModal();
   return (
     <section className="sec-light py-16">
       <div className="max-w-[1240px] mx-auto px-6 md:px-10">
@@ -17,7 +19,7 @@ export default function CTABanner({
               <p className="mt-4 text-[16px] max-w-[60ch]" style={{ color: 'var(--olive)' }}>{sub}</p>
             </div>
             <div className="md:col-span-4 flex flex-wrap gap-3 md:justify-end">
-              <Link to="/demo" className="btn-primary">Book a demo <Icon.Arrow width="14" height="14" /></Link>
+              <button onClick={() => setOpen(true)} className="btn-primary">Book a demo <Icon.Arrow width="14" height="14" /></button>
               <Link to="/pricing" className="btn-ghost">Pricing</Link>
             </div>
           </div>

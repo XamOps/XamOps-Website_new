@@ -3,11 +3,13 @@ import { Link, useLocation } from 'react-router-dom';
 import Logo from './Logo';
 import { Icon } from './Icons';
 import useTheme from '../hooks/useTheme';
+import { useDemoModal } from '../lib/demoModal';
 
 export default function Nav() {
   const [open, setOpen] = useState(null);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const { setOpen: openDemo } = useDemoModal();
   const { pathname } = useLocation();
   const [theme, toggleTheme] = useTheme();
 
@@ -107,7 +109,7 @@ export default function Nav() {
                 ? <Icon.Sun  width="16" height="16" />
                 : <Icon.Moon width="16" height="16" />}
             </button>
-            <Link to="/demo" className="hidden sm:inline-flex btn-primary text-[13px] px-4 py-2.5">Book Demo</Link>
+            <button onClick={() => openDemo(true)} className="hidden sm:inline-flex btn-primary text-[13px] px-4 py-2.5">Book Demo</button>
             <a href="https://live.xamops.com" className="hidden sm:inline-flex btn-dark text-[13px] px-4 py-2.5">Sign In <Icon.Arrow width="13" height="13"/></a>
             {/* Hamburger — mobile only */}
             <button
@@ -161,7 +163,7 @@ export default function Nav() {
             </div>
 
             <div className="pt-6 flex flex-col gap-3">
-              <Link to="/demo" className="btn-primary justify-center">Book Demo</Link>
+              <button onClick={() => { setMobileOpen(false); openDemo(true); }} className="btn-primary justify-center w-full">Book Demo</button>
               <a href="https://live.xamops.com" className="btn-dark justify-center">Sign In <Icon.Arrow width="14" height="14"/></a>
               <a href="tel:+918769254249" className="flex items-center justify-center gap-2 py-3 text-[14px] rounded-lg" style={{color:'var(--olive)', background:'var(--ivory)'}}>
                 <Icon.Phone width="15" height="15"/> +91 87692 54249

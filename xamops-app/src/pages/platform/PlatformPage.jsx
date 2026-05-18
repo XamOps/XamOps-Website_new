@@ -21,12 +21,12 @@ export default function PlatformPage() {
         <div className="max-w-[1240px] mx-auto px-6 md:px-10">
           <div className="grid md:grid-cols-2 gap-px ring-soft rounded-2xl overflow-hidden" style={{ background: 'var(--rule)' }}>
             {cats.map(({ I, to, name, body }, i) => (
-              <Link to={to} key={name} className="p-8 hcard block" style={{ background: 'var(--ivory)' }}>
+              <Link to={to} key={name} className="p-6 md:p-8 hcard block" style={{ background: 'var(--ivory)' }}>
                 <div className="flex items-start justify-between">
                   <I width="24" height="24" />
                   <span className="mono text-[11px]" style={{ color: 'var(--olive)' }}>0{i + 1}</span>
                 </div>
-                <div className="serif text-[28px] mt-10">{name}</div>
+                <div className="serif text-[clamp(20px,5vw,28px)] mt-7 md:mt-10">{name}</div>
                 <div className="text-[15px] mt-3 leading-[1.6]" style={{ color: 'var(--olive)' }}>{body}</div>
                 <div className="mt-6 inline-flex items-center gap-2 text-[14px]">Learn more <Icon.Arrow width="14" height="14" /></div>
               </Link>

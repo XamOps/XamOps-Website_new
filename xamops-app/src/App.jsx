@@ -37,9 +37,10 @@ export default function App() {
     }
     firstRun.current = false;
     window.scrollTo(0, 0);
-    const t1 = setTimeout(() => ScrollTrigger.refresh(), 250);
-    const t2 = setTimeout(() => ScrollTrigger.refresh(), 900);
-    return () => { clearTimeout(t1); clearTimeout(t2); };
+    let canceled = false;
+    document.fonts.ready.then(() => { if (!canceled) ScrollTrigger.refresh(); });
+    const fallback = setTimeout(() => { if (!canceled) ScrollTrigger.refresh(); }, 1000);
+    return () => { canceled = true; clearTimeout(fallback); };
   }, [location.pathname]);
 
   return (

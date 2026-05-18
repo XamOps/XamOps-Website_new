@@ -55,13 +55,17 @@ export default function Nav() {
           <nav className="hidden md:flex items-center gap-1 text-[15px]" style={{color:'var(--ink)'}}>
             {[['Platform','/platform',platform,true],['Solutions','/solutions',solutions,false]].map(([label, base, items, twoCol]) => (
               <div key={base} className="relative" onMouseEnter={() => setOpen(base)} onMouseLeave={() => setOpen(null)}>
-                <Link to={base} className={`px-3 py-2 rounded-md hover:bg-[var(--ivory-2)] flex items-center gap-1.5 ${isActive(base) ? 'font-medium' : ''}`}>
+                <button
+                  onClick={() => setOpen(open === base ? null : base)}
+                  className={`px-3 py-2 rounded-md hover:bg-[var(--ivory-2)] flex items-center gap-1.5 ${isActive(base) ? 'font-medium' : ''}`}
+                  style={{background:'transparent', border:'none', cursor:'pointer', color:'inherit', font:'inherit'}}
+                >
                   {label}
                   <svg width="10" height="10" viewBox="0 0 10 10"
                     style={{transition:'transform 0.2s ease', transform: open===base ? 'rotate(180deg)' : 'rotate(0deg)', flexShrink:0}}>
                     <path d="M2 3.5L5 6.5l3-3" stroke="currentColor" fill="none" strokeWidth="1.6" strokeLinecap="round"/>
                   </svg>
-                </Link>
+                </button>
                 <div className={`nav-dd absolute left-0 top-full pt-3 z-50${open===base ? ' nav-dd--open' : ''}`}>
                   <div className={`nav-dd-panel rounded-2xl p-2.5 ${twoCol ? 'w-[560px]' : 'w-[300px]'}`}
                     style={{background:'var(--parchment)', boxShadow:'0 4px 6px -1px rgba(0,0,0,0.1), 0 20px 60px -10px rgba(0,0,0,0.35)'}}>

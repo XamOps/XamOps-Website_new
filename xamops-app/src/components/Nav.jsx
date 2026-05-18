@@ -61,10 +61,16 @@ export default function Nav() {
           <nav className="hidden md:flex items-center gap-1 text-[16px]" style={{color:'var(--ink)'}}>
             {[['Platform','/platform',platform],['Solutions','/solutions',solutions]].map(([label, base, items]) => (
               <div key={base} className="relative" onMouseEnter={() => setOpen(base)}>
-                <Link to={base} className={`px-3 py-2 rounded-md hover:bg-[var(--ivory)] flex items-center gap-1 ${isActive(base) ? 'font-medium' : ''}`}>
+                <button
+                  onClick={() => setOpen(open === base ? null : base)}
+                  className={`px-3 py-2 rounded-md hover:bg-[var(--ivory)] flex items-center gap-1 ${isActive(base) ? 'font-medium' : ''}`}
+                  style={{background:'transparent', border:'none', cursor:'pointer', color:'inherit', font:'inherit'}}
+                >
                   {label}
-                  <svg width="10" height="10" viewBox="0 0 10 10"><path d="M2 3.5L5 6.5l3-3" stroke="currentColor" fill="none" strokeWidth="1.4" strokeLinecap="round"/></svg>
-                </Link>
+                  <svg width="10" height="10" viewBox="0 0 10 10" style={{transition:'transform .2s', transform: open===base ? 'rotate(180deg)' : 'none'}}>
+                    <path d="M2 3.5L5 6.5l3-3" stroke="currentColor" fill="none" strokeWidth="1.4" strokeLinecap="round"/>
+                  </svg>
+                </button>
                 {open === base && (
                   <div className="absolute left-0 top-full pt-2">
                     <div className="ring-soft rounded-xl p-2 w-[400px]" style={{background:'var(--ivory)'}}>

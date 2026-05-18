@@ -5,6 +5,7 @@ import ScrollTrigger from 'gsap/ScrollTrigger';
 
 import Nav from './components/Nav';
 import Footer from './components/Footer';
+import MetaManager from './components/MetaManager';
 
 const HomePage         = lazy(() => import('./pages/HomePage'));
 const PlatformPage     = lazy(() => import('./pages/platform/PlatformPage'));
@@ -43,6 +44,7 @@ export default function App() {
 
   return (
     <>
+      <MetaManager />
       <Nav />
       <main key={location.pathname}>
         <Suspense fallback={null}>

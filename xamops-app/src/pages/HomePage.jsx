@@ -198,7 +198,7 @@ function PlatformStrip() {
     { I: Icon.SRE,   name: 'SRE Investigation', sub: 'From alert to RCA', to: '/platform/sre' },
   ];
   return (
-    <section ref={ref} className="sec-light pt-16 pb-20 border-t" style={{borderColor:'var(--rule)'}}>
+    <section ref={ref} className="sec-light pt-10 pb-14 md:pt-16 md:pb-20 border-t" style={{borderColor:'var(--rule)'}}>
       <div className="max-w-[1240px] mx-auto px-6 md:px-10">
         <div className="flex items-end justify-between flex-wrap gap-6 mb-12">
           <div>
@@ -261,7 +261,7 @@ function HorizontalScroll() {
   const accentColor = { terracotta: 'var(--terracotta)', ochre: 'var(--ochre)', moss: 'var(--moss)', ink: 'var(--ink)' };
 
   return (
-    <section className="sec-light relative py-16">
+    <section className="sec-light relative py-10 md:py-16">
       <div ref={headRef} className="max-w-[1240px] mx-auto px-6 md:px-10 pb-8 w-full">
         <div className="flex items-end justify-between flex-wrap gap-6">
           <div>
@@ -313,7 +313,7 @@ function ComingSoon() {
     { name: 'Complete Kubernetes Automation', body: 'Full K8s lifecycle management — scaling, cost, security — automated end to end.' },
   ];
   return (
-    <section ref={ref} className="sec-dark py-20 relative overflow-hidden">
+    <section ref={ref} className="sec-dark py-12 md:py-20 relative overflow-hidden">
       <div className="absolute inset-0 pointer-events-none opacity-60">
         <svg className="w-full h-full" preserveAspectRatio="none">
           <defs>
@@ -377,7 +377,7 @@ function Metrics() {
     return () => ctx.revert();
   }, []);
   return (
-    <section ref={ref} className="sec-light py-16 border-t border-b" style={{borderColor:'var(--rule)'}}>
+    <section ref={ref} className="sec-light py-10 md:py-16 border-t border-b" style={{borderColor:'var(--rule)'}}>
       <div className="max-w-[1240px] mx-auto px-6 md:px-10 grid grid-cols-2 md:grid-cols-4 gap-px rounded-2xl overflow-hidden ring-soft" style={{background:'var(--rule)'}}>
         {[
           { k:'Compute savings', n:'70', suf:'%', dec:0 },
@@ -400,7 +400,7 @@ function FinalCTA() {
   useReveal(ref);
   const { setOpen } = useDemoModal();
   return (
-    <section ref={ref} id="demo" className="sec-light py-20">
+    <section ref={ref} id="demo" className="sec-light py-12 md:py-20">
       <div className="max-w-[1240px] mx-auto px-6 md:px-10">
         <div className="rounded-2xl md:rounded-[32px] p-6 sm:p-10 md:p-16 relative overflow-hidden ring-soft" style={{background:'var(--ivory)'}}>
           <div className="absolute -right-20 -bottom-20 w-[420px] h-[420px] rounded-full pointer-events-none"

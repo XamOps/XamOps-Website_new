@@ -8,7 +8,7 @@ export default function CTABanner({
 }) {
   const { setOpen } = useDemoModal();
   return (
-    <section className="sec-light py-16">
+    <section className="sec-light py-10 md:py-16">
       <div className="max-w-[1240px] mx-auto px-6 md:px-10">
         <div className="rounded-[32px] p-10 md:p-14 ring-soft relative overflow-hidden" style={{ background: 'var(--ivory)' }}>
           <div className="absolute -right-20 -bottom-20 w-[420px] h-[420px] rounded-full pointer-events-none"

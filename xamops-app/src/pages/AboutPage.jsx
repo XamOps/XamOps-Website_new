@@ -13,7 +13,7 @@ export default function AboutPage() {
       <PageHero eyebrow="About"
         title={[{ text: 'Built by' }, { text: 'Xammer Technologies.', accent: true }]}
         body="We believe cloud operations should be autonomous, not manual. Founded in Delhi in 2016, Xammer has spent a decade running DevOps platforms for global teams." cta={false} />
-      <section className="sec-light pb-24">
+      <section className="sec-light pb-12 md:pb-24">
         <div className="max-w-[1240px] mx-auto px-6 md:px-10 grid grid-cols-2 md:grid-cols-3 gap-px ring-soft rounded-2xl overflow-hidden" style={{ background: 'var(--rule)' }}>
           {[['10+','years'],['1,000+','projects shipped'],['180','engineers'],['99.9%','uptime SLA'],['40%','avg cost reduction'],['3','cloud providers']].map(([n, l]) => (
             <div key={l} className="p-5 md:p-7" style={{ background: 'var(--ivory)' }}>
@@ -23,7 +23,7 @@ export default function AboutPage() {
           ))}
         </div>
       </section>
-      <section className="sec-dark py-24">
+      <section className="sec-dark py-12 md:py-24">
         <div className="max-w-[1240px] mx-auto px-6 md:px-10">
           <div className="sec-label dark mb-5">Mission</div>
           <h2 className="serif text-[clamp(28px,4vw,52px)] leading-[1.06] max-w-[28ch]">
@@ -31,7 +31,7 @@ export default function AboutPage() {
           </h2>
         </div>
       </section>
-      <section className="sec-light py-24">
+      <section className="sec-light py-12 md:py-24">
         <div className="max-w-[1240px] mx-auto px-6 md:px-10">
           <div className="sec-label mb-6">Team</div>
           <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">

@@ -8,7 +8,7 @@ export default function FeatureSection({ index, eyebrow, title, body, dark, visu
   useReveal(ref);
   const { setOpen } = useDemoModal();
   return (
-    <section ref={ref} className={`relative py-12 ${dark ? 'sec-dark' : 'sec-light'}`}>
+    <section ref={ref} className={`relative py-8 md:py-12 ${dark ? 'sec-dark' : 'sec-light'}`}>
       <div className="max-w-[1240px] mx-auto px-6 md:px-10">
         <div className={`grid md:grid-cols-12 gap-10 items-center ${side === 'left' ? 'md:[&>*:first-child]:order-2' : ''}`}>
           <div className="md:col-span-5">

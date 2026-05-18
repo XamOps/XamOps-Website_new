@@ -24,24 +24,17 @@ export default function Nav() {
   useEffect(() => { setMobileOpen(false); setOpen(null); }, [pathname]);
 
   const platform = [
-    ['Spot Automation',   '/platform/spot-automation',  'AutoSpotting across AWS, GCP, Azure'],
-    ['Disk Rightsizing',  '/platform/disk-rightsizing', 'The only automated disk rightsizing'],
-    ['DBOps',             '/platform/dbops',            'Database operations on autopilot'],
-    ['SecOps',            '/platform/secops',           'Continuous posture and remediation'],
-    ['Cost Analytics',    '/platform/cost-analytics',   'Real-time savings dashboards'],
-    ['SRE Investigation', '/platform/sre',              'AI-assisted incident intelligence'],
+    { I: Icon.Spot,  name: 'Spot Automation',   to: '/platform/spot-automation',  desc: 'AutoSpotting across AWS, GCP, Azure' },
+    { I: Icon.Disk,  name: 'Disk Rightsizing',  to: '/platform/disk-rightsizing', desc: 'The only automated disk rightsizing' },
+    { I: Icon.DB,    name: 'DBOps',             to: '/platform/dbops',            desc: 'Database operations on autopilot' },
+    { I: Icon.Sec,   name: 'SecOps',            to: '/platform/secops',           desc: 'Continuous posture and remediation' },
+    { I: Icon.Cost,  name: 'Cost Analytics',    to: '/platform/cost-analytics',   desc: 'Real-time savings dashboards' },
+    { I: Icon.SRE,   name: 'SRE Investigation', to: '/platform/sre',              desc: 'AI-assisted incident intelligence' },
   ];
   const solutions = [
-    ['For DevOps Engineers', '/solutions/devops', "Ship, don't babysit"],
-    ['For FinOps Teams',     '/solutions/finops', 'Cut waste, prove savings'],
-    ['For SRE Teams',        '/solutions/sre',    'From alert to root cause, faster'],
-  ];
-  const navLinks = [
-    ['Platform',  '/platform'],
-    ['Solutions', '/solutions'],
-    ['Pricing',   '/pricing'],
-    ['About',     '/about'],
-    ['Blog',      '/blog'],
+    { I: Icon.Spot,  name: 'For DevOps Engineers', to: '/solutions/devops', desc: "Ship infrastructure, not scripts" },
+    { I: Icon.Cost,  name: 'For FinOps Teams',     to: '/solutions/finops', desc: 'Cut waste, prove savings' },
+    { I: Icon.SRE,   name: 'For SRE Teams',        to: '/solutions/sre',    desc: 'From alert to root cause, faster' },
   ];
 
   const isActive = (base) => pathname === base || pathname.startsWith(base + '/');
@@ -59,39 +52,36 @@ export default function Nav() {
           <Link to="/"><Logo /></Link>
 
           {/* Desktop nav */}
-          <nav className="hidden md:flex items-center gap-1 text-[16px]" style={{color:'var(--ink)'}}>
-            {[['Platform','/platform',platform],['Solutions','/solutions',solutions]].map(([label, base, items]) => (
+          <nav className="hidden md:flex items-center gap-1 text-[15px]" style={{color:'var(--ink)'}}>
+            {[['Platform','/platform',platform,true],['Solutions','/solutions',solutions,false]].map(([label, base, items, twoCol]) => (
               <div key={base} className="relative" onMouseEnter={() => setOpen(base)} onMouseLeave={() => setOpen(null)}>
                 <Link to={base} className={`px-3 py-2 rounded-md hover:bg-[var(--ivory-2)] flex items-center gap-1.5 ${isActive(base) ? 'font-medium' : ''}`}>
                   {label}
-                  <svg
-                    width="10" height="10" viewBox="0 0 10 10"
-                    style={{transition:'transform 0.2s ease', transform: open === base ? 'rotate(180deg)' : 'rotate(0deg)', flexShrink:0}}
-                  >
+                  <svg width="10" height="10" viewBox="0 0 10 10"
+                    style={{transition:'transform 0.2s ease', transform: open===base ? 'rotate(180deg)' : 'rotate(0deg)', flexShrink:0}}>
                     <path d="M2 3.5L5 6.5l3-3" stroke="currentColor" fill="none" strokeWidth="1.6" strokeLinecap="round"/>
                   </svg>
                 </Link>
-                {/* Always rendered — open/close via CSS transition */}
-                <div className={`nav-dd absolute left-0 top-full pt-3 z-50${open === base ? ' nav-dd--open' : ''}`}>
-                  <div className="nav-dd-panel rounded-2xl p-2 w-[420px]" style={{
-                    background: 'var(--ivory)',
-                    boxShadow: '0 0 0 1px var(--rule), 0 8px 40px -8px rgba(0,0,0,0.35)',
-                  }}>
-                    {items.map(([n, to, d]) => (
-                      <Link key={n} to={to} onClick={() => setOpen(null)}
-                        className="nav-dd-item flex items-start gap-3 px-3 py-3 rounded-xl"
-                        style={{textDecoration:'none', color:'inherit'}}
-                      >
-                        <div className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5"
-                          style={{background:'var(--parchment)', boxShadow:'0 0 0 1px var(--rule)'}}>
-                          <span className="w-2 h-2 rounded-full" style={{background:'var(--terracotta)'}}/>
-                        </div>
-                        <div>
-                          <div className="text-[14px] font-medium leading-snug">{n}</div>
-                          <div className="text-[12px] mt-0.5 leading-relaxed" style={{color:'var(--olive)'}}>{d}</div>
-                        </div>
-                      </Link>
-                    ))}
+                <div className={`nav-dd absolute left-0 top-full pt-3 z-50${open===base ? ' nav-dd--open' : ''}`}>
+                  <div className={`nav-dd-panel rounded-2xl p-2.5 ${twoCol ? 'w-[560px]' : 'w-[300px]'}`}
+                    style={{background:'var(--parchment)', boxShadow:'0 4px 6px -1px rgba(0,0,0,0.1), 0 20px 60px -10px rgba(0,0,0,0.35)'}}>
+                    <div className={twoCol ? 'grid grid-cols-2 gap-0.5' : 'flex flex-col gap-0.5'}>
+                      {items.map(({ I, name, to, desc }) => (
+                        <Link key={to} to={to} onClick={() => setOpen(null)}
+                          className="nav-dd-item flex items-start gap-3 px-3 py-3 rounded-xl"
+                          style={{textDecoration:'none', color:'inherit'}}
+                        >
+                          <div className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0"
+                            style={{background:'rgba(124,92,255,0.1)'}}>
+                            <I width="18" height="18" style={{color:'var(--terracotta)'}}/>
+                          </div>
+                          <div>
+                            <div className="text-[13px] font-semibold leading-snug" style={{color:'var(--terracotta)'}}>{name}</div>
+                            <div className="text-[12px] mt-0.5 leading-relaxed" style={{color:'var(--olive)'}}>{desc}</div>
+                          </div>
+                        </Link>
+                      ))}
+                    </div>
                   </div>
                 </div>
               </div>
@@ -156,18 +146,28 @@ export default function Nav() {
           <div className="px-5 py-6 space-y-1">
             {/* Platform group */}
             <div className="text-[11px] eyebrow mb-2 mt-2">Platform</div>
-            {platform.map(([n, to, d]) => (
-              <Link key={n} to={to} className="block py-3 border-b" style={{borderColor:'var(--rule)'}}>
-                <div className="text-[16px]" style={{color:'var(--ink)'}}>{n}</div>
-                <div className="text-[13px] mt-0.5" style={{color:'var(--olive)'}}>{d}</div>
+            {platform.map(({ I, name, to, desc }) => (
+              <Link key={to} to={to} className="flex items-center gap-3 py-3 border-b" style={{borderColor:'var(--rule)'}}>
+                <div className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0" style={{background:'rgba(124,92,255,0.1)'}}>
+                  <I width="16" height="16" style={{color:'var(--terracotta)'}}/>
+                </div>
+                <div>
+                  <div className="text-[15px]" style={{color:'var(--ink)'}}>{name}</div>
+                  <div className="text-[12px] mt-0.5" style={{color:'var(--olive)'}}>{desc}</div>
+                </div>
               </Link>
             ))}
 
             <div className="text-[11px] eyebrow mb-2 mt-5">Solutions</div>
-            {solutions.map(([n, to, d]) => (
-              <Link key={n} to={to} className="block py-3 border-b" style={{borderColor:'var(--rule)'}}>
-                <div className="text-[16px]" style={{color:'var(--ink)'}}>{n}</div>
-                <div className="text-[13px] mt-0.5" style={{color:'var(--olive)'}}>{d}</div>
+            {solutions.map(({ I, name, to, desc }) => (
+              <Link key={to} to={to} className="flex items-center gap-3 py-3 border-b" style={{borderColor:'var(--rule)'}}>
+                <div className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0" style={{background:'rgba(124,92,255,0.1)'}}>
+                  <I width="16" height="16" style={{color:'var(--terracotta)'}}/>
+                </div>
+                <div>
+                  <div className="text-[15px]" style={{color:'var(--ink)'}}>{name}</div>
+                  <div className="text-[12px] mt-0.5" style={{color:'var(--olive)'}}>{desc}</div>
+                </div>
               </Link>
             ))}
 

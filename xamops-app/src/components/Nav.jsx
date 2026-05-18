@@ -90,7 +90,7 @@ export default function Nav() {
             <a
               href="tel:+918769254249"
               aria-label="Call us"
-              className="w-8 h-8 flex items-center justify-center rounded-md transition-colors"
+              className="hidden md:flex w-8 h-8 items-center justify-center rounded-md transition-colors"
               style={{color:'var(--olive)', background:'transparent'}}
               onMouseEnter={e => e.currentTarget.style.background='var(--ivory)'}
               onMouseLeave={e => e.currentTarget.style.background='transparent'}

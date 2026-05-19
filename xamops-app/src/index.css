@@ -1,5 +1,42 @@
 @import "tailwindcss";
 
+/* ─── FONTS ─────────────────────────────────────────────── */
+@font-face {
+  font-family: "PP Monument Narrow Black";
+  src: url("https://framerusercontent.com/assets/9eBhcmCrMiGuz7yFR0Cu8aGcKpE.woff2") format("woff2");
+  font-weight: 800; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: "KMR Melange Grotesk Regular";
+  src: url("https://framerusercontent.com/assets/hllaZpm139lFB2xYBSFwoYutSN8.woff2") format("woff2");
+  font-weight: 400; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: "KMR Melange Grotesk Medium";
+  src: url("https://framerusercontent.com/assets/uS7AuZptFlZRJ1QH8UUOoJszBdo.woff2") format("woff2");
+  font-weight: 500; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: "PP Neue Montreal Regular";
+  src: url("https://framerusercontent.com/assets/8PI4Ik6jeJD3JcGCVnokJ8qB63c.woff2") format("woff2");
+  font-weight: 400; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: "PP Neue Montreal Medium";
+  src: url("https://framerusercontent.com/assets/NQc6IqMv9X6BGsBxDHbC7MnXYi8.woff2") format("woff2");
+  font-weight: 500; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: "PP Neue Montreal Bold";
+  src: url("https://framerusercontent.com/assets/Gg3XJ221BeOxSBCkTWb1BhAFANo.woff2") format("woff2");
+  font-weight: 700; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: "Fragment Mono";
+  src: url("https://fonts.gstatic.com/s/fragmentmono/v6/4iCr6K5wfMRRjxp0DA6-2CLnB45HhrUI.woff2") format("woff2");
+  font-weight: 400; font-style: normal; font-display: swap;
+}
+
 @theme {
   --color-background: #0b0d12;
   --color-foreground: #ecedf2;
@@ -18,6 +55,13 @@
 }
 
 :root {
+  --font-display: "PP Monument Narrow Black", "Arial Black", Impact, sans-serif;
+  --font-body:    "PP Neue Montreal Regular", Inter, system-ui, sans-serif;
+  --font-med:     "PP Neue Montreal Medium", Inter, sans-serif;
+  --font-bold:    "PP Neue Montreal Bold", Inter, sans-serif;
+  --font-serif:   "KMR Melange Grotesk Regular", Georgia, serif;
+  --font-mono:    "Fragment Mono", "JetBrains Mono", ui-monospace, monospace;
+
   --parchment:      #0b0d12;
   --ivory:          #11141b;
   --ivory-2:        #161a23;
@@ -57,7 +101,7 @@
 
 html, body { background: var(--parchment); color: var(--ink); }
 body {
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-family: var(--font-body);
   font-feature-settings: "ss01", "cv11";
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
@@ -66,8 +110,9 @@ body {
 
 #root { width: 100%; }
 
-.serif { font-family: Georgia, 'Times New Roman', serif; font-weight: 500; letter-spacing: -0.01em; }
-.mono  { font-family: 'JetBrains Mono', ui-monospace, monospace; }
+.serif { font-family: var(--font-serif); font-weight: 400; letter-spacing: -0.01em; }
+.mono  { font-family: var(--font-mono); }
+.display { font-family: var(--font-display); font-weight: 800; }
 
 .sec-light { background: var(--parchment); color: var(--ink); }
 .sec-card  { background: var(--ivory);     color: var(--ink); }
@@ -158,14 +203,14 @@ body {
 }
 
 .eyebrow {
-  font-family: 'JetBrains Mono', monospace;
+  font-family: var(--font-mono);
   font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase;
   color: var(--olive);
 }
 .eyebrow-dark { color: var(--olive); }
 
 @keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
-.ticker-track { animation: ticker 60s linear infinite; }
+.ticker-track { animation: ticker 30s linear infinite; }
 
 .mask-x {
   mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
@@ -216,6 +261,80 @@ body {
   background: var(--parchment);
 }
 
+/* ─── 1. FLOATING CARD ───────────────────────────────────── */
+@keyframes floatCard {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-6px); }
+}
+.float-card {
+  animation: floatCard 5s ease-in-out infinite;
+  will-change: transform;
+}
+
+/* ─── 2. TRUST TICKER (horizontal scroll) ────────────────── */
+/* uses existing .ticker-track + .mask-x */
+
+/* ─── 3. BAR FILL ON LOAD ────────────────────────────────── */
+/* uses existing @keyframes barGrow */
+.bar-fill {
+  transform-origin: left;
+  transform: scaleX(0);
+  animation: barGrow 1.4s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+/* ─── 4. PULSE DOT ───────────────────────────────────────── */
+.live-dot {
+  width: 7px; height: 7px; border-radius: 999px;
+  background: var(--moss);
+  box-shadow: 0 0 0 3px rgba(43,212,168,0.28);
+  animation: livePulse 2s ease-in-out infinite;
+  display: inline-block;
+  flex-shrink: 0;
+}
+@keyframes livePulse {
+  0%, 100% { box-shadow: 0 0 0 3px rgba(43,212,168,0.28); }
+  50%       { box-shadow: 0 0 0 9px rgba(43,212,168,0); }
+}
+
+/* ─── HERO WORD TICKER ───────────────────────────────────── */
+.hero-ticker-wrap {
+  display: inline-block;
+  overflow: hidden;
+  /* font-size + descender room — same height as before */
+  height: clamp(54px, 14.08vw, 189px);
+  vertical-align: top;
+}
+
+.hero-ticker-inner {
+  display: flex;
+  flex-direction: column;
+}
+
+.hero-ticker-inner span {
+  display: block;
+  flex-shrink: 0;
+  line-height: 1;
+  /*
+    padding-bottom creates a gap between words so the next word
+    stays hidden while the current word's descenders are visible.
+    Must be >= descender room above (0.28em) so the next word
+    never bleeds into the wrapper's extra height.
+  */
+  padding-bottom: 0.35em;
+}
+
+.ticker-animate {
+  animation: heroTick 4.8s cubic-bezier(0.76, 0, 0.24, 1) infinite;
+}
+
+@keyframes heroTick {
+  0%,  18% { transform: translateY(0%); }
+  25%, 43% { transform: translateY(-25%); }
+  50%, 68% { transform: translateY(-50%); }
+  75%, 93% { transform: translateY(-75%); }
+  100%     { transform: translateY(0%); }
+}
+
 @keyframes fadeSlideUp {
   from { opacity: 0; transform: translateY(10px); }
   to   { opacity: 1; transform: translateY(0); }
@@ -238,13 +357,7 @@ html { scroll-behavior: smooth; }
 [data-theme="light"] ::-webkit-scrollbar-thumb { background: #c0bebb; }
 [data-theme="light"] ::-webkit-scrollbar-thumb:hover { background: #a8a5a2; }
 
-.live-dot {
-  width: 6px; height: 6px; border-radius: 999px;
-  background: var(--moss); box-shadow: 0 0 0 3px rgba(43,212,168,0.22);
-  animation: pulse 1.8s ease-in-out infinite;
-  display: inline-block;
-}
-@keyframes pulse { 50% { box-shadow: 0 0 0 6px rgba(43,212,168,0); } }
+/* .live-dot defined above with enhanced livePulse animation */
 
 .nav-blur { backdrop-filter: blur(12px) saturate(140%); -webkit-backdrop-filter: blur(12px) saturate(140%); }
 
@@ -253,7 +366,7 @@ html { scroll-behavior: smooth; }
   padding: 6px 10px; border-radius: 999px;
   font-size: 12px; box-shadow: 0 0 0 1px var(--rule);
   display: inline-flex; align-items: center; gap: 6px;
-  font-family: 'JetBrains Mono', monospace;
+  font-family: var(--font-mono);
 }
 
 .ulink { position: relative; }
@@ -268,7 +381,7 @@ html { scroll-behavior: smooth; }
 .sec-label {
   display: inline-flex; align-items: center; gap: 8px;
   padding: 5px 12px; border-radius: 999px;
-  font-family: 'JetBrains Mono', monospace; font-size: 13px;
+  font-family: var(--font-mono); font-size: 13px;
   letter-spacing: 0.14em; text-transform: uppercase;
   box-shadow: 0 0 0 1px var(--rule-dark); color: var(--ink-2);
   background: var(--ivory);
@@ -286,7 +399,7 @@ html { scroll-behavior: smooth; }
 
 :focus-visible { outline: 2px solid var(--terracotta); outline-offset: 2px; border-radius: 4px; }
 
-.big-num { font-family: Georgia, serif; font-weight: 500; letter-spacing: -0.04em; }
+.big-num { font-family: var(--font-display); font-weight: 800; letter-spacing: -0.04em; }
 
 .hs-track {
   scroll-snap-type: x mandatory;

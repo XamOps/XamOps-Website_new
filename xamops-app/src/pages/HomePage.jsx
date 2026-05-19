@@ -76,9 +76,18 @@ function Hero() {
           <span className="live-dot"/> Now in private beta · v1.0
         </div>
 
-        <h1 className="serif text-[clamp(42px,11vw,148px)] leading-[0.95] tracking-tight max-w-[14ch]">
+        <h1 className="serif text-[clamp(42px,11vw,148px)] leading-[0.95] tracking-tight">
           <div className="reveal-line"><span className="hero-line">The Cognitive</span></div>
-          <div className="reveal-line"><span className="hero-line" style={{color:'var(--terracotta)'}}>Cloud Operating</span></div>
+          <div style={{lineHeight:0.95, whiteSpace:'nowrap'}}>
+            <span>Cloud </span><span className="hero-ticker-wrap">
+              <span className="hero-ticker-inner ticker-animate" style={{color:'var(--terracotta)'}}>
+                <span>Operating</span>
+                <span>Automating</span>
+                <span>Optimizing</span>
+                <span>Governing</span>
+              </span>
+            </span>
+          </div>
           <div className="reveal-line"><span className="hero-line">System.</span></div>
         </h1>
 
@@ -91,7 +100,7 @@ function Hero() {
           <a href="https://live.xamops.com" className="btn-dark">Sign in <Icon.Arrow width="14" height="14"/></a>
         </div>
 
-        <div className="hero-strip mt-10 md:mt-16 ring-soft rounded-[20px] md:rounded-[28px] overflow-x-auto" style={{background:'var(--ivory)'}}>
+        <div className="hero-strip float-card mt-10 md:mt-16 ring-soft rounded-[20px] md:rounded-[28px] overflow-x-auto" style={{background:'var(--ivory)'}}>
           <div className="flex items-center justify-between px-5 py-3 border-b" style={{borderColor:'var(--rule)'}}>
             <div className="flex items-center gap-2">
               <span className="w-2.5 h-2.5 rounded-full" style={{background:'#ff6b6b'}}/>
@@ -112,13 +121,16 @@ function Hero() {
                   ['Disk Rightsizing', 22],
                   ['Reservation Coverage', 7],
                   ['DBOps', 3],
-                ].map(([n, v]) => (
+                ].map(([n, v], i) => (
                   <div key={n}>
                     <div className="flex items-center justify-between text-[12px]">
                       <span>{n}</span><span className="mono" style={{color:'var(--olive)'}}>{v}%</span>
                     </div>
-                    <div className="h-1 rounded-full mt-1" style={{background:'var(--rule)'}}>
-                      <div className="h-1 rounded-full" style={{width:`${v}%`, background:'var(--terracotta)'}}/>
+                    <div className="h-1 rounded-full mt-1 overflow-hidden" style={{background:'var(--rule)'}}>
+                      <div
+                        className="h-1 rounded-full bar-fill"
+                        style={{width:`${v}%`, background:'var(--terracotta)', animationDelay:`${0.6 + i * 0.18}s`}}
+                      />
                     </div>
                   </div>
                 ))}

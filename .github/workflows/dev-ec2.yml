@@ -45,24 +45,24 @@ jobs:
         run: |
           rsync -avz --delete \
             -e "ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=accept-new" \
-            xamops-app/dist/ ec2-user@${{ secrets.EC2_HOST }}:~/XamOps-Website_new/dist/
+            xamops-app/dist/ ec2-user@${{ secrets.SSH_HOST }}:~/XamOps-Website_new/dist/
 
       # ── 6. Set correct file permissions ────────────────────────────────────
       - name: Set file permissions on EC2
         run: |
-          ssh -i ~/.ssh/deploy_key ec2-user@${{ secrets.EC2_HOST }} \
+          ssh -i ~/.ssh/deploy_key ec2-user@${{ secrets.SSH_HOST }} \
             "chmod -R 755 ~/XamOps-Website_new/dist/"
 
       # ── 7. Reload Nginx (no downtime) ──────────────────────────────────────
       - name: Reload Nginx
         run: |
-          ssh -i ~/.ssh/deploy_key ec2-user@${{ secrets.EC2_HOST }} \
+          ssh -i ~/.ssh/deploy_key ec2-user@${{ secrets.SSH_HOST }} \
             "sudo nginx -t && sudo systemctl reload nginx"
 
       # ── 8. Verify deployment ───────────────────────────────────────────────
       - name: Verify deployment
         run: |
-          ssh -i ~/.ssh/deploy_key ec2-user@${{ secrets.EC2_HOST }} << 'EOF'
+          ssh -i ~/.ssh/deploy_key ec2-user@${{ secrets.SSH_HOST }} << 'EOF'
             echo "====== Nginx Status ======"
             sudo systemctl status nginx --no-pager | head -10
 

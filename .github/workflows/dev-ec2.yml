@@ -1,4 +1,4 @@
-name: Deploy  XamOps Website to EC2
+name: Deploy XamOps Website to EC2
 
 on:
   push:
@@ -11,43 +11,66 @@ jobs:
     timeout-minutes: 30
 
     steps:
+      # ── 1. Checkout ────────────────────────────────────────────────────────
       - name: Checkout code
         uses: actions/checkout@v4
-        
+
+      # ── 2. Node Setup ──────────────────────────────────────────────────────
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-            node-version: '20'
+          node-version: '20'
 
+      # ── 3. Install & Build ─────────────────────────────────────────────────
       - name: Install dependencies
         run: |
-         cd xamops-app
-         npm install
+          cd xamops-app
+          npm ci
 
       - name: Build
         run: |
-         cd xamops-app
-         npm run build
+          cd xamops-app
+          npm run build
 
+      # ── 4. SSH Setup ───────────────────────────────────────────────────────
       - name: Setup SSH key
         run: |
           mkdir -p ~/.ssh
           echo "${{ secrets.SSH_KEY }}" > ~/.ssh/deploy_key
           chmod 600 ~/.ssh/deploy_key
-          ssh-keyscan -H 18.61.83.164  >> ~/.ssh/known_hosts 2>/dev/null || true
+          ssh-keyscan -H ${{ secrets.EC2_HOST }} >> ~/.ssh/known_hosts 2>/dev/null || true
 
+      # ── 5. Sync dist to EC2 ────────────────────────────────────────────────
       - name: Deploy dist to EC2
         run: |
           rsync -avz --delete \
             -e "ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=accept-new" \
-           xamops-app/dist/ ec2-user@18.61.83.164:~/XamOps-Website_new/dist/ 
+            xamops-app/dist/ ec2-user@${{ secrets.EC2_HOST }}:~/XamOps-Website_new/dist/
 
-      - name: Restart server
+      # ── 6. Set correct file permissions ────────────────────────────────────
+      - name: Set file permissions on EC2
         run: |
-          ssh -i ~/.ssh/deploy_key ec2-user@18.61.83.164  \
-            "cd ~/deploy-scripts && bash deploy.sh restart-only"
+          ssh -i ~/.ssh/deploy_key ec2-user@${{ secrets.EC2_HOST }} \
+            "chmod -R 755 ~/XamOps-Website_new/dist/"
 
-      - name: Check deployment log
+      # ── 7. Reload Nginx (no downtime) ──────────────────────────────────────
+      - name: Reload Nginx
         run: |
-          ssh -i ~/.ssh/deploy_key ec2-user@18.61.83.164  "tail -5 ~/deploy-scripts/deploy.log"
+          ssh -i ~/.ssh/deploy_key ec2-user@${{ secrets.EC2_HOST }} \
+            "sudo nginx -t && sudo systemctl reload nginx"
 
+      # ── 8. Verify deployment ───────────────────────────────────────────────
+      - name: Verify deployment
+        run: |
+          ssh -i ~/.ssh/deploy_key ec2-user@${{ secrets.EC2_HOST }} << 'EOF'
+            echo "====== Nginx Status ======"
+            sudo systemctl status nginx --no-pager | head -10
+
+            echo ""
+            echo "====== Latest dist files ======"
+            ls -lht ~/XamOps-Website_new/dist/ | head -10
+
+            echo ""
+            echo "====== index.html preview ======"
+            head -5 ~/XamOps-Website_new/dist/index.html
+          EOF

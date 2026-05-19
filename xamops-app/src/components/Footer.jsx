@@ -10,7 +10,7 @@ export default function Footer() {
           <div className="col-span-12 md:col-span-4">
             <Logo size={26}/>
             <p className="mt-4 text-[14px] md:text-[15px] max-w-[36ch]" style={{color:'var(--olive)'}}>
-              The Cognitive Cloud Operating System. Built by Xammer Technologies in Delhi.
+              The Cognitive Cloud Operating System.
             </p>
             <div className="mt-5 flex items-center gap-3">
               <button onClick={() => setOpen(true)} className="btn-primary">Book demo</button>
@@ -31,7 +31,7 @@ export default function Footer() {
           ))}
         </div>
         <div className="pt-6 md:pt-8 flex flex-wrap items-center justify-between gap-3 text-[11px] md:text-[12px] mono" style={{color:'var(--ink-2)'}}>
-          <div>© 2026 Xammer Technologies · xamops.com</div>
+          <div>© 2026 Xamops · xamops.com</div>
           <div className="flex items-center gap-5 md:gap-6">
             <a href="#">Terms</a><a href="#">Privacy</a><a href="#">Status</a>
           </div>

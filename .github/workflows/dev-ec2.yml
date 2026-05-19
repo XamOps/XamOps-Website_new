@@ -40,37 +40,37 @@ jobs:
           chmod 600 ~/.ssh/deploy_key
           ssh-keyscan -H ${{ secrets.EC2_HOST }} >> ~/.ssh/known_hosts 2>/dev/null || true
 
-      # ── 5. Sync dist to EC2 ────────────────────────────────────────────────
+      # ── 5. Sync dist directly to Nginx web root ────────────────────────────
       - name: Deploy dist to EC2
         run: |
           rsync -avz --delete \
             -e "ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=accept-new" \
-            xamops-app/dist/ ec2-user@${{ secrets.SSH_HOST }}:~/XamOps-Website_new/dist/
+            xamops-app/dist/ ec2-user@${{ secrets.EC2_HOST }}:/usr/share/nginx/html/
 
       # ── 6. Set correct file permissions ────────────────────────────────────
       - name: Set file permissions on EC2
         run: |
-          ssh -i ~/.ssh/deploy_key ec2-user@${{ secrets.SSH_HOST }} \
-            "chmod -R 755 ~/XamOps-Website_new/dist/"
+          ssh -i ~/.ssh/deploy_key ec2-user@${{ secrets.EC2_HOST }} \
+            "sudo chmod -R 755 /usr/share/nginx/html/"
 
       # ── 7. Reload Nginx (no downtime) ──────────────────────────────────────
       - name: Reload Nginx
         run: |
-          ssh -i ~/.ssh/deploy_key ec2-user@${{ secrets.SSH_HOST }} \
+          ssh -i ~/.ssh/deploy_key ec2-user@${{ secrets.EC2_HOST }} \
             "sudo nginx -t && sudo systemctl reload nginx"
 
       # ── 8. Verify deployment ───────────────────────────────────────────────
       - name: Verify deployment
         run: |
-          ssh -i ~/.ssh/deploy_key ec2-user@${{ secrets.SSH_HOST }} << 'EOF'
+          ssh -i ~/.ssh/deploy_key ec2-user@${{ secrets.EC2_HOST }} << 'EOF'
             echo "====== Nginx Status ======"
             sudo systemctl status nginx --no-pager | head -10
 
             echo ""
-            echo "====== Latest dist files ======"
-            ls -lht ~/XamOps-Website_new/dist/ | head -10
+            echo "====== Files in Nginx root ======"
+            ls -lht /usr/share/nginx/html/ | head -10
 
             echo ""
             echo "====== index.html preview ======"
-            head -5 ~/XamOps-Website_new/dist/index.html
+            head -5 /usr/share/nginx/html/index.html
           EOF

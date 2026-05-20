@@ -20,6 +20,8 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: xamops-app/package-lock.json
 
       # ── 3. Install & Build ─────────────────────────────────────────────────
       - name: Install dependencies
@@ -32,7 +34,16 @@ jobs:
           cd xamops-app
           npm run build
 
-      # ── 4. SSH Setup ───────────────────────────────────────────────────────
+      # ── 4. Verify build output exists ──────────────────────────────────────
+      - name: Verify build output
+        run: |
+          echo "====== Build Output Files ======"
+          ls -lh xamops-app/dist/
+          echo ""
+          echo "====== index.html preview ======"
+          head -10 xamops-app/dist/index.html
+
+      # ── 5. SSH Setup ───────────────────────────────────────────────────────
       - name: Setup SSH key
         run: |
           mkdir -p ~/.ssh
@@ -40,37 +51,72 @@ jobs:
           chmod 600 ~/.ssh/deploy_key
           ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts 2>/dev/null || true
 
-      # ── 5. Sync dist directly to Nginx web root ────────────────────────────
+      # ── 6. Clear old files on EC2 (prevents stale file issues) ────────────
+      - name: Clear old deployment on EC2
+        run: |
+          ssh -i ~/.ssh/deploy_key \
+            -o StrictHostKeyChecking=accept-new \
+            ec2-user@${{ secrets.SSH_HOST }} \
+            "sudo rm -rf /usr/share/nginx/html/* && sudo mkdir -p /usr/share/nginx/html/"
+
+      # ── 7. Sync dist directly to Nginx web root ────────────────────────────
       - name: Deploy dist to EC2
         run: |
           rsync -avz --delete \
+            --checksum \
             -e "ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=accept-new" \
-            xamops-app/dist/ ec2-user@${{ secrets.SSH_HOST }}:/usr/share/nginx/html/
+            xamops-app/dist/ \
+            ec2-user@${{ secrets.SSH_HOST }}:/usr/share/nginx/html/
 
-      # ── 6. Set correct file permissions ────────────────────────────────────
+      # ── 8. Set correct file permissions ────────────────────────────────────
       - name: Set file permissions on EC2
         run: |
-          ssh -i ~/.ssh/deploy_key ec2-user@${{ secrets.SSH_HOST }} \
-            "sudo chmod -R 755 /usr/share/nginx/html/"
+          ssh -i ~/.ssh/deploy_key \
+            -o StrictHostKeyChecking=accept-new \
+            ec2-user@${{ secrets.SSH_HOST }} \
+            "sudo chown -R nginx:nginx /usr/share/nginx/html/ 2>/dev/null || sudo chown -R ec2-user:ec2-user /usr/share/nginx/html/; \
+             sudo chmod -R 755 /usr/share/nginx/html/"
 
-      # ── 7. Reload Nginx (no downtime) ──────────────────────────────────────
-      - name: Reload Nginx
+      # ── 9. Disable Nginx cache & Reload (no downtime) ─────────────────────
+      - name: Configure cache headers & Reload Nginx
         run: |
-          ssh -i ~/.ssh/deploy_key ec2-user@${{ secrets.SSH_HOST }} \
-            "sudo nginx -t && sudo systemctl reload nginx"
+          ssh -i ~/.ssh/deploy_key \
+            -o StrictHostKeyChecking=accept-new \
+            ec2-user@${{ secrets.SSH_HOST }} << 'ENDSSH'
+            # Write a no-cache snippet for HTML files
+            sudo tee /etc/nginx/conf.d/no-cache.conf > /dev/null << 'EOF'
+            # Disable caching for HTML so browsers always fetch fresh content
+            map $sent_http_content_type $expires {
+                default                    off;
+                text/html                  epoch;
+                text/css                   max;
+                application/javascript     max;
+                ~image/                    max;
+            }
+            EOF
 
-      # ── 8. Verify deployment ───────────────────────────────────────────────
+            # Test config and reload
+            sudo nginx -t && sudo systemctl reload nginx
+            echo "Nginx reloaded successfully."
+          ENDSSH
+
+      # ── 10. Verify deployment ──────────────────────────────────────────────
       - name: Verify deployment
         run: |
-          ssh -i ~/.ssh/deploy_key ec2-user@${{ secrets.SSH_HOST }} << 'EOF'
+          ssh -i ~/.ssh/deploy_key \
+            -o StrictHostKeyChecking=accept-new \
+            ec2-user@${{ secrets.SSH_HOST }} << 'EOF'
             echo "====== Nginx Status ======"
             sudo systemctl status nginx --no-pager | head -10
-
             echo ""
-            echo "====== Files in Nginx root ======"
-            ls -lht /usr/share/nginx/html/ | head -10
-
+            echo "====== Files in Nginx root (newest first) ======"
+            ls -lht /usr/share/nginx/html/ | head -15
             echo ""
             echo "====== index.html preview ======"
-            head -5 /usr/share/nginx/html/index.html
+            head -10 /usr/share/nginx/html/index.html
+            echo ""
+            echo "====== Nginx config test ======"
+            sudo nginx -t
+            echo ""
+            echo "✅ Deployment complete!"
           EOF

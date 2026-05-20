@@ -31,13 +31,9 @@ gsap.registerPlugin(ScrollTrigger);
 
 export default function App() {
   const location = useLocation();
-  const firstRun = useRef(true);
   const [demoOpen, setDemoOpen] = useState(false);
 
   useEffect(() => {
-    if (!firstRun.current) {
-      ScrollTrigger.getAll().forEach(t => t.kill());
-    }
     firstRun.current = false;
     window.scrollTo(0, 0);
     let canceled = false;

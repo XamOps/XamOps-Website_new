@@ -34,12 +34,9 @@ export default function App() {
   const [demoOpen, setDemoOpen] = useState(false);
 
   useEffect(() => {
-    firstRun.current = false;
     window.scrollTo(0, 0);
-    let canceled = false;
-    document.fonts.ready.then(() => { if (!canceled) ScrollTrigger.refresh(); });
-    const fallback = setTimeout(() => { if (!canceled) ScrollTrigger.refresh(); }, 1000);
-    return () => { canceled = true; clearTimeout(fallback); };
+    const raf = requestAnimationFrame(() => ScrollTrigger.refresh());
+    return () => cancelAnimationFrame(raf);
   }, [location.pathname]);
 
   return (

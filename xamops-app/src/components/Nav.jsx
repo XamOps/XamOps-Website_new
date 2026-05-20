@@ -2,8 +2,8 @@ import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import Logo from './Logo';
 import { Icon } from './Icons';
-import useTheme from '../hooks/useTheme';
 import { useDemoModal } from '../lib/demoModal';
+import { AnimatedThemeToggler } from './AnimatedThemeToggler';
 
 export default function Nav() {
   const [open, setOpen] = useState(null);
@@ -11,8 +11,6 @@ export default function Nav() {
   const [scrolled, setScrolled] = useState(false);
   const { setOpen: openDemo } = useDemoModal();
   const { pathname } = useLocation();
-  const [theme, toggleTheme] = useTheme();
-
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
     onScroll();
@@ -106,18 +104,12 @@ export default function Nav() {
             >
               <Icon.Phone width="15" height="15" />
             </a>
-            <button
-              onClick={toggleTheme}
-              aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+            <AnimatedThemeToggler
               className="w-8 h-8 flex items-center justify-center rounded-md transition-colors"
               style={{color:'var(--olive)', background:'transparent'}}
               onMouseEnter={e => e.currentTarget.style.background='var(--ivory)'}
               onMouseLeave={e => e.currentTarget.style.background='transparent'}
-            >
-              {theme === 'dark'
-                ? <Icon.Sun  width="16" height="16" />
-                : <Icon.Moon width="16" height="16" />}
-            </button>
+            />
             <button onClick={() => openDemo(true)} className="hidden md:inline-flex btn-primary text-[13px] px-4 py-2.5">Book Demo</button>
             <a href="https://live.xamops.com" className="hidden md:inline-flex btn-dark text-[13px] px-4 py-2.5">Sign In <Icon.Arrow width="13" height="13"/></a>
             {/* Hamburger — mobile only */}
@@ -187,9 +179,10 @@ export default function Nav() {
               <a href="tel:+918769254249" className="flex items-center justify-center gap-2 py-3 text-[14px] rounded-lg" style={{color:'var(--olive)', background:'var(--ivory)'}}>
                 <Icon.Phone width="15" height="15"/> +91 87692 54249
               </a>
-              <button onClick={toggleTheme} className="flex items-center justify-center gap-2 py-3 text-[14px] rounded-lg" style={{color:'var(--olive)', background:'var(--ivory)'}}>
-                {theme === 'dark' ? <><Icon.Sun width="15" height="15"/> Light mode</> : <><Icon.Moon width="15" height="15"/> Dark mode</>}
-              </button>
+              <AnimatedThemeToggler
+                className="flex items-center justify-center gap-2 py-3 text-[14px] rounded-lg w-full"
+                style={{color:'var(--olive)', background:'var(--ivory)'}}
+              />
             </div>
           </div>
         </div>

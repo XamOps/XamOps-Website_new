@@ -13,14 +13,14 @@ export default function useReveal(ref, opts = {}) {
       if (lines.length) {
         gsap.fromTo(lines, { y: '110%' }, {
           y: '0%', duration: 1.05, ease: 'power3.out', stagger: 0.08,
-          scrollTrigger: { trigger: ref.current, start: opts.start || 'top 82%', invalidateOnRefresh: true }
+          scrollTrigger: { trigger: ref.current, start: opts.start || 'top 82%', once: true }
         });
       }
       const fades = ref.current.querySelectorAll('[data-fade]');
       if (fades.length) {
         gsap.fromTo(fades, { y: 24, opacity: 0 }, {
           y: 0, opacity: 1, duration: 0.9, ease: 'power3.out', stagger: 0.08,
-          scrollTrigger: { trigger: ref.current, start: opts.start || 'top 82%', invalidateOnRefresh: true }
+          scrollTrigger: { trigger: ref.current, start: opts.start || 'top 82%', once: true }
         });
       }
     }, ref);

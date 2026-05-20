@@ -258,6 +258,7 @@ export const GridScan = ({
 
   const MAX_SCANS = 8;
   const scanStartsRef = useRef([]);
+  const visibleRef = useRef(true);
 
   const pushScan = t => {
     const arr = scanStartsRef.current.slice();
@@ -333,7 +334,7 @@ export const GridScan = ({
 
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
     rendererRef.current = renderer;
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5));
     renderer.setSize(container.clientWidth, container.clientHeight);
     renderer.outputColorSpace = THREE.SRGBColorSpace;
     renderer.toneMapping = THREE.NoToneMapping;
@@ -405,6 +406,10 @@ export const GridScan = ({
 
     let last = performance.now();
     const tick = () => {
+      if (!visibleRef.current) {
+        rafRef.current = null;
+        return;
+      }
       const now = performance.now();
       const dt = Math.max(0, Math.min(0.1, (now - last) / 1000));
       last = now;
@@ -428,7 +433,18 @@ export const GridScan = ({
     };
     rafRef.current = requestAnimationFrame(tick);
 
+    const io = new IntersectionObserver(([entry]) => {
+      const wasVisible = visibleRef.current;
+      visibleRef.current = entry.isIntersecting;
+      if (entry.isIntersecting && !wasVisible && !rafRef.current) {
+        last = performance.now();
+        rafRef.current = requestAnimationFrame(tick);
+      }
+    }, { threshold: 0 });
+    io.observe(container);
+
     return () => {
+      io.disconnect();
       if (rafRef.current) cancelAnimationFrame(rafRef.current);
       window.removeEventListener('resize', onResize);
       material.dispose();

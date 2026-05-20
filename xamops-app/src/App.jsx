@@ -52,7 +52,7 @@ export default function App() {
       <MetaManager />
       <Nav />
       <main key={location.pathname}>
-        <Suspense fallback={null}>
+        <Suspense fallback={<div style={{minHeight:'100vh'}}/>}>
         <Routes>
           <Route path="/"                          element={<HomePage />} />
           <Route path="/platform"                  element={<PlatformPage />} />

@@ -107,7 +107,9 @@ export function AnimatedThemeToggler({
   fromCenter = false,
   ...props
 }) {
-  const [isDark, setIsDark] = useState(false)
+  const [isDark, setIsDark] = useState(
+    () => document.documentElement.classList.contains('dark')
+  )
   const buttonRef = useRef(null)
 
   useEffect(() => {
@@ -143,9 +145,9 @@ export function AnimatedThemeToggler({
     )
 
     const applyTheme = () => {
-      const newTheme = !isDark
-      document.documentElement.classList.toggle('dark', newTheme)
-      localStorage.setItem('xamops-theme', newTheme ? 'dark' : 'light')
+      const currentlyDark = document.documentElement.classList.contains('dark')
+      document.documentElement.classList.toggle('dark', !currentlyDark)
+      localStorage.setItem('xamops-theme', !currentlyDark ? 'dark' : 'light')
     }
 
     if (typeof document.startViewTransition !== 'function') {
@@ -192,7 +194,7 @@ export function AnimatedThemeToggler({
         )
       })
     }
-  }, [variant, fromCenter, duration, isDark])
+  }, [variant, fromCenter, duration])
 
   return (
     <button

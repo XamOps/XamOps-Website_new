@@ -51,53 +51,67 @@ jobs:
           chmod 600 ~/.ssh/deploy_key
           ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts 2>/dev/null || true
 
-      # ── 6. Clear old files on EC2 (prevents stale file issues) ────────────
-      - name: Clear old deployment on EC2
+      # ── 6. Prepare temp deploy folder (ec2-user owns it, no sudo needed) ──
+      - name: Prepare temp folder on EC2
         run: |
           ssh -i ~/.ssh/deploy_key \
             -o StrictHostKeyChecking=accept-new \
             ec2-user@${{ secrets.SSH_HOST }} \
-            "sudo rm -rf /usr/share/nginx/html/* && sudo mkdir -p /usr/share/nginx/html/"
+            "rm -rf /home/ec2-user/deploy_tmp && mkdir -p /home/ec2-user/deploy_tmp"
 
-      # ── 7. Sync dist directly to Nginx web root ────────────────────────────
-      - name: Deploy dist to EC2
+      # ── 7. Rsync to temp folder (no permission issues) ─────────────────────
+      - name: Deploy dist to EC2 (temp folder)
         run: |
-          rsync -avz --delete \
-            --checksum \
+          rsync -avz --checksum --delete \
             -e "ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=accept-new" \
             xamops-app/dist/ \
-            ec2-user@${{ secrets.SSH_HOST }}:/usr/share/nginx/html/
+            ec2-user@${{ secrets.SSH_HOST }}:/home/ec2-user/deploy_tmp/
 
-      # ── 8. Set correct file permissions ────────────────────────────────────
-      - name: Set file permissions on EC2
+      # ── 8. Move temp → Nginx root with sudo, fix ownership & permissions ───
+      - name: Swap into Nginx root & set permissions
         run: |
           ssh -i ~/.ssh/deploy_key \
             -o StrictHostKeyChecking=accept-new \
-            ec2-user@${{ secrets.SSH_HOST }} \
-            "sudo chown -R nginx:nginx /usr/share/nginx/html/ 2>/dev/null || sudo chown -R ec2-user:ec2-user /usr/share/nginx/html/; \
-             sudo chmod -R 755 /usr/share/nginx/html/"
+            ec2-user@${{ secrets.SSH_HOST }} << 'ENDSSH'
+            set -e
 
-      # ── 9. Disable Nginx cache & Reload (no downtime) ─────────────────────
+            echo ">> Clearing old Nginx root..."
+            sudo rm -rf /usr/share/nginx/html/*
+
+            echo ">> Copying new build into Nginx root..."
+            sudo cp -r /home/ec2-user/deploy_tmp/. /usr/share/nginx/html/
+
+            echo ">> Setting ownership and permissions..."
+            sudo chown -R root:root /usr/share/nginx/html/
+            sudo chmod -R 755 /usr/share/nginx/html/
+
+            echo ">> Cleaning up temp folder..."
+            rm -rf /home/ec2-user/deploy_tmp
+
+            echo "✅ Files in place."
+          ENDSSH
+
+      # ── 9. Add no-cache headers for HTML & Reload Nginx ───────────────────
       - name: Configure cache headers & Reload Nginx
         run: |
           ssh -i ~/.ssh/deploy_key \
             -o StrictHostKeyChecking=accept-new \
             ec2-user@${{ secrets.SSH_HOST }} << 'ENDSSH'
-            # Write a no-cache snippet for HTML files
+            set -e
+
             sudo tee /etc/nginx/conf.d/no-cache.conf > /dev/null << 'EOF'
-            # Disable caching for HTML so browsers always fetch fresh content
-            map $sent_http_content_type $expires {
+            map $sent_http_content_type $cache_expires {
                 default                    off;
                 text/html                  epoch;
                 text/css                   max;
                 application/javascript     max;
                 ~image/                    max;
             }
+            expires $cache_expires;
             EOF
 
-            # Test config and reload
             sudo nginx -t && sudo systemctl reload nginx
-            echo "Nginx reloaded successfully."
+            echo "✅ Nginx reloaded."
           ENDSSH
 
       # ── 10. Verify deployment ──────────────────────────────────────────────
@@ -118,5 +132,5 @@ jobs:
             echo "====== Nginx config test ======"
             sudo nginx -t
             echo ""
-            echo "✅ Deployment complete!"
+            echo "✅ Deployment verified!"
           EOF

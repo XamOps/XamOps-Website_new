@@ -34,6 +34,8 @@ export default function App() {
   const [demoOpen, setDemoOpen] = useState(false);
 
   useEffect(() => {
+    setDemoOpen(false);
+    document.body.style.overflow = '';
     window.scrollTo(0, 0);
     const raf = requestAnimationFrame(() => ScrollTrigger.refresh());
     return () => cancelAnimationFrame(raf);

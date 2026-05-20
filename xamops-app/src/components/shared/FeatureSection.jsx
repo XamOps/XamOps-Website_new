@@ -1,9 +1,10 @@
 import { useRef } from 'react';
+import { Link } from 'react-router-dom';
 import { Icon } from '../Icons';
 import useReveal from '../../hooks/useReveal';
 import { useDemoModal } from '../../lib/demoModal';
 
-export default function FeatureSection({ index, eyebrow, title, body, dark, visual, side = 'right', metric }) {
+export default function FeatureSection({ index, eyebrow, title, body, dark, visual, side = 'right', metric, to }) {
   const ref = useRef();
   useReveal(ref);
   const { setOpen } = useDemoModal();
@@ -32,7 +33,9 @@ export default function FeatureSection({ index, eyebrow, title, body, dark, visu
               </div>
             )}
             <div data-fade className="mt-8 flex gap-3">
-              <a href="#" className={dark ? 'btn-ghost-dark' : 'btn-ghost'}>Learn more <Icon.Arrow width="14" height="14"/></a>
+              {to
+                ? <Link to={to} className={dark ? 'btn-ghost-dark' : 'btn-ghost'}>Learn more <Icon.Arrow width="14" height="14"/></Link>
+                : <a href="#" className={dark ? 'btn-ghost-dark' : 'btn-ghost'}>Learn more <Icon.Arrow width="14" height="14"/></a>}
               <button onClick={() => setOpen(true)} className="btn-primary">Book demo</button>
             </div>
           </div>

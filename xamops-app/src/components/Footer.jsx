@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import Logo from './Logo';
 import { useDemoModal } from '../lib/demoModal';
 
@@ -14,7 +15,7 @@ export default function Footer() {
             </p>
             <div className="mt-5 flex items-center gap-3">
               <button onClick={() => setOpen(true)} className="btn-primary">Book demo</button>
-              <a href="/contact" className="btn-ghost-dark">Contact</a>
+              <Link to="/contact" className="btn-ghost-dark">Contact</Link>
             </div>
           </div>
           {[

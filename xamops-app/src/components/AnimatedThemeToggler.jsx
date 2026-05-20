@@ -146,8 +146,10 @@ export function AnimatedThemeToggler({
 
     const applyTheme = () => {
       const currentlyDark = document.documentElement.classList.contains('dark')
-      document.documentElement.classList.toggle('dark', !currentlyDark)
-      localStorage.setItem('xamops-theme', !currentlyDark ? 'dark' : 'light')
+      const next = !currentlyDark
+      document.documentElement.classList.toggle('dark', next)
+      document.documentElement.setAttribute('data-theme', next ? 'dark' : 'light')
+      localStorage.setItem('xamops-theme', next ? 'dark' : 'light')
     }
 
     if (typeof document.startViewTransition !== 'function') {

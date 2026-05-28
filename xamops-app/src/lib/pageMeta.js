@@ -328,6 +328,44 @@ export const PAGE_META = {
     ],
   },
 
+  // ── Blog post: AWS cost spike ─────────────────────────────────────
+  '/blog/aws-cost-spike-investigation': {
+    title: "AWS Bill Jumped 40%? Here's How to Investigate It | XamOps Blog",
+    description: 'A step-by-step checklist for DevOps engineers to diagnose and fix unexpected AWS cost spikes — before finance comes knocking again.',
+    keywords: 'aws cost spike investigation, why did my aws bill increase, aws cost anomaly checklist, unexpected aws charges devops, aws cost explorer, aws finops, cloud cost optimization, aws billing investigation, ec2 cost spike, data transfer aws costs',
+    canonical: `${BASE}/blog/aws-cost-spike-investigation`,
+    schemas: [
+      {
+        '@context': 'https://schema.org',
+        '@type': 'BlogPosting',
+        '@id': `${BASE}/blog/aws-cost-spike-investigation/#post`,
+        headline: "Your AWS Bill Jumped 40% Last Month — Here's How to Actually Investigate It",
+        description: 'A step-by-step checklist for DevOps engineers to diagnose and fix unexpected AWS cost spikes — before finance comes knocking again.',
+        url: `${BASE}/blog/aws-cost-spike-investigation/`,
+        datePublished: '2026-05-28',
+        dateModified: '2026-05-28',
+        author: { '@type': 'Person', name: 'XamOps FinOps Team', jobTitle: 'Cloud Cost Optimization Specialists', worksFor: org },
+        publisher: org,
+        keywords: ['aws cost spike', 'aws bill increase', 'cloud cost investigation', 'devops finops', 'aws cost explorer', 'ec2 cost', 'data transfer aws', 'spot fallback', 'orphaned resources'],
+        timeRequired: 'PT9M',
+        wordCount: '2000',
+        inLanguage: 'en-US',
+        articleSection: 'FinOps',
+        about: [
+          { '@type': 'Thing', name: 'AWS Cost Management' },
+          { '@type': 'Thing', name: 'Cloud Cost Optimization' },
+          { '@type': 'Thing', name: 'FinOps' },
+        ],
+        mainEntityOfPage: {
+          '@type': 'WebPage',
+          '@id': `${BASE}/blog/aws-cost-spike-investigation/`,
+        },
+      },
+      wp('/blog/aws-cost-spike-investigation', "AWS Bill Jumped 40%? Investigate It | XamOps Blog", 'Step-by-step AWS cost spike investigation checklist for DevOps engineers.'),
+      org,
+    ],
+  },
+
   // ── Blog ──────────────────────────────────────────────────────────
   '/blog': {
     title: 'Cloud Automation, FinOps & DevOps Insights Blog | Xamops',
@@ -359,6 +397,18 @@ export const PAGE_META = {
               { '@type': 'Thing', name: 'Cognitive Cloud Operations' },
             ],
             blogPost: [
+              {
+                '@type': 'BlogPosting',
+                '@id': `${BASE}/blog/aws-cost-spike-investigation/#post`,
+                headline: "Your AWS Bill Jumped 40% Last Month — Here's How to Actually Investigate It",
+                description: 'A step-by-step checklist for DevOps engineers to diagnose and fix unexpected AWS cost spikes.',
+                url: `${BASE}/blog/aws-cost-spike-investigation/`,
+                datePublished: '2026-05-28',
+                author: { '@type': 'Person', name: 'XamOps FinOps Team', jobTitle: 'Cloud Cost Optimization Specialists' },
+                publisher: org,
+                keywords: ['aws cost spike', 'aws bill increase', 'finops', 'devops', 'cloud cost investigation'],
+                timeRequired: 'PT9M',
+              },
               {
                 '@type': 'BlogPosting',
                 '@id': `${BASE}/blog/how-spot-automation-saves-teams-70-percent-on-compute/#post`,

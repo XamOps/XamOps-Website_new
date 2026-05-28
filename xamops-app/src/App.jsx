@@ -23,8 +23,9 @@ const SRESolutionPage  = lazy(() => import('./pages/solutions/SRESolutionPage'))
 const PricingPage      = lazy(() => import('./pages/PricingPage'));
 const AboutPage        = lazy(() => import('./pages/AboutPage'));
 const DemoPage         = lazy(() => import('./pages/DemoPage'));
-const BlogPage         = lazy(() => import('./pages/BlogPage'));
-const ContactPage      = lazy(() => import('./pages/ContactPage'));
+const BlogPage              = lazy(() => import('./pages/BlogPage'));
+const AWSCostSpikePage      = lazy(() => import('./pages/blog/AWSCostSpikePage'));
+const ContactPage           = lazy(() => import('./pages/ContactPage'));
 const NotFoundPage     = lazy(() => import('./pages/NotFoundPage'));
 
 gsap.registerPlugin(ScrollTrigger);
@@ -64,7 +65,8 @@ export default function App() {
           <Route path="/pricing"                   element={<PricingPage />} />
           <Route path="/about"                     element={<AboutPage />} />
           <Route path="/demo"                      element={<DemoPage />} />
-          <Route path="/blog"                      element={<BlogPage />} />
+          <Route path="/blog"                                  element={<BlogPage />} />
+          <Route path="/blog/aws-cost-spike-investigation"     element={<AWSCostSpikePage />} />
           <Route path="/contact"                   element={<ContactPage />} />
           <Route path="*"                          element={<NotFoundPage />} />
         </Routes>

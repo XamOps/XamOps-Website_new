@@ -53,7 +53,7 @@ export default function App() {
       <MetaManager />
       <Nav />
       <main key={location.pathname}>
-        <Suspense fallback={<div style={{minHeight:'100vh'}}/>}>
+        <Suspense fallback={<div style={{minHeight:'200vh'}}/>}>
         <Routes>
           <Route path="/"                          element={<HomePage />} />
           <Route path="/platform"                  element={<PlatformPage />} />

@@ -8,7 +8,7 @@ export default function ContactPage() {
           <div className="eyebrow mb-5">Contact</div>
           <h1 className="serif text-[clamp(36px,5.5vw,64px)] leading-[1.05] tracking-tight">Talk to us.</h1>
           <p className="mt-5 text-[17px] leading-[1.6]" style={{ color: 'var(--olive)' }}>
-            General enquiries, partnerships, press, or just to say hello — we read everything.
+            General enquiries, partnerships, press, or just to say hello. We read everything.
           </p>
           <div className="mt-8 space-y-4 text-[15px]">
             <div><div className="eyebrow mb-1">Email</div><a href="mailto:support@xammer.in" className="ulink">support@xammer.in</a></div>
@@ -18,7 +18,7 @@ export default function ContactPage() {
         </div>
         <div className="md:col-span-7">
           <form className="ring-soft rounded-2xl p-5 md:p-7" style={{ background: 'var(--ivory)' }}
-            onSubmit={(e) => { e.preventDefault(); alert('Message sent — we\'ll get back within 1 business day.'); }}>
+            onSubmit={(e) => { e.preventDefault(); alert('Message sent. We\'ll get back within 1 business day.'); }}>
             {[
               ['Name',  'contact-name',  'name',  'name',  'Aarya Patel',       'text'],
               ['Email', 'contact-email', 'email', 'email', 'you@company.com',   'email'],

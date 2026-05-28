@@ -40,7 +40,7 @@ export const PAGE_META = {
   // ── Homepage ───────────────────────────────────────────────────────
   '/': {
     title: 'Cloud FinOps & DevOps Automation Platform | Xamops',
-    description: 'Automate cloud operations, reduce infrastructure costs, and optimize performance with Xamops — the cloud automation platform for FinOps, DevOps, and SRE teams.',
+    description: 'Automate cloud operations, reduce infrastructure costs, and optimize performance with Xamops, the cloud automation platform for FinOps, DevOps, and SRE teams.',
     keywords: 'cloud automation platform, FinOps platform, DevOps automation platform, cloud cost optimization, cloud management platform, cloud operations automation, SRE automation platform, AI cloud optimization platform, cloud infrastructure automation, enterprise cloud automation, cloud optimization platform, cloud cost management, infrastructure automation, AI powered cloud automation, cloud efficiency tools, cloud monitoring platform, enterprise cloud management, automated cloud operations, FinOps automation platform, cloud cost optimization platform, DevOps automation solutions, cloud infrastructure management platform, AI cloud operations platform, multicloud management platform, cloud cost management platform, devops automation services, aws cost optimization, aws finops, cloud cost optimization services',
     canonical: `${BASE}/`,
     schemas: [
@@ -73,7 +73,7 @@ export const PAGE_META = {
   // ── Platform ───────────────────────────────────────────────────────
   '/platform': {
     title: 'Cloud Automation Platform for FinOps, DevOps & SRE | Xamops',
-    description: 'Explore the Xamops cloud automation platform — purpose-built modules for FinOps, DevOps, SRE, SecOps, DBOps, and cloud cost analytics across AWS, Azure, and GCP.',
+    description: 'Explore the Xamops cloud automation platform: purpose-built modules for FinOps, DevOps, SRE, SecOps, DBOps, and cloud cost analytics across AWS, Azure, and GCP.',
     keywords: 'cloud automation platform, cloud management platform, cloud operations automation, multicloud management platform, enterprise cloud management, cloud infrastructure automation, cloud infrastructure management platform, cloud monitoring platform, cloud optimization platform, infrastructure automation, automated cloud operations, enterprise cloud automation, AI cloud operations platform',
     canonical: `${BASE}/platform`,
     schemas: [
@@ -199,7 +199,7 @@ export const PAGE_META = {
         mainEntity: [
           { '@type': 'Question', name: 'What is SecOps automation in the cloud?', acceptedAnswer: { '@type': 'Answer', text: 'SecOps automation uses AI and policy-as-code to continuously detect misconfigurations, enforce compliance, and auto-remediate security issues across cloud environments.' } },
           { '@type': 'Question', name: 'Which compliance frameworks does Xamops SecOps support?', acceptedAnswer: { '@type': 'Answer', text: 'XamOps SecOps supports CIS Benchmarks, SOC 2, ISO 27001, PCI-DSS, HIPAA, and custom policy frameworks across AWS, Azure, and GCP.' } },
-          { '@type': 'Question', name: 'How does cloud SecOps automation improve security posture?', acceptedAnswer: { '@type': 'Answer', text: 'Cloud SecOps automation continuously scans for misconfigurations, enforces least-privilege policies, and auto-remediates issues before they become incidents — reducing mean time to remediate (MTTR) by over 80%.' } },
+          { '@type': 'Question', name: 'How does cloud SecOps automation improve security posture?', acceptedAnswer: { '@type': 'Answer', text: 'Cloud SecOps automation continuously scans for misconfigurations, enforces least-privilege policies, and auto-remediates issues before they become incidents, reducing mean time to remediate (MTTR) by over 80%.' } },
         ],
       },
       org,
@@ -321,7 +321,7 @@ export const PAGE_META = {
         '@id': `${BASE}/solutions/sre/#faq`,
         mainEntity: [
           { '@type': 'Question', name: 'What SRE capabilities does Xamops provide?', acceptedAnswer: { '@type': 'Answer', text: 'XamOps provides automated incident management, SLO tracking, error budget monitoring, chaos engineering, and AI-driven root cause analysis for SRE teams.' } },
-          { '@type': 'Question', name: 'How does Xamops reduce on-call toil for SRE teams?', acceptedAnswer: { '@type': 'Answer', text: 'XamOps automates runbook execution for common incidents, suppresses alert noise through AI correlation, and resolves recurring issues autonomously — reducing on-call pages by up to 60%.' } },
+          { '@type': 'Question', name: 'How does Xamops reduce on-call toil for SRE teams?', acceptedAnswer: { '@type': 'Answer', text: 'XamOps automates runbook execution for common incidents, suppresses alert noise through AI correlation, and resolves recurring issues autonomously, reducing on-call pages by up to 60%.' } },
         ],
       },
       org,
@@ -331,7 +331,7 @@ export const PAGE_META = {
   // ── Blog post: Disk Rightsizing ───────────────────────────────────
   '/blog/disk-rightsizing-ebs': {
     title: 'Disk Rightsizing: The Cost Saving Everyone Ignores | XamOps Blog',
-    description: 'Three moves that eliminate 30–40% of cloud storage waste — unattached EBS volumes, gp2 to gp3 migration, and over-provisioned disk rightsizing — with policy enforcement to prevent re-accumulation.',
+    description: 'Three moves that eliminate 30–40% of cloud storage waste: unattached EBS volumes, gp2 to gp3 migration, and over-provisioned disk rightsizing. With policy enforcement to prevent re-accumulation.',
     keywords: 'disk rightsizing ebs, aws storage optimization, ebs cost savings, gp2 gp3 migration, unattached ebs volumes, over-provisioned disk aws, cloud storage waste, finops storage, ec2 storage optimization, ebs volume rightsizing, cloud cost optimization',
     canonical: `${BASE}/blog/disk-rightsizing-ebs`,
     schemas: [
@@ -340,7 +340,7 @@ export const PAGE_META = {
         '@type': 'BlogPosting',
         '@id': `${BASE}/blog/disk-rightsizing-ebs/#post`,
         headline: 'Disk Rightsizing: The Cost Saving Everyone Ignores',
-        description: 'Three moves that eliminate 30–40% of cloud storage waste — with the discipline to prevent it from coming back.',
+        description: 'Three moves that eliminate 30–40% of cloud storage waste, with the discipline to prevent it from coming back.',
         url: `${BASE}/blog/disk-rightsizing-ebs/`,
         datePublished: '2026-05-28',
         dateModified: '2026-05-28',
@@ -365,8 +365,8 @@ export const PAGE_META = {
 
   // ── Blog post: EC2 Spot instances ────────────────────────────────
   '/blog/ec2-spot-instances-production': {
-    title: 'EC2 Spot Instances in Production — Stop Fearing Interruptions | XamOps Blog',
-    description: 'A practical guide for DevOps engineers on running Spot instances safely in production — with the five patterns that make interruptions a non-event and save 70% on compute.',
+    title: 'EC2 Spot Instances in Production: Stop Fearing Interruptions | XamOps Blog',
+    description: 'A practical guide for DevOps engineers on running Spot instances safely in production, with the five patterns that make interruptions a non-event and save 70% on compute.',
     keywords: 'ec2 spot instances production, spot instance interruption, aws spot instances guide, spot instances devops, spot instance best practices, aws compute savings, autoscaling spot instances, spot on-demand fallback, ec2 spot automation, cloud cost optimization',
     canonical: `${BASE}/blog/ec2-spot-instances-production`,
     schemas: [
@@ -374,8 +374,8 @@ export const PAGE_META = {
         '@context': 'https://schema.org',
         '@type': 'BlogPosting',
         '@id': `${BASE}/blog/ec2-spot-instances-production/#post`,
-        headline: 'EC2 Spot Instances in Production — How to Stop Fearing Interruptions and Save 70%',
-        description: 'A practical guide for DevOps engineers on running Spot instances safely in production — with the five patterns that make interruptions a non-event.',
+        headline: 'EC2 Spot Instances in Production: How to Stop Fearing Interruptions and Save 70%',
+        description: 'A practical guide for DevOps engineers on running Spot instances safely in production, with the five patterns that make interruptions a non-event.',
         url: `${BASE}/blog/ec2-spot-instances-production/`,
         datePublished: '2026-05-28',
         dateModified: '2026-05-28',
@@ -401,7 +401,7 @@ export const PAGE_META = {
   // ── Blog post: AWS cost spike ─────────────────────────────────────
   '/blog/aws-cost-spike-investigation': {
     title: "AWS Bill Jumped 40%? Here's How to Investigate It | XamOps Blog",
-    description: 'A step-by-step checklist for DevOps engineers to diagnose and fix unexpected AWS cost spikes — before finance comes knocking again.',
+    description: 'A step-by-step checklist for DevOps engineers to diagnose and fix unexpected AWS cost spikes, before finance comes knocking again.',
     keywords: 'aws cost spike investigation, why did my aws bill increase, aws cost anomaly checklist, unexpected aws charges devops, aws cost explorer, aws finops, cloud cost optimization, aws billing investigation, ec2 cost spike, data transfer aws costs',
     canonical: `${BASE}/blog/aws-cost-spike-investigation`,
     schemas: [
@@ -409,8 +409,8 @@ export const PAGE_META = {
         '@context': 'https://schema.org',
         '@type': 'BlogPosting',
         '@id': `${BASE}/blog/aws-cost-spike-investigation/#post`,
-        headline: "Your AWS Bill Jumped 40% Last Month — Here's How to Actually Investigate It",
-        description: 'A step-by-step checklist for DevOps engineers to diagnose and fix unexpected AWS cost spikes — before finance comes knocking again.',
+        headline: "Your AWS Bill Jumped 40% Last Month: Here's How to Actually Investigate It",
+        description: 'A step-by-step checklist for DevOps engineers to diagnose and fix unexpected AWS cost spikes, before finance comes knocking again.',
         url: `${BASE}/blog/aws-cost-spike-investigation/`,
         datePublished: '2026-05-28',
         dateModified: '2026-05-28',
@@ -470,7 +470,7 @@ export const PAGE_META = {
               {
                 '@type': 'BlogPosting',
                 '@id': `${BASE}/blog/ec2-spot-instances-production/#post`,
-                headline: 'EC2 Spot Instances in Production — How to Stop Fearing Interruptions and Save 70%',
+                headline: 'EC2 Spot Instances in Production: How to Stop Fearing Interruptions and Save 70%',
                 description: 'Five patterns for running EC2 Spot instances safely in production with a staged replacement loop.',
                 url: `${BASE}/blog/ec2-spot-instances-production/`,
                 datePublished: '2026-05-28',
@@ -482,7 +482,7 @@ export const PAGE_META = {
               {
                 '@type': 'BlogPosting',
                 '@id': `${BASE}/blog/aws-cost-spike-investigation/#post`,
-                headline: "Your AWS Bill Jumped 40% Last Month — Here's How to Actually Investigate It",
+                headline: "Your AWS Bill Jumped 40% Last Month: Here's How to Actually Investigate It",
                 description: 'A step-by-step checklist for DevOps engineers to diagnose and fix unexpected AWS cost spikes.',
                 url: `${BASE}/blog/aws-cost-spike-investigation/`,
                 datePublished: '2026-05-28',
@@ -507,7 +507,7 @@ export const PAGE_META = {
                 '@type': 'BlogPosting',
                 '@id': `${BASE}/blog/disk-rightsizing-ebs/#post`,
                 headline: 'Disk Rightsizing: The Cost Saving Everyone Ignores',
-                description: 'Three moves that eliminate 30–40% of cloud storage waste — unattached volumes, gp2 migration, and over-provisioned disks.',
+                description: 'Three moves that eliminate 30–40% of cloud storage waste: unattached volumes, gp2 migration, and over-provisioned disks.',
                 url: `${BASE}/blog/disk-rightsizing-ebs/`,
                 datePublished: '2026-05-28',
                 author: { '@type': 'Person', name: 'Aditya Mehta', jobTitle: 'Co-founder, XamOps' },
@@ -559,48 +559,48 @@ export const PAGE_META = {
 
   // ── Pricing ──────────────────────────────────────────────────────
   '/pricing': {
-    title: 'XamOps Pricing — Cloud Automation & FinOps Platform Plans',
+    title: 'XamOps Pricing: Cloud Automation & FinOps Platform Plans',
     description: 'Explore XamOps pricing plans for cloud automation, FinOps, DevOps, and SRE teams. Flexible plans for startups to enterprise. Start with a free 30-day cloud audit.',
     keywords: 'XamOps pricing, cloud automation pricing, FinOps platform pricing, cloud management platform pricing, enterprise cloud management, cloud cost optimization pricing',
     canonical: `${BASE}/pricing`,
     schemas: [
-      wp('/pricing', 'XamOps Pricing — Cloud Automation & FinOps Platform Plans', 'Flexible pricing for cloud automation, FinOps, DevOps, and SRE teams.'),
+      wp('/pricing', 'XamOps Pricing: Cloud Automation & FinOps Platform Plans', 'Flexible pricing for cloud automation, FinOps, DevOps, and SRE teams.'),
       org,
     ],
   },
 
   // ── About ─────────────────────────────────────────────────────────
   '/about': {
-    title: 'About XamOps — The AI-Powered Cloud Automation Company',
-    description: 'Learn about XamOps — the team building the AI-powered cloud automation platform that helps enterprises automate FinOps, DevOps, and SRE operations at scale.',
+    title: 'About XamOps: The AI-Powered Cloud Automation Company',
+    description: 'Learn about XamOps, the team building the AI-powered cloud automation platform that helps enterprises automate FinOps, DevOps, and SRE operations at scale.',
     keywords: 'about XamOps, cloud automation company, AI cloud platform, enterprise cloud management, FinOps company, DevOps automation company, cloud infrastructure automation',
     canonical: `${BASE}/about`,
     schemas: [
-      wp('/about', 'About XamOps — The AI-Powered Cloud Automation Company', 'The team building the AI-powered cloud automation platform.'),
+      wp('/about', 'About XamOps: The AI-Powered Cloud Automation Company', 'The team building the AI-powered cloud automation platform.'),
       org,
     ],
   },
 
   // ── Demo ─────────────────────────────────────────────────────────
   '/demo': {
-    title: 'Book a Demo — XamOps Cloud Automation & FinOps Platform',
+    title: 'Book a Demo: XamOps Cloud Automation & FinOps Platform',
     description: 'See XamOps in action. Book a personalized demo of the cloud automation platform and discover how to reduce cloud costs 30–40% and eliminate operational toil.',
     keywords: 'XamOps demo, cloud automation demo, FinOps platform demo, cloud cost optimization demo, book a demo, cloud management platform demo',
     canonical: `${BASE}/demo`,
     schemas: [
-      wp('/demo', 'Book a Demo — XamOps Cloud Automation & FinOps Platform', 'See XamOps in action and discover how to reduce cloud costs 30–40%.'),
+      wp('/demo', 'Book a Demo: XamOps Cloud Automation & FinOps Platform', 'See XamOps in action and discover how to reduce cloud costs 30–40%.'),
       org,
     ],
   },
 
   // ── Contact ───────────────────────────────────────────────────────
   '/contact': {
-    title: 'Contact XamOps — Cloud Automation & FinOps Platform',
+    title: 'Contact XamOps: Cloud Automation & FinOps Platform',
     description: "Get in touch with the XamOps team. Questions about cloud automation, FinOps, DevOps, or SRE? We're here to help.",
     keywords: 'contact XamOps, cloud automation support, FinOps platform contact, cloud management support',
     canonical: `${BASE}/contact`,
     schemas: [
-      wp('/contact', 'Contact XamOps — Cloud Automation & FinOps Platform', 'Reach the XamOps team for cloud automation and FinOps inquiries.'),
+      wp('/contact', 'Contact XamOps: Cloud Automation & FinOps Platform', 'Reach the XamOps team for cloud automation and FinOps inquiries.'),
       org,
     ],
   },

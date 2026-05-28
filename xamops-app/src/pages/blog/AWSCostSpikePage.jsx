@@ -15,15 +15,15 @@ const STEPS = [
   {
     n: '01',
     title: 'Check the service breakdown first',
-    body: 'Before you dig into individual resources, start at 30,000 feet. Pull up AWS Cost Explorer, set the grouping to "Service," and look at the delta between last month and the previous month. Which service line moved? EC2, S3, Data Transfer, RDS, or something else entirely? Narrowing the blast radius from "AWS in general" to "EC2 specifically" cuts your investigation time in half — you\'re not chasing shadows across 30 different dashboards.',
+    body: 'Before you dig into individual resources, start at 30,000 feet. Pull up AWS Cost Explorer, set the grouping to "Service," and look at the delta between last month and the previous month. Which service line moved? EC2, S3, Data Transfer, RDS, or something else entirely? Narrowing the blast radius from "AWS in general" to "EC2 specifically" cuts your investigation time in half. You\'re not chasing shadows across 30 different dashboards.',
     where: 'AWS Cost Explorer → Group by: Service → Date range: last 2 months',
     flag: 'A single service that jumped 30%+ with no corresponding deployment is the signal. Everything else is noise.',
-    xamops: <><Xam /> Cost Analytics surfaces this service-level delta automatically on the Waste &amp; Cost dashboard — no manual report building required.</>,
+    xamops: <><Xam /> Cost Analytics surfaces this service-level delta automatically on the Waste &amp; Cost dashboard. No manual report building required.</>,
   },
   {
     n: '02',
-    title: 'Look at Data Transfer charges — the silent killer',
-    body: 'Data transfer is the most misunderstood line item on any AWS bill. It hides under vague labels like "EC2 Other" and splits across three different cost dimensions: cross-AZ traffic, NAT Gateway egress, and internet-bound egress. A poorly placed microservice that talks cross-AZ instead of intra-AZ can rack up thousands of dollars in a single month — and it\'ll show up as a flat 2¢/GB that sounds harmless until you\'re moving 200 TB.',
+    title: 'Look at Data Transfer charges: the silent killer',
+    body: 'Data transfer is the most misunderstood line item on any AWS bill. It hides under vague labels like "EC2 Other" and splits across three different cost dimensions: cross-AZ traffic, NAT Gateway egress, and internet-bound egress. A poorly placed microservice that talks cross-AZ instead of intra-AZ can rack up thousands of dollars in a single month, and it\'ll show up as a flat 2¢/GB that sounds harmless until you\'re moving 200 TB.',
     where: 'Cost Explorer → Filter: Service = EC2-Other + DataTransfer → Group by: Usage Type',
     flag: '"DataTransfer-Out-Bytes" or "DataTransfer-Regional-Bytes" climbing without a corresponding traffic increase on your CDN.',
     xamops: <><Xam /> surfaces cross-AZ and NAT Gateway transfer anomalies on the Cost dashboard with the exact resource generating the traffic.</>,
@@ -31,7 +31,7 @@ const STEPS = [
   {
     n: '03',
     title: 'Audit EC2 instance types and counts',
-    body: 'Did anything scale out and forget to scale back? Auto Scaling Groups are powerful, but they don\'t always scale in as aggressively as they scale out — especially if you tuned them during a traffic spike and never reverted the minimum capacity. Pull a 30-day EC2 inventory and compare instance-hour counts week over week. A fleet that was running 40 instances and quietly ballooned to 65 is your culprit. Also check On-Demand vs Reserved vs Spot ratios — an On-Demand surge while Reserved capacity sits idle is a pricing mismatch that finance will notice.',
+    body: 'Did anything scale out and forget to scale back? Auto Scaling Groups are powerful, but they don\'t always scale in as aggressively as they scale out, especially if you tuned them during a traffic spike and never reverted the minimum capacity. Pull a 30-day EC2 inventory and compare instance-hour counts week over week. A fleet that was running 40 instances and quietly ballooned to 65 is your culprit. Also check On-Demand vs Reserved vs Spot ratios. An On-Demand surge while Reserved capacity sits idle is a pricing mismatch that finance will notice.',
     where: 'EC2 → Instances (sort by Launch Time) + Cost Explorer → Group by: Instance Type',
     flag: 'Instance-hours running 20%+ above baseline with no corresponding change in deployment logs.',
     xamops: <><Xam /> tracks fleet size and On-Demand vs Spot ratios over time, alerting when instance count or cost efficiency drifts beyond threshold.</>,
@@ -39,15 +39,15 @@ const STEPS = [
   {
     n: '04',
     title: 'Check for Spot → On-Demand fallbacks',
-    body: 'This one is the most expensive surprise in the AWS toolkit. If your Auto Scaling Group exhausted Spot capacity in a given AZ — common during regional demand spikes — it silently falls back to On-Demand. You don\'t get a banner, you don\'t get an alert. You just get a bill. On-Demand EC2 runs 3–5× the cost of equivalent Spot capacity. A single weekend fallback event for a medium-sized fleet can double your compute bill for the month.',
+    body: 'This one is the most expensive surprise in the AWS toolkit. If your Auto Scaling Group exhausted Spot capacity in a given AZ (common during regional demand spikes), it silently falls back to On-Demand. You don\'t get a banner, you don\'t get an alert. You just get a bill. On-Demand EC2 runs 3–5× the cost of equivalent Spot capacity. A single weekend fallback event for a medium-sized fleet can double your compute bill for the month.',
     where: 'EC2 → Auto Scaling Groups → Activity History + CloudWatch → ASG metric: OnDemandCapacity',
     flag: 'On-Demand capacity appearing in an ASG that is normally 100% Spot.',
-    xamops: <><Xam /> monitors Spot-to-On-Demand fallback events in real time and alerts the moment a fallback starts — not when the bill lands.</>,
+    xamops: <><Xam /> monitors Spot-to-On-Demand fallback events in real time and alerts the moment a fallback starts, not when the bill lands.</>,
   },
   {
     n: '05',
     title: 'Look at RDS and managed service sprawl',
-    body: 'The database tier accumulates waste quietly. Multi-AZ is almost always enabled "just in case" on dev and staging databases — which doubles the instance cost. Read replicas created for a load test and never deleted keep charging hourly. Automated snapshot storage silently grows month over month. Pull a list of every RDS instance, note whether it\'s Multi-AZ, count the read replicas, and check snapshot retention policies. Then ask: does this environment actually need production-level HA?',
+    body: 'The database tier accumulates waste quietly. Multi-AZ is almost always enabled "just in case" on dev and staging databases, which doubles the instance cost. Read replicas created for a load test and never deleted keep charging hourly. Automated snapshot storage silently grows month over month. Pull a list of every RDS instance, note whether it\'s Multi-AZ, count the read replicas, and check snapshot retention policies. Then ask: does this environment actually need production-level HA?',
     where: 'RDS → Databases (filter by environment tag) + Cost Explorer → Group by: Database',
     flag: 'Multi-AZ enabled on non-production databases, or read replica count exceeding the number of active applications.',
     xamops: <><Xam /> flags Multi-AZ on non-prod environments and orphaned read replicas automatically on the Waste dashboard.</>,
@@ -55,15 +55,15 @@ const STEPS = [
   {
     n: '06',
     title: 'Hunt for orphaned resources',
-    body: 'When engineers spin up infrastructure and don\'t tear it down cleanly, the orphans accumulate: EBS volumes detached from terminated instances, Application Load Balancers with no registered targets, Elastic IPs not associated with any resource, NAT Gateways in VPCs that are no longer used. None of these are dramatically expensive individually — but combined across a large AWS account, they routinely add 5–15% to the monthly bill.',
+    body: 'When engineers spin up infrastructure and don\'t tear it down cleanly, the orphans accumulate: EBS volumes detached from terminated instances, Application Load Balancers with no registered targets, Elastic IPs not associated with any resource, NAT Gateways in VPCs that are no longer used. None of these are dramatically expensive individually, but combined across a large AWS account, they routinely add 5–15% to the monthly bill.',
     where: 'EC2 → Volumes (state=available) + EC2 → Load Balancers (0 targets) + EC2 → Elastic IPs',
     flag: 'Unattached EBS volumes, load balancers with 0 healthy targets, or Elastic IPs not associated with a running instance.',
-    xamops: <><Xam /> scans for orphaned resources continuously and surfaces them in a prioritized Waste list — no manual console crawling needed.</>,
+    xamops: <><Xam /> scans for orphaned resources continuously and surfaces them in a prioritized Waste list. No manual console crawling needed.</>,
   },
   {
     n: '07',
     title: 'Check data processing costs',
-    body: 'Athena, Lambda, and CloudWatch are usage-priced and often invisible until they aren\'t. Athena charges per TB of data scanned — a single unpartitioned query on a large S3 bucket can cost more than a full day\'s worth of EC2. Lambda invocation counts can spike if a misconfigured event source starts firing at 10× the expected rate. CloudWatch log ingestion bills by the gigabyte — verbose logging from a debugging session that was never turned off keeps charging indefinitely.',
+    body: 'Athena, Lambda, and CloudWatch are usage-priced and often invisible until they aren\'t. Athena charges per TB of data scanned; a single unpartitioned query on a large S3 bucket can cost more than a full day\'s worth of EC2. Lambda invocation counts can spike if a misconfigured event source starts firing at 10× the expected rate. CloudWatch log ingestion bills by the gigabyte; verbose logging from a debugging session that was never turned off keeps charging indefinitely.',
     where: 'Cost Explorer → Filter: Service = Athena / Lambda / CloudWatch → Group by: Usage Type',
     flag: 'Athena queries scanning TB+ without partitioning, Lambda invocations doubling without a deployment, or CloudWatch log ingestion growing without a known debugging session.',
     xamops: <><Xam /> tracks Athena, Lambda, and CloudWatch costs as part of the Cost dashboard, with anomaly alerts when processing costs deviate from the 30-day baseline.</>,
@@ -108,7 +108,7 @@ export default function AWSCostSpikePage() {
           </div>
 
           <h1 className="serif text-[clamp(34px,5.2vw,66px)] leading-[1.06] tracking-tight max-w-[22ch]" style={{ color: '#ffffff' }}>
-            Your AWS Bill Jumped 40% Last Month —{' '}
+            Your AWS Bill Jumped 40% Last Month:{' '}
             <span style={{ color: '#FF9900' }}>
               Here&rsquo;s How to Actually Investigate It
             </span>
@@ -119,7 +119,7 @@ export default function AWSCostSpikePage() {
             style={{ color: 'rgba(255,255,255,0.65)' }}
           >
             A step-by-step checklist for DevOps engineers to diagnose and fix unexpected AWS cost
-            spikes — before finance comes knocking again.
+            spikes, before finance comes knocking again.
           </p>
 
           <div className="mt-7 flex items-center gap-3">
@@ -141,7 +141,7 @@ export default function AWSCostSpikePage() {
               <section className="mb-12">
                 <p className="text-[17px] leading-[1.78]" style={{ color: 'var(--ink-2)' }}>
                   It&rsquo;s Monday morning. You open Slack and see three messages from the finance
-                  team — all in the last hour. Your AWS bill came in 40% above the previous month.
+                  team, all in the last hour. Your AWS bill came in 40% above the previous month.
                   No major deployment happened. No launch, no traffic spike you know of. The Cost
                   Explorer alert that was supposed to catch this? It didn&rsquo;t fire. Now you have
                   until end of day to explain what happened and produce a remediation plan.
@@ -149,7 +149,7 @@ export default function AWSCostSpikePage() {
                 <p className="text-[17px] leading-[1.78] mt-5" style={{ color: 'var(--ink-2)' }}>
                   This checklist is what we wish we&rsquo;d had the first time that happened. Seven
                   steps, in order of most likely cause to most obscure, each with a direct path to
-                  the answer inside the AWS console — and a note on where XamOps would have caught
+                  the answer inside the AWS console, plus a note on where XamOps would have caught
                   it before finance did.
                 </p>
               </section>
@@ -163,13 +163,13 @@ export default function AWSCostSpikePage() {
                   AWS Cost Explorer has a 24-hour reporting lag. Billing dimensions are spread across
                   dozens of service-specific consoles. A single forgotten resource can hide in the
                   statistical noise of a large account. And unlike application errors, there is no
-                  stack trace — just a larger number at the bottom of a table.
+                  stack trace. Just a larger number at the bottom of a table.
                 </p>
                 <p className="text-[17px] leading-[1.78] mt-4" style={{ color: 'var(--ink-2)' }}>
                   The core problem is dimensionality. AWS bills across 500+ distinct usage types,
                   split across regions, availability zones, account IDs, and resource tags. Finding
                   the spike means narrowing from the entire billing surface down to a single resource
-                  or behavior — and doing it fast enough to actually fix something before next
+                  or behavior, and doing it fast enough to actually fix something before next
                   month&rsquo;s bill arrives.
                 </p>
                 <p className="text-[17px] leading-[1.78] mt-4" style={{ color: 'var(--ink-2)' }}>
@@ -315,15 +315,15 @@ export default function AWSCostSpikePage() {
                     <span style={{ color: '#FF9900' }}>Then never again.</span>
                   </h2>
                   <p className="text-[15.5px] leading-[1.78] mb-4" style={{ color: 'var(--ink-2)' }}>
-                    The investigation above takes a skilled engineer 2–4 hours the first time —
-                    longer if they&rsquo;re new to the account. And it has to be repeated every time
+                    The investigation above takes a skilled engineer 2–4 hours the first time.
+                    Longer if they&rsquo;re new to the account. And it has to be repeated every time
                     a spike happens, because AWS doesn&rsquo;t maintain the institutional memory of
                     what normal looks like.
                   </p>
                   <p className="text-[15.5px] leading-[1.78] mb-4" style={{ color: 'var(--ink-2)' }}>
                     <Xam /> monitors all seven of these dimensions continuously, across AWS, GCP, and
-                    Azure, in near-real time. When something deviates — a Spot fallback, a new
-                    orphaned volume, an unusual data transfer pattern — you get an anomaly alert
+                    Azure, in near-real time. When something deviates (a Spot fallback, a new
+                    orphaned volume, an unusual data transfer pattern), you get an anomaly alert
                     before the billing period closes. The Waste &amp; Cost dashboard shows the root
                     cause in a single view: which resource, which account, which team, and the
                     projected monthly impact.

@@ -16,7 +16,7 @@ export default function PlatformPage() {
     <>
       <PageHero eyebrow="Platform"
         title={[{ text: 'One platform.' }, { text: 'Every layer of your cloud.', accent: true }, { text: 'Fully automated.' }]}
-        body="XamOps unifies six automations into a single control plane that runs across AWS, GCP and Azure — so engineers stop babysitting infrastructure and managers stop signing oversized cloud bills." />
+        body="XamOps unifies six automations into a single control plane that runs across AWS, GCP and Azure, so engineers stop babysitting infrastructure and managers stop signing oversized cloud bills." />
       <section className="sec-light pb-24">
         <div className="max-w-[1240px] mx-auto px-6 md:px-10">
           <div className="grid md:grid-cols-2 gap-px ring-soft rounded-2xl overflow-hidden" style={{ background: 'var(--rule)' }}>

@@ -51,7 +51,7 @@ export default function DemoModal() {
             </h2>
             <p className="mt-5 text-[15px] leading-[1.6]" style={{ color: 'var(--olive)' }}>
               We connect to a sandbox account and show real spot conversions, disk rightsizing recommendations
-              and cost savings — on infrastructure that looks like yours. No slideware.
+              and cost savings on infrastructure that looks like yours. No slideware.
             </p>
             <ul className="mt-6 space-y-3 text-[14px]">
               {[
@@ -77,7 +77,7 @@ export default function DemoModal() {
             <form onSubmit={(e) => {
               e.preventDefault();
               setOpen(false);
-              alert('Demo request received — we\'ll email you within 1 business day.');
+              alert('Demo request received. We\'ll email you within 1 business day.');
             }}>
               {[
                 ['Full name',  'modal-name',    'name',      'name',         'Aarya Patel',    'text'],

@@ -322,7 +322,7 @@ function ComingSoon() {
   const items = [
     { name: 'AI-Powered Recommendations', body: 'XamOps learns your cloud patterns and recommends optimizations before you notice the problem.' },
     { name: 'Agentic SRE',                body: 'A fully autonomous SRE agent that investigates, diagnoses and resolves incidents without paging anyone.' },
-    { name: 'Complete Kubernetes Automation', body: 'Full K8s lifecycle management — scaling, cost, security — automated end to end.' },
+    { name: 'Complete Kubernetes Automation', body: 'Full K8s lifecycle management: scaling, cost, and security, automated end to end.' },
   ];
   return (
     <section ref={ref} className="sec-dark py-12 md:py-20 relative overflow-hidden">
@@ -425,7 +425,7 @@ function FinalCTA() {
                 <div className="reveal-line"><span style={{color:'var(--terracotta)'}}>smarter?</span></div>
               </h3>
               <p data-fade className="mt-6 text-[17px] max-w-[44ch]" style={{color:'var(--olive)'}}>
-                Thirty minutes. We'll connect to a sandbox account and show your cloud automated live — no slides, no theater.
+                Thirty minutes. We'll connect to a sandbox account and show your cloud automated live. No slides, no theater.
               </p>
               <div data-fade className="mt-8 flex flex-wrap gap-3">
                 <button onClick={() => setOpen(true)} className="btn-primary">Book a demo <Icon.Arrow width="14" height="14"/></button>
@@ -472,11 +472,11 @@ export default function HomePage() {
         metric={[['Avg savings','68%'],['Eviction','0.34%'],['Coverage','92%']]} visual={<SpotVisual/>} to="/platform/spot-automation" />
       <FeatureSection index={2} eyebrow="Disk Rightsizing"
         title={[{text:'Stop paying for'},{text:'disk you don\'t', accent:true},{text:'use.'}]} dark side="left"
-        body="No other platform automates this. Continuous volume monitoring, recommendations, and safe automated resize for AWS EBS, GCP Persistent Disk and Azure Managed Disks — including filesystem expansion."
+        body="No other platform automates this. Continuous volume monitoring, recommendations, and safe automated resize for AWS EBS, GCP Persistent Disk and Azure Managed Disks, including filesystem expansion."
         metric={[['Avg reduction','38%'],['Volumes','12,400+'],['Downtime','0s']]} visual={<DiskVisual/>} to="/platform/disk-rightsizing" />
       <FeatureSection index={3} eyebrow="DBOps"
         title={[{text:'Database operations'},{text:'on autopilot.', accent:true}]}
-        body="Automated scaling, backup verification, performance optimization, and patch windows — across RDS, Cloud SQL, Cosmos and beyond. Stop being on-call for routine database work."
+        body="Automated scaling, backup verification, performance optimization, and patch windows across RDS, Cloud SQL, Cosmos and beyond. Stop being on-call for routine database work."
         metric={[['Manual pages','0'],['Routines','12/day'],['DBs','340+']]} visual={<DBVisual/>} to="/platform/dbops" />
       <FeatureSection index={4} eyebrow="SecOps"
         title={[{text:'Security automation'},{text:'that ships with', accent:true},{text:'your code.'}]} dark side="left"

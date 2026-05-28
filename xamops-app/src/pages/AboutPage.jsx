@@ -49,7 +49,7 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
-      <CTABanner heading="Want to build the future of cloud ops with us?" sub="We're hiring across SRE, ML and platform engineering — open roles in Delhi and remote." />
+      <CTABanner heading="Want to build the future of cloud ops with us?" sub="We're hiring across SRE, ML and platform engineering. Open roles in Delhi and remote." />
     </>
   );
 }

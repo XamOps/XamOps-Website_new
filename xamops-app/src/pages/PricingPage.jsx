@@ -13,7 +13,7 @@ export default function PricingPage() {
     <>
       <PageHero eyebrow="Pricing"
         title={[{ text: 'Simple,' }, { text: 'outcome-based pricing.', accent: true }]}
-        body="We price on outcomes — savings delivered, toil eliminated — not on seat counts." cta={false} />
+        body="We price on outcomes: savings delivered, toil eliminated. Not on seat counts." cta={false} />
       <section className="sec-light pb-16 md:pb-24">
         <div className="max-w-[1240px] mx-auto px-4 sm:px-6 md:px-10 grid md:grid-cols-3 gap-4 sm:gap-6">
           {tiers.map((t) => (

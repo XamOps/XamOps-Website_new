@@ -4,7 +4,7 @@ export default function SRESolutionPage() {
   return <SolutionPage
     eyebrow="Solutions · For SRE Teams"
     title={[{ text: 'Always firefighting.' }, { text: 'Every incident takes hours.', accent: true }]}
-    body="Agentic investigation, anomaly feeds, and log intelligence — so RCAs are minutes, not afternoons."
+    body="Agentic investigation, anomaly feeds, and log intelligence. RCAs in minutes, not afternoons."
     before={[
       'Alert storms; correlation by hand.',
       'Log queries copy-pasted between dashboards.',
@@ -20,6 +20,6 @@ export default function SRESolutionPage() {
     relevant={[
       ['SRE Investigation',    'Metrics, logs, traces in one timeline.'],
       ['SecOps',               'Auto-remediation removes a class of pages.'],
-      ['Agentic SRE — soon',   'Autonomous resolution.'],
+      ['Agentic SRE (soon)',   'Autonomous resolution.'],
     ]} />;
 }

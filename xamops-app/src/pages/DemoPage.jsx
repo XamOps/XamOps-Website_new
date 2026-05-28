@@ -10,7 +10,7 @@ export default function DemoPage() {
             30 minutes. <span style={{ color: 'var(--terracotta)' }}>See your cloud automated live.</span>
           </h1>
           <p className="mt-6 text-[17px] leading-[1.6] max-w-[52ch]" style={{ color: 'var(--olive)' }}>
-            We connect to a sandbox account and show real spot conversions, disk rightsizing recommendations and cost savings — on infrastructure that looks like yours. No slideware.
+            We connect to a sandbox account and show real spot conversions, disk rightsizing recommendations and cost savings on infrastructure that looks like yours. No slideware.
           </p>
           <ul className="mt-8 space-y-3 text-[15px]">
             {[
@@ -28,7 +28,7 @@ export default function DemoPage() {
         </div>
         <div className="md:col-span-6">
           <form className="ring-soft rounded-2xl p-7" style={{ background: 'var(--ivory)' }}
-            onSubmit={(e) => { e.preventDefault(); alert('Demo request received — we\'ll email you within 1 business day.'); }}>
+            onSubmit={(e) => { e.preventDefault(); alert('Demo request received. We\'ll email you within 1 business day.'); }}>
             <div className="serif text-[clamp(18px,5vw,24px)] mb-5">Tell us about your stack</div>
             {[
               ['Full name',  'demo-name',    'name',      'name',         'Aarya Patel',    'text'],

@@ -4,7 +4,7 @@ export default function DevOpsPage() {
   return <SolutionPage
     eyebrow="Solutions · For DevOps Engineers"
     title={[{ text: 'You manage 3 clouds.' }, { text: 'Toil never ends.', accent: true }]}
-    body="XamOps automates the operations layer so platform engineers ship platforms — not babysit instances, disks and patch windows."
+    body="XamOps automates the operations layer so platform engineers ship platforms, not babysit instances, disks and patch windows."
     before={[
       'Manual ASG/MIG capacity tuning across regions.',
       'Disk usage tickets queued every Monday.',

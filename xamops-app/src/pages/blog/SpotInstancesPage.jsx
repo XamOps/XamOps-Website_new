@@ -10,7 +10,7 @@ const Xam = () => (
 const MYTHS = [
   {
     myth: '"Spot is only for batch workloads."',
-    reality: 'Spot runs production web services, ML inference, real-time APIs, and Kubernetes worker nodes. The constraint is stateful single-instance workloads — not latency-sensitive ones.',
+    reality: 'Spot runs production web services, ML inference, real-time APIs, and Kubernetes worker nodes. The constraint is stateful single-instance workloads, not latency-sensitive ones.',
   },
   {
     myth: '"If a Spot instance gets interrupted, my service goes down."',
@@ -26,25 +26,25 @@ const STEPS = [
   {
     n: '01',
     title: 'Understand what a Spot interruption actually looks like',
-    body: 'AWS sends a 2-minute interruption notice before reclaiming a Spot instance — a CloudWatch event and an instance metadata endpoint. That\'s 120 seconds to drain connections, finish in-flight requests, and hand off state. The fear is usually of an instant kill. The reality is a predictable warning with a standard API. Most application frameworks can handle a SIGTERM and finish in-flight work well within that window.',
+    body: 'AWS sends a 2-minute interruption notice before reclaiming a Spot instance: a CloudWatch event and an instance metadata endpoint. That\'s 120 seconds to drain connections, finish in-flight requests, and hand off state. The fear is usually of an instant kill. The reality is a predictable warning with a standard API. Most application frameworks can handle a SIGTERM and finish in-flight work well within that window.',
     where: 'EC2 → Spot Requests → Interruption notices + http://169.254.169.254/latest/meta-data/spot/termination-time',
-    flag: 'Workloads with no interruption handler and no graceful shutdown logic — these are the ones that actually break on eviction.',
-    xamops: <><Xam /> logs every Spot interruption event with timestamp, instance ID, and ASG in Actions History — full eviction audit trail across all accounts.</>,
+    flag: 'Workloads with no interruption handler and no graceful shutdown logic. These are the ones that actually break on eviction.',
+    xamops: <><Xam /> logs every Spot interruption event with timestamp, instance ID, and ASG in Actions History, providing a full eviction audit trail across all accounts.</>,
   },
   {
     n: '02',
-    title: 'Set a minimum On-Demand floor — and never go below it',
-    body: 'The safest Spot pattern is not 100% Spot. It\'s a Spot-first fleet with a guaranteed On-Demand minimum. Set the smallest number of On-Demand instances your service needs to stay functional during a full Spot interruption wave — usually 1–3 for non-critical services, more for tier-1. Everything above that floor is Spot. This is the single most important configuration decision in your Spot setup.',
+    title: 'Set a minimum On-Demand floor and never go below it',
+    body: 'The safest Spot pattern is not 100% Spot. It\'s a Spot-first fleet with a guaranteed On-Demand minimum. Set the smallest number of On-Demand instances your service needs to stay functional during a full Spot interruption wave (1–3 for non-critical services, more for tier-1). Everything above that floor is Spot. This is the single most important configuration decision in your Spot setup.',
     where: 'EC2 → Auto Scaling Groups → Edit → On-Demand Base Capacity',
-    flag: 'On-Demand base capacity set to 0 on any customer-facing ASG — this is a ticking clock, not a cost optimization.',
-    xamops: <><Xam /> AutoSpotting enforces the minimum On-Demand floor as a hard constraint. The staged replacement loop never drops below your configured minimum — even during simultaneous interruptions across AZs.</>,
+    flag: 'On-Demand base capacity set to 0 on any customer-facing ASG. This is a ticking clock, not a cost optimization.',
+    xamops: <><Xam /> AutoSpotting enforces the minimum On-Demand floor as a hard constraint. The staged replacement loop never drops below your configured minimum, even during simultaneous interruptions across AZs.</>,
   },
   {
     n: '03',
-    title: 'Use multiple instance types — capacity diversity is your interruption hedge',
-    body: 'The biggest mistake with Spot is requesting a single instance type in a single AZ. When that pool runs out, your entire fleet gets interrupted simultaneously. Request 4–6 instance types of similar size (e.g., m5.xlarge, m5a.xlarge, m4.xlarge) across all available AZs. AWS interrupts Spot when it needs that specific capacity back — if you\'re not over-concentrated, a simultaneous fleet wipeout becomes nearly impossible.',
+    title: 'Use multiple instance types: capacity diversity as your interruption hedge',
+    body: 'The biggest mistake with Spot is requesting a single instance type in a single AZ. When that pool runs out, your entire fleet gets interrupted simultaneously. Request 4–6 instance types of similar size (e.g., m5.xlarge, m5a.xlarge, m4.xlarge) across all available AZs. AWS interrupts Spot when it needs that specific capacity back. If you\'re not over-concentrated, a simultaneous fleet wipeout becomes nearly impossible.',
     where: 'EC2 → Launch Templates → Instance type requirements (flexible mode) → Multiple types + all AZs',
-    flag: 'An ASG with a single instance type and fewer than 3 AZs — this is a correlated failure waiting to happen.',
+    flag: 'An ASG with a single instance type and fewer than 3 AZs. This is a correlated failure waiting to happen.',
     xamops: <><Xam /> shows Spot fleet instance type and AZ distribution on the AutoSpotting dashboard. Flags over-concentrated ASGs before a capacity crunch exposes them.</>,
   },
   {
@@ -52,16 +52,16 @@ const STEPS = [
     title: 'Add a lifecycle hook for graceful shutdown',
     body: 'Install a lightweight daemon polling the metadata termination endpoint. On detection: drain from the load balancer, finish in-flight requests, flush local state. For containers: configure the SIGTERM handler and terminationGracePeriodSeconds. For EC2 workloads: use ASG lifecycle hooks with a TERMINATING:WAIT state. This is the difference between a Spot interruption that\'s invisible to users and one that drops requests hard.',
     where: 'EC2 → Auto Scaling → Lifecycle Hooks (TERMINATING:WAIT) + systemd service polling the metadata endpoint',
-    flag: 'No lifecycle hooks on Spot ASGs and no SIGTERM handler — interruptions will terminate in-flight requests hard.',
-    xamops: <><Xam /> AutoSpotting integrates with ASG lifecycle hooks in the staged replacement loop, health-checking before removing capacity — the same discipline that makes graceful interruption handling work.</>,
+    flag: 'No lifecycle hooks on Spot ASGs and no SIGTERM handler. Interruptions will terminate in-flight requests hard.',
+    xamops: <><Xam /> AutoSpotting integrates with ASG lifecycle hooks in the staged replacement loop, health-checking before removing capacity. Same discipline that makes graceful interruption handling work.</>,
   },
   {
     n: '05',
-    title: 'Let the replacement loop do the heavy lifting — don\'t DIY it',
-    body: 'The hardest part of Spot in production isn\'t the initial config — it\'s keeping the fleet in the right state over time. Spot capacity comes and goes. Manually rebalancing On-Demand ratios, handling fallback events, and re-checking AZ distribution is a part-time job. The engineers who run Spot successfully have automated the control loop: detect drift → add Spot → wait for health check → remove excess On-Demand. Continuously.',
+    title: 'Let the replacement loop do the heavy lifting',
+    body: 'The hardest part of Spot in production isn\'t the initial config. It\'s keeping the fleet in the right state over time. Spot capacity comes and goes. Manually rebalancing On-Demand ratios, handling fallback events, and re-checking AZ distribution is a part-time job. The engineers who run Spot successfully have automated the control loop: detect drift → add Spot → wait for health check → remove excess On-Demand. Continuously.',
     where: 'EC2 → Auto Scaling Groups → Activity History + CloudWatch metric: OnDemandCapacity vs SpotCapacity ratio',
-    flag: 'ASGs that started on Spot months ago and have never been reviewed — they\'re probably mostly On-Demand after a silent fallback event.',
-    xamops: <><Xam /> AutoSpotting runs the staged replacement loop automatically — validate ASG candidacy → launch Spot → wait for health → terminate On-Demand. Runs continuously across all opted-in ASGs. Opt in with a single tag.</>,
+    flag: 'ASGs that started on Spot months ago and have never been reviewed. They\'re probably mostly On-Demand after a silent fallback event.',
+    xamops: <><Xam /> AutoSpotting runs the staged replacement loop automatically: validate ASG candidacy → launch Spot → wait for health → terminate On-Demand. Runs continuously across all opted-in ASGs. Opt in with a single tag.</>,
   },
 ];
 
@@ -94,7 +94,7 @@ export default function SpotInstancesPage() {
           </div>
 
           <h1 className="serif text-[clamp(34px,5.2vw,66px)] leading-[1.06] tracking-tight max-w-[22ch]" style={{ color: '#ffffff' }}>
-            EC2 Spot Instances in Production —{' '}
+            EC2 Spot Instances in Production:{' '}
             <span style={{ color: '#FF9900' }}>
               How to Stop Fearing Interruptions and Save 70%
             </span>
@@ -104,8 +104,8 @@ export default function SpotInstancesPage() {
             className="mt-5 text-[17px] leading-[1.7] max-w-[62ch]"
             style={{ color: 'rgba(255,255,255,0.65)' }}
           >
-            A practical guide for DevOps engineers on running Spot instances safely in production
-            — with the five patterns that make interruptions a non-event.
+            A practical guide for DevOps engineers on running Spot instances safely in production,
+            with the five patterns that make interruptions a non-event.
           </p>
 
           <div className="mt-7 flex items-center gap-3">
@@ -133,7 +133,7 @@ export default function SpotInstancesPage() {
                   get interrupted?&rdquo;
                 </p>
                 <p className="text-[17px] leading-[1.78] mt-5" style={{ color: 'var(--ink-2)' }}>
-                  This guide is the answer to that question — a practical five-step pattern used by
+                  This guide is the answer to that question: a practical five-step pattern used by
                   engineering teams running Spot in production at scale, with a real-time control
                   loop that makes interruptions operationally indistinguishable from a routine
                   health-check replacement.
@@ -175,7 +175,7 @@ export default function SpotInstancesPage() {
 
               {/* Playbook header */}
               <div className="mb-7">
-                <div className="eyebrow mb-3">Section 2 — The Production Spot Playbook</div>
+                <div className="eyebrow mb-3">Section 2: The Production Spot Playbook</div>
                 <h2 className="serif text-[clamp(22px,3.5vw,34px)] leading-[1.1] tracking-tight">
                   5 steps to Spot-first production fleets
                 </h2>
@@ -456,7 +456,7 @@ export default function SpotInstancesPage() {
                       70% savings. One tag to opt in.
                     </div>
                     <p className="text-[12.5px] leading-[1.6] mb-4" style={{ color: 'var(--olive)' }}>
-                      <Xam /> AutoSpotting runs the replacement loop continuously — across all regions, accounts, and ASGs.
+                      <Xam /> AutoSpotting runs the replacement loop continuously, across all regions, accounts, and ASGs.
                     </p>
                     <button
                       onClick={() => setOpen(true)}
@@ -477,7 +477,7 @@ export default function SpotInstancesPage() {
 
       <CTABanner
         heading="70% compute savings. One tag to opt in."
-        sub="XamOps AutoSpotting runs the staged replacement loop continuously — across all regions, all accounts, all ASGs."
+        sub="XamOps AutoSpotting runs the staged replacement loop continuously, across all regions, all accounts, all ASGs."
       />
     </>
   );

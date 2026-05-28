@@ -16,11 +16,11 @@ export default function DiskPage() {
     clouds={['aws.ebs gp3 · io2', 'gcp.persistent-disk', 'azure.managed-disk', 'lvm · ext4 · xfs · ntfs']}
     features={[
       ['38% avg reduction',   'Real customer averages across 12,400+ volumes managed.'],
-      ['Zero downtime',       'Snapshot, resize, expand filesystem — without taking workloads offline.'],
+      ['Zero downtime',       'Snapshot, resize, expand filesystem without taking workloads offline.'],
       ['Rollback ready',      'Every action has a defined rollback path.'],
       ['Filesystem aware',    'Handles ext4, xfs, ntfs and LVM volumes natively.'],
       ['Maintenance windows', 'Schedule resize during low-traffic hours per workload.'],
-      ['Multi-cloud',         'EBS, Persistent Disk, Managed Disk — single policy.'],
+      ['Multi-cloud',         'EBS, Persistent Disk, Managed Disk on a single policy.'],
     ]}
     cta="Disk costs you can finally cut." />;
 }

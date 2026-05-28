@@ -11,16 +11,16 @@ const REASONS = [
   {
     n: '01',
     title: 'No usage signal at the volume level',
-    body: "CloudWatch gives you disk read/write IOPS and throughput — but not a \"% of provisioned capacity in use\" metric. A 2 TB gp3 volume that's 94% empty looks identical to a full one in the AWS console. You're billed for what you provisioned, not what you used.",
+    body: "CloudWatch gives you disk read/write IOPS and throughput, but not a \"% of provisioned capacity in use\" metric. A 2 TB gp3 volume that's 94% empty looks identical to a full one in the AWS console. You're billed for what you provisioned, not what you used.",
   },
   {
     n: '02',
     title: "AWS doesn't alert you when a volume is idle",
-    body: "An EBS volume can sit unattached for 18 months and AWS will never send you a notification. There are no built-in Cost Explorer anomalies for storage waste — only for spend increases. Gradual accumulation is invisible to any threshold-based alert.",
+    body: "An EBS volume can sit unattached for 18 months and AWS will never send you a notification. There are no built-in Cost Explorer anomalies for storage waste, only for spend increases. Gradual accumulation is invisible to any threshold-based alert.",
   },
   {
     n: '03',
-    title: 'Provisioned ≠ consumed — and you pay for provisioned',
+    title: 'Provisioned ≠ consumed, and you pay for provisioned',
     body: "When an engineer provisions a 500 GB volume for a database using 80 GB, the other 420 GB costs money every month in perpetuity. The capacity claim is made once; the cost is ongoing. No one reviews provisioned capacity after the fact.",
   },
 ];
@@ -28,26 +28,26 @@ const REASONS = [
 const MOVES = [
   {
     n: '01',
-    title: 'Delete unattached EBS volumes — the easiest $300/month',
-    body: "Every EC2 instance termination can leave an orphaned EBS volume behind. The default behavior changed in 2022 — volumes are now deleted on instance termination — but any volume provisioned before that change, or with the \"delete on termination\" flag unchecked, persists indefinitely. Filter your volumes by \"available\" state. Every volume in that list is paying rent for nothing.",
+    title: 'Delete unattached EBS volumes: the easiest $300/month',
+    body: "Every EC2 instance termination can leave an orphaned EBS volume behind. The default behavior changed in 2022 (volumes are now deleted on instance termination), but any volume provisioned before that change, or with the \"delete on termination\" flag unchecked, persists indefinitely. Filter your volumes by \"available\" state. Every volume in that list is paying rent for nothing.",
     where: 'EC2 → Volumes → Filter: State = available → Sort by Size descending',
-    flag: 'Volumes tagged with a project name that has no running instances — the project is dead, the bill is not.',
+    flag: 'Volumes tagged with a project name that has no running instances. The project is dead, the bill is not.',
     xamops: <><Xam /> scans all accounts for volumes in "available" state, clusters them by age and tag, and surfaces them on the Disk Rightsizing dashboard with one-click deletion and a 30-day safety window.</>,
   },
   {
     n: '02',
-    title: 'Migrate gp2 → gp3 — same performance, 20% cheaper',
-    body: "gp2 is the old general-purpose SSD type. gp3 is newer: 20% cheaper at the same base price, with independently configurable IOPS and throughput. There is no performance regression for general workloads. AWS doesn't migrate you automatically — it's opt-in. Every gp2 volume in your account is a guaranteed 20% refund waiting to happen with zero application impact.",
+    title: 'Migrate gp2 to gp3: same performance, 20% cheaper',
+    body: "gp2 is the old general-purpose SSD type. gp3 is newer: 20% cheaper at the same base price, with independently configurable IOPS and throughput. There is no performance regression for general workloads. AWS doesn't migrate you automatically; it's opt-in. Every gp2 volume in your account is a guaranteed 20% refund waiting to happen with zero application impact.",
     where: 'EC2 → Volumes → Filter: Volume type = gp2 → Modify → Volume type = gp3',
-    flag: 'A gp2 volume over 1 TB is costing you significantly more than the equivalent gp3 — the per-GB premium compounds fast at scale.',
+    flag: 'A gp2 volume over 1 TB is costing you significantly more than the equivalent gp3. The per-GB premium compounds fast at scale.',
     xamops: <><Xam /> Disk Rightsizing identifies every gp2 volume across all accounts and regions, validates that the workload doesn't require gp2-specific burst credits, and generates a migration plan with one-click execution.</>,
   },
   {
     n: '03',
-    title: 'Rightsize over-provisioned volumes — the biggest lever',
-    body: "The hardest move, but the highest impact. An over-provisioned volume is one where CloudWatch shows consistently low utilization relative to provisioned capacity. The typical pattern: an engineer estimates headroom generously, provisions 2× what's needed, and the volume never fills. Rightsizing means snapshotting, resizing, and restoring — operationally safe but requires a maintenance window for attached volumes.",
+    title: 'Rightsize over-provisioned volumes: the biggest lever',
+    body: "The hardest move, but the highest impact. An over-provisioned volume is one where CloudWatch shows consistently low utilization relative to provisioned capacity. The typical pattern: an engineer estimates headroom generously, provisions 2× what's needed, and the volume never fills. Rightsizing means snapshotting, resizing, and restoring. Operationally safe, but requires a maintenance window for attached volumes.",
     where: 'CloudWatch → Metrics → EBS → VolumeReadBytes / VolumeWriteBytes + AWS Cost Explorer → Filter: Service = EC2-Other, Group by: Usage Type',
-    flag: 'Volumes where the 90-day P99 utilization is under 40% of provisioned capacity — these are immediate rightsizing candidates.',
+    flag: 'Volumes where the 90-day P99 utilization is under 40% of provisioned capacity. These are immediate rightsizing candidates.',
     xamops: <><Xam /> pulls 90-day CloudWatch utilization data for every volume, calculates the recommended size, and provides a rightsizing plan with projected savings per volume. High-confidence volumes can be auto-rightsized within a defined maintenance window.</>,
   },
 ];
@@ -92,8 +92,8 @@ export default function DiskRightsizingPage() {
             className="mt-5 text-[17px] leading-[1.7] max-w-[62ch]"
             style={{ color: 'rgba(255,255,255,0.65)' }}
           >
-            Three moves that eliminate 30–40% of cloud storage waste — with the discipline
-            to prevent it from coming back.
+            Three moves that eliminate 30–40% of cloud storage waste,
+            with the discipline to prevent it from coming back.
           </p>
 
           <div className="mt-7 flex items-center gap-3">
@@ -116,11 +116,11 @@ export default function DiskRightsizingPage() {
                 <p className="text-[17px] leading-[1.78]" style={{ color: 'var(--ink-2)' }}>
                   Every team investigates their AWS bill the same way. You open Cost Explorer,
                   sort by service, find EC2 at the top, and dig in. Compute costs are visible,
-                  attributable, and spiky — easy to notice, easy to blame. So that's where the
+                  attributable, and spiky, easy to notice, easy to blame. So that's where the
                   optimization effort goes.
                 </p>
                 <p className="text-[17px] leading-[1.78] mt-5" style={{ color: 'var(--ink-2)' }}>
-                  Meanwhile, EC2-Other — the line that includes EBS storage — sits quietly at
+                  Meanwhile, EC2-Other (the line that includes EBS storage) sits quietly at
                   15–25% of your bill with no individual owner, no spike to investigate, and no
                   one asking questions. It grows slowly, steadily, and invisibly. New volumes are
                   provisioned, old instances are terminated, and the orphaned disks keep
@@ -129,7 +129,7 @@ export default function DiskRightsizingPage() {
                 <p className="text-[17px] leading-[1.78] mt-5" style={{ color: 'var(--ink-2)' }}>
                   This guide covers three moves that eliminate the waste. None of them require
                   application changes. All of them can be done in a single afternoon. Together,
-                  they typically recover 30–40% of your storage budget — for the average AWS
+                  they typically recover 30–40% of your storage budget. For the average AWS
                   account, that's $15,000–$20,000 per year.
                 </p>
               </section>
@@ -174,7 +174,7 @@ export default function DiskRightsizingPage() {
 
               {/* Moves header */}
               <div className="mb-7">
-                <div className="eyebrow mb-3">Section 2 — The 3-Move Rightsizing Playbook</div>
+                <div className="eyebrow mb-3">Section 2: The 3-Move Rightsizing Playbook</div>
                 <h2 className="serif text-[clamp(22px,3.5vw,34px)] leading-[1.1] tracking-tight">
                   3 moves to eliminate storage waste
                 </h2>
@@ -319,7 +319,7 @@ export default function DiskRightsizingPage() {
                         $18,000/year is the median. Larger accounts with longer-running infrastructure
                         and less disk hygiene see{' '}
                         <strong style={{ color: '#FF9900' }}>$40,000–$80,000/year</strong>
-                        {' '}in recoverable storage waste — more than a junior engineer's annual salary.
+                        {' '}in recoverable storage waste, more than a junior engineer's annual salary.
                       </p>
                     </div>
                   </div>
@@ -336,14 +336,14 @@ export default function DiskRightsizingPage() {
                   <div className="p-6 md:p-8 space-y-5">
                     <p className="text-[15.5px] leading-[1.78]" style={{ color: 'var(--ink-2)' }}>
                       Running the 3-move playbook is a one-time cleanup. Without policy enforcement,
-                      the waste starts accumulating again the next day — new gp2 volumes get
+                      the waste starts accumulating again the next day. New gp2 volumes get
                       provisioned, terminations leave orphans, and engineers estimate generously.
                       The fix is policy-as-code, not periodic audits.
                     </p>
                     {[
                       {
                         title: 'Require gp3 in new volume provisioning',
-                        body: 'Add an SCP (Service Control Policy) or Config rule that denies CreateVolume with type = gp2. Existing Terraform modules should default to gp3. No exception needed — gp3 is strictly superior for general workloads.',
+                        body: 'Add an SCP (Service Control Policy) or Config rule that denies CreateVolume with type = gp2. Existing Terraform modules should default to gp3. No exception needed; gp3 is strictly superior for general workloads.',
                       },
                       {
                         title: 'Enable DeleteOnTermination for all new instances',
@@ -351,7 +351,7 @@ export default function DiskRightsizingPage() {
                       },
                       {
                         title: 'Tag every volume with owner and project at creation',
-                        body: 'Enforce required tags (Owner, Project, Environment) via AWS Config. Untagged volumes are invisible in organizational billing — tagged volumes can be attributed, reviewed, and challenged.',
+                        body: 'Enforce required tags (Owner, Project, Environment) via AWS Config. Untagged volumes are invisible in organizational billing; tagged volumes can be attributed, reviewed, and challenged.',
                       },
                       {
                         title: 'Alert on volumes idle for >14 days',
@@ -397,7 +397,7 @@ export default function DiskRightsizingPage() {
                   <p className="text-[15.5px] leading-[1.78] mb-4" style={{ color: 'var(--ink-2)' }}>
                     The 3-move cleanup above can be done manually. The policy enforcement requires
                     coordinating SCPs, Config rules, Launch Template updates, and CloudWatch alarms
-                    across every account and region — and keeping them in sync as your infrastructure
+                    across every account and region, and keeping them in sync as your infrastructure
                     changes.
                   </p>
                   <p className="text-[15.5px] leading-[1.78] mb-7" style={{ color: 'var(--ink-2)' }}>
@@ -491,7 +491,7 @@ export default function DiskRightsizingPage() {
                     </div>
                     <p className="text-[12.5px] leading-[1.6] mb-4" style={{ color: 'var(--olive)' }}>
                       <Xam /> finds unattached volumes, migrates gp2 to gp3, and rightsizes
-                      over-provisioned disks — automatically.
+                      over-provisioned disks, automatically.
                     </p>
                     <button
                       onClick={() => setOpen(true)}
@@ -512,7 +512,7 @@ export default function DiskRightsizingPage() {
 
       <CTABanner
         heading="30–40% of your storage budget is probably wasted. XamOps finds it, fixes it, and keeps it fixed."
-        sub="Unattached volumes, gp2 migration, over-provisioned disks — automated and continuously monitored across all accounts."
+        sub="Unattached volumes, gp2 migration, over-provisioned disks. Automated and continuously monitored across all accounts."
       />
     </>
   );

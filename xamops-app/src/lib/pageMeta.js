@@ -328,6 +328,41 @@ export const PAGE_META = {
     ],
   },
 
+  // ── Blog post: Disk Rightsizing ───────────────────────────────────
+  '/blog/disk-rightsizing-ebs': {
+    title: 'Disk Rightsizing: The Cost Saving Everyone Ignores | XamOps Blog',
+    description: 'Three moves that eliminate 30–40% of cloud storage waste — unattached EBS volumes, gp2 to gp3 migration, and over-provisioned disk rightsizing — with policy enforcement to prevent re-accumulation.',
+    keywords: 'disk rightsizing ebs, aws storage optimization, ebs cost savings, gp2 gp3 migration, unattached ebs volumes, over-provisioned disk aws, cloud storage waste, finops storage, ec2 storage optimization, ebs volume rightsizing, cloud cost optimization',
+    canonical: `${BASE}/blog/disk-rightsizing-ebs`,
+    schemas: [
+      {
+        '@context': 'https://schema.org',
+        '@type': 'BlogPosting',
+        '@id': `${BASE}/blog/disk-rightsizing-ebs/#post`,
+        headline: 'Disk Rightsizing: The Cost Saving Everyone Ignores',
+        description: 'Three moves that eliminate 30–40% of cloud storage waste — with the discipline to prevent it from coming back.',
+        url: `${BASE}/blog/disk-rightsizing-ebs/`,
+        datePublished: '2026-05-28',
+        dateModified: '2026-05-28',
+        author: { '@type': 'Person', name: 'Aditya Mehta', jobTitle: 'Co-founder, XamOps', worksFor: org },
+        publisher: org,
+        keywords: ['disk rightsizing', 'ebs storage', 'gp2 gp3 migration', 'unattached volumes', 'cloud storage waste', 'finops', 'aws cost optimization'],
+        timeRequired: 'PT7M',
+        wordCount: '1800',
+        inLanguage: 'en-US',
+        articleSection: 'FinOps',
+        about: [
+          { '@type': 'Thing', name: 'EBS Disk Rightsizing' },
+          { '@type': 'Thing', name: 'Cloud Storage Optimization' },
+          { '@type': 'Thing', name: 'FinOps' },
+        ],
+        mainEntityOfPage: { '@type': 'WebPage', '@id': `${BASE}/blog/disk-rightsizing-ebs/` },
+      },
+      wp('/blog/disk-rightsizing-ebs', 'Disk Rightsizing: The Cost Saving Everyone Ignores | XamOps Blog', 'Three moves to eliminate 30–40% of cloud storage waste and prevent re-accumulation.'),
+      org,
+    ],
+  },
+
   // ── Blog post: EC2 Spot instances ────────────────────────────────
   '/blog/ec2-spot-instances-production': {
     title: 'EC2 Spot Instances in Production — Stop Fearing Interruptions | XamOps Blog',
@@ -467,6 +502,18 @@ export const PAGE_META = {
                 publisher: org,
                 keywords: ['spot automation','cloud compute optimization','FinOps automation','compute savings'],
                 timeRequired: 'PT8M',
+              },
+              {
+                '@type': 'BlogPosting',
+                '@id': `${BASE}/blog/disk-rightsizing-ebs/#post`,
+                headline: 'Disk Rightsizing: The Cost Saving Everyone Ignores',
+                description: 'Three moves that eliminate 30–40% of cloud storage waste — unattached volumes, gp2 migration, and over-provisioned disks.',
+                url: `${BASE}/blog/disk-rightsizing-ebs/`,
+                datePublished: '2026-05-28',
+                author: { '@type': 'Person', name: 'Aditya Mehta', jobTitle: 'Co-founder, XamOps' },
+                publisher: org,
+                keywords: ['disk rightsizing', 'ebs storage', 'gp2 gp3 migration', 'cloud storage waste', 'finops'],
+                timeRequired: 'PT7M',
               },
               {
                 '@type': 'BlogPosting',

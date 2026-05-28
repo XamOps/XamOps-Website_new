@@ -39,6 +39,40 @@ function SpotSavingsThumbnail() {
   );
 }
 
+function DiskWasteThumbnail() {
+  const BARS = [
+    { label: 'UNATTACHED', h: 45, x: 45, amount: '$300/mo' },
+    { label: 'GP2→GP3', h: 60, x: 145, amount: '$400/mo' },
+    { label: 'OVER-SIZED', h: 120, x: 245, amount: '$800/mo' },
+  ];
+  const BASE = 185;
+  return (
+    <svg viewBox="0 0 380 210" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ width: '100%', height: '100%', display: 'block' }}>
+      {[100, 130, 155, 175].map(y => (
+        <line key={y} x1="18" y1={y} x2="362" y2={y} stroke="#1f2430" strokeWidth="1" />
+      ))}
+      <defs>
+        <linearGradient id="wasteGrad" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="#ef6d58" stopOpacity="0.85" />
+          <stop offset="100%" stopColor="#ef6d58" stopOpacity="0.5" />
+        </linearGradient>
+      </defs>
+      {BARS.map(b => (
+        <rect key={b.label} x={b.x} y={BASE - b.h} width="70" height={b.h} rx="3" fill="url(#wasteGrad)" />
+      ))}
+      <line x1="18" y1={BASE} x2="362" y2={BASE} stroke="#1f2430" strokeWidth="1.5" />
+      {BARS.map(b => (
+        <g key={b.label}>
+          <text x={b.x + 35} y={BASE - b.h - 6} textAnchor="middle" fontSize="10.5" fill="#ef6d58" fontFamily="monospace">{b.amount}</text>
+          <text x={b.x + 35} y={BASE + 16} textAnchor="middle" fontSize="8.5" fill="#5b6173" fontFamily="monospace">{b.label}</text>
+        </g>
+      ))}
+      <rect x="120" y="16" width="140" height="22" rx="4" fill="#ef6d58" opacity="0.12" />
+      <text x="190" y="31" textAnchor="middle" fontSize="11" fill="#ef6d58" fontFamily="monospace" fontWeight="700">$1,500/mo wasted</text>
+    </svg>
+  );
+}
+
 function CostSpikeThumbnail() {
   const BARS = [
     { label: 'NOV', h: 85, x: 24 },
@@ -98,6 +132,16 @@ export default function BlogPage() {
       thumb: { backgroundColor: 'var(--parchment)' },
       thumbEl: <SpotSavingsThumbnail />,
     },
+    {
+      tag: 'FinOps',
+      title: 'Disk Rightsizing: The Cost Saving Everyone Ignores',
+      excerpt: 'Three moves that eliminate 30–40% of cloud storage waste — unattached volumes, gp2 migration, and over-provisioned disks — with the discipline to prevent it from coming back.',
+      read: '7 min',
+      date: 'May 28, 2026',
+      href: '/blog/disk-rightsizing-ebs',
+      thumb: { backgroundColor: 'var(--parchment)' },
+      thumbEl: <DiskWasteThumbnail />,
+    },
   ];
 
   return (
@@ -109,7 +153,7 @@ export default function BlogPage() {
         cta={false}
       />
       <section className="sec-light pb-24 overflow-hidden">
-        <div className="max-w-[1240px] mx-auto px-4 sm:px-6 md:px-10 grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+        <div className="max-w-[1240px] mx-auto px-4 sm:px-6 md:px-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
           {posts.map((p) => {
             const CardEl = p.href ? Link : 'a';
             const cardProps = p.href ? { to: p.href } : { href: '#' };

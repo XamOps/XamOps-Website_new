@@ -29,20 +29,37 @@ jobs:
           cd xamops-app
           npm ci
 
-      # ── 4. Build ───────────────────────────────────────────────────────────
-      - name: Build
+      # ── 3a. Cache Playwright browser binary ────────────────────────────────
+      - name: Cache Playwright browsers
+        uses: actions/cache@v4
+        id: playwright-cache
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-chromium-${{ runner.os }}-${{ hashFiles('xamops-app/package-lock.json') }}
+
+      # ── 3b. Install Playwright Chromium + OS dependencies ──────────────────
+      - name: Install Playwright Chromium
         run: |
           cd xamops-app
-          npm run build
+          npx playwright install --with-deps chromium
+
+      # ── 4. Build + Pre-render ──────────────────────────────────────────────
+      - name: Build + Pre-render
+        run: |
+          cd xamops-app
+          npm run build:ssg
 
       # ── 5. Verify build output exists ──────────────────────────────────────
       - name: Verify build output
         run: |
-          echo "====== Build Output Files ======"
+          echo "====== Top-level dist/ ======"
           ls -lh xamops-app/dist/
           echo ""
-          echo "====== index.html preview ======"
-          head -10 xamops-app/dist/index.html
+          echo "====== Pre-rendered routes ======"
+          find xamops-app/dist -name "index.html" | sort
+          echo ""
+          echo "====== index.html title tag ======"
+          grep -o '<title>[^<]*</title>' xamops-app/dist/index.html || true
 
       # ── 6. SSH Setup ───────────────────────────────────────────────────────
       - name: Setup SSH key

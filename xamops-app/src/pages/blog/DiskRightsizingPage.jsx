@@ -65,32 +65,32 @@ export default function DiskRightsizingPage() {
   return (
     <>
       {/* ── Article header ─────────────────────────────────────── */}
-      <section className="sec-light pt-28 md:pt-36 pb-12 relative overflow-hidden">
+      <section className="pt-28 md:pt-36 pb-14 relative overflow-hidden" style={{ background: '#232F3E' }}>
         <div
           className="absolute -top-24 left-1/2 -translate-x-1/2 w-[900px] h-[500px] rounded-full pointer-events-none"
-          style={{ background: 'radial-gradient(closest-side, rgba(239,109,88,0.07), transparent 70%)' }}
+          style={{ background: 'radial-gradient(closest-side, rgba(255,153,0,0.07), transparent 70%)' }}
         />
         <div className="max-w-[1240px] mx-auto px-6 md:px-10 relative">
           <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mb-7 eyebrow">
-            <Link to="/blog" className="ulink hover:text-current">Blog</Link>
-            <span style={{ color: 'var(--rule-dark)' }}>/</span>
-            <span style={{ color: 'var(--terracotta)' }}>FinOps</span>
-            <span style={{ color: 'var(--rule-dark)' }}>·</span>
-            <span>May 28, 2026</span>
-            <span style={{ color: 'var(--rule-dark)' }}>·</span>
-            <span>7 min read</span>
+            <Link to="/blog" style={{ color: 'rgba(255,255,255,0.5)', textDecoration: 'none' }}>Blog</Link>
+            <span style={{ color: 'rgba(255,255,255,0.2)' }}>/</span>
+            <span style={{ color: '#FF9900' }}>FinOps</span>
+            <span style={{ color: 'rgba(255,255,255,0.2)' }}>·</span>
+            <span style={{ color: 'rgba(255,255,255,0.45)' }}>May 28, 2026</span>
+            <span style={{ color: 'rgba(255,255,255,0.2)' }}>·</span>
+            <span style={{ color: 'rgba(255,255,255,0.45)' }}>7 min read</span>
           </div>
 
-          <h1 className="serif text-[clamp(34px,5.2vw,66px)] leading-[1.06] tracking-tight max-w-[22ch]">
+          <h1 className="serif text-[clamp(34px,5.2vw,66px)] leading-[1.06] tracking-tight max-w-[22ch]" style={{ color: '#ffffff' }}>
             Disk Rightsizing:{' '}
-            <span style={{ color: 'var(--terracotta)' }}>
+            <span style={{ color: '#FF9900' }}>
               The Cost Saving Everyone Ignores
             </span>
           </h1>
 
           <p
             className="mt-5 text-[17px] leading-[1.7] max-w-[62ch]"
-            style={{ color: 'var(--olive)' }}
+            style={{ color: 'rgba(255,255,255,0.65)' }}
           >
             Three moves that eliminate 30–40% of cloud storage waste — with the discipline
             to prevent it from coming back.
@@ -98,7 +98,7 @@ export default function DiskRightsizingPage() {
 
           <div className="mt-7 flex items-center gap-3">
             <div className="live-dot" />
-            <span className="eyebrow">Aditya Mehta</span>
+            <span className="eyebrow" style={{ color: 'rgba(255,255,255,0.7)' }}>Aditya Mehta</span>
           </div>
         </div>
       </section>
@@ -158,7 +158,7 @@ export default function DiskRightsizingPage() {
                           className="display shrink-0 leading-none select-none"
                           style={{
                             fontSize: '32px',
-                            color: 'var(--terracotta)',
+                            color: '#FF9900',
                             opacity: 0.35,
                             letterSpacing: '-0.04em',
                             marginTop: '-2px',
@@ -201,7 +201,7 @@ export default function DiskRightsizingPage() {
                           className="display shrink-0 leading-none select-none"
                           style={{
                             fontSize: 'clamp(40px,5.5vw,56px)',
-                            color: 'var(--terracotta)',
+                            color: '#FF9900',
                             opacity: 0.4,
                             letterSpacing: '-0.04em',
                             marginTop: '-3px',
@@ -248,10 +248,10 @@ export default function DiskRightsizingPage() {
 
                       <div
                         className="mt-3 flex gap-3 rounded-xl px-4 py-3"
-                        style={{ background: 'rgba(239,109,88,0.06)', border: '1px solid rgba(239,109,88,0.18)' }}
+                        style={{ background: 'rgba(255,153,0,0.06)', border: '1px solid rgba(255,153,0,0.2)' }}
                       >
-                        <span className="shrink-0 mt-px text-[11px]" style={{ color: 'var(--terracotta)' }}>◆</span>
-                        <p className="text-[13px] leading-[1.65]" style={{ color: 'var(--terracotta)' }}>
+                        <span className="shrink-0 mt-px text-[11px]" style={{ color: '#FF9900' }}>◆</span>
+                        <p className="text-[13px] leading-[1.65]" style={{ color: '#FF9900' }}>
                           {move.xamops}
                         </p>
                       </div>
@@ -304,14 +304,14 @@ export default function DiskRightsizingPage() {
                             <tr key={i} style={{ borderBottom: '1px solid var(--rule)' }}>
                               <td style={{ padding: '10px 12px 10px 0', color: 'var(--ink-2)' }}>{row.source}</td>
                               <td style={{ padding: '10px 12px 10px 0', color: 'var(--olive)', fontFamily: 'var(--font-mono)', fontSize: '13px' }}>{row.vol}</td>
-                              <td style={{ padding: '10px 12px 10px 0', color: 'var(--terracotta)', fontFamily: 'var(--font-mono)', fontSize: '13px' }}>{row.cost}</td>
+                              <td style={{ padding: '10px 12px 10px 0', color: '#FF9900', fontFamily: 'var(--font-mono)', fontSize: '13px' }}>{row.cost}</td>
                               <td style={{ padding: '10px 0 10px 0', color: 'var(--moss)', fontFamily: 'var(--font-mono)', fontSize: '13px' }}>{row.rec}</td>
                             </tr>
                           ))}
                           <tr>
                             <td style={{ padding: '14px 12px 0 0', fontWeight: 600, color: 'var(--ink)' }}>Total waste</td>
                             <td />
-                            <td style={{ padding: '14px 12px 0 0', color: 'var(--terracotta)', fontFamily: 'var(--font-mono)', fontSize: '14px', fontWeight: 700 }}>~$1,500/mo</td>
+                            <td style={{ padding: '14px 12px 0 0', color: '#FF9900', fontFamily: 'var(--font-mono)', fontSize: '14px', fontWeight: 700 }}>~$1,500/mo</td>
                             <td style={{ padding: '14px 0 0 0', color: 'var(--moss)', fontFamily: 'var(--font-mono)', fontSize: '14px', fontWeight: 700 }}>$18,000/yr</td>
                           </tr>
                         </tbody>
@@ -319,12 +319,12 @@ export default function DiskRightsizingPage() {
                     </div>
                     <div
                       className="mt-6 rounded-xl p-4"
-                      style={{ background: 'rgba(239,109,88,0.06)', border: '1px solid rgba(239,109,88,0.18)' }}
+                      style={{ background: 'rgba(255,153,0,0.06)', border: '1px solid rgba(255,153,0,0.2)' }}
                     >
                       <p className="text-[13.5px] leading-[1.65]" style={{ color: 'var(--ink-2)' }}>
                         $18,000/year is the median. Larger accounts with longer-running infrastructure
                         and less disk hygiene see{' '}
-                        <strong style={{ color: 'var(--terracotta)' }}>$40,000–$80,000/year</strong>
+                        <strong style={{ color: '#FF9900' }}>$40,000–$80,000/year</strong>
                         {' '}in recoverable storage waste — more than a junior engineer's annual salary.
                       </p>
                     </div>
@@ -371,7 +371,7 @@ export default function DiskRightsizingPage() {
                       >
                         <span
                           className="shrink-0 w-6 h-6 flex items-center justify-center rounded-full text-[11px] font-bold"
-                          style={{ background: 'rgba(239,109,88,0.1)', color: 'var(--terracotta)', marginTop: '1px' }}
+                          style={{ background: 'rgba(255,153,0,0.08)', color: '#FF9900', marginTop: '1px' }}
                         >
                           {i + 1}
                         </span>
@@ -392,13 +392,13 @@ export default function DiskRightsizingPage() {
               >
                 <div
                   className="absolute -right-16 -bottom-16 w-[300px] h-[300px] rounded-full pointer-events-none"
-                  style={{ background: 'radial-gradient(closest-side, rgba(239,109,88,0.09), transparent 70%)' }}
+                  style={{ background: 'radial-gradient(closest-side, rgba(255,153,0,0.08), transparent 70%)' }}
                 />
                 <div className="relative">
                   <div className="eyebrow mb-3">Finds it, fixes it, keeps it fixed</div>
                   <h2 className="serif text-[clamp(20px,3vw,32px)] leading-[1.1] tracking-tight mb-5">
                     Stop paying for empty gigabytes.{' '}
-                    <span style={{ color: 'var(--terracotta)' }}><Xam /> makes it automatic.</span>
+                    <span style={{ color: '#FF9900' }}><Xam /> makes it automatic.</span>
                   </h2>
                   <p className="text-[15.5px] leading-[1.78] mb-4" style={{ color: 'var(--ink-2)' }}>
                     The 3-move cleanup above can be done manually. The policy enforcement requires
@@ -444,7 +444,7 @@ export default function DiskRightsizingPage() {
                         <span style={{ color: 'var(--olive)' }}>{label}</span>
                         <span
                           style={{
-                            color: accent ? 'var(--terracotta)' : 'var(--ink)',
+                            color: accent ? '#FF9900' : 'var(--ink)',
                             fontFamily: accent ? 'var(--font-mono)' : 'inherit',
                             fontSize: accent ? '11px' : 'inherit',
                             letterSpacing: accent ? '0.12em' : 'inherit',
@@ -470,7 +470,7 @@ export default function DiskRightsizingPage() {
                         style={{ textDecoration: 'none', color: 'var(--ink-2)' }}
                       >
                         {item.prefix ? (
-                          <span className="mono shrink-0 text-[11px] mt-[2px]" style={{ color: 'var(--terracotta)' }}>
+                          <span className="mono shrink-0 text-[11px] mt-[2px]" style={{ color: '#FF9900' }}>
                             {item.prefix}
                           </span>
                         ) : (
@@ -489,7 +489,7 @@ export default function DiskRightsizingPage() {
                 >
                   <div
                     className="absolute -right-6 -bottom-6 w-28 h-28 rounded-full pointer-events-none"
-                    style={{ background: 'radial-gradient(closest-side, rgba(239,109,88,0.12), transparent 70%)' }}
+                    style={{ background: 'radial-gradient(closest-side, rgba(255,153,0,0.1), transparent 70%)' }}
                   />
                   <div className="relative">
                     <div className="text-[14px] leading-[1.5] mb-2" style={{ fontFamily: 'var(--font-med)' }}>

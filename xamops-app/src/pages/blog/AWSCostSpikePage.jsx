@@ -91,32 +91,32 @@ export default function AWSCostSpikePage() {
   return (
     <>
       {/* ── Article header ─────────────────────────────────────── */}
-      <section className="sec-light pt-28 md:pt-36 pb-12 relative overflow-hidden">
+      <section className="pt-28 md:pt-36 pb-14 relative overflow-hidden" style={{ background: '#232F3E' }}>
         <div
           className="absolute -top-24 left-1/2 -translate-x-1/2 w-[900px] h-[500px] rounded-full pointer-events-none"
-          style={{ background: 'radial-gradient(closest-side, rgba(124,92,255,0.08), transparent 70%)' }}
+          style={{ background: 'radial-gradient(closest-side, rgba(255,153,0,0.07), transparent 70%)' }}
         />
         <div className="max-w-[1240px] mx-auto px-6 md:px-10 relative">
           <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mb-7 eyebrow">
-            <Link to="/blog" className="ulink hover:text-current">Blog</Link>
-            <span style={{ color: 'var(--rule-dark)' }}>/</span>
-            <span style={{ color: 'var(--terracotta)' }}>FinOps</span>
-            <span style={{ color: 'var(--rule-dark)' }}>·</span>
-            <span>May 28, 2026</span>
-            <span style={{ color: 'var(--rule-dark)' }}>·</span>
-            <span>9 min read</span>
+            <Link to="/blog" style={{ color: 'rgba(255,255,255,0.5)', textDecoration: 'none' }}>Blog</Link>
+            <span style={{ color: 'rgba(255,255,255,0.2)' }}>/</span>
+            <span style={{ color: '#FF9900' }}>FinOps</span>
+            <span style={{ color: 'rgba(255,255,255,0.2)' }}>·</span>
+            <span style={{ color: 'rgba(255,255,255,0.45)' }}>May 28, 2026</span>
+            <span style={{ color: 'rgba(255,255,255,0.2)' }}>·</span>
+            <span style={{ color: 'rgba(255,255,255,0.45)' }}>9 min read</span>
           </div>
 
-          <h1 className="serif text-[clamp(34px,5.2vw,66px)] leading-[1.06] tracking-tight max-w-[22ch]">
+          <h1 className="serif text-[clamp(34px,5.2vw,66px)] leading-[1.06] tracking-tight max-w-[22ch]" style={{ color: '#ffffff' }}>
             Your AWS Bill Jumped 40% Last Month —{' '}
-            <span style={{ color: 'var(--terracotta)' }}>
+            <span style={{ color: '#FF9900' }}>
               Here&rsquo;s How to Actually Investigate It
             </span>
           </h1>
 
           <p
             className="mt-5 text-[17px] leading-[1.7] max-w-[62ch]"
-            style={{ color: 'var(--olive)' }}
+            style={{ color: 'rgba(255,255,255,0.65)' }}
           >
             A step-by-step checklist for DevOps engineers to diagnose and fix unexpected AWS cost
             spikes — before finance comes knocking again.
@@ -124,16 +124,10 @@ export default function AWSCostSpikePage() {
 
           <div className="mt-7 flex items-center gap-3">
             <div className="live-dot" />
-            <span className="eyebrow">Aditya Mehta</span>
+            <span className="eyebrow" style={{ color: 'rgba(255,255,255,0.7)' }}>Aditya Mehta</span>
           </div>
         </div>
       </section>
-
-      {/* Divider */}
-      <div
-        className="max-w-[1240px] mx-auto px-6 md:px-10"
-        style={{ height: '1px', background: 'var(--rule)' }}
-      />
 
       {/* ── Article body ────────────────────────────────────────── */}
       <article className="sec-light py-12 md:py-18">
@@ -208,7 +202,7 @@ export default function AWSCostSpikePage() {
                           className="display shrink-0 leading-none select-none"
                           style={{
                             fontSize: 'clamp(40px,5.5vw,56px)',
-                            color: 'var(--terracotta)',
+                            color: '#FF9900',
                             opacity: 0.4,
                             letterSpacing: '-0.04em',
                             marginTop: '-3px',
@@ -258,10 +252,10 @@ export default function AWSCostSpikePage() {
 
                       <div
                         className="mt-3 flex gap-3 rounded-xl px-4 py-3"
-                        style={{ background: 'rgba(43,212,168,0.06)', border: '1px solid rgba(43,212,168,0.18)' }}
+                        style={{ background: 'rgba(255,153,0,0.06)', border: '1px solid rgba(255,153,0,0.2)' }}
                       >
-                        <span className="shrink-0 mt-px text-[11px]" style={{ color: 'var(--moss)' }}>◆</span>
-                        <p className="text-[13px] leading-[1.65]" style={{ color: 'var(--moss)' }}>
+                        <span className="shrink-0 mt-px text-[11px]" style={{ color: '#FF9900' }}>◆</span>
+                        <p className="text-[13px] leading-[1.65]" style={{ color: '#FF9900' }}>
                           {step.xamops}
                         </p>
                       </div>
@@ -312,13 +306,13 @@ export default function AWSCostSpikePage() {
               >
                 <div
                   className="absolute -right-16 -bottom-16 w-[300px] h-[300px] rounded-full pointer-events-none"
-                  style={{ background: 'radial-gradient(closest-side, rgba(43,212,168,0.1), transparent 70%)' }}
+                  style={{ background: 'radial-gradient(closest-side, rgba(255,153,0,0.08), transparent 70%)' }}
                 />
                 <div className="relative">
                   <div className="eyebrow mb-3">How <Xam /> automates this</div>
                   <h2 className="serif text-[clamp(20px,3vw,32px)] leading-[1.1] tracking-tight mb-5">
                     Run this checklist once.{' '}
-                    <span style={{ color: 'var(--moss)' }}>Then never again.</span>
+                    <span style={{ color: '#FF9900' }}>Then never again.</span>
                   </h2>
                   <p className="text-[15.5px] leading-[1.78] mb-4" style={{ color: 'var(--ink-2)' }}>
                     The investigation above takes a skilled engineer 2–4 hours the first time —
@@ -369,7 +363,7 @@ export default function AWSCostSpikePage() {
                         <span style={{ color: 'var(--olive)' }}>{label}</span>
                         <span
                           style={{
-                            color: accent ? 'var(--terracotta)' : 'var(--ink)',
+                            color: accent ? '#FF9900' : 'var(--ink)',
                             fontFamily: accent ? 'var(--font-mono)' : 'inherit',
                             fontSize: accent ? '11px' : 'inherit',
                             letterSpacing: accent ? '0.12em' : 'inherit',
@@ -396,7 +390,7 @@ export default function AWSCostSpikePage() {
                       >
                         <span
                           className="mono shrink-0 text-[11px] mt-[2px]"
-                          style={{ color: 'var(--terracotta)' }}
+                          style={{ color: '#FF9900' }}
                         >
                           {step.n}
                         </span>
@@ -413,7 +407,7 @@ export default function AWSCostSpikePage() {
                 >
                   <div
                     className="absolute -right-6 -bottom-6 w-28 h-28 rounded-full pointer-events-none"
-                    style={{ background: 'radial-gradient(closest-side, rgba(43,212,168,0.13), transparent 70%)' }}
+                    style={{ background: 'radial-gradient(closest-side, rgba(255,153,0,0.1), transparent 70%)' }}
                   />
                   <div className="relative">
                     <div

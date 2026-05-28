@@ -116,7 +116,7 @@ export default function AWSCostSpikePage() {
 
           <div className="mt-7 flex items-center gap-3">
             <div className="live-dot" />
-            <span className="eyebrow">XamOps FinOps Team</span>
+            <span className="eyebrow">Aditya Mehta</span>
           </div>
         </div>
       </section>
@@ -355,7 +355,7 @@ export default function AWSCostSpikePage() {
                       { label: 'Published', value: 'May 28, 2026', accent: false },
                       { label: 'Read time', value: '9 minutes', accent: false },
                       { label: 'Category', value: 'FinOps', accent: true },
-                      { label: 'Author', value: 'XamOps FinOps Team', accent: false },
+                      { label: 'Author', value: 'Aditya Mehta', accent: false },
                     ].map(({ label, value, accent }) => (
                       <div key={label} className="flex justify-between items-center gap-4">
                         <span style={{ color: 'var(--olive)' }}>{label}</span>

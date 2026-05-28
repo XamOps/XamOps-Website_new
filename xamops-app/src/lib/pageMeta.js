@@ -328,6 +328,41 @@ export const PAGE_META = {
     ],
   },
 
+  // ── Blog post: EC2 Spot instances ────────────────────────────────
+  '/blog/ec2-spot-instances-production': {
+    title: 'EC2 Spot Instances in Production — Stop Fearing Interruptions | XamOps Blog',
+    description: 'A practical guide for DevOps engineers on running Spot instances safely in production — with the five patterns that make interruptions a non-event and save 70% on compute.',
+    keywords: 'ec2 spot instances production, spot instance interruption, aws spot instances guide, spot instances devops, spot instance best practices, aws compute savings, autoscaling spot instances, spot on-demand fallback, ec2 spot automation, cloud cost optimization',
+    canonical: `${BASE}/blog/ec2-spot-instances-production`,
+    schemas: [
+      {
+        '@context': 'https://schema.org',
+        '@type': 'BlogPosting',
+        '@id': `${BASE}/blog/ec2-spot-instances-production/#post`,
+        headline: 'EC2 Spot Instances in Production — How to Stop Fearing Interruptions and Save 70%',
+        description: 'A practical guide for DevOps engineers on running Spot instances safely in production — with the five patterns that make interruptions a non-event.',
+        url: `${BASE}/blog/ec2-spot-instances-production/`,
+        datePublished: '2026-05-28',
+        dateModified: '2026-05-28',
+        author: { '@type': 'Person', name: 'Aditya Mehta', jobTitle: 'Co-founder, XamOps', worksFor: org },
+        publisher: org,
+        keywords: ['ec2 spot instances', 'spot interruption', 'production spot instances', 'aws compute savings', 'spot automation', 'on-demand vs spot'],
+        timeRequired: 'PT10M',
+        wordCount: '2200',
+        inLanguage: 'en-US',
+        articleSection: 'Spot',
+        about: [
+          { '@type': 'Thing', name: 'EC2 Spot Instances' },
+          { '@type': 'Thing', name: 'Cloud Cost Optimization' },
+          { '@type': 'Thing', name: 'AWS Auto Scaling' },
+        ],
+        mainEntityOfPage: { '@type': 'WebPage', '@id': `${BASE}/blog/ec2-spot-instances-production/` },
+      },
+      wp('/blog/ec2-spot-instances-production', 'EC2 Spot Instances in Production | XamOps Blog', 'Five patterns for running Spot safely in production and saving 70% on compute.'),
+      org,
+    ],
+  },
+
   // ── Blog post: AWS cost spike ─────────────────────────────────────
   '/blog/aws-cost-spike-investigation': {
     title: "AWS Bill Jumped 40%? Here's How to Investigate It | XamOps Blog",
@@ -397,6 +432,18 @@ export const PAGE_META = {
               { '@type': 'Thing', name: 'Cognitive Cloud Operations' },
             ],
             blogPost: [
+              {
+                '@type': 'BlogPosting',
+                '@id': `${BASE}/blog/ec2-spot-instances-production/#post`,
+                headline: 'EC2 Spot Instances in Production — How to Stop Fearing Interruptions and Save 70%',
+                description: 'Five patterns for running EC2 Spot instances safely in production with a staged replacement loop.',
+                url: `${BASE}/blog/ec2-spot-instances-production/`,
+                datePublished: '2026-05-28',
+                author: { '@type': 'Person', name: 'Aditya Mehta', jobTitle: 'Co-founder, XamOps' },
+                publisher: org,
+                keywords: ['ec2 spot instances', 'spot interruption', 'aws compute savings', 'spot automation'],
+                timeRequired: 'PT10M',
+              },
               {
                 '@type': 'BlogPosting',
                 '@id': `${BASE}/blog/aws-cost-spike-investigation/#post`,

@@ -2,6 +2,43 @@ import { Link } from 'react-router-dom';
 import { Icon } from '../components/Icons';
 import PageHero from '../components/shared/PageHero';
 
+function SpotSavingsThumbnail() {
+  return (
+    <svg viewBox="0 0 380 210" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ width: '100%', height: '100%', display: 'block' }}>
+      {[55, 85, 115, 145].map(y => (
+        <line key={y} x1="20" y1={y} x2="360" y2={y} stroke="#1f2430" strokeWidth="1" />
+      ))}
+      <defs>
+        <linearGradient id="odGrad" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="#7c5cff" stopOpacity="0.65" />
+          <stop offset="100%" stopColor="#7c5cff" stopOpacity="0.35" />
+        </linearGradient>
+        <linearGradient id="spotGrad" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="#2bd4a8" stopOpacity="0.85" />
+          <stop offset="100%" stopColor="#2bd4a8" stopOpacity="0.55" />
+        </linearGradient>
+      </defs>
+      {/* On-Demand bar */}
+      <rect x="70" y="25" width="100" height="150" rx="4" fill="url(#odGrad)" />
+      {/* Spot bar */}
+      <rect x="210" y="130" width="100" height="45" rx="4" fill="url(#spotGrad)" />
+      {/* Baseline */}
+      <line x1="20" y1="175" x2="360" y2="175" stroke="#1f2430" strokeWidth="1.5" />
+      {/* Price labels */}
+      <text x="120" y="18" textAnchor="middle" fontSize="10.5" fill="#8b90a0" fontFamily="monospace">$7,000/mo</text>
+      <text x="260" y="124" textAnchor="middle" fontSize="10.5" fill="#2bd4a8" fontFamily="monospace">$2,200/mo</text>
+      {/* Bar labels */}
+      <text x="120" y="193" textAnchor="middle" fontSize="9" fill="#5b6173" fontFamily="monospace">ON-DEMAND</text>
+      <text x="260" y="193" textAnchor="middle" fontSize="9" fill="#2bd4a8" fontFamily="monospace">SPOT</text>
+      {/* -70% badge */}
+      <rect x="219" y="136" width="82" height="22" rx="4" fill="#2bd4a8" opacity="0.15" />
+      <text x="260" y="151" textAnchor="middle" fontSize="11" fill="#2bd4a8" fontFamily="monospace" fontWeight="700">-70% cheaper</text>
+      {/* Connector */}
+      <line x1="170" y1="25" x2="210" y2="130" stroke="#2b2f3e" strokeWidth="1" strokeDasharray="4 3" />
+    </svg>
+  );
+}
+
 function CostSpikeThumbnail() {
   const BARS = [
     { label: 'NOV', h: 85, x: 24 },
@@ -50,6 +87,16 @@ export default function BlogPage() {
       href: '/blog/aws-cost-spike-investigation',
       thumb: { backgroundColor: 'var(--parchment)' },
       thumbEl: <CostSpikeThumbnail />,
+    },
+    {
+      tag: 'Spot',
+      title: 'EC2 Spot Instances in Production — How to Stop Fearing Interruptions and Save 70%',
+      excerpt: 'A practical guide for DevOps engineers on running Spot instances safely in production — with the five patterns that make interruptions a non-event.',
+      read: '10 min',
+      date: 'May 28, 2026',
+      href: '/blog/ec2-spot-instances-production',
+      thumb: { backgroundColor: 'var(--parchment)' },
+      thumbEl: <SpotSavingsThumbnail />,
     },
     {
       tag: 'Spot',

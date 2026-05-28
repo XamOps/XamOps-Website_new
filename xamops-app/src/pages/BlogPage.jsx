@@ -108,8 +108,8 @@ export default function BlogPage() {
         body="Engineering deep-dives, FinOps math, and the occasional opinion from the people building XamOps."
         cta={false}
       />
-      <section className="sec-light pb-24">
-        <div className="max-w-[1240px] mx-auto px-4 sm:px-6 md:px-10 grid sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6">
+      <section className="sec-light pb-24 overflow-hidden">
+        <div className="max-w-[1240px] mx-auto px-4 sm:px-6 md:px-10 grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
           {posts.map((p) => {
             const CardEl = p.href ? Link : 'a';
             const cardProps = p.href ? { to: p.href } : { href: '#' };
@@ -117,7 +117,7 @@ export default function BlogPage() {
               <CardEl
                 key={p.title}
                 {...cardProps}
-                className="ring-soft rounded-2xl overflow-hidden hcard block"
+                className="ring-soft rounded-2xl overflow-hidden hcard block min-w-0"
                 style={{ background: 'var(--ivory)' }}
               >
                 <div className="aspect-[16/10] overflow-hidden" style={p.thumb}>

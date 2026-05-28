@@ -1,4 +1,4 @@
-import { useRef, useEffect, useState, lazy, Suspense } from 'react';
+import { useRef, useEffect, useLayoutEffect, useState, lazy, Suspense } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import gsap from 'gsap';
 import ScrollTrigger from 'gsap/ScrollTrigger';
@@ -36,10 +36,13 @@ export default function App() {
   const location = useLocation();
   const [demoOpen, setDemoOpen] = useState(false);
 
+  useLayoutEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
+
   useEffect(() => {
     setDemoOpen(false);
     document.body.style.overflow = '';
-    window.scrollTo(0, 0);
     const raf = requestAnimationFrame(() => ScrollTrigger.refresh());
     return () => cancelAnimationFrame(raf);
   }, [location.pathname]);

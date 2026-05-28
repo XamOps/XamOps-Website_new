@@ -116,7 +116,7 @@ export default function SpotInstancesPage() {
       </section>
 
       {/* ── Article body ────────────────────────────────────────── */}
-      <article className="sec-light py-12 md:py-18">
+      <article className="sec-light py-12 md:py-20">
         <div className="max-w-[1240px] mx-auto px-6 md:px-10">
           <div className="grid grid-cols-1 md:grid-cols-12 gap-x-10 gap-y-12">
 

@@ -98,42 +98,6 @@ export default function BlogPage() {
       thumb: { backgroundColor: 'var(--parchment)' },
       thumbEl: <SpotSavingsThumbnail />,
     },
-    {
-      tag: 'Spot',
-      title: 'How Spot Automation saves teams 70% on compute',
-      excerpt: 'A walk-through of the staged replacement loop, eviction handling and minimum-regular-VM safety net.',
-      read: '8 min',
-      date: 'Apr 28, 2026',
-      href: null,
-      thumb: {
-        backgroundImage: 'repeating-linear-gradient(135deg, rgba(255,255,255,0.05) 0 1px, transparent 1px 12px)',
-        backgroundColor: 'var(--parchment)',
-      },
-    },
-    {
-      tag: 'FinOps',
-      title: 'Disk Rightsizing: the cost saving everyone ignores',
-      excerpt: 'Compute gets all the FinOps press. Disks quietly waste 30–40%.',
-      read: '6 min',
-      date: 'Apr 14, 2026',
-      href: null,
-      thumb: {
-        backgroundImage: 'repeating-linear-gradient(135deg, rgba(255,255,255,0.05) 0 1px, transparent 1px 12px)',
-        backgroundColor: 'var(--parchment)',
-      },
-    },
-    {
-      tag: 'Vision',
-      title: 'What is a Cognitive Cloud OS?',
-      excerpt: 'A definition, a manifesto, and a roadmap for the next decade of cloud operations.',
-      read: '12 min',
-      date: 'Apr 02, 2026',
-      href: null,
-      thumb: {
-        backgroundImage: 'repeating-linear-gradient(135deg, rgba(255,255,255,0.05) 0 1px, transparent 1px 12px)',
-        backgroundColor: 'var(--parchment)',
-      },
-    },
   ];
 
   return (

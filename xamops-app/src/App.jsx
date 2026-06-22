@@ -27,6 +27,7 @@ const BlogPage              = lazy(() => import('./pages/BlogPage'));
 const AWSCostSpikePage      = lazy(() => import('./pages/blog/AWSCostSpikePage'));
 const SpotInstancesPage     = lazy(() => import('./pages/blog/SpotInstancesPage'));
 const DiskRightsizingPage   = lazy(() => import('./pages/blog/DiskRightsizingPage'));
+const WhatIsXamOpsPage      = lazy(() => import('./pages/blog/WhatIsXamOpsPage'));
 const ContactPage           = lazy(() => import('./pages/ContactPage'));
 const NotFoundPage     = lazy(() => import('./pages/NotFoundPage'));
 
@@ -74,6 +75,7 @@ export default function App() {
           <Route path="/blog/aws-cost-spike-investigation"     element={<AWSCostSpikePage />} />
           <Route path="/blog/ec2-spot-instances-production"   element={<SpotInstancesPage />} />
           <Route path="/blog/disk-rightsizing-ebs"           element={<DiskRightsizingPage />} />
+          <Route path="/blog/what-is-xamops"               element={<WhatIsXamOpsPage />} />
           <Route path="/contact"                   element={<ContactPage />} />
           <Route path="*"                          element={<NotFoundPage />} />
         </Routes>

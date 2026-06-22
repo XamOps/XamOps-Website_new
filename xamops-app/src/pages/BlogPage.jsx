@@ -116,6 +116,33 @@ function CostSpikeThumbnail() {
   );
 }
 
+function XamOpsPlatformThumbnail() {
+  const PILLARS = [
+    { label: 'SPOT', x: 22, color: '#FF9900' },
+    { label: 'DISK', x: 95, color: '#ef6d58' },
+    { label: 'DBOPS', x: 168, color: '#7c5cff' },
+    { label: 'SECOPS', x: 248, color: '#4285F4' },
+    { label: 'COST', x: 316, color: '#ef6d58' },
+  ];
+  return (
+    <svg viewBox="0 0 380 210" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ width: '100%', height: '100%', display: 'block' }}>
+      <rect width="380" height="210" fill="var(--parchment, #f4f1eb)" />
+      <text x="190" y="34" textAnchor="middle" fontSize="11" fill="#8899aa" fontFamily="monospace" fontWeight="600" letterSpacing="2">COGNITIVE CLOUD OS</text>
+      <rect x="30" y="44" width="320" height="1" fill="#334" opacity="0.3" />
+      {PILLARS.map((p) => (
+        <g key={p.label}>
+          <rect x={p.x} y="60" width="46" height="100" rx="4" fill={p.color} opacity="0.15" />
+          <rect x={p.x + 10} y="110" width="26" height="50" rx="3" fill={p.color} opacity="0.55" />
+          <text x={p.x + 23} y="176" textAnchor="middle" fontSize="7.5" fill={p.color} fontFamily="monospace" fontWeight="700">{p.label}</text>
+        </g>
+      ))}
+      <rect x="30" y="160" width="320" height="1" fill="#334" opacity="0.3" />
+      <rect x="85" y="186" width="210" height="16" rx="4" fill="#ef6d58" opacity="0.12" />
+      <text x="190" y="198" textAnchor="middle" fontSize="10" fill="#ef6d58" fontFamily="monospace" fontWeight="700">AWS · AZURE · GCP</text>
+    </svg>
+  );
+}
+
 function SpotSavingsThumbnail() {
   return (
     <svg viewBox="0 0 380 210" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ width: '100%', height: '100%', display: 'block' }}>
@@ -148,6 +175,16 @@ function SpotSavingsThumbnail() {
 
 export default function BlogPage() {
   const posts = [
+    {
+      provider: 'xamops',
+      tag: 'Platform',
+      title: 'What Is XamOps? A Smarter Way to Reduce Cloud Costs and Simplify Cloud Operations',
+      excerpt: 'A Cognitive Cloud Operating System for DevOps, FinOps, and SRE teams. One platform that automates routine tasks, cuts spending, and keeps infrastructure under control across AWS, Azure, and GCP.',
+      read: '8 min',
+      date: 'June 22, 2026',
+      href: '/blog/what-is-xamops',
+      thumbEl: <XamOpsPlatformThumbnail />,
+    },
     {
       provider: 'aws',
       tag: 'FinOps',

@@ -436,6 +436,41 @@ export const PAGE_META = {
     ],
   },
 
+  // ── Blog post: What Is XamOps ─────────────────────────────────────
+  '/blog/what-is-xamops': {
+    title: 'What Is XamOps? A Smarter Way to Reduce Cloud Costs | XamOps Blog',
+    description: 'XamOps is a Cognitive Cloud Operating System for DevOps, FinOps, and SRE teams. Learn how it automates cloud operations, cuts costs, and unifies AWS, Azure, and GCP into one platform.',
+    keywords: 'what is xamops, cloud cost optimization platform, cognitive cloud operating system, cloud automation software, devops finops sre platform, aws azure gcp management, cloud operations automation, reduce cloud costs, cloud infrastructure management, xamops review',
+    canonical: `${BASE}/blog/what-is-xamops`,
+    schemas: [
+      {
+        '@context': 'https://schema.org',
+        '@type': 'BlogPosting',
+        '@id': `${BASE}/blog/what-is-xamops/#post`,
+        headline: 'What Is XamOps? A Smarter Way to Reduce Cloud Costs and Simplify Cloud Operations',
+        description: 'XamOps is a Cognitive Cloud Operating System that helps DevOps, FinOps, and SRE teams automate routine tasks, cut spending, and regain control across AWS, Azure, and GCP.',
+        url: `${BASE}/blog/what-is-xamops/`,
+        datePublished: '2026-06-22',
+        dateModified: '2026-06-22',
+        author: { '@type': 'Person', name: 'Aditya Mehta', jobTitle: 'Co-founder, XamOps', worksFor: org },
+        publisher: org,
+        keywords: ['xamops', 'cloud cost optimization', 'cloud automation', 'finops platform', 'devops platform', 'sre tools', 'spot automation', 'disk rightsizing', 'dbops', 'secops', 'multi-cloud management'],
+        timeRequired: 'PT8M',
+        wordCount: '1600',
+        inLanguage: 'en-US',
+        articleSection: 'Platform',
+        about: [
+          { '@type': 'Thing', name: 'XamOps Platform' },
+          { '@type': 'Thing', name: 'Cloud Cost Optimization' },
+          { '@type': 'Thing', name: 'Cloud Operations Automation' },
+        ],
+        mainEntityOfPage: { '@type': 'WebPage', '@id': `${BASE}/blog/what-is-xamops/` },
+      },
+      wp('/blog/what-is-xamops', 'What Is XamOps? | XamOps Blog', 'Cognitive Cloud OS for DevOps, FinOps, and SRE teams across AWS, Azure, and GCP.'),
+      org,
+    ],
+  },
+
   // ── Blog ──────────────────────────────────────────────────────────
   '/blog': {
     title: 'Cloud Automation, FinOps & DevOps Insights Blog | Xamops',

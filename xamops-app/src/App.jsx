@@ -42,6 +42,7 @@ export default function App() {
   }, [location.pathname]);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     setDemoOpen(false);
     document.body.style.overflow = '';
     const raf = requestAnimationFrame(() => ScrollTrigger.refresh());

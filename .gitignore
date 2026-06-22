@@ -1,0 +1,22 @@
+# Dependencies
+node_modules/
+
+# Build output
+xamops-app/dist/
+
+# Dev tooling / Claude Code
+.agents/
+.superpowers/
+.playwright-mcp/
+skills-lock.json
+
+# Root-level stray files (not part of the app)
+package.json
+package-lock.json
+
+# Design reference screenshots
+*.png
+design-extract-output/
+
+# Local test files
+testing.html

@@ -3,6 +3,11 @@ import { BrowserRouter } from 'react-router-dom';
 import './index.css';
 import App from './App.jsx';
 
+// Disable browser scroll restoration so React Router controls it
+if ('scrollRestoration' in history) {
+  history.scrollRestoration = 'manual';
+}
+
 // Apply theme before first paint to avoid flash
 const stored = localStorage.getItem('xamops-theme');
 const preferLight = window.matchMedia('(prefers-color-scheme: light)').matches;

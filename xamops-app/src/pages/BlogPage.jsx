@@ -116,6 +116,52 @@ function CostSpikeThumbnail() {
   );
 }
 
+function FinOpsThumbnail() {
+  const PROVIDERS = [
+    { label: 'AWS', x: 44, h: 95, color: '#FF9900' },
+    { label: 'AZURE', x: 144, h: 110, color: '#0078D4' },
+    { label: 'GCP', x: 244, h: 80, color: '#4285F4' },
+  ];
+  const BASE = 178;
+  return (
+    <svg viewBox="0 0 380 210" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ width: '100%', height: '100%', display: 'block' }}>
+      <defs>
+        <linearGradient id="awsFinOps" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="#FF9900" stopOpacity="0.75" />
+          <stop offset="100%" stopColor="#FF9900" stopOpacity="0.4" />
+        </linearGradient>
+        <linearGradient id="azureFinOps" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="#0078D4" stopOpacity="0.75" />
+          <stop offset="100%" stopColor="#0078D4" stopOpacity="0.4" />
+        </linearGradient>
+        <linearGradient id="gcpFinOps" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="#4285F4" stopOpacity="0.75" />
+          <stop offset="100%" stopColor="#4285F4" stopOpacity="0.4" />
+        </linearGradient>
+      </defs>
+      {[110, 130, 150, 168].map(y => (
+        <line key={y} x1="22" y1={y} x2="358" y2={y} stroke="#223" strokeWidth="1" />
+      ))}
+      {PROVIDERS.map((p, i) => (
+        <g key={p.label}>
+          <rect x={p.x} y={BASE - p.h} width="82" height={p.h} rx="4"
+            fill={`url(#${['awsFinOps','azureFinOps','gcpFinOps'][i]})`} />
+          <text x={p.x + 41} y={BASE - p.h - 7} textAnchor="middle" fontSize="10"
+            fill={p.color} fontFamily="monospace" fontWeight="700">
+            {p.h === 110 ? '-$1.2k' : p.h === 95 ? '-$840' : '-$620'}
+          </text>
+          <text x={p.x + 41} y={BASE + 16} textAnchor="middle" fontSize="9"
+            fill={p.color} fontFamily="monospace">{p.label}</text>
+        </g>
+      ))}
+      <line x1="22" y1={BASE} x2="358" y2={BASE} stroke="#334" strokeWidth="1.5" />
+      <rect x="100" y="14" width="180" height="18" rx="4" fill="#f0b341" opacity="0.1" />
+      <text x="190" y="27" textAnchor="middle" fontSize="10" fill="#f0b341"
+        fontFamily="monospace" fontWeight="700">MULTI-CLOUD SAVINGS / MO</text>
+    </svg>
+  );
+}
+
 function SecurityAutomationThumbnail() {
   return (
     <svg viewBox="0 0 380 210" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ width: '100%', height: '100%', display: 'block' }}>
@@ -205,6 +251,16 @@ function SpotSavingsThumbnail() {
 
 export default function BlogPage() {
   const posts = [
+    {
+      provider: 'aws',
+      tag: 'FinOps',
+      title: 'Best FinOps Practices for Multi-Cloud Environments',
+      excerpt: 'Seven practices that bring financial control back to teams running AWS, Azure, and GCP simultaneously, from ownership tagging to automated rightsizing.',
+      read: '9 min',
+      date: 'June 24, 2026',
+      href: '/blog/finops-practices-multi-cloud',
+      thumbEl: <FinOpsThumbnail />,
+    },
     {
       provider: 'azure',
       tag: 'Security',

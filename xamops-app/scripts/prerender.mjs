@@ -38,6 +38,7 @@ const ROUTES = [
   '/blog/disk-rightsizing-ebs',
   '/blog/what-is-xamops',
   '/blog/cloud-security-automation',
+  '/blog/finops-practices-multi-cloud',
   '/contact',
   '/demo',
 ];

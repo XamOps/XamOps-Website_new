@@ -471,6 +471,41 @@ export const PAGE_META = {
     ],
   },
 
+  // ── Blog post: FinOps Practices Multi-Cloud ──────────────────────
+  '/blog/finops-practices-multi-cloud': {
+    title: 'Best FinOps Practices for Multi-Cloud Environments | XamOps Blog',
+    description: 'Seven proven FinOps practices for managing cloud costs across AWS, Azure, and GCP: ownership tagging, real-time monitoring, removing unused resources, automation, and cost forecasting.',
+    keywords: 'finops practices, multi-cloud cost management, cloud cost optimization, finops platform, aws azure gcp cost control, cloud cost visibility, cloud waste reduction, finops automation, cloud resource tagging, cloud cost forecasting',
+    canonical: `${BASE}/blog/finops-practices-multi-cloud`,
+    schemas: [
+      {
+        '@context': 'https://schema.org',
+        '@type': 'BlogPosting',
+        '@id': `${BASE}/blog/finops-practices-multi-cloud/#post`,
+        headline: 'Best FinOps Practices for Multi-Cloud Environments',
+        description: 'Seven practices that bring financial control back to teams running AWS, Azure, and GCP simultaneously, from ownership tagging to automated rightsizing.',
+        url: `${BASE}/blog/finops-practices-multi-cloud/`,
+        datePublished: '2026-06-24',
+        dateModified: '2026-06-24',
+        author: { '@type': 'Person', name: 'Aditya Mehta', jobTitle: 'Co-founder, XamOps', worksFor: org },
+        publisher: org,
+        keywords: ['finops', 'multi-cloud cost management', 'cloud cost optimization', 'cloud tagging', 'cloud automation', 'aws azure gcp', 'finops platform', 'cloud cost forecasting', 'cloud waste'],
+        timeRequired: 'PT9M',
+        wordCount: '1700',
+        inLanguage: 'en-US',
+        articleSection: 'FinOps',
+        about: [
+          { '@type': 'Thing', name: 'FinOps' },
+          { '@type': 'Thing', name: 'Multi-Cloud Cost Management' },
+          { '@type': 'Thing', name: 'Cloud Cost Optimization' },
+        ],
+        mainEntityOfPage: { '@type': 'WebPage', '@id': `${BASE}/blog/finops-practices-multi-cloud/` },
+      },
+      wp('/blog/finops-practices-multi-cloud', 'Best FinOps Practices for Multi-Cloud | XamOps Blog', 'Seven practices for financial control across AWS, Azure, and GCP.'),
+      org,
+    ],
+  },
+
   // ── Blog post: Cloud Security Automation ─────────────────────────
   '/blog/cloud-security-automation': {
     title: 'What Is Cloud Security Automation and Why Is It Important? | XamOps Blog',

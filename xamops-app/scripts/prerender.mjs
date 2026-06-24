@@ -39,6 +39,7 @@ const ROUTES = [
   '/blog/what-is-xamops',
   '/blog/cloud-security-automation',
   '/blog/finops-practices-multi-cloud',
+  '/blog/cloud-cost-optimization-strategies',
   '/contact',
   '/demo',
 ];

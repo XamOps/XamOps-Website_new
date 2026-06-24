@@ -29,7 +29,8 @@ const SpotInstancesPage     = lazy(() => import('./pages/blog/SpotInstancesPage'
 const DiskRightsizingPage   = lazy(() => import('./pages/blog/DiskRightsizingPage'));
 const WhatIsXamOpsPage              = lazy(() => import('./pages/blog/WhatIsXamOpsPage'));
 const CloudSecurityAutomationPage   = lazy(() => import('./pages/blog/CloudSecurityAutomationPage'));
-const FinOpsPracticesPage           = lazy(() => import('./pages/blog/FinOpsPracticesPage'));
+const FinOpsPracticesPage                   = lazy(() => import('./pages/blog/FinOpsPracticesPage'));
+const CloudCostOptimizationStrategiesPage   = lazy(() => import('./pages/blog/CloudCostOptimizationStrategiesPage'));
 const ContactPage           = lazy(() => import('./pages/ContactPage'));
 const NotFoundPage     = lazy(() => import('./pages/NotFoundPage'));
 
@@ -80,7 +81,8 @@ export default function App() {
           <Route path="/blog/disk-rightsizing-ebs"           element={<DiskRightsizingPage />} />
           <Route path="/blog/what-is-xamops"                  element={<WhatIsXamOpsPage />} />
           <Route path="/blog/cloud-security-automation"      element={<CloudSecurityAutomationPage />} />
-          <Route path="/blog/finops-practices-multi-cloud" element={<FinOpsPracticesPage />} />
+          <Route path="/blog/finops-practices-multi-cloud"          element={<FinOpsPracticesPage />} />
+          <Route path="/blog/cloud-cost-optimization-strategies"   element={<CloudCostOptimizationStrategiesPage />} />
           <Route path="/contact"                   element={<ContactPage />} />
           <Route path="*"                          element={<NotFoundPage />} />
         </Routes>

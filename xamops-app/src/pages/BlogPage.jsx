@@ -116,6 +116,41 @@ function CostSpikeThumbnail() {
   );
 }
 
+function CostOptimizationThumbnail() {
+  const BARS = [
+    { x: 30, h: 130, color: '#ef6d58', label: 'BEFORE' },
+    { x: 200, h: 68, color: '#22c55e', label: 'AFTER' },
+  ];
+  const BASE = 178;
+  return (
+    <svg viewBox="0 0 380 210" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ width: '100%', height: '100%', display: 'block' }}>
+      {[100, 120, 140, 158].map(y => (
+        <line key={y} x1="18" y1={y} x2="362" y2={y} stroke="#223" strokeWidth="1" />
+      ))}
+      <defs>
+        <linearGradient id="beforeGrad" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="#ef6d58" stopOpacity="0.8" />
+          <stop offset="100%" stopColor="#ef6d58" stopOpacity="0.45" />
+        </linearGradient>
+        <linearGradient id="afterGrad" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="#22c55e" stopOpacity="0.85" />
+          <stop offset="100%" stopColor="#22c55e" stopOpacity="0.5" />
+        </linearGradient>
+      </defs>
+      <rect x="30" y={BASE - 130} width="140" height="130" rx="4" fill="url(#beforeGrad)" />
+      <rect x="210" y={BASE - 68} width="140" height="68" rx="4" fill="url(#afterGrad)" />
+      <line x1="18" y1={BASE} x2="362" y2={BASE} stroke="#334" strokeWidth="1.5" />
+      <text x="100" y={BASE - 136} textAnchor="middle" fontSize="11" fill="#ef6d58" fontFamily="monospace" fontWeight="700">$12,400/mo</text>
+      <text x="280" y={BASE - 74} textAnchor="middle" fontSize="11" fill="#22c55e" fontFamily="monospace" fontWeight="700">$6,200/mo</text>
+      <text x="100" y={BASE + 16} textAnchor="middle" fontSize="9" fill="#ef6d58" fontFamily="monospace">BEFORE</text>
+      <text x="280" y={BASE + 16} textAnchor="middle" fontSize="9" fill="#22c55e" fontFamily="monospace">AFTER</text>
+      <path d="M175 115 L205 115" stroke="#22c55e" strokeWidth="1.5" strokeDasharray="3 3" opacity="0.6" />
+      <rect x="130" y="14" width="120" height="18" rx="4" fill="#22c55e" opacity="0.1" />
+      <text x="190" y="27" textAnchor="middle" fontSize="10" fill="#22c55e" fontFamily="monospace" fontWeight="700">-50% SAVINGS</text>
+    </svg>
+  );
+}
+
 function FinOpsThumbnail() {
   const PROVIDERS = [
     { label: 'AWS', x: 44, h: 95, color: '#FF9900' },
@@ -251,6 +286,16 @@ function SpotSavingsThumbnail() {
 
 export default function BlogPage() {
   const posts = [
+    {
+      provider: 'aws',
+      tag: 'FinOps',
+      title: 'Cloud Cost Optimization: 10 Proven Strategies for FinOps Teams',
+      excerpt: 'Ten actionable strategies to reduce cloud waste and maximize the value of every dollar spent, from resource tagging and rightsizing to predictive analytics and commitment planning.',
+      read: '10 min',
+      date: 'June 24, 2026',
+      href: '/blog/cloud-cost-optimization-strategies',
+      thumbEl: <CostOptimizationThumbnail />,
+    },
     {
       provider: 'aws',
       tag: 'FinOps',

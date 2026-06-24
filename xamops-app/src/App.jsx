@@ -31,8 +31,11 @@ const WhatIsXamOpsPage              = lazy(() => import('./pages/blog/WhatIsXamO
 const CloudSecurityAutomationPage   = lazy(() => import('./pages/blog/CloudSecurityAutomationPage'));
 const FinOpsPracticesPage                   = lazy(() => import('./pages/blog/FinOpsPracticesPage'));
 const CloudCostOptimizationStrategiesPage   = lazy(() => import('./pages/blog/CloudCostOptimizationStrategiesPage'));
+const CustomersPage         = lazy(() => import('./pages/CustomersPage'));
+const CareersPage           = lazy(() => import('./pages/CareersPage'));
+const SecurityPage          = lazy(() => import('./pages/SecurityPage'));
 const ContactPage           = lazy(() => import('./pages/ContactPage'));
-const NotFoundPage     = lazy(() => import('./pages/NotFoundPage'));
+const NotFoundPage          = lazy(() => import('./pages/NotFoundPage'));
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -83,6 +86,9 @@ export default function App() {
           <Route path="/blog/cloud-security-automation"      element={<CloudSecurityAutomationPage />} />
           <Route path="/blog/finops-practices-multi-cloud"          element={<FinOpsPracticesPage />} />
           <Route path="/blog/cloud-cost-optimization-strategies"   element={<CloudCostOptimizationStrategiesPage />} />
+          <Route path="/customers"                 element={<CustomersPage />} />
+          <Route path="/careers"                   element={<CareersPage />} />
+          <Route path="/security"                  element={<SecurityPage />} />
           <Route path="/contact"                   element={<ContactPage />} />
           <Route path="*"                          element={<NotFoundPage />} />
         </Routes>

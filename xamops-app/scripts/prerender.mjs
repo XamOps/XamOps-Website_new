@@ -40,6 +40,9 @@ const ROUTES = [
   '/blog/cloud-security-automation',
   '/blog/finops-practices-multi-cloud',
   '/blog/cloud-cost-optimization-strategies',
+  '/customers',
+  '/careers',
+  '/security',
   '/contact',
   '/demo',
 ];

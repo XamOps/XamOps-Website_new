@@ -710,6 +710,30 @@ export const PAGE_META = {
   },
 
   // ── About ─────────────────────────────────────────────────────────
+  '/customers': {
+    title: 'Customer Stories: Cloud Cost Savings with XamOps | XamOps',
+    description: 'See how DevOps, FinOps, and SRE teams use XamOps to cut cloud costs by 40%, automate operations, and gain real-time visibility across AWS, Azure, and GCP.',
+    keywords: 'xamops customers, cloud cost optimization results, finops success stories, devops automation testimonials, cloud savings case studies, aws cost reduction, cloud operations automation results',
+    canonical: `${BASE}/customers`,
+    schemas: [wp('/customers', 'Customer Stories | XamOps', 'How teams use XamOps to cut cloud costs and automate operations.'), org],
+  },
+
+  '/careers': {
+    title: 'Careers at XamOps: Join the Cloud Automation Team',
+    description: 'Join XamOps and help build the Cognitive Cloud Operating System. Open roles in platform engineering, SRE, FinOps product, and customer success. Remote-first.',
+    keywords: 'xamops careers, cloud automation jobs, devops engineer jobs, finops jobs, sre jobs, platform engineer jobs, remote cloud jobs, xammer technologies careers',
+    canonical: `${BASE}/careers`,
+    schemas: [wp('/careers', 'Careers at XamOps | Cloud Automation Jobs', 'Open roles in engineering, product, and customer success at XamOps.'), org],
+  },
+
+  '/security': {
+    title: 'Security at XamOps: How We Protect Your Cloud Environment',
+    description: 'XamOps uses TLS 1.2+, AES-256 encryption, IAM role federation, least-privilege access, and full audit logging. No credentials stored. SOC 2 audit in progress.',
+    keywords: 'xamops security, cloud security practices, iam role federation, cloud data encryption, cloud audit logging, soc 2 cloud platform, gdpr cloud compliance, cloud security posture',
+    canonical: `${BASE}/security`,
+    schemas: [wp('/security', 'Security at XamOps | Cloud Data Protection', 'How XamOps protects your cloud environment with encryption, IAM federation, and audit logging.'), org],
+  },
+
   '/about': {
     title: 'About XamOps: The AI-Powered Cloud Automation Company',
     description: 'Learn about XamOps, the team building the AI-powered cloud automation platform that helps enterprises automate FinOps, DevOps, and SRE operations at scale.',

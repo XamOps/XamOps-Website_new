@@ -32,14 +32,14 @@ export default function Footer() {
               ['For FinOps',  '/solutions/finops'],
               ['For SRE',     '/solutions/sre'],
               ['Pricing',     '/pricing'],
-              ['Customers',   null],
+              ['Customers',   '/customers'],
             ]],
             ['Company', [
               ['About',    '/about'],
               ['Blog',     '/blog'],
-              ['Careers',  null],
+              ['Careers',  '/careers'],
               ['Contact',  '/contact'],
-              ['Security', null],
+              ['Security', '/security'],
             ]],
           ].map(([h, items]) => (
             <div key={h} className="col-span-4 md:col-span-2">

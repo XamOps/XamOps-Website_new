@@ -718,14 +718,6 @@ export const PAGE_META = {
     schemas: [wp('/customers', 'Customer Stories | XamOps', 'How teams use XamOps to cut cloud costs and automate operations.'), org],
   },
 
-  '/careers': {
-    title: 'Careers at XamOps: Join the Cloud Automation Team',
-    description: 'Join XamOps and help build the Cognitive Cloud Operating System. Open roles in platform engineering, SRE, FinOps product, and customer success. Remote-first.',
-    keywords: 'xamops careers, cloud automation jobs, devops engineer jobs, finops jobs, sre jobs, platform engineer jobs, remote cloud jobs, xammer technologies careers',
-    canonical: `${BASE}/careers`,
-    schemas: [wp('/careers', 'Careers at XamOps | Cloud Automation Jobs', 'Open roles in engineering, product, and customer success at XamOps.'), org],
-  },
-
   '/security': {
     title: 'Security at XamOps: How We Protect Your Cloud Environment',
     description: 'XamOps uses TLS 1.2+, AES-256 encryption, IAM role federation, least-privilege access, and full audit logging. No credentials stored. SOC 2 audit in progress.',

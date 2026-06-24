@@ -41,7 +41,6 @@ const ROUTES = [
   '/blog/finops-practices-multi-cloud',
   '/blog/cloud-cost-optimization-strategies',
   '/customers',
-  '/careers',
   '/security',
   '/contact',
   '/demo',

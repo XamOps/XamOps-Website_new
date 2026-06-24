@@ -99,7 +99,7 @@
   --nav-border:     #d8d6d2;
 }
 
-html, body { background: var(--parchment); color: var(--ink); }
+html, body { background: var(--parchment); color: var(--ink); overflow-anchor: none; }
 body {
   font-family: var(--font-body);
   font-feature-settings: "ss01", "cv11";

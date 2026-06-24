@@ -41,6 +41,8 @@ export default function App() {
   const [demoOpen, setDemoOpen] = useState(false);
 
   useLayoutEffect(() => {
+    // Kill stale triggers before scroll reset so GSAP can't jump position
+    ScrollTrigger.getAll().forEach(t => t.kill());
     window.scrollTo(0, 0);
   }, [location.pathname]);
 
@@ -48,8 +50,6 @@ export default function App() {
     window.scrollTo(0, 0);
     setDemoOpen(false);
     document.body.style.overflow = '';
-    const raf = requestAnimationFrame(() => ScrollTrigger.refresh());
-    return () => cancelAnimationFrame(raf);
   }, [location.pathname]);
 
   return (

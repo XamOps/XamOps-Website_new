@@ -19,14 +19,40 @@ export default function Footer() {
             </div>
           </div>
           {[
-            ['Platform',  ['Spot Automation','Disk Rightsizing','DBOps','SecOps','Cost Analytics','SRE Investigation']],
-            ['Solutions', ['For DevOps','For FinOps','For SRE','Pricing','Customers']],
-            ['Company',   ['About','Blog','Careers','Contact','Security']],
+            ['Platform', [
+              ['Spot Automation',   '/platform/spot-automation'],
+              ['Disk Rightsizing',  '/platform/disk-rightsizing'],
+              ['DBOps',             '/platform/dbops'],
+              ['SecOps',            '/platform/secops'],
+              ['Cost Analytics',    '/platform/cost-analytics'],
+              ['SRE Investigation', '/platform/sre'],
+            ]],
+            ['Solutions', [
+              ['For DevOps',  '/solutions/devops'],
+              ['For FinOps',  '/solutions/finops'],
+              ['For SRE',     '/solutions/sre'],
+              ['Pricing',     '/pricing'],
+              ['Customers',   null],
+            ]],
+            ['Company', [
+              ['About',    '/about'],
+              ['Blog',     '/blog'],
+              ['Careers',  null],
+              ['Contact',  '/contact'],
+              ['Security', null],
+            ]],
           ].map(([h, items]) => (
             <div key={h} className="col-span-4 md:col-span-2">
               <div className="eyebrow mb-3 md:mb-4" style={{color:'var(--ink)'}}>{h}</div>
               <ul className="space-y-2 md:space-y-2.5 text-[13px] md:text-[14px]">
-                {items.map(i => <li key={i}><a href="#" className="ulink" style={{color:'var(--ink-2)'}}>{i}</a></li>)}
+                {items.map(([label, to]) => (
+                  <li key={label}>
+                    {to
+                      ? <Link to={to} className="ulink" style={{color:'var(--ink-2)'}}>{label}</Link>
+                      : <span className="ulink" style={{color:'var(--olive)', cursor:'default'}}>{label}</span>
+                    }
+                  </li>
+                ))}
               </ul>
             </div>
           ))}

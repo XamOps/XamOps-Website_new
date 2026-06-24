@@ -116,6 +116,36 @@ function CostSpikeThumbnail() {
   );
 }
 
+function SecurityAutomationThumbnail() {
+  return (
+    <svg viewBox="0 0 380 210" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ width: '100%', height: '100%', display: 'block' }}>
+      <rect width="380" height="210" fill="#091628" />
+      {/* Grid lines */}
+      {[50, 90, 130, 170].map(y => (
+        <line key={y} x1="20" y1={y} x2="360" y2={y} stroke="#0078D4" strokeWidth="0.5" opacity="0.12" />
+      ))}
+      {/* Shield shape */}
+      <path d="M190 28 L230 46 L230 90 Q230 118 190 132 Q150 118 150 90 L150 46 Z" fill="#0078D4" opacity="0.15" />
+      <path d="M190 38 L222 53 L222 89 Q222 112 190 124 Q158 112 158 89 L158 53 Z" fill="none" stroke="#0078D4" strokeWidth="1.5" opacity="0.6" />
+      {/* Checkmark inside shield */}
+      <path d="M178 82 L186 90 L202 72" stroke="#0078D4" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" opacity="0.9" />
+      {/* Scan rings */}
+      <circle cx="190" cy="81" r="52" stroke="#0078D4" strokeWidth="0.75" strokeDasharray="4 4" opacity="0.2" />
+      <circle cx="190" cy="81" r="72" stroke="#0078D4" strokeWidth="0.5" strokeDasharray="3 6" opacity="0.12" />
+      {/* Alert dots */}
+      <circle cx="120" cy="60" r="4" fill="#ef6d58" opacity="0.8" />
+      <circle cx="120" cy="60" r="8" fill="#ef6d58" opacity="0.15" />
+      <text x="130" y="64" fontSize="8" fill="#ef6d58" fontFamily="monospace" opacity="0.8">DRIFT DETECTED</text>
+      <circle cx="258" cy="100" r="4" fill="#4285F4" opacity="0.7" />
+      <circle cx="258" cy="100" r="8" fill="#4285F4" opacity="0.12" />
+      <text x="268" y="104" fontSize="8" fill="#4285F4" fontFamily="monospace" opacity="0.7">REMEDIATED</text>
+      {/* Bottom label */}
+      <rect x="100" y="152" width="180" height="16" rx="4" fill="#0078D4" opacity="0.1" />
+      <text x="190" y="164" textAnchor="middle" fontSize="10" fill="#0078D4" fontFamily="monospace" fontWeight="700" opacity="0.8">CONTINUOUS SECURITY MONITORING</text>
+    </svg>
+  );
+}
+
 function XamOpsPlatformThumbnail() {
   const PILLARS = [
     { label: 'SPOT', x: 22, color: '#FF9900' },
@@ -175,6 +205,16 @@ function SpotSavingsThumbnail() {
 
 export default function BlogPage() {
   const posts = [
+    {
+      provider: 'azure',
+      tag: 'Security',
+      title: 'What Is Cloud Security Automation and Why Is It Important?',
+      excerpt: 'Manual security monitoring breaks down at cloud scale. Here is what cloud security automation actually covers and why modern teams cannot afford to skip it.',
+      read: '7 min',
+      date: 'June 24, 2026',
+      href: '/blog/cloud-security-automation',
+      thumbEl: <SecurityAutomationThumbnail />,
+    },
     {
       provider: 'xamops',
       tag: 'Platform',

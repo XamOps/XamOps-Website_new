@@ -471,6 +471,41 @@ export const PAGE_META = {
     ],
   },
 
+  // ── Blog post: Cloud Security Automation ─────────────────────────
+  '/blog/cloud-security-automation': {
+    title: 'What Is Cloud Security Automation and Why Is It Important? | XamOps Blog',
+    description: 'Manual security monitoring breaks down at cloud scale. Learn what cloud security automation covers, why it matters for DevOps and FinOps teams, and how AI-powered tools are changing cloud operations.',
+    keywords: 'cloud security automation, cloud security monitoring, automated cloud security, cloud operations automation, devops automation platform, cloud cost optimization, cloud infrastructure management, ai cloud automation, secops automation, cloud compliance automation',
+    canonical: `${BASE}/blog/cloud-security-automation`,
+    schemas: [
+      {
+        '@context': 'https://schema.org',
+        '@type': 'BlogPosting',
+        '@id': `${BASE}/blog/cloud-security-automation/#post`,
+        headline: 'What Is Cloud Security Automation and Why Is It Important?',
+        description: 'Manual security monitoring breaks down at cloud scale. Here is what cloud security automation actually covers and why modern teams cannot afford to skip it.',
+        url: `${BASE}/blog/cloud-security-automation/`,
+        datePublished: '2026-06-24',
+        dateModified: '2026-06-24',
+        author: { '@type': 'Person', name: 'Aditya Mehta', jobTitle: 'Co-founder, XamOps', worksFor: org },
+        publisher: org,
+        keywords: ['cloud security automation', 'secops', 'cloud compliance', 'devops automation', 'cloud cost optimization', 'ai cloud automation', 'cloud monitoring', 'configuration drift'],
+        timeRequired: 'PT7M',
+        wordCount: '1400',
+        inLanguage: 'en-US',
+        articleSection: 'Security',
+        about: [
+          { '@type': 'Thing', name: 'Cloud Security Automation' },
+          { '@type': 'Thing', name: 'Cloud Operations' },
+          { '@type': 'Thing', name: 'DevOps Automation' },
+        ],
+        mainEntityOfPage: { '@type': 'WebPage', '@id': `${BASE}/blog/cloud-security-automation/` },
+      },
+      wp('/blog/cloud-security-automation', 'What Is Cloud Security Automation? | XamOps Blog', 'Why manual security fails at cloud scale and how automation fixes it.'),
+      org,
+    ],
+  },
+
   // ── Blog ──────────────────────────────────────────────────────────
   '/blog': {
     title: 'Cloud Automation, FinOps & DevOps Insights Blog | Xamops',

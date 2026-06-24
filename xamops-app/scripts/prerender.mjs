@@ -37,6 +37,7 @@ const ROUTES = [
   '/blog/ec2-spot-instances-production',
   '/blog/disk-rightsizing-ebs',
   '/blog/what-is-xamops',
+  '/blog/cloud-security-automation',
   '/contact',
   '/demo',
 ];

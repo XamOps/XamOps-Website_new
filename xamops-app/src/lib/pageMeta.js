@@ -483,7 +483,7 @@ export const PAGE_META = {
 
   // ── Blog post: Cloud Cost Optimization Strategies ────────────────
   '/blog/cloud-cost-optimization-strategies': {
-    title: 'Cloud Cost Optimization: 10 Proven Strategies for FinOps Teams | XamOps Blog',
+    title: 'Cloud Cost Optimization in Noida: 10 Proven Strategies for FinOps Teams | XamOps Blog',
     description: 'Ten actionable cloud cost optimization strategies for FinOps teams: visibility, resource tagging, rightsizing, scheduling automation, reserved instances, budget alerts, storage optimization, collaboration, and predictive analytics.',
     keywords: 'cloud cost optimization strategies, finops best practices, cloud cost reduction, aws cost optimization, azure cost management, gcp cost control, resource rightsizing, cloud waste reduction, finops automation, cloud budget management, reserved instances savings plans',
     canonical: `${BASE}/blog/cloud-cost-optimization-strategies`,
@@ -492,7 +492,7 @@ export const PAGE_META = {
         '@context': 'https://schema.org',
         '@type': 'BlogPosting',
         '@id': `${BASE}/blog/cloud-cost-optimization-strategies/#post`,
-        headline: 'Cloud Cost Optimization: 10 Proven Strategies for FinOps Teams',
+        headline: 'Cloud Cost Optimization in Noida: 10 Proven Strategies for FinOps Teams',
         description: 'Ten actionable strategies to reduce cloud waste and maximize the value of every dollar spent, from resource tagging and rightsizing to predictive analytics.',
         url: `${BASE}/blog/cloud-cost-optimization-strategies/`,
         datePublished: '2026-06-24',

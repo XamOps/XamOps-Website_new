@@ -143,7 +143,7 @@ export default function CloudCostOptimizationStrategiesPage() {
           </div>
 
           <h1 className="serif text-[clamp(34px,5.2vw,66px)] leading-[1.06] tracking-tight max-w-[22ch]" style={{ color: '#ffffff' }}>
-            Cloud Cost Optimization:{' '}
+            Cloud Cost Optimization in Noida:{' '}
             <span style={{ color: ACCENT }}>10 Proven Strategies for FinOps Teams</span>
           </h1>
 

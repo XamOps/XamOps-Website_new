@@ -289,7 +289,7 @@ export default function BlogPage() {
     {
       provider: 'aws',
       tag: 'FinOps',
-      title: 'Cloud Cost Optimization: 10 Proven Strategies for FinOps Teams',
+      title: 'Cloud Cost Optimization in Noida: 10 Proven Strategies for FinOps Teams',
       excerpt: 'Ten actionable strategies to reduce cloud waste and maximize the value of every dollar spent, from resource tagging and rightsizing to predictive analytics and commitment planning.',
       read: '10 min',
       date: 'June 24, 2026',

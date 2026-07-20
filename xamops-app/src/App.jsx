@@ -31,6 +31,7 @@ const WhatIsXamOpsPage              = lazy(() => import('./pages/blog/WhatIsXamO
 const CloudSecurityAutomationPage   = lazy(() => import('./pages/blog/CloudSecurityAutomationPage'));
 const FinOpsPracticesPage                   = lazy(() => import('./pages/blog/FinOpsPracticesPage'));
 const CloudCostOptimizationStrategiesPage   = lazy(() => import('./pages/blog/CloudCostOptimizationStrategiesPage'));
+const DevOpsVsTraditionalITPage             = lazy(() => import('./pages/blog/DevOpsVsTraditionalITPage'));
 const CustomersPage         = lazy(() => import('./pages/CustomersPage'));
 const SecurityPage          = lazy(() => import('./pages/SecurityPage'));
 const ContactPage           = lazy(() => import('./pages/ContactPage'));
@@ -85,6 +86,7 @@ export default function App() {
           <Route path="/blog/cloud-security-automation"      element={<CloudSecurityAutomationPage />} />
           <Route path="/blog/finops-practices-multi-cloud"          element={<FinOpsPracticesPage />} />
           <Route path="/blog/cloud-cost-optimization-strategies"   element={<CloudCostOptimizationStrategiesPage />} />
+          <Route path="/blog/devops-automation-platform-vs-traditional-it-operations" element={<DevOpsVsTraditionalITPage />} />
           <Route path="/customers"                 element={<CustomersPage />} />
           <Route path="/security"                  element={<SecurityPage />} />
           <Route path="/contact"                   element={<ContactPage />} />

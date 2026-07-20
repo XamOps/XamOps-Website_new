@@ -311,8 +311,52 @@ function DevOpsVsTraditionalThumbnail() {
   );
 }
 
+function SREReliabilityThumbnail() {
+  const NODES = [
+    { cx: 90, cy: 70, ok: true },
+    { cx: 190, cy: 70, ok: true },
+    { cx: 290, cy: 70, ok: false },
+    { cx: 90, cy: 150, ok: true },
+    { cx: 190, cy: 150, ok: true },
+    { cx: 290, cy: 150, ok: true },
+  ];
+  return (
+    <svg viewBox="0 0 380 210" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ width: '100%', height: '100%', display: 'block' }}>
+      <rect width="380" height="210" fill="#10141f" />
+      <text x="20" y="24" fontSize="10" fill="#8899aa" fontFamily="monospace" fontWeight="600" letterSpacing="1.5">CLOUD INFRASTRUCTURE HEALTH</text>
+      <line x1="90" y1="70" x2="190" y2="70" stroke="#2a3548" strokeWidth="1.5" />
+      <line x1="190" y1="70" x2="290" y2="70" stroke="#2a3548" strokeWidth="1.5" />
+      <line x1="90" y1="70" x2="90" y2="150" stroke="#2a3548" strokeWidth="1.5" />
+      <line x1="190" y1="70" x2="190" y2="150" stroke="#2a3548" strokeWidth="1.5" />
+      <line x1="290" y1="70" x2="290" y2="150" stroke="#2a3548" strokeWidth="1.5" />
+      <line x1="90" y1="150" x2="190" y2="150" stroke="#2a3548" strokeWidth="1.5" />
+      <line x1="190" y1="150" x2="290" y2="150" stroke="#2a3548" strokeWidth="1.5" />
+      {NODES.map((n, i) => (
+        <g key={i}>
+          <circle cx={n.cx} cy={n.cy} r="14" fill={n.ok ? '#14b8a6' : '#ef6d58'} opacity="0.18" />
+          <circle cx={n.cx} cy={n.cy} r="7" fill={n.ok ? '#14b8a6' : '#ef6d58'} />
+        </g>
+      ))}
+      <rect x="20" y="178" width="150" height="20" rx="10" fill="#14b8a6" opacity="0.12" />
+      <text x="30" y="192" fontSize="10" fill="#14b8a6" fontFamily="monospace" fontWeight="700">99.98% UPTIME</text>
+      <rect x="290" y="178" width="70" height="20" rx="10" fill="#ef6d58" opacity="0.12" />
+      <text x="300" y="192" fontSize="10" fill="#ef6d58" fontFamily="monospace" fontWeight="700">AUTO-HEAL</text>
+    </svg>
+  );
+}
+
 export default function BlogPage() {
   const posts = [
+    {
+      provider: 'gcp',
+      tag: 'SRE',
+      title: 'SRE Automation Platform: Building Reliable Cloud Infrastructure for Enterprises in Noida',
+      excerpt: 'Manual cloud management cannot keep pace with modern infrastructure demands. See how Site Reliability Engineering automation helps enterprises in Noida, Delhi, and Lucknow build resilient cloud environments.',
+      read: '8 min',
+      date: 'July 10, 2026',
+      href: '/blog/sre-automation-platform-noida',
+      thumbEl: <SREReliabilityThumbnail />,
+    },
     {
       provider: 'azure',
       tag: 'DevOps',

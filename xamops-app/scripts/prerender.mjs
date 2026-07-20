@@ -41,6 +41,7 @@ const ROUTES = [
   '/blog/finops-practices-multi-cloud',
   '/blog/cloud-cost-optimization-strategies',
   '/blog/devops-automation-platform-vs-traditional-it-operations',
+  '/blog/sre-automation-platform-noida',
   '/customers',
   '/security',
   '/contact',

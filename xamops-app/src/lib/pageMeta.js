@@ -562,6 +562,52 @@ export const PAGE_META = {
     ],
   },
 
+  // ── Blog post: SRE Automation Platform Noida ────────────────────
+  '/blog/sre-automation-platform-noida': {
+    title: 'SRE Automation Platform in Noida | Cloud Reliability Solutions | Xamops',
+    description: 'Discover how the Xamops SRE Automation Platform helps businesses in Noida, Delhi, and Lucknow improve cloud reliability, automate IT operations, reduce downtime, and optimize cloud infrastructure.',
+    keywords: 'SRE Automation Platform, SRE Automation Platform in Noida, Cloud Reliability Platform, Site Reliability Engineering, Cloud Infrastructure Automation, DevOps Automation Platform, Cloud Monitoring, Xamops, Cloud Operations Platform',
+    canonical: `${BASE}/blog/sre-automation-platform-noida`,
+    schemas: [
+      {
+        '@context': 'https://schema.org',
+        '@type': 'BlogPosting',
+        '@id': `${BASE}/blog/sre-automation-platform-noida/#post`,
+        headline: 'SRE Automation Platform: Building Reliable Cloud Infrastructure for Enterprises in Noida',
+        description: 'How the Xamops SRE Automation Platform helps businesses in Noida, Delhi, and Lucknow improve cloud reliability, automate IT operations, reduce downtime, and optimize cloud infrastructure.',
+        url: `${BASE}/blog/sre-automation-platform-noida/`,
+        datePublished: '2026-07-10',
+        dateModified: '2026-07-10',
+        author: { '@type': 'Person', name: 'Aditya Mehta', jobTitle: 'Co-founder, XamOps', worksFor: org },
+        publisher: org,
+        keywords: ['sre automation platform', 'sre automation platform noida', 'cloud reliability platform', 'site reliability engineering', 'cloud infrastructure automation', 'cloud monitoring'],
+        timeRequired: 'PT8M',
+        wordCount: '1500',
+        inLanguage: 'en-US',
+        articleSection: 'SRE',
+        about: [
+          { '@type': 'Thing', name: 'Site Reliability Engineering' },
+          { '@type': 'Thing', name: 'Cloud Infrastructure Automation' },
+          { '@type': 'Thing', name: 'Cloud Reliability' },
+        ],
+        mainEntityOfPage: { '@type': 'WebPage', '@id': `${BASE}/blog/sre-automation-platform-noida/` },
+      },
+      {
+        '@type': 'FAQPage',
+        '@id': `${BASE}/blog/sre-automation-platform-noida/#faq`,
+        mainEntity: [
+          { '@type': 'Question', name: 'What is an SRE Automation Platform in Noida?', acceptedAnswer: { '@type': 'Answer', text: 'An SRE Automation Platform enables organizations to automate cloud operations, monitoring, reduce downtime, and enhance application reliability through Site Reliability Engineering principles.' } },
+          { '@type': 'Question', name: 'How does Xamops improve Cloud Infrastructure in Noida?', acceptedAnswer: { '@type': 'Answer', text: 'Xamops ensures cloud monitoring in real time, incident management automation, automation of cloud infrastructure, and performance optimization.' } },
+          { '@type': 'Question', name: 'Why should businesses in Noida invest in Cloud Infrastructure Management?', acceptedAnswer: { '@type': 'Answer', text: 'Effective Cloud Infrastructure Management in Noida is a way for organizations to enhance system performance, save on cloud costs, increase security, and keep application availability high.' } },
+          { '@type': 'Question', name: 'Which industries can benefit from the Xamops SRE Automation Platform?', acceptedAnswer: { '@type': 'Answer', text: 'Xamops caters to IT firms, SaaS firms, healthcare firms, manufacturing, BFSI, retail, logistics, education, and enterprises having cloud infrastructures.' } },
+          { '@type': 'Question', name: 'Can Xamops reduce cloud downtime?', acceptedAnswer: { '@type': 'Answer', text: 'Yes. Xamops monitors cloud infrastructure continuously, identifies any problems in advance, and responds automatically to avoid downtime and increase service reliability.' } },
+        ],
+      },
+      wp('/blog/sre-automation-platform-noida', 'SRE Automation Platform in Noida | Cloud Reliability Solutions | Xamops', 'How Xamops helps businesses in Noida, Delhi, and Lucknow improve cloud reliability and automate IT operations.'),
+      org,
+    ],
+  },
+
   // ── Blog post: FinOps Practices Multi-Cloud ──────────────────────
   '/blog/finops-practices-multi-cloud': {
     title: 'Best FinOps Practices for Multi-Cloud Environments | XamOps Blog',

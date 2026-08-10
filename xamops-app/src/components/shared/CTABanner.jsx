@@ -8,11 +8,11 @@ export default function CTABanner({
 }) {
   const { setOpen } = useDemoModal();
   return (
-    <section className="sec-light py-10 md:py-16">
+    <section className="sec-light py-7 md:py-11">
       <div className="max-w-[1240px] mx-auto px-6 md:px-10">
         <div className="rounded-[32px] p-10 md:p-14 ring-soft relative overflow-hidden" style={{ background: 'var(--ivory)' }}>
           <div className="absolute -right-20 -bottom-20 w-[420px] h-[420px] rounded-full pointer-events-none"
-            style={{ background: 'radial-gradient(closest-side, rgba(201,100,66,0.18), transparent 70%)' }} />
+            style={{ background: 'radial-gradient(closest-side, var(--halo), transparent 70%)' }} />
           <div className="grid md:grid-cols-12 gap-8 relative items-center">
             <div className="md:col-span-8">
               <h2 className="serif text-[clamp(44px,5.5vw,76px)] leading-[1.04] tracking-tight max-w-[20ch]">{heading}</h2>

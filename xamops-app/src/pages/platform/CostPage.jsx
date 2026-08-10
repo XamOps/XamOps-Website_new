@@ -33,7 +33,7 @@ export default function CostPage() {
         title={[{ text: 'Cost Analytics for Better' }, { text: 'Cloud Cost Visibility', accent: true }]}
         body="As businesses expand across AWS, Microsoft Azure, and Google Cloud, tracking cloud expenses becomes increasingly difficult. Xamops Cost Analytics gives you complete visibility into cloud spending."
       />
-      <section className="sec-light pb-16">
+      <section className="sec-light pb-10">
         <div className="max-w-[1240px] mx-auto px-6 md:px-10"><CostVisual /></div>
       </section>
       <CopySection

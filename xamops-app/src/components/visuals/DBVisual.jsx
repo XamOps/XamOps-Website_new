@@ -7,6 +7,13 @@ const DB_ROWS = [
   ['rds-staging-api',  'PostgreSQL 16', 'patching',  'minor 16.2 → 16.4',     '22%'],
 ];
 
+// healthy → green, optimizing → blue, patching → amber
+const STATUS = {
+  healthy:    ['badge--positive', 'var(--viz-2)'],
+  optimizing: ['badge--info',     'var(--viz-1)'],
+  patching:   ['badge--warning',  'var(--viz-3)'],
+};
+
 export default function DBVisual() {
   const [ref, inView] = useInView(0.2);
 
@@ -21,10 +28,7 @@ export default function DBVisual() {
           }}>
             <div className="flex items-center justify-between">
               <div className="serif text-[18px]">{n}</div>
-              <span className="text-[11px] mono px-2 py-0.5 rounded-full" style={{
-                background: s === 'healthy' ? 'rgba(43,212,168,0.18)' : s === 'optimizing' ? 'rgba(124,92,255,0.18)' : 'rgba(240,179,65,0.18)',
-                color: s === 'healthy' ? '#2bd4a8' : s === 'optimizing' ? '#a48dff' : '#f0b341',
-              }}>{s}</span>
+              <span className={`badge ${STATUS[s][0]}`}>{s}</span>
             </div>
             <div className="text-[12px] mt-1" style={{color:'var(--olive)'}}>{e}</div>
             <div className="text-[13px] mt-3">{m}</div>
@@ -32,7 +36,7 @@ export default function DBVisual() {
             <div className="mt-3 h-1.5 rounded-full overflow-hidden" style={{background:'var(--rule)'}}>
               <div className="h-1.5 rounded-full origin-left" style={{
                 width: w,
-                background: 'var(--terracotta)',
+                background: STATUS[s][1],
                 transform: inView ? 'scaleX(1)' : 'scaleX(0)',
                 transformOrigin: 'left',
                 transition: `transform 0.9s ease ${0.3 + idx * 0.12}s`,
@@ -46,8 +50,11 @@ export default function DBVisual() {
         opacity: inView ? 1 : 0,
         transition: 'opacity 0.5s ease 0.6s',
       }}>
-        <div className="text-[13px]"><span className="serif text-[16px]">Last 24h</span> · 0 manual interventions · 12 routines automated</div>
-        <span className="mono text-[12px]" style={{color:'var(--olive)'}}>0 pages</span>
+        <div className="text-[13px]">
+          <span className="serif text-[16px]">Last 24h</span> ·{' '}
+          <span style={{color:'var(--viz-2)'}}>0 manual interventions</span> · 12 routines automated
+        </div>
+        <span className="badge badge--positive">0 pages</span>
       </div>
     </div>
   );

@@ -5,9 +5,9 @@ import { useDemoModal } from '../../lib/demoModal';
 export default function PageHero({ eyebrow, title, body, cta = true }) {
   const { setOpen } = useDemoModal();
   return (
-    <section className="sec-light pt-24 md:pt-[140px] pb-16 md:pb-20 relative overflow-hidden">
+    <section className="sec-light pt-20 md:pt-[104px] pb-10 md:pb-12 relative overflow-hidden">
       <div className="absolute -top-20 -right-20 w-[420px] h-[420px] rounded-full pointer-events-none"
-        style={{ background: 'radial-gradient(closest-side, rgba(201,100,66,0.14), transparent 70%)' }} />
+        style={{ background: 'radial-gradient(closest-side, var(--halo), transparent 70%)' }} />
       <div className="max-w-[1240px] mx-auto px-6 md:px-10 relative">
         <div className="eyebrow mb-5">{eyebrow}</div>
         <h1 className="serif text-[clamp(52px,7.5vw,108px)] leading-[1.02] tracking-tight max-w-[18ch]">

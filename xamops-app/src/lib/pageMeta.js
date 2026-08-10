@@ -1,3 +1,6 @@
+import { GROUPS } from './platform';
+import { GROUP_FAQS } from './platformDetail';
+
 const BASE = 'https://xamops.com';
 const LOGO = `${BASE}/logo.png`;
 const OG_IMG = `${BASE}/og-image.jpg`;
@@ -58,12 +61,14 @@ export const PAGE_META = {
       },
       app(
         'XamOps Cloud Automation Platform',
-        'AI-powered cloud automation platform for FinOps, DevOps, and SRE teams.',
+        'AI-powered cloud automation platform for FinOps, DevOps, SRE, Kubernetes and security teams.',
         [
           'Cloud cost optimization','FinOps automation','DevOps automation platform','SRE automation',
           'Cloud monitoring platform','AI cloud operations','Multicloud management platform',
           'Cloud infrastructure automation','Enterprise cloud management','Cloud cost management',
-          'Automated cloud operations','Cloud optimization platform',
+          'Automated cloud operations','Cloud optimization platform','Kubernetes cost management',
+          'Cloud security posture management','SOC 2 compliance automation','Instance scheduling',
+          'Spot instance automation','Cloud waste management','Cost forecasting','MediaOps',
         ]
       ),
       org,
@@ -72,14 +77,21 @@ export const PAGE_META = {
 
   // ── Platform ───────────────────────────────────────────────────────
   '/platform': {
-    title: 'Cloud Automation Platform for FinOps, DevOps & SRE | Xamops',
-    description: 'Explore the Xamops cloud automation platform: purpose-built modules for FinOps, DevOps, SRE, SecOps, DBOps, and cloud cost analytics across AWS, Azure, and GCP.',
-    keywords: 'cloud automation platform, cloud management platform, cloud operations automation, multicloud management platform, enterprise cloud management, cloud infrastructure automation, cloud infrastructure management platform, cloud monitoring platform, cloud optimization platform, infrastructure automation, automated cloud operations, enterprise cloud automation, AI cloud operations platform',
+    title: 'Cloud Automation Platform for FinOps, DevOps, SRE & Kubernetes | Xamops',
+    description: 'Explore the Xamops cloud automation platform: 47 capabilities across FinOps, cost automation, Kubernetes, security and compliance, observability, DevOps and MediaOps, on AWS, Azure and GCP.',
+    keywords: 'cloud automation platform, cloud management platform, cloud operations automation, multicloud management platform, enterprise cloud management, cloud infrastructure automation, cloud infrastructure management platform, cloud monitoring platform, cloud optimization platform, infrastructure automation, automated cloud operations, enterprise cloud automation, AI cloud operations platform, kubernetes cost optimization, CNAPP, SOC 2 compliance automation, cloud security posture management',
     canonical: `${BASE}/platform`,
     schemas: [
-      wp('/platform', 'Cloud Automation Platform for FinOps, DevOps & SRE | Xamops', 'Purpose-built cloud automation modules for every cloud team.'),
-      app('XamOps Platform', 'Cloud automation platform modules for FinOps, DevOps, SRE, SecOps, and DBOps.',
-        ['Spot automation','Disk rightsizing','DBOps','SecOps','Cost analytics','SRE automation','Cloud monitoring']),
+      wp('/platform', 'Cloud Automation Platform for FinOps, DevOps, SRE & Kubernetes | Xamops', 'Forty-seven cloud automation capabilities in one control plane.'),
+      app('XamOps Platform', 'Cloud automation platform spanning FinOps, cost automation, Kubernetes, security and compliance, observability, DevOps and MediaOps.',
+        [
+          'Unified multi-cloud dashboard','Cost management','Cost forecasting','Waste management',
+          'Compute rightsizing','Disk rightsizing','Reservations and commitments','Pricing calculator',
+          'CloudSitter instance scheduling','AutoSpotting','Kubernetes autoscaling','CloudK8s cluster management',
+          'Security Center','Workload attack-surface review','XamSecure CNAPP','ComplianceOps','SOC 2 program',
+          'Cloud inventory','CloudMap topology','Observability','AI SRE investigations','AIOps',
+          'CI/CD pipelines','Code quality','CloudShell','DbOps','MediaOps transcoding',
+        ]),
       org,
     ],
   },
@@ -166,22 +178,22 @@ export const PAGE_META = {
 
   // ── DBOps ──────────────────────────────────────────────────────────
   '/platform/dbops': {
-    title: 'SecOps Platform | AI-Powered Cloud Security Automation | Xamops',
-    description: 'Strengthen cloud security with the Xamops SecOps Platform. Automate security operations, improve compliance, monitor cloud infrastructure, and optimize enterprise cloud management with AI-powered automation.',
-    keywords: 'DBOps platform, database operations automation, cloud database management, aws rds optimization, azure sql automation, cloud database cost optimization, cloud infrastructure automation, infrastructure automation',
+    title: 'DBOps Platform | Database Operations Automation | Xamops',
+    description: 'Automate managed database operations with Xamops DBOps. Track database inventory, surface savings opportunities, review query statistics, and monitor health snapshots across AWS RDS, Cloud SQL, and Azure databases.',
+    keywords: 'DBOps platform, database operations automation, cloud database management, aws rds optimization, azure sql automation, cloud database cost optimization, cloud infrastructure automation, infrastructure automation, managed database inventory, database query statistics, database health monitoring',
     canonical: `${BASE}/platform/dbops`,
     schemas: [
-      wp('/platform/dbops', 'SecOps Platform | AI-Powered Cloud Security Automation | Xamops', 'Automate security operations, improve compliance, and optimize enterprise cloud management with AI-powered automation.'),
+      wp('/platform/dbops', 'DBOps Platform | Database Operations Automation | Xamops', 'Automate managed database inventory, savings, query statistics, and health monitoring across clouds.'),
       app('XamOps DBOps', 'Database operations automation for cloud-managed databases across AWS, Azure, and GCP.',
-        ['Automated DB scaling','Performance anomaly detection','Cost optimization recommendations','Multi-cloud DB support','DBA toil elimination']),
+        ['Managed database inventory','Database savings opportunities','Query statistics','Health snapshots','Automated DB scaling','Multi-cloud DB support','DBA toil elimination']),
       {
         '@type': 'FAQPage',
         '@id': `${BASE}/platform/dbops/#faq`,
         mainEntity: [
-          { '@type': 'Question', name: 'What is a SecOps Platform?', acceptedAnswer: { '@type': 'Answer', text: 'The SecOps Platform brings together the process of security and operations to enable automation in threat detection, monitoring, compliance, and incident response within cloud environments.' } },
-          { '@type': 'Question', name: 'How does Xamops improve cloud security?', acceptedAnswer: { '@type': 'Answer', text: 'Xamops leverages automation using artificial intelligence, continuous monitoring, intelligent policy enforcement, and automated remediation for better cloud security.' } },
-          { '@type': 'Question', name: 'Can Xamops automate cloud operations?', acceptedAnswer: { '@type': 'Answer', text: 'Yes. Xamops automates cloud infrastructure management, security operations, compliance, monitoring, and cloud optimization.' } },
-          { '@type': 'Question', name: 'Which teams can benefit from Xamops?', acceptedAnswer: { '@type': 'Answer', text: 'DevOps, SecOps, FinOps, IT Operations, SRE, Cloud Engineering, and Infrastructure Management teams all benefit from the platform.' } },
+          { '@type': 'Question', name: 'What is DBOps?', acceptedAnswer: { '@type': 'Answer', text: 'DBOps applies operations automation to managed databases: keeping an inventory of every database instance, surfacing cost savings opportunities, collecting query statistics, and capturing health snapshots so routine database work does not depend on a specialist being on call.' } },
+          { '@type': 'Question', name: 'Which databases does Xamops DBOps support?', acceptedAnswer: { '@type': 'Answer', text: 'DBOps covers managed database services across AWS, GCP, and Azure, including Amazon RDS, Google Cloud SQL, and Azure database services. The Kubernetes in-cluster agent additionally gathers Postgres, MongoDB, and Redis diagnostics.' } },
+          { '@type': 'Question', name: 'How does DBOps reduce database costs?', acceptedAnswer: { '@type': 'Answer', text: 'DBOps identifies oversized and idle database instances, highlights savings opportunities against observed utilization, and reports them alongside the rest of your cloud spend so database waste is visible next to compute and storage waste.' } },
+          { '@type': 'Question', name: 'Can DBOps help diagnose slow queries?', acceptedAnswer: { '@type': 'Answer', text: 'Yes. DBOps collects query statistics and health snapshots, and the Kubernetes agent adds Postgres query stats, index usage, vacuum activity, and wait events so you can see which queries are causing latency.' } },
         ],
       },
       org,
@@ -863,5 +875,43 @@ export const PAGE_META = {
     ],
   },
 };
+
+// ── Capability group pages ──────────────────────────────────────────
+// Generated from the catalogue so a new group ships with correct metadata,
+// a SoftwareApplication featureList and a breadcrumb without hand-editing.
+GROUPS.forEach((g) => {
+  const path = `/platform/${g.slug}`;
+  const faqs = GROUP_FAQS[g.id] || [];
+  PAGE_META[path] = {
+    title: g.seo.title,
+    description: g.seo.description,
+    keywords: g.seo.keywords,
+    canonical: `${BASE}${path}`,
+    schemas: [
+      wp(path, g.seo.title, g.seo.description),
+      app(`XamOps ${g.name}`, g.body, g.features.map((f) => f.name)),
+      {
+        '@type': 'BreadcrumbList',
+        '@id': `${BASE}${path}/#breadcrumb`,
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'Home', item: BASE },
+          { '@type': 'ListItem', position: 2, name: 'Platform', item: `${BASE}/platform` },
+          { '@type': 'ListItem', position: 3, name: g.name, item: `${BASE}${path}` },
+        ],
+      },
+      // Mirrors the FAQ block rendered on the page
+      ...(faqs.length ? [{
+        '@type': 'FAQPage',
+        '@id': `${BASE}${path}/#faq`,
+        mainEntity: faqs.map(([name, text]) => ({
+          '@type': 'Question',
+          name,
+          acceptedAnswer: { '@type': 'Answer', text },
+        })),
+      }] : []),
+      org,
+    ],
+  };
+});
 
 export const DEFAULT_META = PAGE_META['/'];

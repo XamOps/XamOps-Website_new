@@ -87,7 +87,7 @@ export default function CustomersPage() {
       />
 
       {/* Stats */}
-      <section className="sec-light pb-12 md:pb-20">
+      <section className="sec-light pb-8 md:pb-12">
         <div className="max-w-[1240px] mx-auto px-6 md:px-10">
           <div
             className="grid grid-cols-2 md:grid-cols-4 gap-px ring-soft rounded-2xl overflow-hidden"
@@ -109,7 +109,7 @@ export default function CustomersPage() {
       </section>
 
       {/* Testimonials */}
-      <section className="sec-dark py-12 md:py-20">
+      <section className="sec-dark py-8 md:py-12">
         <div className="max-w-[1240px] mx-auto px-6 md:px-10">
           <div className="sec-label dark mb-5">What teams say</div>
           <h2 className="serif text-[clamp(26px,4vw,48px)] leading-[1.08] mb-10 max-w-[22ch]">
@@ -155,7 +155,7 @@ export default function CustomersPage() {
       </section>
 
       {/* Use cases */}
-      <section className="sec-light py-12 md:py-20">
+      <section className="sec-light py-8 md:py-12">
         <div className="max-w-[1240px] mx-auto px-6 md:px-10">
           <div className="sec-label mb-5">By team</div>
           <h2 className="serif text-[clamp(26px,4vw,48px)] leading-[1.08] mb-10 max-w-[24ch]">

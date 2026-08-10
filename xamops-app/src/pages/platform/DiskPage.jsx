@@ -37,7 +37,7 @@ export default function DiskPage() {
         title={[{ text: 'Disk Rightsizing for' }, { text: 'Smarter Storage', accent: true }]}
         body="Over-provisioned disks and underutilized storage volumes quietly increase cloud costs over time. Xamops Disk Rightsizing analyzes usage and recommends the right storage configuration."
       />
-      <section className="sec-light pb-16">
+      <section className="sec-light pb-10">
         <div className="max-w-[1240px] mx-auto px-6 md:px-10"><DiskVisual /></div>
       </section>
       <CopySection

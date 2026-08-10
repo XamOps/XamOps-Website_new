@@ -83,10 +83,10 @@ export default function WhatIsXamOpsPage() {
   return (
     <>
       {/* ── Article header ─────────────────────────────────────── */}
-      <section className="pt-28 md:pt-36 pb-14 relative overflow-hidden" style={{ background: '#1a1f2a' }}>
+      <section className="pt-22 md:pt-24 pb-9 relative overflow-hidden" style={{ background: '#1b1b1b' }}>
         <div
           className="absolute -top-24 left-1/2 -translate-x-1/2 w-[900px] h-[500px] rounded-full pointer-events-none"
-          style={{ background: 'radial-gradient(closest-side, rgba(239,109,88,0.07), transparent 70%)' }}
+          style={{ background: 'radial-gradient(closest-side, var(--halo), transparent 70%)' }}
         />
         <div className="max-w-[1240px] mx-auto px-6 md:px-10 relative">
           <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mb-7 eyebrow">
@@ -122,7 +122,7 @@ export default function WhatIsXamOpsPage() {
       </section>
 
       {/* ── Article body ────────────────────────────────────────── */}
-      <article className="sec-light py-12 md:py-20">
+      <article className="sec-light py-8 md:py-12">
         <div className="max-w-[1240px] mx-auto px-6 md:px-10">
           <div className="grid grid-cols-1 md:grid-cols-12 gap-x-10 gap-y-12">
 
@@ -219,7 +219,7 @@ export default function WhatIsXamOpsPage() {
                 </p>
                 <div
                   className="rounded-xl p-5 mb-2"
-                  style={{ background: 'rgba(239,109,88,0.06)', border: '1px solid rgba(239,109,88,0.18)' }}
+                  style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.18)' }}
                 >
                   <p className="text-[14px] leading-[1.65]" style={{ color: 'var(--ink-2)' }}>
                     XamOps brings cost optimization, cloud governance, security, and operational intelligence
@@ -335,7 +335,7 @@ export default function WhatIsXamOpsPage() {
               >
                 <div
                   className="absolute -right-16 -bottom-16 w-[300px] h-[300px] rounded-full pointer-events-none"
-                  style={{ background: 'radial-gradient(closest-side, rgba(239,109,88,0.07), transparent 70%)' }}
+                  style={{ background: 'radial-gradient(closest-side, var(--halo), transparent 70%)' }}
                 />
                 <div className="relative">
                   <div className="eyebrow mb-3">One platform. Every cloud.</div>
@@ -468,7 +468,7 @@ export default function WhatIsXamOpsPage() {
                 >
                   <div
                     className="absolute -right-6 -bottom-6 w-28 h-28 rounded-full pointer-events-none"
-                    style={{ background: 'radial-gradient(closest-side, rgba(239,109,88,0.1), transparent 70%)' }}
+                    style={{ background: 'radial-gradient(closest-side, var(--halo), transparent 70%)' }}
                   />
                   <div className="relative">
                     <div

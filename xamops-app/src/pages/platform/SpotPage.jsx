@@ -24,7 +24,7 @@ export default function SpotPage() {
         title={[{ text: 'Spot Automation for' }, { text: 'Smarter Cost Optimization', accent: true }]}
         body="Managing cloud infrastructure efficiently while keeping operational costs under control is a challenge for modern businesses. Xamops Spot Automation automates spot instance management without compromising reliability."
       />
-      <section className="sec-light pb-16">
+      <section className="sec-light pb-10">
         <div className="max-w-[1240px] mx-auto px-6 md:px-10"><SpotVisual /></div>
       </section>
       <CopySection

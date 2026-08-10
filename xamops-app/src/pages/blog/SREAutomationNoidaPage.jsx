@@ -7,7 +7,7 @@ const Xam = () => (
   <span style={{ color: 'var(--terracotta)', fontFamily: 'var(--font-med)', letterSpacing: '-0.01em' }}>XamOps</span>
 );
 
-const ACCENT = '#14b8a6';
+const ACCENT = 'var(--viz-5)';
 
 const WHY_NOIDA = [
   'Downtime without planning',
@@ -91,10 +91,10 @@ export default function SREAutomationNoidaPage() {
   return (
     <>
       {/* ── Article header ─────────────────────────────────────── */}
-      <section className="pt-28 md:pt-36 pb-14 relative overflow-hidden" style={{ background: '#0c1f1c' }}>
+      <section className="pt-22 md:pt-24 pb-9 relative overflow-hidden" style={{ background: '#131313' }}>
         <div
           className="absolute -top-24 left-1/2 -translate-x-1/2 w-[900px] h-[500px] rounded-full pointer-events-none"
-          style={{ background: `radial-gradient(closest-side, rgba(20,184,166,0.1), transparent 70%)` }}
+          style={{ background: `radial-gradient(closest-side, var(--halo), transparent 70%)` }}
         />
         <div className="max-w-[1240px] mx-auto px-6 md:px-10 relative">
           <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mb-7 eyebrow">
@@ -129,7 +129,7 @@ export default function SREAutomationNoidaPage() {
       </section>
 
       {/* ── Article body ────────────────────────────────────────── */}
-      <article className="sec-light py-12 md:py-20">
+      <article className="sec-light py-8 md:py-12">
         <div className="max-w-[1240px] mx-auto px-6 md:px-10">
           <div className="grid grid-cols-1 md:grid-cols-12 gap-x-10 gap-y-12">
 
@@ -260,7 +260,7 @@ export default function SREAutomationNoidaPage() {
                     <div
                       key={s.title}
                       className="rounded-xl p-5"
-                      style={{ background: 'rgba(20,184,166,0.06)', border: '1px solid rgba(20,184,166,0.2)' }}
+                      style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.2)' }}
                     >
                       <div className="text-[15px] mb-1.5" style={{ fontFamily: 'var(--font-med)', color: ACCENT }}>
                         {s.title}
@@ -335,7 +335,7 @@ export default function SREAutomationNoidaPage() {
               >
                 <div
                   className="absolute -right-16 -bottom-16 w-[300px] h-[300px] rounded-full pointer-events-none"
-                  style={{ background: `radial-gradient(closest-side, rgba(20,184,166,0.08), transparent 70%)` }}
+                  style={{ background: `radial-gradient(closest-side, var(--halo), transparent 70%)` }}
                 />
                 <div className="relative">
                   <div className="eyebrow mb-3">Conclusion</div>
@@ -468,7 +468,7 @@ export default function SREAutomationNoidaPage() {
                 >
                   <div
                     className="absolute -right-6 -bottom-6 w-28 h-28 rounded-full pointer-events-none"
-                    style={{ background: `radial-gradient(closest-side, rgba(20,184,166,0.12), transparent 70%)` }}
+                    style={{ background: `radial-gradient(closest-side, var(--halo), transparent 70%)` }}
                   />
                   <div className="relative">
                     <div className="text-[14px] leading-[1.5] mb-2" style={{ fontFamily: 'var(--font-med)' }}>

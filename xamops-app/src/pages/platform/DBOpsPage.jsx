@@ -24,7 +24,7 @@ export default function DBOpsPage() {
         title={[{ text: 'Intelligent Cloud Security &' }, { text: 'Automated Operations', accent: true }]}
         body="Cloud-based ecosystems today need constant monitoring, early identification of threats, and automation of operations. Xamops makes cloud security easier for businesses by integrating cloud automation, AI-powered automation, and intelligent policy management into one platform."
       />
-      <section className="sec-light pb-16">
+      <section className="sec-light pb-10">
         <div className="max-w-[1240px] mx-auto px-6 md:px-10"><DBVisual /></div>
       </section>
       <CopySection

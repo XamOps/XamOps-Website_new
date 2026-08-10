@@ -1,6 +1,6 @@
 export default function FAQList({ title = 'Frequently asked questions', faqs }) {
   return (
-    <section className="sec-light py-10 md:py-16">
+    <section className="sec-light py-7 md:py-11">
       <div className="max-w-[1240px] mx-auto px-6 md:px-10">
         <div className="sec-label mb-6">{title}</div>
         <div className="space-y-3">

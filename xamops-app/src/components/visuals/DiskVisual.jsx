@@ -18,7 +18,7 @@ export default function DiskVisual() {
             {/* Path draws in using pathLength */}
             <path
               d="M0,120 L40,118 L40,80 L80,80 L80,90 L120,90 L120,60 L160,60 L160,90 L200,90 L200,40 L240,40 L240,90 L280,90 L280,70 L320,70 L320,100 L360,100"
-              fill="none" stroke="#7c5cff" strokeWidth="1.8"
+              fill="none" stroke="var(--viz-1)" strokeWidth="1.8"
               pathLength="1"
               style={{
                 strokeDasharray: 1,
@@ -26,8 +26,8 @@ export default function DiskVisual() {
                 transition: 'stroke-dashoffset 1.4s ease 0.2s',
               }}
             />
-            <path d="M0,140 L360,140" stroke="#262c39" strokeDasharray="2 4"/>
-            <text x="0" y="138" fill="#8b90a0" fontSize="10" fontFamily="JetBrains Mono">avg use 18%</text>
+            <path d="M0,140 L360,140" stroke="var(--viz-3)" strokeDasharray="2 4" opacity="0.7"/>
+            <text x="0" y="138" fill="var(--viz-3)" fontSize="10" fontFamily="JetBrains Mono">avg use 18%</text>
           </svg>
           <div className="mt-3 text-[13px]" style={{color:'var(--olive)'}}>Provisioned 500 GB · Recommended 160 GB</div>
         </div>
@@ -47,11 +47,11 @@ export default function DiskVisual() {
               </li>
             ))}
           </ul>
-          <div className="mt-4 pt-3" style={{borderTop:'1px dashed #262c39'}}>
+          <div className="mt-4 pt-3" style={{borderTop:'1px dashed #2e2e2e'}}>
             <div className="text-[13px]">Estimated savings</div>
             {/* Savings number pops in */}
             <div className="serif text-[40px] leading-none mt-1" style={{
-              color:'var(--terracotta)',
+              color:'var(--viz-2)',
               opacity: inView ? 1 : 0,
               transform: inView ? 'scale(1)' : 'scale(0.8)',
               transition: 'opacity 0.5s ease 0.9s, transform 0.5s ease 0.9s',

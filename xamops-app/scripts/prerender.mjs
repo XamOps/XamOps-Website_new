@@ -12,41 +12,15 @@ import { preview } from 'vite';
 import { writeFile, mkdir } from 'fs/promises';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
+import { ROUTES as REGISTRY_ROUTES } from '../src/lib/routes.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, '..');
 const DIST = join(ROOT, 'dist');
 const PORT = 4174; // avoid colliding with default 4173 if preview is already running
 
-const ROUTES = [
-  '/',
-  '/platform',
-  '/platform/spot-automation',
-  '/platform/disk-rightsizing',
-  '/platform/dbops',
-  '/platform/secops',
-  '/platform/cost-analytics',
-  '/platform/sre',
-  '/solutions/devops',
-  '/solutions/finops',
-  '/solutions/sre',
-  '/pricing',
-  '/about',
-  '/blog',
-  '/blog/aws-cost-spike-investigation',
-  '/blog/ec2-spot-instances-production',
-  '/blog/disk-rightsizing-ebs',
-  '/blog/what-is-xamops',
-  '/blog/cloud-security-automation',
-  '/blog/finops-practices-multi-cloud',
-  '/blog/cloud-cost-optimization-strategies',
-  '/blog/devops-automation-platform-vs-traditional-it-operations',
-  '/blog/sre-automation-platform-noida',
-  '/customers',
-  '/security',
-  '/contact',
-  '/demo',
-];
+// Single source of truth — see src/lib/routes.js
+const ROUTES = REGISTRY_ROUTES;
 
 async function prerenderRoute(page, route) {
   await page.goto(`http://localhost:${PORT}${route}`, { waitUntil: 'networkidle', timeout: 30_000 });

@@ -35,7 +35,7 @@ export default function SecOpsPage() {
         title={[{ text: 'SecOps Platform for' }, { text: 'Smarter Cloud Security', accent: true }]}
         body="With the growth of cloud environments, security teams face challenges in threat detection, incident response, and compliance. Xamops SecOps integrates security operations into one solution."
       />
-      <section className="sec-light pb-16">
+      <section className="sec-light pb-10">
         <div className="max-w-[1240px] mx-auto px-6 md:px-10"><SecOpsVisual /></div>
       </section>
       <CopySection

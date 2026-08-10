@@ -2,9 +2,9 @@ import { Icon } from '../Icons';
 import useInView from '../../hooks/useInView';
 
 const BARS = [
-  ['On-demand',    '$612k', '22%', '#8b90a0'],
-  ['Reserved',     '$1.4M', '51%', 'var(--terracotta)'],
-  ['Savings Plans','$760k', '27%', '#f0b341'],
+  ['On-demand',    '$612k', '22%', 'var(--viz-4)'],
+  ['Reserved',     '$1.4M', '51%', 'var(--viz-2)'],
+  ['Savings Plans','$760k', '27%', 'var(--viz-1)'],
 ];
 
 export default function CostVisual() {
@@ -24,16 +24,16 @@ export default function CostVisual() {
             {/* Animated fill arc — strokeDashoffset from 490→98 */}
             <circle
               cx="100" cy="100" r="78"
-              fill="none" stroke="var(--terracotta)" strokeWidth="22"
+              fill="none" stroke="var(--viz-2)" strokeWidth="22"
               strokeDasharray="490"
               strokeDashoffset={inView ? 98 : 490}
               strokeLinecap="butt"
               transform="rotate(-90 100 100)"
               style={{ transition: 'stroke-dashoffset 1.4s ease 0.2s' }}
             />
-            <text x="100" y="98"  textAnchor="middle" fontFamily="Georgia"      fontSize="42" fill="#ecedf2"
+            <text x="100" y="98"  textAnchor="middle" fontFamily="Georgia"      fontSize="42" fill="var(--ink)"
               style={{ opacity: inView ? 1 : 0, transition: 'opacity 0.4s ease 1s' }}>80%</text>
-            <text x="100" y="120" textAnchor="middle" fontFamily="JetBrains Mono" fontSize="11" fill="#8b90a0"
+            <text x="100" y="120" textAnchor="middle" fontFamily="JetBrains Mono" fontSize="11" fill="var(--olive)"
               style={{ opacity: inView ? 1 : 0, transition: 'opacity 0.4s ease 1.1s' }}>covered</text>
           </svg>
         </div>
@@ -68,7 +68,10 @@ export default function CostVisual() {
             opacity: inView ? 1 : 0,
             transition: 'opacity 0.5s ease 0.7s',
           }}>
-            <div className="text-[13px]"><span className="serif text-[16px]">Forecast Q3</span> · $7.8M ↘ $5.1M with optimizations</div>
+            <div className="text-[13px]">
+              <span className="serif text-[16px]">Forecast Q3</span> · $7.8M ↘{' '}
+              <span style={{color:'var(--viz-2)'}}>$5.1M</span> with optimizations
+            </div>
             <Icon.Arrow width="14" height="14"/>
           </div>
         </div>

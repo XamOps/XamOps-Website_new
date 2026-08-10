@@ -2,7 +2,7 @@ import ChecklistGrid from './ChecklistGrid';
 
 export default function CopySection({ heading, paragraphs = [], checklist, bullets, dark, wide }) {
   return (
-    <section className={`py-10 md:py-16 ${dark ? 'sec-dark' : 'sec-light'}`}>
+    <section className={`py-7 md:py-11 ${dark ? 'sec-dark' : 'sec-light'}`}>
       <div className="max-w-[1240px] mx-auto px-6 md:px-10">
         <div className={wide ? 'max-w-[900px]' : 'max-w-[760px]'}>
           {heading && (

@@ -65,7 +65,7 @@ export default function NotFoundPage() {
         </div>
 
         <h1 className="nf-item mb-4 text-3xl md:text-5xl font-semibold tracking-tight text-foreground">
-          Ups! Lost in space
+          Oops! Lost in space
         </h1>
 
         <p className="nf-item mx-auto mb-10 max-w-md text-base md:text-lg text-muted-foreground/70">

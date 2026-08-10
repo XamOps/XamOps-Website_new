@@ -4,34 +4,34 @@ import PageHero from '../components/shared/PageHero';
 
 const PROVIDER_THEME = {
   aws: {
-    card: '#1a2332',
-    thumb: '#0d1820',
-    tag: '#FF9900',
+    card: '#1c1c1c',
+    thumb: '#101010',
+    tag: '#a3a3a3',
     sep: 'rgba(255,255,255,0.2)',
     date: 'rgba(255,255,255,0.45)',
-    title: '#f0f2f4',
+    title: '#f5f5f5',
     excerpt: 'rgba(255,255,255,0.55)',
-    read: '#FF9900',
+    read: '#a3a3a3',
   },
   azure: {
-    card: '#0f1e35',
-    thumb: '#091628',
-    tag: '#0078D4',
+    card: '#151515',
+    thumb: '#0f0f0f',
+    tag: '#8a8a8a',
     sep: 'rgba(255,255,255,0.2)',
     date: 'rgba(255,255,255,0.45)',
-    title: '#f0f2f4',
+    title: '#f5f5f5',
     excerpt: 'rgba(255,255,255,0.55)',
-    read: '#0078D4',
+    read: '#8a8a8a',
   },
   gcp: {
-    card: '#1a1f2e',
-    thumb: '#10141f',
-    tag: '#4285F4',
+    card: '#1b1b1b',
+    thumb: '#141414',
+    tag: '#b0b0b0',
     sep: 'rgba(255,255,255,0.2)',
     date: 'rgba(255,255,255,0.45)',
-    title: '#f0f2f4',
+    title: '#f5f5f5',
     excerpt: 'rgba(255,255,255,0.55)',
-    read: '#4285F4',
+    read: '#b0b0b0',
   },
   xamops: {
     card: 'var(--ivory)',
@@ -55,26 +55,26 @@ function DiskWasteThumbnail() {
   return (
     <svg viewBox="0 0 380 210" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ width: '100%', height: '100%', display: 'block' }}>
       {[100, 130, 155, 175].map(y => (
-        <line key={y} x1="18" y1={y} x2="362" y2={y} stroke="#223" strokeWidth="1" />
+        <line key={y} x1="18" y1={y} x2="362" y2={y} stroke="#222" strokeWidth="1" />
       ))}
       <defs>
         <linearGradient id="wasteGrad" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="#ef6d58" stopOpacity="0.85" />
-          <stop offset="100%" stopColor="#ef6d58" stopOpacity="0.5" />
+          <stop offset="0%" stopColor="#8a8a8a" stopOpacity="0.85" />
+          <stop offset="100%" stopColor="#8a8a8a" stopOpacity="0.5" />
         </linearGradient>
       </defs>
       {BARS.map(b => (
         <rect key={b.label} x={b.x} y={BASE - b.h} width="70" height={b.h} rx="3" fill="url(#wasteGrad)" />
       ))}
-      <line x1="18" y1={BASE} x2="362" y2={BASE} stroke="#334" strokeWidth="1.5" />
+      <line x1="18" y1={BASE} x2="362" y2={BASE} stroke="#333" strokeWidth="1.5" />
       {BARS.map(b => (
         <g key={b.label}>
-          <text x={b.x + 35} y={BASE - b.h - 6} textAnchor="middle" fontSize="10.5" fill="#ef6d58" fontFamily="monospace">{b.amount}</text>
-          <text x={b.x + 35} y={BASE + 16} textAnchor="middle" fontSize="8.5" fill="#8899aa" fontFamily="monospace">{b.label}</text>
+          <text x={b.x + 35} y={BASE - b.h - 6} textAnchor="middle" fontSize="10.5" fill="#8a8a8a" fontFamily="monospace">{b.amount}</text>
+          <text x={b.x + 35} y={BASE + 16} textAnchor="middle" fontSize="8.5" fill="#8f8f8f" fontFamily="monospace">{b.label}</text>
         </g>
       ))}
-      <rect x="120" y="16" width="140" height="22" rx="4" fill="#ef6d58" opacity="0.12" />
-      <text x="190" y="31" textAnchor="middle" fontSize="11" fill="#ef6d58" fontFamily="monospace" fontWeight="700">$1,500/mo wasted</text>
+      <rect x="120" y="16" width="140" height="22" rx="4" fill="#8a8a8a" opacity="0.12" />
+      <text x="190" y="31" textAnchor="middle" fontSize="11" fill="#8a8a8a" fontFamily="monospace" fontWeight="700">$1,500/mo wasted</text>
     </svg>
   );
 }
@@ -92,90 +92,90 @@ function CostSpikeThumbnail() {
   return (
     <svg viewBox="0 0 380 220" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ width: '100%', height: '100%', display: 'block' }}>
       {[155, 130, 108, 85].map(y => (
-        <line key={y} x1="18" y1={y} x2="362" y2={y} stroke="#223" strokeWidth="1" />
+        <line key={y} x1="18" y1={y} x2="362" y2={y} stroke="#222" strokeWidth="1" />
       ))}
-      <line x1="18" y1={BASE - 85} x2="362" y2={BASE - 85} stroke="#ef4444" strokeWidth="1.5" strokeDasharray="5 3" opacity="0.45" />
+      <line x1="18" y1={BASE - 85} x2="362" y2={BASE - 85} stroke="var(--viz-3)" strokeWidth="1.5" strokeDasharray="5 3" opacity="0.45" />
       {BARS.map(b => (
-        <rect key={b.label} x={b.x} y={BASE - b.h} width="34" height={b.h} rx="3" fill="#7c5cff" opacity="0.42" />
+        <rect key={b.label} x={b.x} y={BASE - b.h} width="34" height={b.h} rx="3" fill="var(--viz-1)" opacity="0.42" />
       ))}
       <defs>
         <linearGradient id="spikeGrad" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="#f0b341" stopOpacity="1" />
-          <stop offset="100%" stopColor="#f0b341" stopOpacity="0.75" />
+          <stop offset="0%" stopColor="var(--viz-4)" stopOpacity="1" />
+          <stop offset="100%" stopColor="var(--viz-4)" stopOpacity="0.75" />
         </linearGradient>
       </defs>
       <rect x="330" y={BASE - 128} width="34" height="128" rx="3" fill="url(#spikeGrad)" />
-      <rect x="319" y={BASE - 148} width="56" height="18" rx="4" fill="#f0b341" opacity="0.12" />
-      <text x="347" y={BASE - 134} textAnchor="middle" fontSize="10" fill="#f0b341" fontFamily="monospace" fontWeight="700">+40%</text>
-      <line x1="18" y1={BASE} x2="362" y2={BASE} stroke="#334" strokeWidth="1.5" />
+      <rect x="319" y={BASE - 148} width="56" height="18" rx="4" fill="var(--viz-4)" opacity="0.12" />
+      <text x="347" y={BASE - 134} textAnchor="middle" fontSize="10" fill="var(--viz-4)" fontFamily="monospace" fontWeight="700">+40%</text>
+      <line x1="18" y1={BASE} x2="362" y2={BASE} stroke="#333" strokeWidth="1.5" />
       {BARS.map(b => (
-        <text key={b.label} x={b.x + 17} y={BASE + 16} textAnchor="middle" fontSize="8.5" fill="#8899aa" fontFamily="monospace">{b.label}</text>
+        <text key={b.label} x={b.x + 17} y={BASE + 16} textAnchor="middle" fontSize="8.5" fill="#8f8f8f" fontFamily="monospace">{b.label}</text>
       ))}
-      <text x="347" y={BASE + 16} textAnchor="middle" fontSize="8.5" fill="#f0b341" fontFamily="monospace">MAY</text>
+      <text x="347" y={BASE + 16} textAnchor="middle" fontSize="8.5" fill="var(--viz-4)" fontFamily="monospace">MAY</text>
     </svg>
   );
 }
 
 function CostOptimizationThumbnail() {
   const BARS = [
-    { x: 30, h: 130, color: '#ef6d58', label: 'BEFORE' },
-    { x: 200, h: 68, color: '#22c55e', label: 'AFTER' },
+    { x: 30, h: 130, color: 'var(--viz-4)', label: 'BEFORE' },
+    { x: 200, h: 68, color: 'var(--viz-2)', label: 'AFTER' },
   ];
   const BASE = 178;
   return (
     <svg viewBox="0 0 380 210" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ width: '100%', height: '100%', display: 'block' }}>
       {[100, 120, 140, 158].map(y => (
-        <line key={y} x1="18" y1={y} x2="362" y2={y} stroke="#223" strokeWidth="1" />
+        <line key={y} x1="18" y1={y} x2="362" y2={y} stroke="#222" strokeWidth="1" />
       ))}
       <defs>
         <linearGradient id="beforeGrad" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="#ef6d58" stopOpacity="0.8" />
-          <stop offset="100%" stopColor="#ef6d58" stopOpacity="0.45" />
+          <stop offset="0%" stopColor="var(--viz-4)" stopOpacity="0.8" />
+          <stop offset="100%" stopColor="var(--viz-4)" stopOpacity="0.45" />
         </linearGradient>
         <linearGradient id="afterGrad" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="#22c55e" stopOpacity="0.85" />
-          <stop offset="100%" stopColor="#22c55e" stopOpacity="0.5" />
+          <stop offset="0%" stopColor="var(--viz-2)" stopOpacity="0.85" />
+          <stop offset="100%" stopColor="var(--viz-2)" stopOpacity="0.5" />
         </linearGradient>
       </defs>
       <rect x="30" y={BASE - 130} width="140" height="130" rx="4" fill="url(#beforeGrad)" />
       <rect x="210" y={BASE - 68} width="140" height="68" rx="4" fill="url(#afterGrad)" />
-      <line x1="18" y1={BASE} x2="362" y2={BASE} stroke="#334" strokeWidth="1.5" />
-      <text x="100" y={BASE - 136} textAnchor="middle" fontSize="11" fill="#ef6d58" fontFamily="monospace" fontWeight="700">$12,400/mo</text>
-      <text x="280" y={BASE - 74} textAnchor="middle" fontSize="11" fill="#22c55e" fontFamily="monospace" fontWeight="700">$6,200/mo</text>
-      <text x="100" y={BASE + 16} textAnchor="middle" fontSize="9" fill="#ef6d58" fontFamily="monospace">BEFORE</text>
-      <text x="280" y={BASE + 16} textAnchor="middle" fontSize="9" fill="#22c55e" fontFamily="monospace">AFTER</text>
-      <path d="M175 115 L205 115" stroke="#22c55e" strokeWidth="1.5" strokeDasharray="3 3" opacity="0.6" />
-      <rect x="130" y="14" width="120" height="18" rx="4" fill="#22c55e" opacity="0.1" />
-      <text x="190" y="27" textAnchor="middle" fontSize="10" fill="#22c55e" fontFamily="monospace" fontWeight="700">-50% SAVINGS</text>
+      <line x1="18" y1={BASE} x2="362" y2={BASE} stroke="#333" strokeWidth="1.5" />
+      <text x="100" y={BASE - 136} textAnchor="middle" fontSize="11" fill="var(--viz-4)" fontFamily="monospace" fontWeight="700">$12,400/mo</text>
+      <text x="280" y={BASE - 74} textAnchor="middle" fontSize="11" fill="var(--viz-2)" fontFamily="monospace" fontWeight="700">$6,200/mo</text>
+      <text x="100" y={BASE + 16} textAnchor="middle" fontSize="9" fill="var(--viz-4)" fontFamily="monospace">BEFORE</text>
+      <text x="280" y={BASE + 16} textAnchor="middle" fontSize="9" fill="var(--viz-2)" fontFamily="monospace">AFTER</text>
+      <path d="M175 115 L205 115" stroke="var(--viz-2)" strokeWidth="1.5" strokeDasharray="3 3" opacity="0.6" />
+      <rect x="130" y="14" width="120" height="18" rx="4" fill="var(--viz-2)" opacity="0.1" />
+      <text x="190" y="27" textAnchor="middle" fontSize="10" fill="var(--viz-2)" fontFamily="monospace" fontWeight="700">-50% SAVINGS</text>
     </svg>
   );
 }
 
 function FinOpsThumbnail() {
   const PROVIDERS = [
-    { label: 'AWS', x: 44, h: 95, color: '#FF9900' },
-    { label: 'AZURE', x: 144, h: 110, color: '#0078D4' },
-    { label: 'GCP', x: 244, h: 80, color: '#4285F4' },
+    { label: 'AWS', x: 44, h: 95, color: 'var(--viz-3)' },
+    { label: 'AZURE', x: 144, h: 110, color: 'var(--viz-1)' },
+    { label: 'GCP', x: 244, h: 80, color: 'var(--viz-2)' },
   ];
   const BASE = 178;
   return (
     <svg viewBox="0 0 380 210" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ width: '100%', height: '100%', display: 'block' }}>
       <defs>
         <linearGradient id="awsFinOps" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="#FF9900" stopOpacity="0.75" />
-          <stop offset="100%" stopColor="#FF9900" stopOpacity="0.4" />
+          <stop offset="0%" stopColor="var(--viz-3)" stopOpacity="0.75" />
+          <stop offset="100%" stopColor="var(--viz-3)" stopOpacity="0.4" />
         </linearGradient>
         <linearGradient id="azureFinOps" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="#0078D4" stopOpacity="0.75" />
-          <stop offset="100%" stopColor="#0078D4" stopOpacity="0.4" />
+          <stop offset="0%" stopColor="var(--viz-1)" stopOpacity="0.75" />
+          <stop offset="100%" stopColor="var(--viz-1)" stopOpacity="0.4" />
         </linearGradient>
         <linearGradient id="gcpFinOps" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="#4285F4" stopOpacity="0.75" />
-          <stop offset="100%" stopColor="#4285F4" stopOpacity="0.4" />
+          <stop offset="0%" stopColor="var(--viz-2)" stopOpacity="0.75" />
+          <stop offset="100%" stopColor="var(--viz-2)" stopOpacity="0.4" />
         </linearGradient>
       </defs>
       {[110, 130, 150, 168].map(y => (
-        <line key={y} x1="22" y1={y} x2="358" y2={y} stroke="#223" strokeWidth="1" />
+        <line key={y} x1="22" y1={y} x2="358" y2={y} stroke="#222" strokeWidth="1" />
       ))}
       {PROVIDERS.map((p, i) => (
         <g key={p.label}>
@@ -189,9 +189,9 @@ function FinOpsThumbnail() {
             fill={p.color} fontFamily="monospace">{p.label}</text>
         </g>
       ))}
-      <line x1="22" y1={BASE} x2="358" y2={BASE} stroke="#334" strokeWidth="1.5" />
-      <rect x="100" y="14" width="180" height="18" rx="4" fill="#f0b341" opacity="0.1" />
-      <text x="190" y="27" textAnchor="middle" fontSize="10" fill="#f0b341"
+      <line x1="22" y1={BASE} x2="358" y2={BASE} stroke="#333" strokeWidth="1.5" />
+      <rect x="100" y="14" width="180" height="18" rx="4" fill="var(--viz-3)" opacity="0.1" />
+      <text x="190" y="27" textAnchor="middle" fontSize="10" fill="var(--viz-3)"
         fontFamily="monospace" fontWeight="700">MULTI-CLOUD SAVINGS / MO</text>
     </svg>
   );
@@ -200,46 +200,46 @@ function FinOpsThumbnail() {
 function SecurityAutomationThumbnail() {
   return (
     <svg viewBox="0 0 380 210" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ width: '100%', height: '100%', display: 'block' }}>
-      <rect width="380" height="210" fill="#091628" />
+      <rect width="380" height="210" fill="#0f0f0f" />
       {/* Grid lines */}
       {[50, 90, 130, 170].map(y => (
-        <line key={y} x1="20" y1={y} x2="360" y2={y} stroke="#0078D4" strokeWidth="0.5" opacity="0.12" />
+        <line key={y} x1="20" y1={y} x2="360" y2={y} stroke="var(--viz-1)" strokeWidth="0.5" opacity="0.12" />
       ))}
       {/* Shield shape */}
-      <path d="M190 28 L230 46 L230 90 Q230 118 190 132 Q150 118 150 90 L150 46 Z" fill="#0078D4" opacity="0.15" />
-      <path d="M190 38 L222 53 L222 89 Q222 112 190 124 Q158 112 158 89 L158 53 Z" fill="none" stroke="#0078D4" strokeWidth="1.5" opacity="0.6" />
+      <path d="M190 28 L230 46 L230 90 Q230 118 190 132 Q150 118 150 90 L150 46 Z" fill="var(--viz-1)" opacity="0.15" />
+      <path d="M190 38 L222 53 L222 89 Q222 112 190 124 Q158 112 158 89 L158 53 Z" fill="none" stroke="var(--viz-1)" strokeWidth="1.5" opacity="0.6" />
       {/* Checkmark inside shield */}
-      <path d="M178 82 L186 90 L202 72" stroke="#0078D4" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" opacity="0.9" />
+      <path d="M178 82 L186 90 L202 72" stroke="var(--viz-1)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" opacity="0.9" />
       {/* Scan rings */}
-      <circle cx="190" cy="81" r="52" stroke="#0078D4" strokeWidth="0.75" strokeDasharray="4 4" opacity="0.2" />
-      <circle cx="190" cy="81" r="72" stroke="#0078D4" strokeWidth="0.5" strokeDasharray="3 6" opacity="0.12" />
+      <circle cx="190" cy="81" r="52" stroke="var(--viz-1)" strokeWidth="0.75" strokeDasharray="4 4" opacity="0.2" />
+      <circle cx="190" cy="81" r="72" stroke="var(--viz-1)" strokeWidth="0.5" strokeDasharray="3 6" opacity="0.12" />
       {/* Alert dots */}
-      <circle cx="120" cy="60" r="4" fill="#ef6d58" opacity="0.8" />
-      <circle cx="120" cy="60" r="8" fill="#ef6d58" opacity="0.15" />
-      <text x="130" y="64" fontSize="8" fill="#ef6d58" fontFamily="monospace" opacity="0.8">DRIFT DETECTED</text>
-      <circle cx="258" cy="100" r="4" fill="#4285F4" opacity="0.7" />
-      <circle cx="258" cy="100" r="8" fill="#4285F4" opacity="0.12" />
-      <text x="268" y="104" fontSize="8" fill="#4285F4" fontFamily="monospace" opacity="0.7">REMEDIATED</text>
+      <circle cx="120" cy="60" r="4" fill="var(--viz-1)" opacity="0.8" />
+      <circle cx="120" cy="60" r="8" fill="var(--viz-1)" opacity="0.15" />
+      <text x="130" y="64" fontSize="8" fill="var(--viz-1)" fontFamily="monospace" opacity="0.8">DRIFT DETECTED</text>
+      <circle cx="258" cy="100" r="4" fill="var(--viz-2)" opacity="0.7" />
+      <circle cx="258" cy="100" r="8" fill="var(--viz-2)" opacity="0.12" />
+      <text x="268" y="104" fontSize="8" fill="var(--viz-2)" fontFamily="monospace" opacity="0.7">REMEDIATED</text>
       {/* Bottom label */}
-      <rect x="100" y="152" width="180" height="16" rx="4" fill="#0078D4" opacity="0.1" />
-      <text x="190" y="164" textAnchor="middle" fontSize="10" fill="#0078D4" fontFamily="monospace" fontWeight="700" opacity="0.8">CONTINUOUS SECURITY MONITORING</text>
+      <rect x="100" y="152" width="180" height="16" rx="4" fill="var(--viz-1)" opacity="0.1" />
+      <text x="190" y="164" textAnchor="middle" fontSize="10" fill="var(--viz-1)" fontFamily="monospace" fontWeight="700" opacity="0.8">CONTINUOUS SECURITY MONITORING</text>
     </svg>
   );
 }
 
 function XamOpsPlatformThumbnail() {
   const PILLARS = [
-    { label: 'SPOT', x: 22, color: '#FF9900' },
-    { label: 'DISK', x: 95, color: '#ef6d58' },
-    { label: 'DBOPS', x: 168, color: '#7c5cff' },
-    { label: 'SECOPS', x: 248, color: '#4285F4' },
-    { label: 'COST', x: 316, color: '#ef6d58' },
+    { label: 'SPOT', x: 22, color: 'var(--viz-2)' },
+    { label: 'DISK', x: 95, color: 'var(--viz-1)' },
+    { label: 'DBOPS', x: 168, color: 'var(--viz-5)' },
+    { label: 'SECOPS', x: 248, color: 'var(--viz-4)' },
+    { label: 'COST', x: 316, color: 'var(--viz-3)' },
   ];
   return (
     <svg viewBox="0 0 380 210" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ width: '100%', height: '100%', display: 'block' }}>
-      <rect width="380" height="210" fill="var(--parchment, #f4f1eb)" />
-      <text x="190" y="34" textAnchor="middle" fontSize="11" fill="#8899aa" fontFamily="monospace" fontWeight="600" letterSpacing="2">COGNITIVE CLOUD OS</text>
-      <rect x="30" y="44" width="320" height="1" fill="#334" opacity="0.3" />
+      <rect width="380" height="210" fill="var(--parchment, #fafafa)" />
+      <text x="190" y="34" textAnchor="middle" fontSize="11" fill="#8f8f8f" fontFamily="monospace" fontWeight="600" letterSpacing="2">COGNITIVE CLOUD OS</text>
+      <rect x="30" y="44" width="320" height="1" fill="#333" opacity="0.3" />
       {PILLARS.map((p) => (
         <g key={p.label}>
           <rect x={p.x} y="60" width="46" height="100" rx="4" fill={p.color} opacity="0.15" />
@@ -247,9 +247,9 @@ function XamOpsPlatformThumbnail() {
           <text x={p.x + 23} y="176" textAnchor="middle" fontSize="7.5" fill={p.color} fontFamily="monospace" fontWeight="700">{p.label}</text>
         </g>
       ))}
-      <rect x="30" y="160" width="320" height="1" fill="#334" opacity="0.3" />
-      <rect x="85" y="186" width="210" height="16" rx="4" fill="#ef6d58" opacity="0.12" />
-      <text x="190" y="198" textAnchor="middle" fontSize="10" fill="#ef6d58" fontFamily="monospace" fontWeight="700">AWS · AZURE · GCP</text>
+      <rect x="30" y="160" width="320" height="1" fill="#333" opacity="0.3" />
+      <rect x="85" y="186" width="210" height="16" rx="4" fill="var(--viz-1)" opacity="0.12" />
+      <text x="190" y="198" textAnchor="middle" fontSize="10" fill="var(--viz-1)" fontFamily="monospace" fontWeight="700">AWS · AZURE · GCP</text>
     </svg>
   );
 }
@@ -258,28 +258,28 @@ function SpotSavingsThumbnail() {
   return (
     <svg viewBox="0 0 380 210" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ width: '100%', height: '100%', display: 'block' }}>
       {[55, 85, 115, 145].map(y => (
-        <line key={y} x1="20" y1={y} x2="360" y2={y} stroke="#223" strokeWidth="1" />
+        <line key={y} x1="20" y1={y} x2="360" y2={y} stroke="#222" strokeWidth="1" />
       ))}
       <defs>
         <linearGradient id="odGrad" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="#7c5cff" stopOpacity="0.65" />
-          <stop offset="100%" stopColor="#7c5cff" stopOpacity="0.35" />
+          <stop offset="0%" stopColor="var(--viz-4)" stopOpacity="0.65" />
+          <stop offset="100%" stopColor="var(--viz-4)" stopOpacity="0.35" />
         </linearGradient>
         <linearGradient id="spotGrad" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="#FF9900" stopOpacity="0.85" />
-          <stop offset="100%" stopColor="#FF9900" stopOpacity="0.55" />
+          <stop offset="0%" stopColor="var(--viz-2)" stopOpacity="0.85" />
+          <stop offset="100%" stopColor="var(--viz-2)" stopOpacity="0.55" />
         </linearGradient>
       </defs>
       <rect x="70" y="25" width="100" height="150" rx="4" fill="url(#odGrad)" />
       <rect x="210" y="130" width="100" height="45" rx="4" fill="url(#spotGrad)" />
-      <line x1="20" y1="175" x2="360" y2="175" stroke="#334" strokeWidth="1.5" />
-      <text x="120" y="18" textAnchor="middle" fontSize="10.5" fill="#8899aa" fontFamily="monospace">$7,000/mo</text>
-      <text x="260" y="124" textAnchor="middle" fontSize="10.5" fill="#FF9900" fontFamily="monospace">$2,200/mo</text>
-      <text x="120" y="193" textAnchor="middle" fontSize="9" fill="#8899aa" fontFamily="monospace">ON-DEMAND</text>
-      <text x="260" y="193" textAnchor="middle" fontSize="9" fill="#FF9900" fontFamily="monospace">SPOT</text>
-      <rect x="219" y="136" width="82" height="22" rx="4" fill="#FF9900" opacity="0.15" />
-      <text x="260" y="151" textAnchor="middle" fontSize="11" fill="#FF9900" fontFamily="monospace" fontWeight="700">-70% cheaper</text>
-      <line x1="170" y1="25" x2="210" y2="130" stroke="#445" strokeWidth="1" strokeDasharray="4 3" />
+      <line x1="20" y1="175" x2="360" y2="175" stroke="#333" strokeWidth="1.5" />
+      <text x="120" y="18" textAnchor="middle" fontSize="10.5" fill="#8f8f8f" fontFamily="monospace">$7,000/mo</text>
+      <text x="260" y="124" textAnchor="middle" fontSize="10.5" fill="var(--viz-2)" fontFamily="monospace">$2,200/mo</text>
+      <text x="120" y="193" textAnchor="middle" fontSize="9" fill="#8f8f8f" fontFamily="monospace">ON-DEMAND</text>
+      <text x="260" y="193" textAnchor="middle" fontSize="9" fill="var(--viz-2)" fontFamily="monospace">SPOT</text>
+      <rect x="219" y="136" width="82" height="22" rx="4" fill="var(--viz-2)" opacity="0.15" />
+      <text x="260" y="151" textAnchor="middle" fontSize="11" fill="var(--viz-2)" fontFamily="monospace" fontWeight="700">-70% cheaper</text>
+      <line x1="170" y1="25" x2="210" y2="130" stroke="#444" strokeWidth="1" strokeDasharray="4 3" />
     </svg>
   );
 }
@@ -293,17 +293,17 @@ function DevOpsVsTraditionalThumbnail() {
   ];
   return (
     <svg viewBox="0 0 380 210" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ width: '100%', height: '100%', display: 'block' }}>
-      <rect width="380" height="210" fill="#091628" />
-      <text x="20" y="24" fontSize="10" fill="#8899aa" fontFamily="monospace" fontWeight="600" letterSpacing="1.5">TRADITIONAL IT</text>
-      <text x="360" y="24" textAnchor="end" fontSize="10" fill="#0078D4" fontFamily="monospace" fontWeight="700" letterSpacing="1.5">DEVOPS</text>
+      <rect width="380" height="210" fill="#0f0f0f" />
+      <text x="20" y="24" fontSize="10" fill="#8f8f8f" fontFamily="monospace" fontWeight="600" letterSpacing="1.5">TRADITIONAL IT</text>
+      <text x="360" y="24" textAnchor="end" fontSize="10" fill="var(--viz-2)" fontFamily="monospace" fontWeight="700" letterSpacing="1.5">DEVOPS</text>
       {ROWS.map((r, i) => {
         const y = 44 + i * 38;
         return (
           <g key={r.label}>
-            <text x="20" y={y - 6} fontSize="8.5" fill="#66788f" fontFamily="monospace">{r.label}</text>
-            <rect x="20" y={y} width="340" height="10" rx="5" fill="#152030" />
-            <rect x="20" y={y} width={r.trad * 1.7} height="10" rx="5" fill="#4a5568" opacity="0.7" />
-            <rect x={20 + r.trad * 1.7} y={y} width={(r.dev - r.trad) * 1.7} height="10" rx="5" fill="#0078D4" opacity="0.85" />
+            <text x="20" y={y - 6} fontSize="8.5" fill="#6b6b6b" fontFamily="monospace">{r.label}</text>
+            <rect x="20" y={y} width="340" height="10" rx="5" fill="#171717" />
+            <rect x="20" y={y} width={r.trad * 1.7} height="10" rx="5" fill="#4a4a4a" opacity="0.7" />
+            <rect x={20 + r.trad * 1.7} y={y} width={(r.dev - r.trad) * 1.7} height="10" rx="5" fill="var(--viz-2)" opacity="0.85" />
           </g>
         );
       })}
@@ -322,25 +322,25 @@ function SREReliabilityThumbnail() {
   ];
   return (
     <svg viewBox="0 0 380 210" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ width: '100%', height: '100%', display: 'block' }}>
-      <rect width="380" height="210" fill="#10141f" />
-      <text x="20" y="24" fontSize="10" fill="#8899aa" fontFamily="monospace" fontWeight="600" letterSpacing="1.5">CLOUD INFRASTRUCTURE HEALTH</text>
-      <line x1="90" y1="70" x2="190" y2="70" stroke="#2a3548" strokeWidth="1.5" />
-      <line x1="190" y1="70" x2="290" y2="70" stroke="#2a3548" strokeWidth="1.5" />
-      <line x1="90" y1="70" x2="90" y2="150" stroke="#2a3548" strokeWidth="1.5" />
-      <line x1="190" y1="70" x2="190" y2="150" stroke="#2a3548" strokeWidth="1.5" />
-      <line x1="290" y1="70" x2="290" y2="150" stroke="#2a3548" strokeWidth="1.5" />
-      <line x1="90" y1="150" x2="190" y2="150" stroke="#2a3548" strokeWidth="1.5" />
-      <line x1="190" y1="150" x2="290" y2="150" stroke="#2a3548" strokeWidth="1.5" />
+      <rect width="380" height="210" fill="#141414" />
+      <text x="20" y="24" fontSize="10" fill="#8f8f8f" fontFamily="monospace" fontWeight="600" letterSpacing="1.5">CLOUD INFRASTRUCTURE HEALTH</text>
+      <line x1="90" y1="70" x2="190" y2="70" stroke="#2a2a2a" strokeWidth="1.5" />
+      <line x1="190" y1="70" x2="290" y2="70" stroke="#2a2a2a" strokeWidth="1.5" />
+      <line x1="90" y1="70" x2="90" y2="150" stroke="#2a2a2a" strokeWidth="1.5" />
+      <line x1="190" y1="70" x2="190" y2="150" stroke="#2a2a2a" strokeWidth="1.5" />
+      <line x1="290" y1="70" x2="290" y2="150" stroke="#2a2a2a" strokeWidth="1.5" />
+      <line x1="90" y1="150" x2="190" y2="150" stroke="#2a2a2a" strokeWidth="1.5" />
+      <line x1="190" y1="150" x2="290" y2="150" stroke="#2a2a2a" strokeWidth="1.5" />
       {NODES.map((n, i) => (
         <g key={i}>
-          <circle cx={n.cx} cy={n.cy} r="14" fill={n.ok ? '#14b8a6' : '#ef6d58'} opacity="0.18" />
-          <circle cx={n.cx} cy={n.cy} r="7" fill={n.ok ? '#14b8a6' : '#ef6d58'} />
+          <circle cx={n.cx} cy={n.cy} r="14" fill={n.ok ? 'var(--viz-2)' : 'var(--viz-4)'} opacity="0.18" />
+          <circle cx={n.cx} cy={n.cy} r="7" fill={n.ok ? 'var(--viz-2)' : 'var(--viz-4)'} />
         </g>
       ))}
-      <rect x="20" y="178" width="150" height="20" rx="10" fill="#14b8a6" opacity="0.12" />
-      <text x="30" y="192" fontSize="10" fill="#14b8a6" fontFamily="monospace" fontWeight="700">99.98% UPTIME</text>
-      <rect x="290" y="178" width="70" height="20" rx="10" fill="#ef6d58" opacity="0.12" />
-      <text x="300" y="192" fontSize="10" fill="#ef6d58" fontFamily="monospace" fontWeight="700">AUTO-HEAL</text>
+      <rect x="20" y="178" width="150" height="20" rx="10" fill="var(--viz-2)" opacity="0.12" />
+      <text x="30" y="192" fontSize="10" fill="var(--viz-2)" fontFamily="monospace" fontWeight="700">99.98% UPTIME</text>
+      <rect x="290" y="178" width="70" height="20" rx="10" fill="var(--viz-4)" opacity="0.12" />
+      <text x="300" y="192" fontSize="10" fill="var(--viz-4)" fontFamily="monospace" fontWeight="700">AUTO-HEAL</text>
     </svg>
   );
 }
@@ -447,7 +447,7 @@ export default function BlogPage() {
         body="Engineering deep-dives, FinOps math, and the occasional opinion from the people building XamOps."
         cta={false}
       />
-      <section className="sec-light pt-8 pb-24 overflow-x-hidden">
+      <section className="sec-light pt-6 pb-14 overflow-x-hidden">
         <div className="max-w-[1240px] mx-auto px-4 sm:px-6 md:px-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {posts.map((p) => {
             const CardEl = p.href ? Link : 'a';
@@ -460,7 +460,7 @@ export default function BlogPage() {
                 className="rounded-2xl overflow-hidden hcard block min-w-0"
                 style={{
                   background: t.card,
-                  boxShadow: p.provider === 'aws' ? '0 0 0 1px rgba(255,153,0,0.12)' : '0 0 0 1px var(--rule)',
+                  boxShadow: p.provider === 'aws' ? '0 0 0 1px rgba(255,255,255,0.12)' : '0 0 0 1px var(--rule)',
                   textDecoration: 'none',
                 }}
               >

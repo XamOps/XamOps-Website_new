@@ -1,11 +1,12 @@
 import { Link } from 'react-router-dom';
 import Logo from './Logo';
 import { useDemoModal } from '../lib/demoModal';
+import { GROUPS, PAGED_FEATURES } from '../lib/platform';
 
 export default function Footer() {
   const { setOpen } = useDemoModal();
   return (
-    <footer className="sec-dark pt-12 md:pt-20 pb-8 md:pb-10">
+    <footer className="sec-dark pt-10 md:pt-14 pb-8 md:pb-10">
       <div className="max-w-[1240px] mx-auto px-6 md:px-10">
         <div className="grid grid-cols-12 gap-x-4 gap-y-8 md:gap-10 pb-10 md:pb-16 border-b" style={{borderColor:'var(--rule-dark)'}}>
           <div className="col-span-12 md:col-span-4">
@@ -19,13 +20,11 @@ export default function Footer() {
             </div>
           </div>
           {[
-            ['Platform', [
-              ['Spot Automation',   '/platform/spot-automation'],
-              ['Disk Rightsizing',  '/platform/disk-rightsizing'],
-              ['DBOps',             '/platform/dbops'],
-              ['SecOps',            '/platform/secops'],
-              ['Cost Analytics',    '/platform/cost-analytics'],
-              ['SRE Investigation', '/platform/sre'],
+            // Capability groups come straight from the catalogue
+            ['Platform', GROUPS.map(g => [g.name, `/platform/${g.slug}`])],
+            ['Deep dives', [
+              ...PAGED_FEATURES.map(f => [f.name, f.to]),
+              ['All capabilities', '/platform'],
             ]],
             ['Solutions', [
               ['For DevOps',  '/solutions/devops'],
@@ -42,7 +41,7 @@ export default function Footer() {
               ['Security', '/security'],
             ]],
           ].map(([h, items]) => (
-            <div key={h} className="col-span-4 md:col-span-2">
+            <div key={h} className="col-span-6 md:col-span-2">
               <div className="eyebrow mb-3 md:mb-4" style={{color:'var(--ink)'}}>{h}</div>
               <ul className="space-y-2 md:space-y-2.5 text-[13px] md:text-[14px]">
                 {items.map(([label, to]) => (

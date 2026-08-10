@@ -3,6 +3,8 @@ import { Link, useLocation } from 'react-router-dom';
 import Logo from './Logo';
 import { Icon } from './Icons';
 import { useDemoModal } from '../lib/demoModal';
+import { accentFor } from '../lib/moduleAccents';
+import { GROUPS, FEATURE_COUNT, STATUS_LABEL, STATUS_BADGE } from '../lib/platform';
 import { AnimatedThemeToggler } from './AnimatedThemeToggler';
 
 export default function Nav() {
@@ -21,14 +23,15 @@ export default function Nav() {
   // Close mobile menu on route change
   useEffect(() => { setMobileOpen(false); setOpen(null); }, [pathname]);
 
-  const platform = [
-    { I: Icon.Spot,  name: 'Spot Automation',   to: '/platform/spot-automation',  desc: 'AutoSpotting across AWS, GCP, Azure' },
-    { I: Icon.Disk,  name: 'Disk Rightsizing',  to: '/platform/disk-rightsizing', desc: 'The only automated disk rightsizing' },
-    { I: Icon.DB,    name: 'DBOps',             to: '/platform/dbops',            desc: 'Database operations on autopilot' },
-    { I: Icon.Sec,   name: 'SecOps',            to: '/platform/secops',           desc: 'Continuous posture and remediation' },
-    { I: Icon.Cost,  name: 'Cost Analytics',    to: '/platform/cost-analytics',   desc: 'Real-time savings dashboards' },
-    { I: Icon.SRE,   name: 'SRE Investigation', to: '/platform/sre',              desc: 'AI-assisted incident intelligence' },
-  ];
+  // Platform menu is generated from the capability catalogue: one column per
+  // group, showing the first few capabilities and linking the rest to /platform.
+  const platform = GROUPS.map((g) => ({
+    ...g,
+    I: Icon[g.icon],
+    to: `/platform/${g.slug}`,
+    desc: g.tagline,
+  }));
+
   const solutions = [
     { I: Icon.Spot,  name: 'For DevOps Engineers', to: '/solutions/devops', desc: "Ship infrastructure, not scripts" },
     { I: Icon.Cost,  name: 'For FinOps Teams',     to: '/solutions/finops', desc: 'Cut waste, prove savings' },
@@ -64,27 +67,87 @@ export default function Nav() {
                     <path d="M2 3.5L5 6.5l3-3" stroke="currentColor" fill="none" strokeWidth="1.6" strokeLinecap="round"/>
                   </svg>
                 </button>
-                <div className={`nav-dd absolute left-0 top-full pt-3 z-50${open===base ? ' nav-dd--open' : ''}`}>
-                  <div className={`nav-dd-panel rounded-2xl p-2.5 ${twoCol ? 'w-[560px]' : 'w-[300px]'}`}
-                    style={{background:'var(--parchment)', boxShadow:'0 4px 6px -1px rgba(0,0,0,0.1), 0 20px 60px -10px rgba(0,0,0,0.35)'}}>
-                    <div className={twoCol ? 'grid grid-cols-2 gap-0.5' : 'flex flex-col gap-0.5'}>
-                      {items.map(({ I, name, to, desc }) => (
-                        <Link key={to} to={to} onClick={() => setOpen(null)}
-                          className="nav-dd-item flex items-start gap-3 px-3 py-3 rounded-xl"
-                          style={{textDecoration:'none', color:'inherit'}}
-                        >
-                          <div className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0"
-                            style={{background:'rgba(124,92,255,0.1)'}}>
-                            <I width="18" height="18" style={{color:'var(--terracotta)'}}/>
-                          </div>
-                          <div>
-                            <div className="text-[13px] font-semibold leading-snug" style={{color:'var(--terracotta)'}}>{name}</div>
-                            <div className="text-[12px] mt-0.5 leading-relaxed" style={{color:'var(--olive)'}}>{desc}</div>
-                          </div>
+                <div className={`nav-dd absolute top-full pt-3 z-50${open===base ? ' nav-dd--open' : ''}`}
+                  style={twoCol ? {left: '50%', transform: 'translateX(-50%)'} : {left: 0}}>
+                  {twoCol ? (
+                    /* Platform mega panel — one column per capability group */
+                    <div className="nav-dd-panel rounded-2xl p-4 w-[920px]"
+                      style={{background:'var(--parchment)', boxShadow:'0 4px 6px -1px rgba(0,0,0,0.1), 0 20px 60px -10px rgba(0,0,0,0.35)'}}>
+                      <div className="grid grid-cols-4 gap-x-4 gap-y-5">
+                        {items.map((g) => {
+                          const I = g.I;
+                          return (
+                            <div key={g.id}>
+                              <Link to={g.to} onClick={() => setOpen(null)}
+                                className="flex items-center gap-2 mb-2.5"
+                                style={{textDecoration:'none', color:'inherit'}}>
+                                <I width="15" height="15" style={{color: g.accent}}/>
+                                <span className="mono text-[10.5px] uppercase tracking-[0.14em]" style={{color:'var(--ink)'}}>
+                                  {g.name}
+                                </span>
+                                {g.status && (
+                                  <span className={`badge ${STATUS_BADGE[g.status]}`} style={{fontSize:9, padding:'1px 6px'}}>
+                                    {STATUS_LABEL[g.status]}
+                                  </span>
+                                )}
+                              </Link>
+                              <ul className="space-y-0.5" style={{listStyle:'none', margin:0, padding:0}}>
+                                {g.features.slice(0, 4).map((f) => (
+                                  <li key={f.name}>
+                                    <Link to={f.to || g.to} onClick={() => setOpen(null)}
+                                      className="nav-dd-item block px-2 py-1.5 rounded-lg text-[12.5px] leading-snug"
+                                      style={{textDecoration:'none', color:'var(--olive)'}}>
+                                      {f.name}
+                                    </Link>
+                                  </li>
+                                ))}
+                                {g.features.length > 4 && (
+                                  <li>
+                                    <Link to={g.to} onClick={() => setOpen(null)}
+                                      className="nav-dd-item block px-2 py-1.5 rounded-lg text-[12px] mono"
+                                      style={{textDecoration:'none', color:'var(--olive-2)'}}>
+                                      +{g.features.length - 4} more
+                                    </Link>
+                                  </li>
+                                )}
+                              </ul>
+                            </div>
+                          );
+                        })}
+                      </div>
+                      <div className="mt-4 pt-3 flex items-center justify-between border-t" style={{borderColor:'var(--rule)'}}>
+                        <span className="mono text-[11px]" style={{color:'var(--olive-2)'}}>
+                          {FEATURE_COUNT} capabilities · AWS · GCP · Azure
+                        </span>
+                        <Link to="/platform" onClick={() => setOpen(null)}
+                          className="text-[12.5px] inline-flex items-center gap-1.5 ulink"
+                          style={{textDecoration:'none', color:'var(--ink)'}}>
+                          Explore the platform <Icon.Arrow width="13" height="13"/>
                         </Link>
-                      ))}
+                      </div>
                     </div>
-                  </div>
+                  ) : (
+                    <div className="nav-dd-panel rounded-2xl p-2.5 w-[300px]"
+                      style={{background:'var(--parchment)', boxShadow:'0 4px 6px -1px rgba(0,0,0,0.1), 0 20px 60px -10px rgba(0,0,0,0.35)'}}>
+                      <div className="flex flex-col gap-0.5">
+                        {items.map(({ I, name, to, desc }) => (
+                          <Link key={to} to={to} onClick={() => setOpen(null)}
+                            className="nav-dd-item flex items-start gap-3 px-3 py-3 rounded-xl"
+                            style={{textDecoration:'none', color:'inherit'}}
+                          >
+                            <div className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0"
+                              style={{background:'var(--ivory-2)'}}>
+                              <I width="18" height="18" style={{color: accentFor(to)}}/>
+                            </div>
+                            <div>
+                              <div className="text-[13px] font-semibold leading-snug" style={{color:'var(--terracotta)'}}>{name}</div>
+                              <div className="text-[12px] mt-0.5 leading-relaxed" style={{color:'var(--olive)'}}>{desc}</div>
+                            </div>
+                          </Link>
+                        ))}
+                      </div>
+                    </div>
+                  )}
                 </div>
               </div>
             ))}
@@ -142,23 +205,30 @@ export default function Nav() {
           <div className="px-5 py-6 space-y-1">
             {/* Platform group */}
             <div className="text-[11px] eyebrow mb-2 mt-2">Platform</div>
-            {platform.map(({ I, name, to, desc }) => (
-              <Link key={to} to={to} className="flex items-center gap-3 py-3 border-b" style={{borderColor:'var(--rule)'}}>
-                <div className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0" style={{background:'rgba(124,92,255,0.1)'}}>
-                  <I width="16" height="16" style={{color:'var(--terracotta)'}}/>
+            {platform.map(({ I, id, name, to, desc, features, status, accent }) => (
+              <Link key={id} to={to} className="flex items-center gap-3 py-3 border-b" style={{borderColor:'var(--rule)'}}>
+                <div className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0" style={{background:'var(--ivory-2)'}}>
+                  <I width="16" height="16" style={{color: accent}}/>
                 </div>
                 <div>
-                  <div className="text-[15px]" style={{color:'var(--ink)'}}>{name}</div>
+                  <div className="text-[15px] flex items-center gap-2" style={{color:'var(--ink)'}}>
+                    {name}
+                    {status && <span className={`badge ${STATUS_BADGE[status]}`}>{STATUS_LABEL[status]}</span>}
+                  </div>
                   <div className="text-[12px] mt-0.5" style={{color:'var(--olive)'}}>{desc}</div>
                 </div>
+                <span className="ml-auto mono text-[11px] flex-shrink-0" style={{color:'var(--olive-2)'}}>{features.length}</span>
               </Link>
             ))}
+            <Link to="/platform" className="block py-3 text-[14px] mono" style={{color:'var(--olive)'}}>
+              All {FEATURE_COUNT} capabilities →
+            </Link>
 
             <div className="text-[11px] eyebrow mb-2 mt-5">Solutions</div>
             {solutions.map(({ I, name, to, desc }) => (
               <Link key={to} to={to} className="flex items-center gap-3 py-3 border-b" style={{borderColor:'var(--rule)'}}>
-                <div className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0" style={{background:'rgba(124,92,255,0.1)'}}>
-                  <I width="16" height="16" style={{color:'var(--terracotta)'}}/>
+                <div className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0" style={{background:'var(--ivory-2)'}}>
+                  <I width="16" height="16" style={{color: accentFor(to)}}/>
                 </div>
                 <div>
                   <div className="text-[15px]" style={{color:'var(--ink)'}}>{name}</div>

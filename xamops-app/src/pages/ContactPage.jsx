@@ -2,7 +2,7 @@ import { Icon } from '../components/Icons';
 
 export default function ContactPage() {
   return (
-    <section className="sec-light pt-24 md:pt-[140px] pb-16 md:pb-24">
+    <section className="sec-light pt-20 md:pt-[104px] pb-10 md:pb-14">
       <div className="max-w-[1240px] mx-auto px-4 sm:px-6 md:px-10 grid md:grid-cols-12 gap-6 md:gap-10">
         <div className="md:col-span-5">
           <div className="eyebrow mb-5">Contact</div>

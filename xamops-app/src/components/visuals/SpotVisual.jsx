@@ -19,7 +19,7 @@ export default function SpotVisual() {
             animation: inView ? `scaleIn 0.4s ease ${i * 0.1}s both` : 'none',
           }}>
             <div className="mx-auto w-9 h-9 rounded-full flex items-center justify-center"
-                 style={{background: i < 4 ? 'var(--terracotta)' : 'var(--parchment)', color: i < 4 ? '#fff' : 'var(--ink)', boxShadow: i >= 4 ? '0 0 0 1px var(--rule)' : 'none'}}>
+                 style={{background: i < 4 ? 'var(--viz-2)' : 'var(--parchment)', color: i < 4 ? '#08080a' : 'var(--ink)', boxShadow: i >= 4 ? '0 0 0 1px var(--rule)' : 'none'}}>
               {i < 4 ? <Icon.Check width="14" height="14"/> : <Icon.Dot width="10" height="10"/>}
             </div>
             <div className="text-[12px] mt-2">{s}</div>
@@ -39,7 +39,7 @@ export default function SpotVisual() {
             const targetOpacity = conv ? (0.5 + (i % 6) / 12) : 0.7;
             return (
               <div key={i} className="aspect-square rounded-sm" style={{
-                background: conv ? 'var(--terracotta)' : '#e3d6c4',
+                background: conv ? 'var(--viz-2)' : 'var(--olive-2)',
                 opacity: inView ? targetOpacity : 0,
                 transform: inView ? 'scale(1)' : 'scale(0.4)',
                 transition: `opacity 0.25s ease ${0.3 + i * 0.012}s, transform 0.25s ease ${0.3 + i * 0.012}s`,
@@ -51,14 +51,14 @@ export default function SpotVisual() {
 
       {/* Stat cards fade up */}
       <div className="mt-4 grid grid-cols-3 gap-3">
-        {[['Spot ratio','86%'],['Eviction','0.34%'],['Min regular','4']].map(([k,v], i) => (
+        {[['Spot ratio','86%','var(--viz-2)'],['Eviction','0.34%','var(--ink)'],['Min regular','4','var(--ink)']].map(([k,v,c], i) => (
           <div key={k} className="rounded-lg p-3 ring-soft hcard" style={{
             background:'var(--parchment)',
             opacity: inView ? 1 : 0,
             animation: inView ? `fadeSlideUp 0.5s ease ${0.8 + i * 0.1}s both` : 'none',
           }}>
             <div className="eyebrow">{k}</div>
-            <div className="serif text-[22px] mt-0.5">{v}</div>
+            <div className="serif text-[22px] mt-0.5" style={{color:c}}>{v}</div>
           </div>
         ))}
       </div>

@@ -8,7 +8,7 @@ export default function ProductPage({ eyebrow, title, body, Visual, dark, steps,
   return (
     <>
       <PageHero eyebrow={eyebrow} title={title} body={body} />
-      <section className="sec-light pb-16">
+      <section className="sec-light pb-10">
         <div className="max-w-[1240px] mx-auto px-6 md:px-10"><Visual /></div>
       </section>
       {steps && <Steps steps={steps} dark={dark} />}

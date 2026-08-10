@@ -105,16 +105,16 @@ export default function CloudSecurityAutomationPage() {
   return (
     <>
       {/* ── Article header ─────────────────────────────────────── */}
-      <section className="pt-28 md:pt-36 pb-14 relative overflow-hidden" style={{ background: '#0f1e35' }}>
+      <section className="pt-22 md:pt-24 pb-9 relative overflow-hidden" style={{ background: '#151515' }}>
         <div
           className="absolute -top-24 left-1/2 -translate-x-1/2 w-[900px] h-[500px] rounded-full pointer-events-none"
-          style={{ background: 'radial-gradient(closest-side, rgba(0,120,212,0.09), transparent 70%)' }}
+          style={{ background: 'radial-gradient(closest-side, var(--halo), transparent 70%)' }}
         />
         <div className="max-w-[1240px] mx-auto px-6 md:px-10 relative">
           <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mb-7 eyebrow">
             <Link to="/blog" style={{ color: 'rgba(255,255,255,0.5)', textDecoration: 'none' }}>Blog</Link>
             <span style={{ color: 'rgba(255,255,255,0.2)' }}>/</span>
-            <span style={{ color: '#0078D4' }}>Security</span>
+            <span style={{ color: 'var(--viz-4)' }}>Security</span>
             <span style={{ color: 'rgba(255,255,255,0.2)' }}>·</span>
             <span style={{ color: 'rgba(255,255,255,0.45)' }}>June 24, 2026</span>
             <span style={{ color: 'rgba(255,255,255,0.2)' }}>·</span>
@@ -123,7 +123,7 @@ export default function CloudSecurityAutomationPage() {
 
           <h1 className="serif text-[clamp(34px,5.2vw,66px)] leading-[1.06] tracking-tight max-w-[24ch]" style={{ color: '#ffffff' }}>
             What Is Cloud Security Automation{' '}
-            <span style={{ color: '#0078D4' }}>and Why Is It Important?</span>
+            <span style={{ color: 'var(--viz-4)' }}>and Why Is It Important?</span>
           </h1>
 
           <p
@@ -142,7 +142,7 @@ export default function CloudSecurityAutomationPage() {
       </section>
 
       {/* ── Article body ────────────────────────────────────────── */}
-      <article className="sec-light py-12 md:py-20">
+      <article className="sec-light py-8 md:py-12">
         <div className="max-w-[1240px] mx-auto px-6 md:px-10">
           <div className="grid grid-cols-1 md:grid-cols-12 gap-x-10 gap-y-12">
 
@@ -176,7 +176,7 @@ export default function CloudSecurityAutomationPage() {
                   >
                     <div
                       className="big-num text-[clamp(22px,3.5vw,32px)] mb-1"
-                      style={{ color: '#0078D4' }}
+                      style={{ color: 'var(--viz-4)' }}
                     >
                       {value}
                     </div>
@@ -202,7 +202,7 @@ export default function CloudSecurityAutomationPage() {
                           className="display shrink-0 leading-none select-none"
                           style={{
                             fontSize: 'clamp(40px,5.5vw,56px)',
-                            color: '#0078D4',
+                            color: 'var(--viz-4)',
                             opacity: 0.3,
                             letterSpacing: '-0.04em',
                             marginTop: '-3px',
@@ -213,7 +213,7 @@ export default function CloudSecurityAutomationPage() {
                         <div className="pt-1">
                           <div
                             className="eyebrow mb-1"
-                            style={{ fontSize: '10px', color: '#0078D4' }}
+                            style={{ fontSize: '10px', color: 'var(--viz-4)' }}
                           >
                             {sec.tag}
                           </div>
@@ -245,13 +245,13 @@ export default function CloudSecurityAutomationPage() {
               >
                 <div
                   className="absolute -right-16 -bottom-16 w-[300px] h-[300px] rounded-full pointer-events-none"
-                  style={{ background: 'radial-gradient(closest-side, rgba(0,120,212,0.07), transparent 70%)' }}
+                  style={{ background: 'radial-gradient(closest-side, var(--halo), transparent 70%)' }}
                 />
                 <div className="relative">
                   <div className="eyebrow mb-3">How XamOps handles this</div>
                   <h2 className="serif text-[clamp(20px,3vw,32px)] leading-[1.1] tracking-tight mb-5">
                     Cloud infrastructure and automation,{' '}
-                    <span style={{ color: '#0078D4' }}>in one platform.</span>
+                    <span style={{ color: 'var(--viz-4)' }}>in one platform.</span>
                   </h2>
                   <p className="text-[15.5px] leading-[1.78] mb-4" style={{ color: 'var(--ink-2)' }}>
                     <Xam /> SecOps continuously evaluates cloud environments, detects configuration
@@ -328,7 +328,7 @@ export default function CloudSecurityAutomationPage() {
                         <span style={{ color: 'var(--olive)' }}>{label}</span>
                         <span
                           style={{
-                            color: accent ? '#0078D4' : 'var(--ink)',
+                            color: accent ? 'var(--viz-4)' : 'var(--ink)',
                             fontFamily: accent ? 'var(--font-mono)' : 'inherit',
                             fontSize: accent ? '11px' : 'inherit',
                             letterSpacing: accent ? '0.12em' : 'inherit',
@@ -356,7 +356,7 @@ export default function CloudSecurityAutomationPage() {
                         {item.prefix ? (
                           <span
                             className="mono shrink-0 text-[11px] mt-[2px]"
-                            style={{ color: '#0078D4' }}
+                            style={{ color: 'var(--viz-4)' }}
                           >
                             {item.prefix}
                           </span>
@@ -381,7 +381,7 @@ export default function CloudSecurityAutomationPage() {
                 >
                   <div
                     className="absolute -right-6 -bottom-6 w-28 h-28 rounded-full pointer-events-none"
-                    style={{ background: 'radial-gradient(closest-side, rgba(0,120,212,0.1), transparent 70%)' }}
+                    style={{ background: 'radial-gradient(closest-side, var(--halo), transparent 70%)' }}
                   />
                   <div className="relative">
                     <div

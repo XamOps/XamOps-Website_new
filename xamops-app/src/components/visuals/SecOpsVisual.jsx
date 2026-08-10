@@ -18,7 +18,8 @@ export default function SecOpsVisual() {
                 <rect
                   key={i}
                   x={i * 20} y={170 - h} width="14" height={h}
-                  fill={i > 25 ? '#2bd4a8' : 'rgba(124,92,255,0.6)'}
+                  fill={i > 25 ? 'var(--viz-2)' : 'var(--viz-3)'}
+                  opacity={i > 25 ? 1 : 0.55}
                   style={{
                     transformOrigin: `${i * 20 + 7}px 170px`,
                     transform: inView ? 'scaleY(1)' : 'scaleY(0)',
@@ -49,7 +50,7 @@ export default function SecOpsVisual() {
                 transform: inView ? 'translateX(0)' : 'translateX(12px)',
                 transition: `opacity 0.4s ease ${0.3 + i * 0.1}s, transform 0.4s ease ${0.3 + i * 0.1}s`,
               }}>
-                <Icon.Check width="14" height="14" style={{color:'#2bd4a8', marginTop:3}}/>
+                <Icon.Check width="14" height="14" style={{color:'var(--viz-2)', marginTop:3}}/>
                 <div className="flex-1">
                   <div>{k}</div>
                   <div className="mono text-[11px]" style={{color:'var(--olive-2)'}}>{a} · {t}</div>
@@ -62,14 +63,14 @@ export default function SecOpsVisual() {
 
       {/* Metric cards pop in */}
       <div className="mt-5 grid grid-cols-3 gap-3">
-        {[['CIS coverage','94%'],['Critical findings','0'],['MTTR','4m 12s']].map(([k, v], i) => (
+        {[['CIS coverage','94%','var(--viz-1)'],['Critical findings','0','var(--viz-2)'],['MTTR','4m 12s','var(--ink)']].map(([k, v, c], i) => (
           <div key={k} className="rounded-xl p-3 hcard" style={{
             background:'var(--parchment)', boxShadow:'0 0 0 1px var(--rule-dark)',
             opacity: inView ? 1 : 0,
             animation: inView ? `scaleIn 0.4s ease ${0.7 + i * 0.1}s both` : 'none',
           }}>
             <div className="eyebrow eyebrow-dark">{k}</div>
-            <div className="serif text-[22px] mt-0.5">{v}</div>
+            <div className="serif text-[22px] mt-0.5" style={{color:c}}>{v}</div>
           </div>
         ))}
       </div>

@@ -75,7 +75,7 @@ export default function SecurityPage() {
       />
 
       {/* Trust summary */}
-      <section className="sec-light pb-12 md:pb-20">
+      <section className="sec-light pb-8 md:pb-12">
         <div className="max-w-[1240px] mx-auto px-6 md:px-10">
           <div
             className="grid grid-cols-2 md:grid-cols-4 gap-px ring-soft rounded-2xl overflow-hidden"
@@ -102,7 +102,7 @@ export default function SecurityPage() {
       </section>
 
       {/* Security practices */}
-      <section className="sec-dark py-12 md:py-20">
+      <section className="sec-dark py-8 md:py-12">
         <div className="max-w-[1240px] mx-auto px-6 md:px-10">
           <div className="sec-label dark mb-5">How we protect your environment</div>
           <h2 className="serif text-[clamp(26px,4vw,48px)] leading-[1.08] mb-10 max-w-[24ch]">
@@ -138,7 +138,7 @@ export default function SecurityPage() {
       </section>
 
       {/* Compliance */}
-      <section className="sec-light py-12 md:py-20">
+      <section className="sec-light py-8 md:py-12">
         <div className="max-w-[1240px] mx-auto px-6 md:px-10">
           <div className="sec-label mb-6">Compliance</div>
           <h2 className="serif text-[clamp(26px,4vw,48px)] leading-[1.08] mb-8 max-w-[24ch]">
@@ -162,8 +162,8 @@ export default function SecurityPage() {
                   <span
                     className="eyebrow px-3 py-1 rounded-full text-[10px]"
                     style={{
-                      background: status === 'Compliant' ? 'rgba(34,197,94,0.1)' : 'rgba(240,179,65,0.1)',
-                      color: status === 'Compliant' ? '#22c55e' : 'var(--ochre)',
+                      background: status === 'Compliant' ? 'rgba(255,255,255,0.1)' : 'rgba(255,255,255,0.1)',
+                      color: status === 'Compliant' ? '#d4d4d4' : 'var(--ochre)',
                     }}
                   >
                     {status}

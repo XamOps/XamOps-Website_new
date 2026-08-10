@@ -2,38 +2,116 @@ import { Link } from 'react-router-dom';
 import { Icon } from '../../components/Icons';
 import PageHero from '../../components/shared/PageHero';
 import CTABanner from '../../components/shared/CTABanner';
+import FeatureMeta from '../../components/shared/FeatureMeta';
+import {
+  GROUPS, FEATURE_COUNT, groupPath, groupProviders, PROVIDER_LABEL,
+} from '../../lib/platform';
+
+/** Eight capability groups, each linking to its own page. */
+function GroupIndex() {
+  return (
+    <section className="sec-light pb-8 md:pb-10">
+      <div className="max-w-[1240px] mx-auto px-6 md:px-10">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-px ring-soft rounded-2xl overflow-hidden"
+          style={{ background: 'var(--rule)' }}>
+          {GROUPS.map((g, i) => {
+            const I = Icon[g.icon];
+            return (
+              <Link key={g.id} to={groupPath(g)} className="hcard p-5 md:p-6 block"
+                style={{ background: 'var(--ivory)', textDecoration: 'none', color: 'inherit' }}>
+                <div className="flex items-start justify-between">
+                  <I width="20" height="20" style={{ color: g.accent }} />
+                  <span className="mono text-[11px]" style={{ color: 'var(--olive)' }}>
+                    {String(i + 1).padStart(2, '0')}
+                  </span>
+                </div>
+                <div className="serif text-[17px] md:text-[19px] mt-5 leading-tight">{g.name}</div>
+                <div className="text-[13px] mt-2 leading-[1.5]" style={{ color: 'var(--olive)' }}>
+                  {g.tagline}
+                </div>
+                <div className="mono text-[11px] mt-4 flex items-center justify-between"
+                  style={{ color: 'var(--olive-2)' }}>
+                  <span>{g.features.length} capabilities</span>
+                  <Icon.Arrow width="13" height="13" />
+                </div>
+              </Link>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/**
+ * Directory row per group: the full capability names, with the descriptive copy
+ * living on the group page so the two pages don't duplicate each other.
+ */
+function GroupDirectory({ group, index }) {
+  const I = Icon[group.icon];
+  return (
+    <section id={group.id} className="sec-light py-7 md:py-10 border-t"
+      style={{ borderColor: 'var(--rule)', scrollMarginTop: '80px' }}>
+      <div className="max-w-[1240px] mx-auto px-6 md:px-10">
+        <div className="grid md:grid-cols-12 gap-6 md:gap-10">
+          <div className="md:col-span-4">
+            <div className="sec-label mb-5">
+              [ {String(index + 1).padStart(2, '0')} ] {group.name}
+            </div>
+            <div className="flex items-start gap-4">
+              <div className="w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0"
+                style={{ background: 'var(--ivory-2)' }}>
+                <I width="22" height="22" style={{ color: group.accent }} />
+              </div>
+              <div>
+                <h2 className="serif text-[clamp(24px,2.6vw,32px)] leading-[1.1]">{group.tagline}</h2>
+                {group.status && <FeatureMeta status={group.status} className="mt-2.5" />}
+              </div>
+            </div>
+            <p className="mt-4 text-[15px] leading-[1.65] max-w-[44ch]" style={{ color: 'var(--olive)' }}>
+              {group.body}
+            </p>
+            <div className="mt-4 flex flex-wrap items-center gap-1.5">
+              {groupProviders(group).map((p) => (
+                <span key={p} className="chip">{PROVIDER_LABEL[p]}</span>
+              ))}
+            </div>
+            <Link to={groupPath(group)} className="btn-ghost mt-5">
+              Explore {group.name} <Icon.Arrow width="14" height="14" />
+            </Link>
+          </div>
+
+          <div className="md:col-span-8">
+            <ul className="grid sm:grid-cols-2 gap-x-8 gap-y-0" style={{ listStyle: 'none', margin: 0, padding: 0 }}>
+              {group.features.map((f) => (
+                <li key={f.name} className="py-3 border-b" style={{ borderColor: 'var(--rule)' }}>
+                  <div className="flex items-start justify-between gap-3">
+                    {f.to ? (
+                      <Link to={f.to} className="ulink text-[14.5px] leading-snug"
+                        style={{ color: 'var(--ink)', textDecoration: 'none' }}>{f.name}</Link>
+                    ) : (
+                      <span className="text-[14.5px] leading-snug" style={{ color: 'var(--ink-2)' }}>{f.name}</span>
+                    )}
+                    <FeatureMeta providers={f.providers} status={f.status} className="justify-end flex-shrink-0" />
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
 
 export default function PlatformPage() {
-  const cats = [
-    { I: Icon.Spot,  to: '/platform/spot-automation',  name: 'Spot Automation',   body: 'Replace on-demand with spot capacity across AWS ASGs, GCP MIGs, Azure VMSS. Up to 70% off compute.' },
-    { I: Icon.Disk,  to: '/platform/disk-rightsizing', name: 'Disk Rightsizing',  body: 'The only platform that automates disk rightsizing at scale across EBS, Persistent Disk, Managed Disks.' },
-    { I: Icon.DB,    to: '/platform/dbops',            name: 'DBOps',             body: 'Automated scaling, backup verification, performance tuning and patch windows for managed DBs.' },
-    { I: Icon.Sec,   to: '/platform/secops',           name: 'SecOps',            body: 'Continuous CIS posture, drift detection and automated remediation alongside your CI/CD.' },
-    { I: Icon.Cost,  to: '/platform/cost-analytics',   name: 'Cost Analytics',    body: 'Real-time savings dashboards, daily aggregations, RI/CUD/Savings Plan coverage and forecasting.' },
-    { I: Icon.SRE,   to: '/platform/sre',              name: 'SRE Investigation', body: 'AI-assisted log triage and an investigation timeline that connects metrics, logs and traces.' },
-  ];
   return (
     <>
       <PageHero eyebrow="Platform"
         title={[{ text: 'One platform.' }, { text: 'Every layer of your cloud.', accent: true }, { text: 'Fully automated.' }]}
-        body="XamOps unifies six automations into a single control plane that runs across AWS, GCP and Azure, so engineers stop babysitting infrastructure and managers stop signing oversized cloud bills." />
-      <section className="sec-light pb-24">
-        <div className="max-w-[1240px] mx-auto px-6 md:px-10">
-          <div className="grid md:grid-cols-2 gap-px ring-soft rounded-2xl overflow-hidden" style={{ background: 'var(--rule)' }}>
-            {cats.map(({ I, to, name, body }, i) => (
-              <Link to={to} key={name} className="p-6 md:p-8 hcard block" style={{ background: 'var(--ivory)' }}>
-                <div className="flex items-start justify-between">
-                  <I width="24" height="24" />
-                  <span className="mono text-[11px]" style={{ color: 'var(--olive)' }}>0{i + 1}</span>
-                </div>
-                <div className="serif text-[clamp(20px,5vw,28px)] mt-7 md:mt-10">{name}</div>
-                <div className="text-[15px] mt-3 leading-[1.6]" style={{ color: 'var(--olive)' }}>{body}</div>
-                <div className="mt-6 inline-flex items-center gap-2 text-[14px]">Learn more <Icon.Arrow width="14" height="14" /></div>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
+        body={`XamOps unifies ${FEATURE_COUNT} capabilities into a single control plane across AWS, GCP and Azure, so engineers stop babysitting infrastructure and managers stop signing oversized cloud bills.`} />
+      <GroupIndex />
+      {GROUPS.map((g, i) => <GroupDirectory key={g.id} group={g} index={i} />)}
       <CTABanner />
     </>
   );

@@ -1,11 +1,12 @@
 import useInView from '../../hooks/useInView';
 
+// dot colour tracks the investigation arc: detection → analysis → resolution
 const TIMELINE = [
-  ['09:14:02','Anomaly detected',       'p99 latency 1.2s → 4.6s',                              'olive'],
-  ['09:14:18','Correlated metrics',     'CPU on rds-prod-orders +62%',                          'olive'],
-  ['09:14:34','Logs scanned',           '12,403 lines · 3 candidate causes',                    'olive'],
-  ['09:14:51','Root cause hypothesis',  'index miss on orders.created_at after migration v218', 'terracotta'],
-  ['09:15:03','Suggested fix',          'CREATE INDEX CONCURRENTLY ix_orders_created_at',       'terracotta'],
+  ['09:14:02','Anomaly detected',       'p99 latency 1.2s → 4.6s',                              'var(--viz-4)'],
+  ['09:14:18','Correlated metrics',     'CPU on rds-prod-orders +62%',                          'var(--viz-3)'],
+  ['09:14:34','Logs scanned',           '12,403 lines · 3 candidate causes',                    'var(--viz-3)'],
+  ['09:14:51','Root cause hypothesis',  'index miss on orders.created_at after migration v218', 'var(--viz-1)'],
+  ['09:15:03','Suggested fix',          'CREATE INDEX CONCURRENTLY ix_orders_created_at',       'var(--viz-2)'],
 ];
 
 export default function SREVisual() {
@@ -22,7 +23,7 @@ export default function SREVisual() {
           <div className="eyebrow">Investigation · INC-2147</div>
           <div className="serif text-[20px] mt-1">api-orders p99 spike</div>
         </div>
-        <span className="text-[11px] mono px-2 py-0.5 rounded-full" style={{background:'rgba(240,179,65,0.18)', color:'#f0b341'}}>investigating</span>
+        <span className="badge badge--warning">investigating</span>
       </div>
 
       {/* Timeline line draws down */}
@@ -41,7 +42,7 @@ export default function SREVisual() {
             transition: `opacity 0.4s ease ${0.2 + i * 0.12}s, transform 0.4s ease ${0.2 + i * 0.12}s`,
           }}>
             <span className="absolute -left-[18px] top-1.5 w-2.5 h-2.5 rounded-full" style={{
-              background: c === 'terracotta' ? 'var(--terracotta)' : '#8b90a0',
+              background: c,
               transform: inView ? 'scale(1)' : 'scale(0)',
               transition: `transform 0.3s ease ${0.25 + i * 0.12}s`,
             }}/>

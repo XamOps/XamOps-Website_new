@@ -24,7 +24,7 @@ export default function SREPage() {
         title={[{ text: 'SRE Automation for' }, { text: 'Intelligent Reliability', accent: true }]}
         body="Ensuring application reliability, system performance, and operational efficiency is critical for business success. The Xamops SRE Automation Platform improves system availability while reducing manual operational tasks."
       />
-      <section className="sec-light pb-16">
+      <section className="sec-light pb-10">
         <div className="max-w-[1240px] mx-auto px-6 md:px-10"><SREVisual /></div>
       </section>
       <CopySection

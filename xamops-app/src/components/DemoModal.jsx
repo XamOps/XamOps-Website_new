@@ -21,7 +21,7 @@ export default function DemoModal() {
   return (
     <div
       className="fixed inset-0 z-[200] flex items-end sm:items-center justify-center p-0 sm:p-4 md:p-6"
-      style={{ background: 'rgba(6,8,12,0.72)', backdropFilter: 'blur(6px)' }}
+      style={{ background: 'rgba(5,5,5,0.72)', backdropFilter: 'blur(6px)' }}
       onClick={() => setOpen(false)}
     >
       <div

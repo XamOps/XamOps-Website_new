@@ -7,7 +7,7 @@ const Xam = () => (
   <span style={{ color: 'var(--terracotta)', fontFamily: 'var(--font-med)', letterSpacing: '-0.01em' }}>XamOps</span>
 );
 
-const ACCENT = '#0078D4';
+const ACCENT = 'var(--viz-1)';
 
 const LIMITATIONS = [
   'Slow infrastructure deployment',
@@ -88,10 +88,10 @@ export default function DevOpsVsTraditionalITPage() {
   return (
     <>
       {/* ── Article header ─────────────────────────────────────── */}
-      <section className="pt-28 md:pt-36 pb-14 relative overflow-hidden" style={{ background: '#0f1e35' }}>
+      <section className="pt-22 md:pt-24 pb-9 relative overflow-hidden" style={{ background: '#151515' }}>
         <div
           className="absolute -top-24 left-1/2 -translate-x-1/2 w-[900px] h-[500px] rounded-full pointer-events-none"
-          style={{ background: `radial-gradient(closest-side, rgba(0,120,212,0.1), transparent 70%)` }}
+          style={{ background: `radial-gradient(closest-side, var(--halo), transparent 70%)` }}
         />
         <div className="max-w-[1240px] mx-auto px-6 md:px-10 relative">
           <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mb-7 eyebrow">
@@ -126,7 +126,7 @@ export default function DevOpsVsTraditionalITPage() {
       </section>
 
       {/* ── Article body ────────────────────────────────────────── */}
-      <article className="sec-light py-12 md:py-20">
+      <article className="sec-light py-8 md:py-12">
         <div className="max-w-[1240px] mx-auto px-6 md:px-10">
           <div className="grid grid-cols-1 md:grid-cols-12 gap-x-10 gap-y-12">
 
@@ -329,7 +329,7 @@ export default function DevOpsVsTraditionalITPage() {
               >
                 <div
                   className="absolute -right-16 -bottom-16 w-[300px] h-[300px] rounded-full pointer-events-none"
-                  style={{ background: `radial-gradient(closest-side, rgba(0,120,212,0.08), transparent 70%)` }}
+                  style={{ background: `radial-gradient(closest-side, var(--halo), transparent 70%)` }}
                 />
                 <div className="relative">
                   <div className="eyebrow mb-3">Is it time to replace traditional IT operations?</div>
@@ -464,7 +464,7 @@ export default function DevOpsVsTraditionalITPage() {
                 >
                   <div
                     className="absolute -right-6 -bottom-6 w-28 h-28 rounded-full pointer-events-none"
-                    style={{ background: `radial-gradient(closest-side, rgba(0,120,212,0.12), transparent 70%)` }}
+                    style={{ background: `radial-gradient(closest-side, var(--halo), transparent 70%)` }}
                   />
                   <div className="relative">
                     <div className="text-[14px] leading-[1.5] mb-2" style={{ fontFamily: 'var(--font-med)' }}>

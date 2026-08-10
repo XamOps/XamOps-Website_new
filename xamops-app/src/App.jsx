@@ -8,9 +8,11 @@ import Footer from './components/Footer';
 import MetaManager from './components/MetaManager';
 import DemoModal from './components/DemoModal';
 import { DemoModalCtx } from './lib/demoModal';
+import { GROUPS } from './lib/platform';
 
 const HomePage         = lazy(() => import('./pages/HomePage'));
 const PlatformPage     = lazy(() => import('./pages/platform/PlatformPage'));
+const GroupPage        = lazy(() => import('./pages/platform/GroupPage'));
 const SpotPage         = lazy(() => import('./pages/platform/SpotPage'));
 const DiskPage         = lazy(() => import('./pages/platform/DiskPage'));
 const DBOpsPage        = lazy(() => import('./pages/platform/DBOpsPage'));
@@ -47,14 +49,31 @@ export default function App() {
   useLayoutEffect(() => {
     // Kill stale triggers before scroll reset so GSAP can't jump position
     ScrollTrigger.getAll().forEach(t => t.kill());
-    window.scrollTo(0, 0);
-  }, [location.pathname]);
+    if (!location.hash) window.scrollTo(0, 0);
+  }, [location.pathname, location.hash]);
 
   useEffect(() => {
-    window.scrollTo(0, 0);
+    if (!location.hash) window.scrollTo(0, 0);
     setDemoOpen(false);
     document.body.style.overflow = '';
-  }, [location.pathname]);
+  }, [location.pathname, location.hash]);
+
+  // Anchor links into long pages (e.g. /platform#finops) — the target may be
+  // inside a lazy chunk, so retry briefly until it mounts.
+  useEffect(() => {
+    if (!location.hash) return;
+    const id = decodeURIComponent(location.hash.slice(1));
+    let tries = 0;
+    const tick = () => {
+      const el = document.getElementById(id);
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        return;
+      }
+      if (++tries < 40) requestAnimationFrame(tick);
+    };
+    tick();
+  }, [location.pathname, location.hash]);
 
   return (
     <DemoModalCtx.Provider value={{ open: demoOpen, setOpen: setDemoOpen }}>
@@ -66,6 +85,10 @@ export default function App() {
         <Routes>
           <Route path="/"                          element={<HomePage />} />
           <Route path="/platform"                  element={<PlatformPage />} />
+          {/* Capability group pages, generated from the catalogue */}
+          {GROUPS.map(g => (
+            <Route key={g.id} path={`/platform/${g.slug}`} element={<GroupPage id={g.id} />} />
+          ))}
           <Route path="/platform/spot-automation"  element={<SpotPage />} />
           <Route path="/platform/disk-rightsizing" element={<DiskPage />} />
           <Route path="/platform/dbops"            element={<DBOpsPage />} />

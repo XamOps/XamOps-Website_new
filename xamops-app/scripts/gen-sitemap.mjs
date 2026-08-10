@@ -8,7 +8,7 @@
 import { writeFile } from 'fs/promises';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
-import { ROUTE_META, SITE } from '../src/lib/routes.js';
+import { ROUTE_META, canonicalUrl } from '../src/lib/routes.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const OUT = join(__dirname, '..', 'public', 'sitemap.xml');
@@ -16,7 +16,7 @@ const OUT = join(__dirname, '..', 'public', 'sitemap.xml');
 const lastmod = new Date().toISOString().slice(0, 10);
 
 const body = ROUTE_META.map(({ path, priority, changefreq }) => `  <url>
-    <loc>${SITE}${path}</loc>
+    <loc>${canonicalUrl(path)}</loc>
     <lastmod>${lastmod}</lastmod>
     <changefreq>${changefreq}</changefreq>
     <priority>${priority.toFixed(1)}</priority>

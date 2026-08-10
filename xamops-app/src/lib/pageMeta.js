@@ -1,5 +1,6 @@
 import { GROUPS } from './platform';
 import { GROUP_FAQS } from './platformDetail';
+import { canonicalUrl } from './routes';
 
 const BASE = 'https://xamops.com';
 const LOGO = `${BASE}/logo.png`;
@@ -18,8 +19,8 @@ const org = {
 
 const wp = (path, name, desc) => ({
   '@type': 'WebPage',
-  '@id': `${BASE}${path}`,
-  url: `${BASE}${path}`,
+  '@id': canonicalUrl(path),
+  url: canonicalUrl(path),
   name,
   description: desc,
   inLanguage: 'en-US',
@@ -894,9 +895,9 @@ GROUPS.forEach((g) => {
         '@type': 'BreadcrumbList',
         '@id': `${BASE}${path}/#breadcrumb`,
         itemListElement: [
-          { '@type': 'ListItem', position: 1, name: 'Home', item: BASE },
-          { '@type': 'ListItem', position: 2, name: 'Platform', item: `${BASE}/platform` },
-          { '@type': 'ListItem', position: 3, name: g.name, item: `${BASE}${path}` },
+          { '@type': 'ListItem', position: 1, name: 'Home', item: canonicalUrl('/') },
+          { '@type': 'ListItem', position: 2, name: 'Platform', item: canonicalUrl('/platform') },
+          { '@type': 'ListItem', position: 3, name: g.name, item: canonicalUrl(path) },
         ],
       },
       // Mirrors the FAQ block rendered on the page

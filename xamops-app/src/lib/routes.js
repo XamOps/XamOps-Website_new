@@ -11,6 +11,25 @@ import { GROUPS } from './platform.js';
 
 export const SITE = 'https://xamops.com';
 
+/**
+ * Absolute canonical URL for a path.
+ *
+ * The prerenderer writes dist/<route>/index.html, so nginx serves the
+ * trailing-slash form and 301s the bare path to it. Canonicals, og:url and
+ * the sitemap therefore all have to carry the trailing slash, otherwise every
+ * one of them points at a redirect.
+ */
+export const canonicalUrl = (input) => {
+  // Accept a bare path or an already-absolute URL, drop any query/hash.
+  let path = String(input).replace(SITE, '').split(/[?#]/)[0];
+  if (!path.startsWith('/')) path = `/${path}`;
+  if (!path.endsWith('/')) path = `${path}/`;
+  return SITE + path;
+};
+
+/** Alias: normalises a path or absolute URL onto the URL nginx actually serves. */
+export const normalizeCanonical = canonicalUrl;
+
 const CORE = [
   ['/',          1.0, 'weekly'],
   ['/platform',  0.9, 'weekly'],

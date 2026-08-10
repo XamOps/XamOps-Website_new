@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { PAGE_META, DEFAULT_META } from '../lib/pageMeta';
+import { normalizeCanonical } from '../lib/routes';
 
 const BASE = 'https://xamops.com';
 const OG_IMG = `${BASE}/og-image.jpg`;
@@ -50,9 +51,12 @@ export default function MetaManager() {
     setMeta('keywords', meta.keywords || '');
     setMeta('robots', 'index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1');
 
-    setLink('canonical', meta.canonical || `${BASE}${pathname}`);
+    // nginx serves the trailing-slash form and redirects the bare path to it,
+    // so the canonical has to match or it points at a 301.
+    const canonical = normalizeCanonical(meta.canonical || pathname);
+    setLink('canonical', canonical);
 
-    setMeta('og:url',         meta.canonical || `${BASE}${pathname}`, 'property');
+    setMeta('og:url',         canonical, 'property');
     setMeta('og:title',       meta.title,       'property');
     setMeta('og:description', meta.description, 'property');
     setMeta('og:image',       meta.ogImage || OG_IMG, 'property');

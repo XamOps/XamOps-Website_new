@@ -35,6 +35,7 @@ const FinOpsPracticesPage                   = lazy(() => import('./pages/blog/Fi
 const CloudCostOptimizationStrategiesPage   = lazy(() => import('./pages/blog/CloudCostOptimizationStrategiesPage'));
 const DevOpsVsTraditionalITPage             = lazy(() => import('./pages/blog/DevOpsVsTraditionalITPage'));
 const SREAutomationNoidaPage                = lazy(() => import('./pages/blog/SREAutomationNoidaPage'));
+const FinOpsCloudCostOptimizationBenefitsPage = lazy(() => import('./pages/blog/FinOpsCloudCostOptimizationBenefitsPage'));
 const CustomersPage         = lazy(() => import('./pages/CustomersPage'));
 const SecurityPage          = lazy(() => import('./pages/SecurityPage'));
 const ContactPage           = lazy(() => import('./pages/ContactPage'));
@@ -112,6 +113,7 @@ export default function App() {
           <Route path="/blog/cloud-cost-optimization-strategies"   element={<CloudCostOptimizationStrategiesPage />} />
           <Route path="/blog/devops-automation-platform-vs-traditional-it-operations" element={<DevOpsVsTraditionalITPage />} />
           <Route path="/blog/sre-automation-platform-noida" element={<SREAutomationNoidaPage />} />
+          <Route path="/blog/benefits-of-finops-services-cloud-cost-optimization" element={<FinOpsCloudCostOptimizationBenefitsPage />} />
           <Route path="/customers"                 element={<CustomersPage />} />
           <Route path="/security"                  element={<SecurityPage />} />
           <Route path="/contact"                   element={<ContactPage />} />

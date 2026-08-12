@@ -197,6 +197,34 @@ function FinOpsThumbnail() {
   );
 }
 
+function FinOpsBenefitsThumbnail() {
+  const ITEMS = [
+    { label: 'VISIBILITY', v: 92 },
+    { label: 'BUDGETING', v: 84 },
+    { label: 'GOVERNANCE', v: 88 },
+    { label: 'ROI', v: 78 },
+  ];
+  return (
+    <svg viewBox="0 0 380 210" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ width: '100%', height: '100%', display: 'block' }}>
+      <rect width="380" height="210" fill="#111111" />
+      <text x="20" y="24" fontSize="10" fill="#8f8f8f" fontFamily="monospace" fontWeight="600" letterSpacing="1.5">FINOPS SCORECARD</text>
+      {ITEMS.map((it, i) => {
+        const y = 44 + i * 38;
+        return (
+          <g key={it.label}>
+            <text x="20" y={y - 6} fontSize="8.5" fill="#6b6b6b" fontFamily="monospace">{it.label}</text>
+            <rect x="20" y={y} width="280" height="10" rx="5" fill="#1c1c1c" />
+            <rect x="20" y={y} width={it.v * 2.8} height="10" rx="5" fill="var(--viz-3)" opacity="0.85" />
+            <text x={310} y={y + 9} fontSize="9" fill="var(--viz-3)" fontFamily="monospace" fontWeight="700">{it.v}%</text>
+          </g>
+        );
+      })}
+      <rect x="20" y="182" width="150" height="18" rx="9" fill="var(--viz-3)" opacity="0.12" />
+      <text x="30" y="195" fontSize="10" fill="var(--viz-3)" fontFamily="monospace" fontWeight="700">COST OPTIMIZED</text>
+    </svg>
+  );
+}
+
 function SecurityAutomationThumbnail() {
   return (
     <svg viewBox="0 0 380 210" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ width: '100%', height: '100%', display: 'block' }}>
@@ -347,6 +375,16 @@ function SREReliabilityThumbnail() {
 
 export default function BlogPage() {
   const posts = [
+    {
+      provider: 'aws',
+      tag: 'FinOps',
+      title: 'Top Benefits of FinOps Services for Cloud Cost Optimization',
+      excerpt: 'The top benefits of FinOps Services for cloud cost optimization and learn how Xamops helps businesses reduce costs and improve ROI.',
+      read: '6 min',
+      date: 'August 12, 2026',
+      href: '/blog/benefits-of-finops-services-cloud-cost-optimization',
+      thumbEl: <FinOpsBenefitsThumbnail />,
+    },
     {
       provider: 'gcp',
       tag: 'SRE',

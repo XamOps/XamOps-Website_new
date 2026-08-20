@@ -373,8 +373,49 @@ function SREReliabilityThumbnail() {
   );
 }
 
+function SREServicesIndiaThumbnail() {
+  const CITIES = [
+    { cx: 90, cy: 65, label: 'NOIDA' },
+    { cx: 190, cy: 45, label: 'DELHI NCR' },
+    { cx: 290, cy: 70, label: 'JAIPUR' },
+    { cx: 120, cy: 150, label: 'HYDERABAD' },
+    { cx: 250, cy: 160, label: 'BANGALORE' },
+  ];
+  return (
+    <svg viewBox="0 0 380 210" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ width: '100%', height: '100%', display: 'block' }}>
+      <rect width="380" height="210" fill="#141414" />
+      <text x="20" y="24" fontSize="10" fill="#8f8f8f" fontFamily="monospace" fontWeight="600" letterSpacing="1.5">SRE COVERAGE · INDIA</text>
+      <line x1="90" y1="65" x2="190" y2="45" stroke="#2a2a2a" strokeWidth="1.5" />
+      <line x1="190" y1="45" x2="290" y2="70" stroke="#2a2a2a" strokeWidth="1.5" />
+      <line x1="90" y1="65" x2="120" y2="150" stroke="#2a2a2a" strokeWidth="1.5" />
+      <line x1="120" y1="150" x2="250" y2="160" stroke="#2a2a2a" strokeWidth="1.5" />
+      <line x1="250" y1="160" x2="290" y2="70" stroke="#2a2a2a" strokeWidth="1.5" />
+      {CITIES.map((c, i) => (
+        <g key={i}>
+          <circle cx={c.cx} cy={c.cy} r="12" fill="var(--viz-2)" opacity="0.18" />
+          <circle cx={c.cx} cy={c.cy} r="5.5" fill="var(--viz-2)" />
+        </g>
+      ))}
+      <rect x="20" y="178" width="150" height="20" rx="10" fill="var(--viz-2)" opacity="0.12" />
+      <text x="30" y="192" fontSize="10" fill="var(--viz-2)" fontFamily="monospace" fontWeight="700">5 CITIES MONITORED</text>
+      <rect x="290" y="178" width="70" height="20" rx="10" fill="var(--viz-5)" opacity="0.12" />
+      <text x="300" y="192" fontSize="10" fill="var(--viz-5)" fontFamily="monospace" fontWeight="700">99.9% SLA</text>
+    </svg>
+  );
+}
+
 export default function BlogPage() {
   const posts = [
+    {
+      provider: 'gcp',
+      tag: 'SRE',
+      title: 'Site Reliability Engineering Services in India: Noida, Delhi NCR, Bangalore, Hyderabad & Jaipur',
+      excerpt: 'How Site Reliability Engineering Services help businesses build stable, scalable digital infrastructure — and what to look for in a provider across five of India\'s major tech hubs.',
+      read: '9 min',
+      date: 'August 19, 2026',
+      href: '/blog/sre-services-india',
+      thumbEl: <SREServicesIndiaThumbnail />,
+    },
     {
       provider: 'aws',
       tag: 'FinOps',

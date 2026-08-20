@@ -72,6 +72,7 @@ const BLOG_ROUTES = [
   '/blog/devops-automation-platform-vs-traditional-it-operations',
   '/blog/sre-automation-platform-noida',
   '/blog/benefits-of-finops-services-cloud-cost-optimization',
+  '/blog/sre-services-india',
 ].map((p) => [p, 0.6, 'monthly']);
 
 export const ROUTE_META = [

@@ -73,6 +73,7 @@ const BLOG_ROUTES = [
   '/blog/sre-automation-platform-noida',
   '/blog/benefits-of-finops-services-cloud-cost-optimization',
   '/blog/sre-services-india',
+  '/blog/finops-services-in-noida',
 ].map((p) => [p, 0.6, 'monthly']);
 
 export const ROUTE_META = [

@@ -404,8 +404,52 @@ function SREServicesIndiaThumbnail() {
   );
 }
 
+function FinOpsServicesNoidaThumbnail() {
+  const BARS = [
+    { x: 40, h: 60, ok: false },
+    { x: 90, h: 100, ok: false },
+    { x: 140, h: 45, ok: true },
+    { x: 190, h: 80, ok: false },
+    { x: 240, h: 35, ok: true },
+    { x: 290, h: 55, ok: true },
+  ];
+  return (
+    <svg viewBox="0 0 380 210" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ width: '100%', height: '100%', display: 'block' }}>
+      <rect width="380" height="210" fill="#141414" />
+      <text x="20" y="24" fontSize="10" fill="#8f8f8f" fontFamily="monospace" fontWeight="600" letterSpacing="1.5">CLOUD SPEND · BY REGION</text>
+      <line x1="20" y1="150" x2="360" y2="150" stroke="#2a2a2a" strokeWidth="1.5" />
+      {BARS.map((b, i) => (
+        <rect
+          key={i}
+          x={b.x}
+          y={150 - b.h}
+          width="26"
+          height={b.h}
+          rx="3"
+          fill={b.ok ? 'var(--viz-3)' : 'var(--viz-4)'}
+          opacity={b.ok ? '0.85' : '0.5'}
+        />
+      ))}
+      <rect x="20" y="178" width="140" height="20" rx="10" fill="var(--viz-3)" opacity="0.12" />
+      <text x="30" y="192" fontSize="10" fill="var(--viz-3)" fontFamily="monospace" fontWeight="700">32% COST REDUCED</text>
+      <rect x="280" y="178" width="80" height="20" rx="10" fill="var(--viz-4)" opacity="0.12" />
+      <text x="290" y="192" fontSize="10" fill="var(--viz-4)" fontFamily="monospace" fontWeight="700">5 REGIONS</text>
+    </svg>
+  );
+}
+
 export default function BlogPage() {
   const posts = [
+    {
+      provider: 'azure',
+      tag: 'FinOps',
+      title: 'FinOps Services in Noida, Delhi NCR, Bangalore, Hyderabad & Jaipur',
+      excerpt: 'How FinOps services help businesses optimize AWS, Azure, and GCP spending, improve cloud cost visibility, and connect engineering decisions to business value.',
+      read: '10 min',
+      date: 'August 24, 2026',
+      href: '/blog/finops-services-in-noida',
+      thumbEl: <FinOpsServicesNoidaThumbnail />,
+    },
     {
       provider: 'gcp',
       tag: 'SRE',

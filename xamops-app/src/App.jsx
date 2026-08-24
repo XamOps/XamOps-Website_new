@@ -37,6 +37,7 @@ const DevOpsVsTraditionalITPage             = lazy(() => import('./pages/blog/De
 const SREAutomationNoidaPage                = lazy(() => import('./pages/blog/SREAutomationNoidaPage'));
 const FinOpsCloudCostOptimizationBenefitsPage = lazy(() => import('./pages/blog/FinOpsCloudCostOptimizationBenefitsPage'));
 const SREServicesIndiaPage                  = lazy(() => import('./pages/blog/SREServicesIndiaPage'));
+const FinOpsServicesNoidaPage                = lazy(() => import('./pages/blog/FinOpsServicesNoidaPage'));
 const CustomersPage         = lazy(() => import('./pages/CustomersPage'));
 const SecurityPage          = lazy(() => import('./pages/SecurityPage'));
 const ContactPage           = lazy(() => import('./pages/ContactPage'));
@@ -116,6 +117,7 @@ export default function App() {
           <Route path="/blog/sre-automation-platform-noida" element={<SREAutomationNoidaPage />} />
           <Route path="/blog/benefits-of-finops-services-cloud-cost-optimization" element={<FinOpsCloudCostOptimizationBenefitsPage />} />
           <Route path="/blog/sre-services-india" element={<SREServicesIndiaPage />} />
+          <Route path="/blog/finops-services-in-noida" element={<FinOpsServicesNoidaPage />} />
           <Route path="/customers"                 element={<CustomersPage />} />
           <Route path="/security"                  element={<SecurityPage />} />
           <Route path="/contact"                   element={<ContactPage />} />

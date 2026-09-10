@@ -3,18 +3,46 @@ import { GROUP_FAQS } from './platformDetail';
 import { canonicalUrl } from './routes';
 
 const BASE = 'https://xamops.com';
-const LOGO = `${BASE}/logo.png`;
+// TODO: no dedicated logo file exists in /public (org.logo previously pointed at a
+// nonexistent /logo.png, a 404 that breaks Google's logo/sitelinks eligibility).
+// Pointing at the real favicon asset as an interim fix — replace with a proper
+// exported logo (square or ~600x60) once one exists.
+const LOGO = `${BASE}/favicon.svg`;
 const OG_IMG = `${BASE}/og-image.jpg`;
 
 const org = {
   '@type': 'Organization',
   '@id': `${BASE}/#organization`,
   name: 'XamOps',
+  legalName: 'Xammer Technologies',
   url: BASE,
   logo: { '@type': 'ImageObject', url: LOGO },
   description: 'XamOps delivers intelligent cloud automation and FinOps solutions to help organizations optimize cloud operations, reduce infrastructure costs, and improve operational efficiency.',
+  foundingDate: '2014',
+  address: { '@type': 'PostalAddress', addressLocality: 'New Delhi', addressRegion: 'Delhi', addressCountry: 'IN' },
+  areaServed: [
+    { '@type': 'City', name: 'New Delhi' },
+    { '@type': 'City', name: 'Noida' },
+    { '@type': 'City', name: 'Delhi NCR' },
+    { '@type': 'City', name: 'Gurugram' },
+    { '@type': 'City', name: 'Bangalore' },
+    { '@type': 'City', name: 'Hyderabad' },
+    { '@type': 'City', name: 'Jaipur' },
+    { '@type': 'City', name: 'Mumbai' },
+    { '@type': 'City', name: 'Pune' },
+    { '@type': 'City', name: 'Lucknow' },
+  ],
+  contactPoint: [
+    { '@type': 'ContactPoint', telephone: '+91-8769254249', contactType: 'sales', email: 'demo@xamops.com', areaServed: 'IN', availableLanguage: ['English', 'Hindi'] },
+    { '@type': 'ContactPoint', telephone: '+91-8769254249', contactType: 'customer service', email: 'support@xammer.in', areaServed: 'IN', availableLanguage: ['English', 'Hindi'] },
+  ],
+  email: 'support@xammer.in',
   sameAs: ['https://www.linkedin.com/company/xamops'],
+  numberOfEmployees: { '@type': 'QuantitativeValue', minValue: 180 },
   knowsAbout: ['Cloud Automation','FinOps','Cloud Infrastructure','Cloud Cost Optimization','AI Operations'],
+  // No aggregateRating: no real, verifiable rating/review-count exists yet on any
+  // review platform (Google Business Profile, Trustpilot, Clutch, G2, ...). Add one
+  // here — backed by a visible rating badge on the site — once real figures exist.
 };
 
 const wp = (path, name, desc) => ({
@@ -39,10 +67,33 @@ const app = (name, desc, features) => ({
   provider: org,
 });
 
+// BreadcrumbList helper: crumbs = [[name, path-or-absolute-url], ...]
+const bc = (crumbs) => ({
+  '@type': 'BreadcrumbList',
+  itemListElement: crumbs.map(([name, path], i) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    name,
+    item: path.startsWith('http') ? path : canonicalUrl(path),
+  })),
+});
+
+// Service helper: one per core platform/solution offering, named around that
+// page's own primary keyword.
+const svc = (name, desc, serviceType) => ({
+  '@type': 'Service',
+  name,
+  provider: { '@type': 'Organization', name: 'XamOps' },
+  serviceType,
+  description: desc,
+  areaServed: 'Worldwide',
+});
+
 export const PAGE_META = {
 
   // ── Homepage ───────────────────────────────────────────────────────
   '/': {
+    primaryKeyword: 'Cloud Automation Platform',
     title: 'Cloud FinOps & DevOps Automation Platform | Xamops',
     description: 'Automate cloud operations, reduce infrastructure costs, and optimize performance with Xamops, the cloud automation platform for FinOps, DevOps, and SRE teams.',
     keywords: 'cloud automation platform, FinOps platform, DevOps automation platform, cloud cost optimization, cloud management platform, cloud operations automation, SRE automation platform, AI cloud optimization platform, cloud infrastructure automation, enterprise cloud automation, cloud optimization platform, cloud cost management, infrastructure automation, AI powered cloud automation, cloud efficiency tools, cloud monitoring platform, enterprise cloud management, automated cloud operations, FinOps automation platform, cloud cost optimization platform, DevOps automation solutions, cloud infrastructure management platform, AI cloud operations platform, multicloud management platform, cloud cost management platform, devops automation services, aws cost optimization, aws finops, cloud cost optimization services',
@@ -78,13 +129,14 @@ export const PAGE_META = {
 
   // ── Platform ───────────────────────────────────────────────────────
   '/platform': {
-    title: 'Cloud Automation Platform for FinOps, DevOps, SRE & Kubernetes | Xamops',
-    description: 'Explore the Xamops cloud automation platform: 47 capabilities across FinOps, cost automation, Kubernetes, security and compliance, observability, DevOps and MediaOps, on AWS, Azure and GCP.',
-    keywords: 'cloud automation platform, cloud management platform, cloud operations automation, multicloud management platform, enterprise cloud management, cloud infrastructure automation, cloud infrastructure management platform, cloud monitoring platform, cloud optimization platform, infrastructure automation, automated cloud operations, enterprise cloud automation, AI cloud operations platform, kubernetes cost optimization, CNAPP, SOC 2 compliance automation, cloud security posture management',
+    primaryKeyword: 'Unified Cloud Automation Platform',
+    title: 'Unified Cloud Automation Platform | FinOps, DevOps & SRE | Xamops',
+    description: 'The Xamops unified cloud automation platform brings 47 capabilities across FinOps, cost automation, Kubernetes, security and observability into one control plane on AWS, Azure and GCP.',
+    keywords: 'unified cloud automation platform, cloud automation platform, cloud management platform, cloud operations automation, multicloud management platform, enterprise cloud management, cloud infrastructure automation, cloud infrastructure management platform, cloud monitoring platform, cloud optimization platform, infrastructure automation, automated cloud operations, enterprise cloud automation, AI cloud operations platform, kubernetes cost optimization, CNAPP, SOC 2 compliance automation, cloud security posture management',
     canonical: `${BASE}/platform`,
     schemas: [
-      wp('/platform', 'Cloud Automation Platform for FinOps, DevOps, SRE & Kubernetes | Xamops', 'Forty-seven cloud automation capabilities in one control plane.'),
-      app('XamOps Platform', 'Cloud automation platform spanning FinOps, cost automation, Kubernetes, security and compliance, observability, DevOps and MediaOps.',
+      wp('/platform', 'Unified Cloud Automation Platform | Xamops', 'Forty-seven cloud automation capabilities in one unified control plane.'),
+      app('XamOps Platform', 'Unified cloud automation platform spanning FinOps, cost automation, Kubernetes, security and compliance, observability, DevOps and MediaOps.',
         [
           'Unified multi-cloud dashboard','Cost management','Cost forecasting','Waste management',
           'Compute rightsizing','Disk rightsizing','Reservations and commitments','Pricing calculator',
@@ -93,15 +145,18 @@ export const PAGE_META = {
           'Cloud inventory','CloudMap topology','Observability','AI SRE investigations','AIOps',
           'CI/CD pipelines','Code quality','CloudShell','DbOps','MediaOps transcoding',
         ]),
+      bc([['Home', '/'], ['Platform', '/platform']]),
+      svc('Unified Cloud Automation Platform', 'A single control plane spanning FinOps, cost automation, Kubernetes, security and compliance, observability, DevOps and MediaOps across AWS, Azure and GCP.', 'Cloud Automation'),
       org,
     ],
   },
 
   // ── Spot Automation ────────────────────────────────────────────────
   '/platform/spot-automation': {
+    primaryKeyword: 'Spot Automation Platform',
     title: 'Spot Automation Platform | Automate Spot Instance Management | Xamops',
     description: 'Reduce cloud costs and improve workload availability with the Xamops Spot Automation Platform. Automate spot instance management, optimize cloud infrastructure, and maximize operational efficiency.',
-    keywords: 'spot automation, spot instance management, cloud compute optimization, cloud cost optimization, FinOps automation, compute savings, aws spot instances, cloud cost optimization platform, cloud cost management, aws cost optimization, cloud efficiency tools',
+    keywords: 'spot automation platform, spot automation, spot instance management, cloud compute optimization, cloud cost optimization, FinOps automation, compute savings, aws spot instances, cloud cost optimization platform, cloud cost management, aws cost optimization, cloud efficiency tools',
     canonical: `${BASE}/platform/spot-automation`,
     schemas: [
       wp('/platform/spot-automation', 'Spot Automation Platform | Automate Spot Instance Management | Xamops', 'Reduce cloud costs and improve workload availability with automated spot instance management.'),
@@ -149,12 +204,15 @@ export const PAGE_META = {
           { '@type': 'Question', name: 'Which teams benefit from Xamops Spot Automation?', acceptedAnswer: { '@type': 'Answer', text: 'DevOps, FinOps, Cloud Operations, Infrastructure Engineering, Platform Engineering, and Site Reliability Engineering (SRE) teams all benefit from automated cloud operations.' } },
         ],
       },
+      bc([['Home', '/'], ['Platform', '/platform'], ['Spot Automation Platform', '/platform/spot-automation']]),
+      svc('Spot Automation Platform', 'Automated spot instance management that reduces cloud compute costs while maintaining workload availability.', 'Spot Instance Automation'),
       org,
     ],
   },
 
   // ── Disk Rightsizing ───────────────────────────────────────────────
   '/platform/disk-rightsizing': {
+    primaryKeyword: 'Disk Rightsizing',
     title: 'Disk Rightsizing | Optimize Cloud Storage Costs | Xamops',
     description: 'Optimize cloud storage and reduce unnecessary costs with Xamops Disk Rightsizing. Identify oversized volumes, improve storage utilization, and maximize cloud efficiency.',
     keywords: 'disk rightsizing, cloud storage optimization, cloud cost savings, FinOps, storage cost management, aws storage optimization, gcp storage optimization, cloud cost optimization, cloud cost management, infrastructure automation',
@@ -173,12 +231,15 @@ export const PAGE_META = {
           { '@type': 'Question', name: 'Can Xamops identify unused cloud storage?', acceptedAnswer: { '@type': 'Answer', text: 'Yes. Xamops detects underutilized and oversized storage volumes, allowing organizations to reclaim unused capacity and reduce unnecessary cloud storage costs.' } },
         ],
       },
+      bc([['Home', '/'], ['Platform', '/platform'], ['Disk Rightsizing', '/platform/disk-rightsizing']]),
+      svc('Disk Rightsizing', 'Automated cloud storage rightsizing that identifies oversized and unattached volumes to reduce storage waste.', 'Cloud Storage Optimization'),
       org,
     ],
   },
 
   // ── DBOps ──────────────────────────────────────────────────────────
   '/platform/dbops': {
+    primaryKeyword: 'DBOps Platform',
     title: 'DBOps Platform | Database Operations Automation | Xamops',
     description: 'Automate managed database operations with Xamops DBOps. Track database inventory, surface savings opportunities, review query statistics, and monitor health snapshots across AWS RDS, Cloud SQL, and Azure databases.',
     keywords: 'DBOps platform, database operations automation, cloud database management, aws rds optimization, azure sql automation, cloud database cost optimization, cloud infrastructure automation, infrastructure automation, managed database inventory, database query statistics, database health monitoring',
@@ -197,13 +258,16 @@ export const PAGE_META = {
           { '@type': 'Question', name: 'Can DBOps help diagnose slow queries?', acceptedAnswer: { '@type': 'Answer', text: 'Yes. DBOps collects query statistics and health snapshots, and the Kubernetes agent adds Postgres query stats, index usage, vacuum activity, and wait events so you can see which queries are causing latency.' } },
         ],
       },
+      bc([['Home', '/'], ['Platform', '/platform'], ['DBOps Platform', '/platform/dbops']]),
+      svc('DBOps Platform', 'Database operations automation covering managed database inventory, savings opportunities, query statistics, and health snapshots across AWS RDS, Cloud SQL, and Azure databases.', 'Database Operations Automation'),
       org,
     ],
   },
 
   // ── SecOps ─────────────────────────────────────────────────────────
   '/platform/secops': {
-    title: 'SecOps Platform | Security Operations Automation | Xamops',
+    primaryKeyword: 'SecOps Automation Platform',
+    title: 'SecOps Automation Platform | Security Operations | Xamops',
     description: 'Strengthen your security operations with Xamops SecOps. Detect threats faster, automate security workflows, improve incident response, and protect your cloud infrastructure.',
     keywords: 'SecOps automation, cloud security management, cloud compliance automation, cloud misconfiguration detection, cloud security platform, aws security automation, azure cloud security monitoring, cloud monitoring platform, cloud monitoring services, gcp security monitoring',
     canonical: `${BASE}/platform/secops`,
@@ -221,12 +285,15 @@ export const PAGE_META = {
           { '@type': 'Question', name: 'How does Xamops help with incident response?', acceptedAnswer: { '@type': 'Answer', text: 'Xamops provides real-time alerts, centralized security monitoring, automated workflows, and actionable insights that help security teams investigate and resolve incidents faster.' } },
         ],
       },
+      bc([['Home', '/'], ['Platform', '/platform'], ['SecOps Automation Platform', '/platform/secops']]),
+      svc('SecOps Automation Platform', 'Security operations automation for threat detection, incident response, and continuous compliance monitoring across AWS, Azure, and GCP.', 'Security Operations Automation'),
       org,
     ],
   },
 
   // ── Cost Analytics ─────────────────────────────────────────────────
   '/platform/cost-analytics': {
+    primaryKeyword: 'Cost Analytics Platform',
     title: 'Cost Analytics Platform | Cloud Cost Analytics & FinOps | Xamops',
     description: 'Gain complete visibility into cloud spending with Xamops Cost Analytics. Monitor costs, optimize cloud resources, improve budgeting, and simplify cloud financial management.',
     keywords: 'cloud cost analytics, FinOps insights, cloud cost management platform, cloud cost visibility, aws cost analytics, cloud cost reporting, FinOps dashboard, cloud cost optimization, cloud cost management, aws finops, cloud cost optimization platform, cloud cost optimization services, gcp cost optimization, azure cloud cost optimization, aws cloud cost management, google cloud cost optimization',
@@ -245,12 +312,15 @@ export const PAGE_META = {
           { '@type': 'Question', name: 'What is cloud cost allocation?', acceptedAnswer: { '@type': 'Answer', text: 'Cloud cost allocation is the process of assigning cloud expenses to specific teams, departments, applications, or projects using customizable tags and reporting.' } },
         ],
       },
+      bc([['Home', '/'], ['Platform', '/platform'], ['Cost Analytics Platform', '/platform/cost-analytics']]),
+      svc('Cost Analytics Platform', 'Real-time cloud cost visibility, FinOps dashboards, and chargeback reporting across AWS, Azure, and GCP.', 'Cloud Cost Analytics'),
       org,
     ],
   },
 
   // ── SRE Platform ──────────────────────────────────────────────────
   '/platform/sre': {
+    primaryKeyword: 'SRE Automation Platform',
     title: 'SRE Automation Platform | AI-Powered Site Reliability Engineering | Xamops',
     description: 'Improve reliability, automate cloud operations, and optimize infrastructure with the Xamops SRE Automation Platform. Reduce downtime using AI-powered cloud automation and intelligent monitoring.',
     keywords: 'SRE automation platform, site reliability engineering, SLO management, incident automation, runbook automation, cloud reliability, AI SRE platform, cloud operations automation, cloud monitoring platform, administering monitoring cloud services, cloud monitoring services, cloud infrastructure automation',
@@ -269,23 +339,19 @@ export const PAGE_META = {
           { '@type': 'Question', name: 'Is Xamops suitable for multi-cloud environments?', acceptedAnswer: { '@type': 'Answer', text: 'Absolutely. Xamops provides centralized visibility and automation for AWS, Azure, Google Cloud, and hybrid cloud infrastructures.' } },
         ],
       },
+      bc([['Home', '/'], ['Platform', '/platform'], ['SRE Automation Platform', '/platform/sre']]),
+      svc('SRE Automation Platform', 'AI-driven SRE automation for incident detection, SLO management, and runbook automation.', 'Site Reliability Engineering Automation'),
       org,
     ],
   },
 
   // ── Solutions ─────────────────────────────────────────────────────
-  '/solutions': {
-    title: 'Cloud Solutions for DevOps, FinOps & SRE Teams | Xamops',
-    description: 'Explore Xamops cloud solutions tailored for DevOps, FinOps, and SRE teams. Reduce cloud costs, automate operations, and improve reliability at enterprise scale.',
-    keywords: 'cloud solutions, DevOps solutions, FinOps solutions, SRE solutions, cloud automation solutions, enterprise cloud solutions, enterprise cloud management, cloud management platform, multicloud management platform',
-    canonical: `${BASE}/solutions`,
-    schemas: [
-      wp('/solutions', 'Cloud Solutions for DevOps, FinOps & SRE Teams | Xamops', 'Tailored cloud automation solutions for DevOps, FinOps, and SRE.'),
-      org,
-    ],
-  },
+  // '/solutions' itself is a <Navigate> redirect to /platform in App.jsx (it
+  // rendered the exact same PlatformPage component with no meta entry — a
+  // duplicate-content route), so it no longer needs a PAGE_META entry here.
 
   '/solutions/devops': {
+    primaryKeyword: 'DevOps Solutions',
     title: 'DevOps Solutions | Automate Software Delivery & Cloud Operations | Xamops',
     description: 'Accelerate software delivery with Xamops DevOps Solutions. Automate CI/CD, improve cloud operations, optimize infrastructure, and deliver applications faster with confidence.',
     keywords: 'DevOps automation solutions, devops automation platform, cloud devops, CI/CD automation, infrastructure automation, kubernetes automation, devops workflow automation, cloud automation devops, azure devops automation, devops automation services, cloud infrastructure automation, enterprise cloud automation',
@@ -303,33 +369,39 @@ export const PAGE_META = {
           { '@type': 'Question', name: 'Does Xamops support multi-cloud environments?', acceptedAnswer: { '@type': 'Answer', text: 'Yes. Xamops DevOps Solutions support AWS, Microsoft Azure, Google Cloud, and hybrid cloud environments from a centralized platform.' } },
         ],
       },
+      bc([['Home', '/'], ['DevOps Solutions', '/solutions/devops']]),
+      svc('DevOps Solutions', 'DevOps automation solutions for CI/CD, infrastructure-as-code, and Kubernetes operations across cloud environments.', 'DevOps Consulting'),
       org,
     ],
   },
 
   '/solutions/finops': {
-    title: 'FinOps Platform for Cloud Cost Optimization | Xamops',
-    description: 'Optimize cloud spending with the Xamops FinOps Platform. Improve cloud cost visibility, automate resource optimization, and maximize business value with intelligent cloud financial management.',
-    keywords: 'FinOps solutions, cloud cost management, cloud cost optimization, FinOps platform, cloud cost reduction, reserved instance optimization, aws finops, azure finops, gcp finops, cloud cost optimization platform, FinOps automation platform, cloud cost management platform, multicloud management platform, aws cost optimization, cloud cost optimization services, google cloud cost optimization, azure cloud cost optimization, gcp cost optimization, cloud cost analytics',
+    primaryKeyword: 'FinOps Solutions',
+    title: 'FinOps Solutions for Cloud Cost Management | Xamops',
+    description: 'Xamops FinOps Solutions help enterprises improve cloud cost visibility, automate resource optimization, and maximize business value with intelligent cloud financial management.',
+    keywords: 'FinOps solutions, cloud cost management solutions, reserved instance optimization, cloud financial management, multi-cloud FinOps, enterprise FinOps consulting, cloud cost management, cloud cost optimization, cloud cost reduction, aws finops, azure finops, gcp finops, cloud cost optimization platform, cloud cost management platform, multicloud management platform, aws cost optimization, cloud cost optimization services, google cloud cost optimization, azure cloud cost optimization, gcp cost optimization, cloud cost analytics',
     canonical: `${BASE}/solutions/finops`,
     schemas: [
-      wp('/solutions/finops', 'FinOps Platform for Cloud Cost Optimization | Xamops', 'Improve cloud cost visibility and automate resource optimization.'),
+      wp('/solutions/finops', 'FinOps Solutions for Cloud Cost Management | Xamops', 'Improve cloud cost visibility and automate resource optimization.'),
       app('XamOps FinOps', 'Automated FinOps solutions for cloud cost management and optimization across AWS, Azure, and GCP.',
         ['Real-time cost visibility','Automated rightsizing','Reserved instance optimization','Chargeback automation','Cloud cost anomaly alerts','Guaranteed 30-40% cost reduction']),
       {
         '@type': 'FAQPage',
         '@id': `${BASE}/solutions/finops/#faq`,
         mainEntity: [
-          { '@type': 'Question', name: 'What is a FinOps Platform?', acceptedAnswer: { '@type': 'Answer', text: 'A FinOps Platform helps organizations monitor, manage, and optimize cloud spending by bringing engineering, finance, and operations teams together for better financial accountability.' } },
+          { '@type': 'Question', name: 'What are FinOps Solutions?', acceptedAnswer: { '@type': 'Answer', text: 'FinOps Solutions help organizations monitor, manage, and optimize cloud spending by bringing engineering, finance, and operations teams together for better financial accountability.' } },
           { '@type': 'Question', name: 'How does Xamops help reduce cloud costs?', acceptedAnswer: { '@type': 'Answer', text: 'Xamops identifies underutilized resources, monitors cloud usage, automates optimization, and provides recommendations to reduce unnecessary cloud expenses.' } },
           { '@type': 'Question', name: 'Can Xamops support multi-cloud environments?', acceptedAnswer: { '@type': 'Answer', text: 'Yes. Xamops is designed to manage cloud infrastructure across multiple cloud providers through centralized monitoring, automation, and cost management.' } },
         ],
       },
+      bc([['Home', '/'], ['FinOps Solutions', '/solutions/finops']]),
+      svc('FinOps Solutions', 'Cloud financial management solutions covering cost visibility, automated rightsizing, and reserved instance optimization across AWS, Azure, and GCP.', 'FinOps Consulting'),
       org,
     ],
   },
 
   '/solutions/sre': {
+    primaryKeyword: 'SRE Solutions',
     title: 'SRE Solutions | Improve Reliability with Cloud Automation | Xamops',
     description: 'Improve application reliability with Xamops SRE Solutions. Automate cloud operations, reduce downtime, optimize infrastructure, and enhance system performance with intelligent cloud management.',
     keywords: 'SRE solutions, site reliability engineering, cloud reliability, incident management, SLO tracking, cloud operations, reliability automation, SRE automation platform, cloud operations automation, administering monitoring cloud services',
@@ -347,13 +419,16 @@ export const PAGE_META = {
           { '@type': 'Question', name: 'Which teams benefit from Xamops SRE Solutions?', acceptedAnswer: { '@type': 'Answer', text: 'Site Reliability Engineers, DevOps teams, Cloud Operations teams, Infrastructure Engineers, FinOps teams, and IT Operations teams all benefit from Xamops.' } },
         ],
       },
+      bc([['Home', '/'], ['SRE Solutions', '/solutions/sre']]),
+      svc('SRE Solutions', 'Site reliability engineering solutions covering automated incident management, SLO tracking, and chaos engineering.', 'SRE Consulting'),
       org,
     ],
   },
 
   // ── Blog post: Disk Rightsizing ───────────────────────────────────
   '/blog/disk-rightsizing-ebs': {
-    title: 'Disk Rightsizing: The Cost Saving Everyone Ignores | XamOps Blog',
+    primaryKeyword: 'EBS Disk Rightsizing',
+    title: 'EBS Disk Rightsizing: The Cost Saving Everyone Ignores | XamOps Blog',
     description: 'Three moves that eliminate 30–40% of cloud storage waste: unattached EBS volumes, gp2 to gp3 migration, and over-provisioned disk rightsizing. With policy enforcement to prevent re-accumulation.',
     keywords: 'disk rightsizing ebs, aws storage optimization, ebs cost savings, gp2 gp3 migration, unattached ebs volumes, over-provisioned disk aws, cloud storage waste, finops storage, ec2 storage optimization, ebs volume rightsizing, cloud cost optimization',
     canonical: `${BASE}/blog/disk-rightsizing-ebs`,
@@ -362,7 +437,7 @@ export const PAGE_META = {
         '@context': 'https://schema.org',
         '@type': 'BlogPosting',
         '@id': `${BASE}/blog/disk-rightsizing-ebs/#post`,
-        headline: 'Disk Rightsizing: The Cost Saving Everyone Ignores',
+        headline: 'EBS Disk Rightsizing: The Cost Saving Everyone Ignores',
         description: 'Three moves that eliminate 30–40% of cloud storage waste, with the discipline to prevent it from coming back.',
         url: `${BASE}/blog/disk-rightsizing-ebs/`,
         datePublished: '2026-05-28',
@@ -381,13 +456,15 @@ export const PAGE_META = {
         ],
         mainEntityOfPage: { '@type': 'WebPage', '@id': `${BASE}/blog/disk-rightsizing-ebs/` },
       },
-      wp('/blog/disk-rightsizing-ebs', 'Disk Rightsizing: The Cost Saving Everyone Ignores | XamOps Blog', 'Three moves to eliminate 30–40% of cloud storage waste and prevent re-accumulation.'),
+      wp('/blog/disk-rightsizing-ebs', 'EBS Disk Rightsizing: The Cost Saving Everyone Ignores | XamOps Blog', 'Three moves to eliminate 30–40% of cloud storage waste and prevent re-accumulation.'),
+      bc([['Home', '/'], ['Blog', '/blog'], ['EBS Disk Rightsizing', '/blog/disk-rightsizing-ebs']]),
       org,
     ],
   },
 
   // ── Blog post: EC2 Spot instances ────────────────────────────────
   '/blog/ec2-spot-instances-production': {
+    primaryKeyword: 'EC2 Spot Instances in Production',
     title: 'EC2 Spot Instances in Production: Stop Fearing Interruptions | XamOps Blog',
     description: 'A practical guide for DevOps engineers on running Spot instances safely in production, with the five patterns that make interruptions a non-event and save 70% on compute.',
     keywords: 'ec2 spot instances production, spot instance interruption, aws spot instances guide, spot instances devops, spot instance best practices, aws compute savings, autoscaling spot instances, spot on-demand fallback, ec2 spot automation, cloud cost optimization',
@@ -417,12 +494,14 @@ export const PAGE_META = {
         mainEntityOfPage: { '@type': 'WebPage', '@id': `${BASE}/blog/ec2-spot-instances-production/` },
       },
       wp('/blog/ec2-spot-instances-production', 'EC2 Spot Instances in Production | XamOps Blog', 'Five patterns for running Spot safely in production and saving 70% on compute.'),
+      bc([['Home', '/'], ['Blog', '/blog'], ['EC2 Spot Instances in Production', '/blog/ec2-spot-instances-production']]),
       org,
     ],
   },
 
   // ── Blog post: AWS cost spike ─────────────────────────────────────
   '/blog/aws-cost-spike-investigation': {
+    primaryKeyword: 'AWS Cost Spike Investigation',
     title: "AWS Bill Jumped 40%? Here's How to Investigate It | XamOps Blog",
     description: 'A step-by-step checklist for DevOps engineers to diagnose and fix unexpected AWS cost spikes, before finance comes knocking again.',
     keywords: 'aws cost spike investigation, why did my aws bill increase, aws cost anomaly checklist, unexpected aws charges devops, aws cost explorer, aws finops, cloud cost optimization, aws billing investigation, ec2 cost spike, data transfer aws costs',
@@ -455,12 +534,14 @@ export const PAGE_META = {
         },
       },
       wp('/blog/aws-cost-spike-investigation', "AWS Bill Jumped 40%? Investigate It | XamOps Blog", 'Step-by-step AWS cost spike investigation checklist for DevOps engineers.'),
+      bc([['Home', '/'], ['Blog', '/blog'], ['AWS Cost Spike Investigation', '/blog/aws-cost-spike-investigation']]),
       org,
     ],
   },
 
   // ── Blog post: What Is XamOps ─────────────────────────────────────
   '/blog/what-is-xamops': {
+    primaryKeyword: 'What Is XamOps',
     title: 'What Is XamOps? A Smarter Way to Reduce Cloud Costs | XamOps Blog',
     description: 'XamOps is a Cognitive Cloud Operating System for DevOps, FinOps, and SRE teams. Learn how it automates cloud operations, cuts costs, and unifies AWS, Azure, and GCP into one platform.',
     keywords: 'what is xamops, cloud cost optimization platform, cognitive cloud operating system, cloud automation software, devops finops sre platform, aws azure gcp management, cloud operations automation, reduce cloud costs, cloud infrastructure management, xamops review',
@@ -490,13 +571,19 @@ export const PAGE_META = {
         mainEntityOfPage: { '@type': 'WebPage', '@id': `${BASE}/blog/what-is-xamops/` },
       },
       wp('/blog/what-is-xamops', 'What Is XamOps? | XamOps Blog', 'Cognitive Cloud OS for DevOps, FinOps, and SRE teams across AWS, Azure, and GCP.'),
+      bc([['Home', '/'], ['Blog', '/blog'], ['What Is XamOps', '/blog/what-is-xamops']]),
       org,
     ],
   },
 
   // ── Blog post: Cloud Cost Optimization Strategies ────────────────
+  // NOTE: title/H1 previously said "in Noida" with zero supporting Noida content
+  // in the body — a keyword/content mismatch. Dropped "in Noida" here and in the
+  // page's H1 (CloudCostOptimizationStrategiesPage.jsx) to keep this a generic
+  // pillar page; the two genuine 5-city posts already own the Noida-cluster terms.
   '/blog/cloud-cost-optimization-strategies': {
-    title: 'Cloud Cost Optimization in Noida: 10 Proven Strategies for FinOps Teams | XamOps Blog',
+    primaryKeyword: 'Cloud Cost Optimization Strategies',
+    title: 'Cloud Cost Optimization Strategies: 10 Proven Tactics for FinOps Teams | XamOps Blog',
     description: 'Ten actionable cloud cost optimization strategies for FinOps teams: visibility, resource tagging, rightsizing, scheduling automation, reserved instances, budget alerts, storage optimization, collaboration, and predictive analytics.',
     keywords: 'cloud cost optimization strategies, finops best practices, cloud cost reduction, aws cost optimization, azure cost management, gcp cost control, resource rightsizing, cloud waste reduction, finops automation, cloud budget management, reserved instances savings plans',
     canonical: `${BASE}/blog/cloud-cost-optimization-strategies`,
@@ -505,7 +592,7 @@ export const PAGE_META = {
         '@context': 'https://schema.org',
         '@type': 'BlogPosting',
         '@id': `${BASE}/blog/cloud-cost-optimization-strategies/#post`,
-        headline: 'Cloud Cost Optimization in Noida: 10 Proven Strategies for FinOps Teams',
+        headline: 'Cloud Cost Optimization Strategies: 10 Proven Tactics for FinOps Teams',
         description: 'Ten actionable strategies to reduce cloud waste and maximize the value of every dollar spent, from resource tagging and rightsizing to predictive analytics.',
         url: `${BASE}/blog/cloud-cost-optimization-strategies/`,
         datePublished: '2026-06-24',
@@ -525,12 +612,14 @@ export const PAGE_META = {
         mainEntityOfPage: { '@type': 'WebPage', '@id': `${BASE}/blog/cloud-cost-optimization-strategies/` },
       },
       wp('/blog/cloud-cost-optimization-strategies', '10 Cloud Cost Optimization Strategies | XamOps Blog', 'Proven FinOps strategies to reduce cloud waste across AWS, Azure, and GCP.'),
+      bc([['Home', '/'], ['Blog', '/blog'], ['Cloud Cost Optimization Strategies', '/blog/cloud-cost-optimization-strategies']]),
       org,
     ],
   },
 
   // ── Blog post: DevOps Automation Platform vs Traditional IT Operations ──
   '/blog/devops-automation-platform-vs-traditional-it-operations': {
+    primaryKeyword: 'DevOps Automation Platform vs Traditional IT Operations',
     title: 'DevOps Automation Platform vs Traditional IT Operations | Xamops',
     description: 'Compare DevOps Automation Platforms with Traditional IT Operations. Learn how Xamops helps businesses in Noida, Delhi, and Lucknow automate cloud operations, reduce costs, and improve efficiency.',
     keywords: 'devops automation platform, traditional it operations, devops vs it operations, cloud automation noida, devops automation delhi, devops automation lucknow, cloud cost optimization, infrastructure as code, cloud governance, multi-cloud management',
@@ -571,15 +660,17 @@ export const PAGE_META = {
         ],
       },
       wp('/blog/devops-automation-platform-vs-traditional-it-operations', 'DevOps Automation Platform vs Traditional IT Operations | Xamops', 'Compare DevOps Automation Platforms with Traditional IT Operations for businesses in Noida, Delhi, and Lucknow.'),
+      bc([['Home', '/'], ['Blog', '/blog'], ['DevOps Automation Platform vs Traditional IT Operations', '/blog/devops-automation-platform-vs-traditional-it-operations']]),
       org,
     ],
   },
 
   // ── Blog post: SRE Automation Platform Noida ────────────────────
   '/blog/sre-automation-platform-noida': {
+    primaryKeyword: 'SRE Automation Platform in Noida',
     title: 'SRE Automation Platform in Noida | Cloud Reliability Solutions | Xamops',
     description: 'Discover how the Xamops SRE Automation Platform helps businesses in Noida, Delhi, and Lucknow improve cloud reliability, automate IT operations, reduce downtime, and optimize cloud infrastructure.',
-    keywords: 'SRE Automation Platform, SRE Automation Platform in Noida, Cloud Reliability Platform, Site Reliability Engineering, Cloud Infrastructure Automation, DevOps Automation Platform, Cloud Monitoring, Xamops, Cloud Operations Platform',
+    keywords: 'SRE Automation Platform in Noida, SRE Automation Platform, Cloud Reliability Platform, Site Reliability Engineering, Cloud Infrastructure Automation, DevOps Automation Platform, Cloud Monitoring, Xamops, Cloud Operations Platform',
     canonical: `${BASE}/blog/sre-automation-platform-noida`,
     schemas: [
       {
@@ -624,15 +715,17 @@ export const PAGE_META = {
         ],
       },
       wp('/blog/sre-automation-platform-noida', 'SRE Automation Platform in Noida | Cloud Reliability Solutions | Xamops', 'How Xamops helps businesses in Noida, Delhi, and Lucknow improve cloud reliability and automate IT operations.'),
+      bc([['Home', '/'], ['Blog', '/blog'], ['SRE Automation Platform in Noida', '/blog/sre-automation-platform-noida']]),
       org,
     ],
   },
 
   // ── Blog post: Top Benefits of FinOps Services for Cloud Cost Optimization ──
   '/blog/benefits-of-finops-services-cloud-cost-optimization': {
+    primaryKeyword: 'Benefits of FinOps Services',
     title: 'Top Benefits of FinOps Services for Cloud Cost Optimization',
     description: 'The top benefits of FinOps Services for cloud cost optimization and learn how Xamops helps businesses reduce costs and improve ROI.',
-    keywords: 'FinOps Services, FinOps Services Noida, FinOps Services Delhi NCR, FinOps Services Bangalore, FinOps Services Hyderabad, FinOps Services Jaipur, Cloud Cost Optimization, Cloud Financial Management, Xamops',
+    keywords: 'Benefits of FinOps Services, FinOps Services, FinOps Services Noida, FinOps Services Delhi NCR, FinOps Services Bangalore, FinOps Services Hyderabad, FinOps Services Jaipur, Cloud Cost Optimization, Cloud Financial Management',
     canonical: `${BASE}/blog/benefits-of-finops-services-cloud-cost-optimization`,
     schemas: [
       {
@@ -678,12 +771,14 @@ export const PAGE_META = {
         ],
       },
       wp('/blog/benefits-of-finops-services-cloud-cost-optimization', 'Top Benefits of FinOps Services for Cloud Cost Optimization', 'The top benefits of FinOps Services for cloud cost optimization and learn how Xamops helps businesses reduce costs and improve ROI.'),
+      bc([['Home', '/'], ['Blog', '/blog'], ['Benefits of FinOps Services', '/blog/benefits-of-finops-services-cloud-cost-optimization']]),
       org,
     ],
   },
 
   // ── Blog post: SRE Services India (Noida, Delhi NCR, Bangalore, Hyderabad, Jaipur) ──
   '/blog/sre-services-india': {
+    primaryKeyword: 'SRE Services in India',
     title: 'Site Reliability Engineering Services in India | Noida, Delhi NCR, Bangalore, Hyderabad & Jaipur | Xamops',
     description: 'Learn how Site Reliability Engineering Services can help businesses improve cloud reliability, application performance, monitoring, automation, and infrastructure operations across India.',
     keywords: 'Site Reliability Engineering Services, SRE Services, Site Reliability Engineering, SRE Solutions, SRE Consulting Services, SRE Automation, Cloud Reliability Services, Cloud Infrastructure Management, Infrastructure Monitoring, Application Performance Monitoring, Observability and Reliability, Incident Management, Root Cause Analysis, SRE Investigation, Cloud Operations, DevOps and SRE, Kubernetes Monitoring, Site Reliability Engineering Services in Noida, Site Reliability Engineering Services in Delhi NCR, Site Reliability Engineering Services in Bangalore, Site Reliability Engineering Services in Hyderabad, Site Reliability Engineering Services in Jaipur, XamOps SRE Services',
@@ -766,6 +861,7 @@ export const PAGE_META = {
 
   // ── Blog post: FinOps Services in Noida, Delhi NCR, Bangalore, Hyderabad & Jaipur ──
   '/blog/finops-services-in-noida': {
+    primaryKeyword: 'FinOps Services in Noida',
     title: 'FinOps Services in Noida, Delhi NCR, Bangalore, Hyderabad & Jaipur | Xamops',
     description: 'Learn how FinOps services help businesses optimize cloud costs, improve cloud visibility, manage AWS, Azure and GCP spending, and strengthen cloud financial management in Noida, Delhi NCR, Bangalore, Hyderabad and Jaipur.',
     keywords: 'FinOps Services in Noida, FinOps in Noida, FinOps Services in Delhi NCR, FinOps Services in Bangalore, FinOps Services in Hyderabad, FinOps Services in Jaipur, FinOps Services, FinOps consulting services, cloud cost optimization, cloud cost optimization services, cloud cost management, AWS FinOps, Azure FinOps, GCP FinOps, multi-cloud FinOps, XamOps FinOps, XamOps cloud cost optimization',
@@ -815,15 +911,217 @@ export const PAGE_META = {
         ],
       },
       wp('/blog/finops-services-in-noida', 'FinOps Services in Noida, Delhi NCR, Bangalore, Hyderabad & Jaipur | Xamops', 'How FinOps services help businesses optimize AWS, Azure, and GCP spending across Noida, Delhi NCR, Bangalore, Hyderabad, and Jaipur.'),
+      bc([['Home', '/'], ['Blog', '/blog'], ['FinOps Services in Noida', '/blog/finops-services-in-noida']]),
+      org,
+    ],
+  },
+
+  // ── Blog post: Enterprise FinOps Services in Noida ────────────────
+  '/blog/enterprise-finops-services-in-noida': {
+    primaryKeyword: 'Enterprise FinOps Services in Noida',
+    title: 'Enterprise FinOps Services in Noida | 24/7 Monitoring | Xamops',
+    description: 'Enterprise FinOps Services in Noida with 24/7 Infrastructure Monitoring, 99.9% Availability Focus, and 100% technical support to help enterprises control cloud spending without compromising performance.',
+    keywords: 'Enterprise FinOps Services in Noida, FinOps Consultants in Noida, Cloud FinOps Services in Noida, FinOps Consulting Services in Noida, FinOps Service Provider in Noida, 24/7 Infrastructure Monitoring, 99.9% Availability Focus, cloud cost management, cloud financial governance',
+    canonical: `${BASE}/blog/enterprise-finops-services-in-noida`,
+    schemas: [
+      {
+        '@context': 'https://schema.org',
+        '@type': 'BlogPosting',
+        '@id': `${BASE}/blog/enterprise-finops-services-in-noida/#post`,
+        headline: 'Enterprise FinOps Services in Noida: 24/7 Infrastructure Monitoring, 99.9% Availability Focus & 100% Technical Support',
+        description: 'Enterprise FinOps Services in Noida help businesses control cloud spending without compromising application performance, scalability, or innovation.',
+        url: `${BASE}/blog/enterprise-finops-services-in-noida/`,
+        datePublished: '2026-09-10',
+        dateModified: '2026-09-10',
+        author: { '@type': 'Organization', name: 'XamOps', url: `${BASE}/` },
+        publisher: org,
+        keywords: ['Enterprise FinOps Services in Noida', 'FinOps Consultants in Noida', 'Cloud FinOps Services in Noida', 'FinOps Consulting Services in Noida', 'FinOps Service Provider in Noida', '24/7 Infrastructure Monitoring', '99.9% Availability Focus'],
+        timeRequired: 'PT9M',
+        wordCount: '1550',
+        inLanguage: 'en-US',
+        articleSection: 'FinOps',
+        about: [
+          { '@type': 'Thing', name: 'Enterprise FinOps Services' },
+          { '@type': 'Thing', name: 'Cloud Financial Management' },
+          { '@type': 'Thing', name: 'Cloud Cost Optimization' },
+        ],
+        mainEntityOfPage: { '@type': 'WebPage', '@id': `${BASE}/blog/enterprise-finops-services-in-noida/` },
+      },
+      {
+        '@type': 'FAQPage',
+        '@id': `${BASE}/blog/enterprise-finops-services-in-noida/#faq`,
+        mainEntity: [
+          { '@type': 'Question', name: 'What are Enterprise FinOps Services in Noida?', acceptedAnswer: { '@type': 'Answer', text: 'Enterprise FinOps Services in Noida help large organizations control cloud spending without compromising application performance, scalability, or innovation, combining cloud financial management with 24/7 infrastructure monitoring, availability focus, and technical support by certified engineers.' } },
+          { '@type': 'Question', name: 'How does XamOps provide 24/7 Infrastructure Monitoring?', acceptedAnswer: { '@type': 'Answer', text: 'XamOps maintains continuous visibility into critical cloud environments so that spending anomalies, underutilized resources, and operational issues can be identified and addressed before they become major budget or performance problems.' } },
+          { '@type': 'Question', name: 'What does a 99.9% Availability Focus mean for FinOps?', acceptedAnswer: { '@type': 'Answer', text: 'It means cost optimization is never pursued at the expense of reliability. XamOps evaluates the right balance between cost, performance, reliability, security, and business value rather than simply cutting every possible expense.' } },
+          { '@type': 'Question', name: 'What is included in FinOps governance for enterprises?', acceptedAnswer: { '@type': 'Answer', text: 'FinOps governance includes practices around budgets, resource ownership, tagging, reporting, accountability, and optimization, defining who owns specific cloud resources and what processes apply when spending exceeds predefined thresholds.' } },
+          { '@type': 'Question', name: 'Why work with FinOps Consultants in Noida instead of an internal team alone?', acceptedAnswer: { '@type': 'Answer', text: 'FinOps Consultants in Noida bring specialized knowledge of cloud architecture, billing models, utilization metrics, and financial planning that may not exist within an internal finance or infrastructure team, and can identify hidden cost drivers faster.' } },
+          { '@type': 'Question', name: 'Does XamOps support multi-cloud and hybrid enterprise environments?', acceptedAnswer: { '@type': 'Answer', text: 'Yes. Cloud FinOps Services in Noida from XamOps can support multi-cloud and hybrid environments, making it easier to compare spending, monitor business units, evaluate workload efficiency, and establish consistent financial controls.' } },
+        ],
+      },
+      wp('/blog/enterprise-finops-services-in-noida', 'Enterprise FinOps Services in Noida | Xamops', '24/7 Infrastructure Monitoring, 99.9% Availability Focus, and 100% technical support for enterprise cloud financial management.'),
+      bc([['Home', '/'], ['Blog', '/blog'], ['Enterprise FinOps Services in Noida', '/blog/enterprise-finops-services-in-noida']]),
+      svc('Enterprise FinOps Services in Noida', 'Enterprise cloud financial management with 24/7 infrastructure monitoring, 99.9% availability focus, and certified technical support.', 'FinOps Consulting'),
+      org,
+    ],
+  },
+
+  // ── Blog post: FinOps Services in Ahmedabad ───────────────────────
+  '/blog/finops-services-in-ahmedabad': {
+    primaryKeyword: 'FinOps Services in Ahmedabad',
+    title: 'FinOps Services in Ahmedabad | 24/7 Monitoring | Xamops',
+    description: 'FinOps Services in Ahmedabad with 24/7 Infrastructure Monitoring, 99.9% Availability Focus, and 100% technical support, helping businesses control cloud spending without slowing down innovation.',
+    keywords: 'FinOps Services in Ahmedabad, FinOps Consultants in Ahmedabad, Cloud FinOps Services in Ahmedabad, FinOps Consulting Services in Ahmedabad, FinOps Service Provider in Ahmedabad, 24/7 Infrastructure Monitoring, cloud cost optimization, cloud cost management',
+    canonical: `${BASE}/blog/finops-services-in-ahmedabad`,
+    schemas: [
+      {
+        '@context': 'https://schema.org',
+        '@type': 'BlogPosting',
+        '@id': `${BASE}/blog/finops-services-in-ahmedabad/#post`,
+        headline: 'FinOps Services in Ahmedabad: 24/7 Infrastructure Monitoring, 99.9% Availability Focus & 100% Technical Support',
+        description: 'FinOps Services in Ahmedabad help businesses control cloud spending without slowing down innovation, through structured cloud financial management.',
+        url: `${BASE}/blog/finops-services-in-ahmedabad/`,
+        datePublished: '2026-09-10',
+        dateModified: '2026-09-10',
+        author: { '@type': 'Organization', name: 'XamOps', url: `${BASE}/` },
+        publisher: org,
+        keywords: ['FinOps Services in Ahmedabad', 'FinOps Consultants in Ahmedabad', 'Cloud FinOps Services in Ahmedabad', 'FinOps Consulting Services in Ahmedabad', 'FinOps Service Provider in Ahmedabad', '24/7 Infrastructure Monitoring'],
+        timeRequired: 'PT10M',
+        wordCount: '2000',
+        inLanguage: 'en-US',
+        articleSection: 'FinOps',
+        about: [
+          { '@type': 'Thing', name: 'FinOps Services' },
+          { '@type': 'Thing', name: 'Cloud Financial Management' },
+          { '@type': 'Thing', name: 'Cloud Cost Optimization' },
+        ],
+        mainEntityOfPage: { '@type': 'WebPage', '@id': `${BASE}/blog/finops-services-in-ahmedabad/` },
+      },
+      {
+        '@type': 'FAQPage',
+        '@id': `${BASE}/blog/finops-services-in-ahmedabad/#faq`,
+        mainEntity: [
+          { '@type': 'Question', name: 'What are FinOps Services in Ahmedabad?', acceptedAnswer: { '@type': 'Answer', text: 'FinOps Services in Ahmedabad help businesses control cloud spending without slowing down innovation, through a structured approach combining 24/7 infrastructure monitoring, availability focus, and technical support by certified engineers.' } },
+          { '@type': 'Question', name: 'How do FinOps Consultants in Ahmedabad help reduce cloud costs?', acceptedAnswer: { '@type': 'Answer', text: 'FinOps Consultants in Ahmedabad evaluate existing cloud environments, analyze compute instances, storage, databases, networking costs, and managed services, and identify optimization opportunities backed by measurable usage data.' } },
+          { '@type': 'Question', name: 'Does cloud optimization affect application performance?', acceptedAnswer: { '@type': 'Answer', text: 'It should not. XamOps focuses on optimization that considers both financial and technical requirements, evaluating whether resources are appropriately sized for actual workloads rather than reducing capacity blindly.' } },
+          { '@type': 'Question', name: 'What is included in FinOps Consulting Services in Ahmedabad for growing businesses?', acceptedAnswer: { '@type': 'Answer', text: 'FinOps Consulting Services in Ahmedabad help growing organizations establish a scalable framework as new applications, users, and workloads affect cloud budgets, including centralized reporting and governance across multiple accounts and platforms.' } },
+          { '@type': 'Question', name: 'Is FinOps a one-time project or an ongoing process?', acceptedAnswer: { '@type': 'Answer', text: 'Successful FinOps is an ongoing process. Cloud environments continuously evolve, so XamOps uses continuous analysis to identify changes in usage and spending patterns rather than treating optimization as a single exercise.' } },
+          { '@type': 'Question', name: 'Why choose XamOps as a FinOps Service Provider in Ahmedabad?', acceptedAnswer: { '@type': 'Answer', text: 'XamOps combines cloud operations knowledge with financial management principles, backed by 24/7 Infrastructure Monitoring, a 99.9% Availability Focus, and Technical Support by Certified Engineers, to deliver practical, data-driven recommendations.' } },
+        ],
+      },
+      wp('/blog/finops-services-in-ahmedabad', 'FinOps Services in Ahmedabad | Xamops', '24/7 Infrastructure Monitoring, 99.9% Availability Focus, and 100% technical support for cloud financial management in Ahmedabad.'),
+      bc([['Home', '/'], ['Blog', '/blog'], ['FinOps Services in Ahmedabad', '/blog/finops-services-in-ahmedabad']]),
+      svc('FinOps Services in Ahmedabad', 'Cloud financial management for Ahmedabad businesses with 24/7 infrastructure monitoring, 99.9% availability focus, and certified technical support.', 'FinOps Consulting'),
+      org,
+    ],
+  },
+
+  // ── Blog post: SRE Services in Bangalore ──────────────────────────
+  '/blog/site-reliability-engineering-services-in-bangalore': {
+    primaryKeyword: 'Site Reliability Engineering Services in Bangalore',
+    title: 'Site Reliability Engineering Services in Bangalore | Xamops',
+    description: 'Site Reliability Engineering Services in Bangalore with 24/7 Monitoring, 99.9% Availability Focus, and certified engineering support for reliable, scalable cloud-native applications.',
+    keywords: 'Site Reliability Engineering Services in Bangalore, SRE Consulting Services in Bangalore, Site Reliability Consulting in Bangalore, Cloud Reliability Engineering Services in Bangalore, DevOps and SRE Services in Bangalore, 24/7 Infrastructure Monitoring, 99.9% Availability Focus',
+    canonical: `${BASE}/blog/site-reliability-engineering-services-in-bangalore`,
+    schemas: [
+      {
+        '@context': 'https://schema.org',
+        '@type': 'BlogPosting',
+        '@id': `${BASE}/blog/site-reliability-engineering-services-in-bangalore/#post`,
+        headline: 'Site Reliability Engineering Services in Bangalore: 24/7 Monitoring, 99.9% Availability & Certified Engineering Support',
+        description: 'Site Reliability Engineering Services in Bangalore help businesses that depend on cloud applications, APIs, and microservices build reliable, scalable, performance-focused IT environments.',
+        url: `${BASE}/blog/site-reliability-engineering-services-in-bangalore/`,
+        datePublished: '2026-09-10',
+        dateModified: '2026-09-10',
+        author: { '@type': 'Organization', name: 'XamOps', url: `${BASE}/` },
+        publisher: org,
+        keywords: ['Site Reliability Engineering Services in Bangalore', 'SRE Consulting Services in Bangalore', 'Site Reliability Consulting in Bangalore', 'Cloud Reliability Engineering Services in Bangalore', 'DevOps and SRE Services in Bangalore', '24/7 Infrastructure Monitoring'],
+        timeRequired: 'PT10M',
+        wordCount: '2100',
+        inLanguage: 'en-US',
+        articleSection: 'SRE',
+        about: [
+          { '@type': 'Thing', name: 'Site Reliability Engineering' },
+          { '@type': 'Thing', name: 'Cloud Reliability' },
+          { '@type': 'Thing', name: 'DevOps' },
+        ],
+        mainEntityOfPage: { '@type': 'WebPage', '@id': `${BASE}/blog/site-reliability-engineering-services-in-bangalore/` },
+      },
+      {
+        '@type': 'FAQPage',
+        '@id': `${BASE}/blog/site-reliability-engineering-services-in-bangalore/#faq`,
+        mainEntity: [
+          { '@type': 'Question', name: 'What are Site Reliability Engineering Services in Bangalore?', acceptedAnswer: { '@type': 'Answer', text: 'Site Reliability Engineering Services in Bangalore help businesses that depend on cloud applications, APIs, microservices, and always-on infrastructure build reliable, scalable, secure, and performance-focused IT environments, backed by 24/7 Infrastructure Monitoring and certified engineering support.' } },
+          { '@type': 'Question', name: 'How does XamOps build reliable IT infrastructure?', acceptedAnswer: { '@type': 'Answer', text: 'XamOps starts with visibility, establishing monitoring and observability across applications, servers, containers, databases, networks, and cloud resources, then layers automation on top to support deployments, recovery procedures, and scaling activities.' } },
+          { '@type': 'Question', name: 'What is the difference between DevOps and SRE?', acceptedAnswer: { '@type': 'Answer', text: 'DevOps promotes collaboration, automation, and faster software delivery, while SRE applies engineering principles to reliability, availability, performance, and operational risk. XamOps offers DevOps and SRE Services in Bangalore that bring both disciplines together.' } },
+          { '@type': 'Question', name: 'What does a 99.9% Availability Focus mean in practice?', acceptedAnswer: { '@type': 'Answer', text: 'It means XamOps designs reliability strategies for business-critical environments with the underlying objective of reducing avoidable downtime and improving service continuity, while the exact target depends on application architecture and business requirements.' } },
+          { '@type': 'Question', name: 'Can Cloud Reliability Engineering Services in Bangalore support growing startups?', acceptedAnswer: { '@type': 'Answer', text: "Yes. XamOps provides Site Reliability Consulting in Bangalore aligned with the organization's current technology maturity, whether that means establishing monitoring and incident processes for a growing startup or reliability improvements across large-scale distributed systems for an enterprise." } },
+          { '@type': 'Question', name: 'How does reliability engineering connect to security?', acceptedAnswer: { '@type': 'Answer', text: 'Reliability cannot be separated completely from security and operational discipline. Misconfigurations, outdated components, and unmanaged infrastructure changes can create both security and availability risks, so XamOps integrates automation and best practices into reliability-focused environments.' } },
+        ],
+      },
+      wp('/blog/site-reliability-engineering-services-in-bangalore', 'Site Reliability Engineering Services in Bangalore | Xamops', '24/7 Monitoring, 99.9% Availability, and certified engineering support for reliable cloud infrastructure in Bangalore.'),
+      bc([['Home', '/'], ['Blog', '/blog'], ['Site Reliability Engineering Services in Bangalore', '/blog/site-reliability-engineering-services-in-bangalore']]),
+      svc('Site Reliability Engineering Services in Bangalore', 'Reliability engineering for cloud-native applications in Bangalore, with 24/7 monitoring, 99.9% availability focus, and certified engineering support.', 'Site Reliability Engineering'),
+      org,
+    ],
+  },
+
+  // ── Blog post: SRE Services in Hyderabad ──────────────────────────
+  '/blog/site-reliability-engineering-services-in-hyderabad': {
+    primaryKeyword: 'Site Reliability Engineering Services in Hyderabad',
+    title: 'Site Reliability Engineering Services in Hyderabad | Xamops',
+    description: 'Site Reliability Engineering Services in Hyderabad with 24/7 Infrastructure Monitoring, 99.9% Availability Focus, and 100% technical support for reliable, scalable, high-performance IT operations.',
+    keywords: 'Site Reliability Engineering Services in Hyderabad, SRE Consulting Services in Hyderabad, Site Reliability Consulting in Hyderabad, Cloud Reliability Engineering Services in Hyderabad, DevOps and SRE Services in Hyderabad, 24/7 Infrastructure Monitoring, 99.9% Availability Focus',
+    canonical: `${BASE}/blog/site-reliability-engineering-services-in-hyderabad`,
+    schemas: [
+      {
+        '@context': 'https://schema.org',
+        '@type': 'BlogPosting',
+        '@id': `${BASE}/blog/site-reliability-engineering-services-in-hyderabad/#post`,
+        headline: 'Site Reliability Engineering Services in Hyderabad: 24/7 Monitoring, 99.9% Availability & 100% Technical Support',
+        description: 'Site Reliability Engineering Services in Hyderabad help businesses that depend on always-available applications and cloud infrastructure strengthen operational reliability.',
+        url: `${BASE}/blog/site-reliability-engineering-services-in-hyderabad/`,
+        datePublished: '2026-09-10',
+        dateModified: '2026-09-10',
+        author: { '@type': 'Organization', name: 'XamOps', url: `${BASE}/` },
+        publisher: org,
+        keywords: ['Site Reliability Engineering Services in Hyderabad', 'SRE Consulting Services in Hyderabad', 'Site Reliability Consulting in Hyderabad', 'Cloud Reliability Engineering Services in Hyderabad', 'DevOps and SRE Services in Hyderabad', '24/7 Infrastructure Monitoring'],
+        timeRequired: 'PT10M',
+        wordCount: '2100',
+        inLanguage: 'en-US',
+        articleSection: 'SRE',
+        about: [
+          { '@type': 'Thing', name: 'Site Reliability Engineering' },
+          { '@type': 'Thing', name: 'Cloud Reliability' },
+          { '@type': 'Thing', name: 'Incident Management' },
+        ],
+        mainEntityOfPage: { '@type': 'WebPage', '@id': `${BASE}/blog/site-reliability-engineering-services-in-hyderabad/` },
+      },
+      {
+        '@type': 'FAQPage',
+        '@id': `${BASE}/blog/site-reliability-engineering-services-in-hyderabad/#faq`,
+        mainEntity: [
+          { '@type': 'Question', name: 'What are Site Reliability Engineering Services in Hyderabad?', acceptedAnswer: { '@type': 'Answer', text: 'Site Reliability Engineering Services in Hyderabad help businesses that depend on always-available applications, cloud infrastructure, APIs, and digital platforms strengthen operational reliability through 24/7 Infrastructure Monitoring, availability focus, and technical support by certified engineers.' } },
+          { '@type': 'Question', name: 'How does XamOps provide 24/7 Infrastructure Monitoring in Hyderabad?', acceptedAnswer: { '@type': 'Answer', text: 'XamOps monitors servers, virtual machines, containers, Kubernetes environments, cloud resources, databases, applications, APIs, and network components, with alerts configured around meaningful thresholds so engineering teams focus on important events rather than noise.' } },
+          { '@type': 'Question', name: 'What does Technical Support by Certified Engineers include?', acceptedAnswer: { '@type': 'Answer', text: 'It includes helping organizations investigate incidents, troubleshoot performance issues, manage infrastructure challenges, and improve operational processes, as well as incident investigation and root cause analysis to prevent similar failures.' } },
+          { '@type': 'Question', name: 'How does XamOps handle incident management and root cause analysis?', acceptedAnswer: { '@type': 'Answer', text: 'XamOps establishes structured incident management processes covering detection, escalation, communication, investigation, resolution, and post-incident improvement, with root cause analysis identifying engineering improvements rather than simply assigning responsibility.' } },
+          { '@type': 'Question', name: 'How do DevOps and SRE work together at XamOps?', acceptedAnswer: { '@type': 'Answer', text: 'DevOps and SRE Services in Hyderabad from XamOps bring development, infrastructure, automation, monitoring, and operational practices together, combining faster software delivery with engineering principles for reliability at scale.' } },
+          { '@type': 'Question', name: 'Is XamOps suitable for organizations migrating to the cloud?', acceptedAnswer: { '@type': 'Answer', text: 'Yes. Cloud Reliability Engineering Services in Hyderabad are suitable for organizations improving the stability of cloud-native applications, hybrid infrastructure, containers, APIs, databases, and distributed systems, including teams transitioning from traditional IT operations.' } },
+        ],
+      },
+      wp('/blog/site-reliability-engineering-services-in-hyderabad', 'Site Reliability Engineering Services in Hyderabad | Xamops', '24/7 Infrastructure Monitoring, 99.9% Availability Focus, and 100% technical support for reliable cloud operations in Hyderabad.'),
+      bc([['Home', '/'], ['Blog', '/blog'], ['Site Reliability Engineering Services in Hyderabad', '/blog/site-reliability-engineering-services-in-hyderabad']]),
+      svc('Site Reliability Engineering Services in Hyderabad', 'Reliability engineering for business-critical applications in Hyderabad, with 24/7 infrastructure monitoring, 99.9% availability focus, and certified technical support.', 'Site Reliability Engineering'),
       org,
     ],
   },
 
   // ── Blog post: FinOps Practices Multi-Cloud ──────────────────────
   '/blog/finops-practices-multi-cloud': {
+    primaryKeyword: 'FinOps Practices for Multi-Cloud',
     title: 'Best FinOps Practices for Multi-Cloud Environments | XamOps Blog',
     description: 'Seven proven FinOps practices for managing cloud costs across AWS, Azure, and GCP: ownership tagging, real-time monitoring, removing unused resources, automation, and cost forecasting.',
-    keywords: 'finops practices, multi-cloud cost management, cloud cost optimization, finops platform, aws azure gcp cost control, cloud cost visibility, cloud waste reduction, finops automation, cloud resource tagging, cloud cost forecasting',
+    keywords: 'finops practices for multi-cloud, finops practices, multi-cloud cost management, cloud cost optimization, finops platform, aws azure gcp cost control, cloud cost visibility, cloud waste reduction, finops automation, cloud resource tagging, cloud cost forecasting',
     canonical: `${BASE}/blog/finops-practices-multi-cloud`,
     schemas: [
       {
@@ -850,12 +1148,14 @@ export const PAGE_META = {
         mainEntityOfPage: { '@type': 'WebPage', '@id': `${BASE}/blog/finops-practices-multi-cloud/` },
       },
       wp('/blog/finops-practices-multi-cloud', 'Best FinOps Practices for Multi-Cloud | XamOps Blog', 'Seven practices for financial control across AWS, Azure, and GCP.'),
+      bc([['Home', '/'], ['Blog', '/blog'], ['FinOps Practices for Multi-Cloud', '/blog/finops-practices-multi-cloud']]),
       org,
     ],
   },
 
   // ── Blog post: Cloud Security Automation ─────────────────────────
   '/blog/cloud-security-automation': {
+    primaryKeyword: 'Cloud Security Automation',
     title: 'What Is Cloud Security Automation and Why Is It Important? | XamOps Blog',
     description: 'Manual security monitoring breaks down at cloud scale. Learn what cloud security automation covers, why it matters for DevOps and FinOps teams, and how AI-powered tools are changing cloud operations.',
     keywords: 'cloud security automation, cloud security monitoring, automated cloud security, cloud operations automation, devops automation platform, cloud cost optimization, cloud infrastructure management, ai cloud automation, secops automation, cloud compliance automation',
@@ -885,15 +1185,17 @@ export const PAGE_META = {
         mainEntityOfPage: { '@type': 'WebPage', '@id': `${BASE}/blog/cloud-security-automation/` },
       },
       wp('/blog/cloud-security-automation', 'What Is Cloud Security Automation? | XamOps Blog', 'Why manual security fails at cloud scale and how automation fixes it.'),
+      bc([['Home', '/'], ['Blog', '/blog'], ['Cloud Security Automation', '/blog/cloud-security-automation']]),
       org,
     ],
   },
 
   // ── Blog ──────────────────────────────────────────────────────────
   '/blog': {
+    primaryKeyword: 'Cloud Automation & FinOps Blog',
     title: 'Cloud Automation, FinOps & DevOps Insights Blog | Xamops',
     description: 'Expert insights on cloud automation, FinOps optimization, DevOps practices, SRE engineering, cloud cost management, and AI-powered cloud operations from the Xamops engineering team.',
-    keywords: 'cloud automation blog, FinOps insights, DevOps blog, SRE blog, cloud cost optimization, cloud infrastructure, AI cloud operations, cloud monitoring, cloud cost management, cloud infrastructure automation',
+    keywords: 'cloud automation and FinOps blog, cloud automation blog, FinOps insights blog, DevOps blog, SRE blog, cloud cost optimization articles, cloud infrastructure automation blog, cloud cost optimization, cloud infrastructure, AI cloud operations, cloud monitoring',
     canonical: `${BASE}/blog`,
     schemas: [
       {
@@ -907,92 +1209,151 @@ export const PAGE_META = {
         publisher: { '@type': 'Organization', name: 'XamOps', url: `${BASE}/` },
         inLanguage: 'en-US',
       },
-      {
-        '@type': 'FAQPage',
-        '@id': `${BASE}/blog/#faq`,
-        mainEntity: [
-          { '@type': 'Question', name: 'What topics does the XamOps blog cover?', acceptedAnswer: { '@type': 'Answer', text: 'The XamOps blog covers cloud automation, FinOps optimization, cloud infrastructure management, compute savings, disk rightsizing, and cognitive cloud operations.' } },
-          { '@type': 'Question', name: 'How does cloud automation help reduce infrastructure costs?', acceptedAnswer: { '@type': 'Answer', text: 'Cloud automation helps reduce infrastructure costs by optimizing compute resources, automating scaling, improving workload efficiency, and minimizing unnecessary cloud spending.' } },
-          { '@type': 'Question', name: 'What is disk rightsizing in FinOps?', acceptedAnswer: { '@type': 'Answer', text: 'Disk rightsizing is the process of identifying oversized or underutilized cloud storage volumes and optimizing them to reduce wasted cloud storage costs.' } },
-          { '@type': 'Question', name: 'Why is FinOps important for modern businesses?', acceptedAnswer: { '@type': 'Answer', text: 'FinOps helps businesses improve cloud cost visibility, optimize infrastructure usage, control spending, and maximize return on cloud investments.' } },
-        ],
-      },
+      // No FAQPage here: the /blog index has no visible FAQ/accordion section
+      // (the FAQPage schema previously here wasn't backed by anything on the
+      // page — removed per the content/schema-honesty rule).
+      bc([['Home', '/'], ['Blog', '/blog']]),
       org,
     ],
   },
 
   // ── Pricing ──────────────────────────────────────────────────────
   '/pricing': {
-    title: 'XamOps Pricing: Cloud Automation & FinOps Platform Plans',
-    description: 'Explore XamOps pricing plans for cloud automation, FinOps, DevOps, and SRE teams. Flexible plans for startups to enterprise. Start with a free 30-day cloud audit.',
-    keywords: 'XamOps pricing, cloud automation pricing, FinOps platform pricing, cloud management platform pricing, enterprise cloud management, cloud cost optimization pricing',
+    primaryKeyword: 'Cloud Automation Platform Pricing',
+    title: 'Cloud Automation Platform Pricing | FinOps & DevOps Plans | Xamops',
+    description: 'Xamops cloud automation platform pricing is outcome-based: savings delivered, toil eliminated, not seat counts. Flexible plans for startups to enterprise, starting with a free 30-day cloud audit.',
+    keywords: 'cloud automation platform pricing, outcome-based pricing, FinOps platform pricing, cloud cost optimization pricing, enterprise cloud automation pricing, free cloud audit, XamOps pricing, cloud management platform pricing',
     canonical: `${BASE}/pricing`,
     schemas: [
-      wp('/pricing', 'XamOps Pricing: Cloud Automation & FinOps Platform Plans', 'Flexible pricing for cloud automation, FinOps, DevOps, and SRE teams.'),
+      wp('/pricing', 'Cloud Automation Platform Pricing | Xamops', 'Outcome-based pricing for cloud automation, FinOps, DevOps, and SRE teams.'),
+      bc([['Home', '/'], ['Pricing', '/pricing']]),
       org,
     ],
   },
 
-  // ── About ─────────────────────────────────────────────────────────
+  // ── Customers ─────────────────────────────────────────────────────
   '/customers': {
-    title: 'Customer Stories: Cloud Cost Savings with XamOps | XamOps',
-    description: 'See how DevOps, FinOps, and SRE teams use XamOps to cut cloud costs by 40%, automate operations, and gain real-time visibility across AWS, Azure, and GCP.',
-    keywords: 'xamops customers, cloud cost optimization results, finops success stories, devops automation testimonials, cloud savings case studies, aws cost reduction, cloud operations automation results',
+    primaryKeyword: 'Cloud Cost Optimization Customer Stories',
+    title: 'Cloud Cost Optimization Customer Stories | XamOps',
+    description: 'Real cloud cost optimization customer stories: see how DevOps, FinOps, and SRE teams use XamOps to cut cloud costs by up to 40% and automate operations across AWS, Azure, and GCP.',
+    keywords: 'cloud cost optimization customer stories, xamops customer testimonials, finops success stories, devops automation case studies, aws cost reduction results, spot automation savings, disk rightsizing savings, cloud operations automation results',
     canonical: `${BASE}/customers`,
-    schemas: [wp('/customers', 'Customer Stories | XamOps', 'How teams use XamOps to cut cloud costs and automate operations.'), org],
+    schemas: [
+      wp('/customers', 'Cloud Cost Optimization Customer Stories | XamOps', 'How teams use XamOps to cut cloud costs and automate operations.'),
+      bc([['Home', '/'], ['Customers', '/customers']]),
+      // Review schema built from 3 of the real, verbatim testimonials rendered
+      // on this page (CustomersPage.jsx TESTIMONIALS array) — no aggregateRating
+      // block since no real review-platform figure exists yet (see org above).
+      {
+        '@type': 'Service',
+        name: 'XamOps Cloud Cost Optimization Services',
+        provider: { '@type': 'Organization', name: 'XamOps' },
+        description: 'Cloud cost optimization, spot automation, disk rightsizing, and cost analytics services used by DevOps, FinOps, and SRE teams.',
+        review: [
+          {
+            '@type': 'Review',
+            author: { '@type': 'Person', name: 'Priya Nair' },
+            reviewRating: { '@type': 'Rating', ratingValue: '5', bestRating: '5' },
+            reviewBody: 'XamOps cut our AWS bill by 38% in the first quarter. The Spot automation ran itself — we barely had to touch it after the initial setup.',
+            datePublished: '2026-03-10',
+          },
+          {
+            '@type': 'Review',
+            author: { '@type': 'Person', name: 'Rahul Desai' },
+            reviewRating: { '@type': 'Rating', ratingValue: '5', bestRating: '5' },
+            reviewBody: 'We had visibility problems across three cloud providers. XamOps gave our FinOps team one dashboard for everything. Budget conversations with leadership are completely different now.',
+            datePublished: '2026-04-02',
+          },
+          {
+            '@type': 'Review',
+            author: { '@type': 'Person', name: 'Suresh Iyer' },
+            reviewRating: { '@type': 'Rating', ratingValue: '5', bestRating: '5' },
+            reviewBody: 'Disk rightsizing alone recovered $4,200 a month. We had no idea how much was sitting unattached. XamOps found it in minutes, we cleaned it up in an afternoon.',
+            datePublished: '2026-05-15',
+          },
+        ],
+      },
+      org,
+    ],
   },
 
   '/security': {
-    title: 'Security at XamOps: How We Protect Your Cloud Environment',
-    description: 'XamOps uses TLS 1.2+, AES-256 encryption, IAM role federation, least-privilege access, and full audit logging. No credentials stored. SOC 2 audit in progress.',
-    keywords: 'xamops security, cloud security practices, iam role federation, cloud data encryption, cloud audit logging, soc 2 cloud platform, gdpr cloud compliance, cloud security posture',
+    primaryKeyword: 'Cloud Platform Security Practices',
+    title: 'Cloud Platform Security Practices | XamOps',
+    description: 'XamOps cloud platform security practices: TLS 1.2+, AES-256 encryption, IAM role federation, least-privilege access, and full audit logging. No credentials stored. SOC 2 audit in progress.',
+    keywords: 'cloud platform security practices, xamops security, iam role federation, aes-256 encryption cloud data, cloud audit logging, soc 2 compliance readiness, least-privilege cloud access, gdpr cloud compliance, cloud security posture',
     canonical: `${BASE}/security`,
-    schemas: [wp('/security', 'Security at XamOps | Cloud Data Protection', 'How XamOps protects your cloud environment with encryption, IAM federation, and audit logging.'), org],
+    schemas: [
+      wp('/security', 'Cloud Platform Security Practices | XamOps', 'How XamOps protects your cloud environment with encryption, IAM federation, and audit logging.'),
+      bc([['Home', '/'], ['Security', '/security']]),
+      org,
+    ],
   },
 
   '/about': {
-    title: 'About XamOps: The AI-Powered Cloud Automation Company',
-    description: 'Learn about XamOps, the team building the AI-powered cloud automation platform that helps enterprises automate FinOps, DevOps, and SRE operations at scale.',
-    keywords: 'about XamOps, cloud automation company, AI cloud platform, enterprise cloud management, FinOps company, DevOps automation company, cloud infrastructure automation',
+    primaryKeyword: 'Cloud Managed Services Company',
+    title: 'Cloud Managed Services Company | About XamOps',
+    description: 'Xammer is a cloud managed services company founded in Delhi in 2014, building the AI-powered XamOps automation platform to help enterprises automate FinOps, DevOps, and SRE operations at scale.',
+    keywords: 'cloud managed services company, cloud consulting company India, cloud automation company, FinOps company, DevOps automation company, enterprise cloud management, cloud engineering Delhi, about XamOps',
     canonical: `${BASE}/about`,
     schemas: [
-      wp('/about', 'About XamOps: The AI-Powered Cloud Automation Company', 'The team building the AI-powered cloud automation platform.'),
+      wp('/about', 'Cloud Managed Services Company | About XamOps', 'The team building the AI-powered cloud automation platform.'),
+      bc([['Home', '/'], ['About', '/about']]),
       org,
     ],
   },
 
   // ── Demo ─────────────────────────────────────────────────────────
   '/demo': {
-    title: 'Book a Demo: XamOps Cloud Automation & FinOps Platform',
-    description: 'See XamOps in action. Book a personalized demo of the cloud automation platform and discover how to reduce cloud costs 30–40% and eliminate operational toil.',
-    keywords: 'XamOps demo, cloud automation demo, FinOps platform demo, cloud cost optimization demo, book a demo, cloud management platform demo',
+    primaryKeyword: 'Cloud Automation Platform Demo',
+    title: 'Cloud Automation Platform Demo | Book a Demo | Xamops',
+    description: 'Book a cloud automation platform demo and see XamOps in action live: spot automation, disk rightsizing, and cost optimization demoed on infrastructure that looks like yours.',
+    keywords: 'cloud automation platform demo, FinOps platform demo, book a cloud automation demo, spot automation demo, disk rightsizing demo, live cloud cost optimization demo, XamOps demo',
     canonical: `${BASE}/demo`,
     schemas: [
-      wp('/demo', 'Book a Demo: XamOps Cloud Automation & FinOps Platform', 'See XamOps in action and discover how to reduce cloud costs 30–40%.'),
+      wp('/demo', 'Cloud Automation Platform Demo | Xamops', 'See XamOps in action and discover how to reduce cloud costs 30–40%.'),
+      bc([['Home', '/'], ['Demo', '/demo']]),
       org,
     ],
   },
 
   // ── Contact ───────────────────────────────────────────────────────
   '/contact': {
+    primaryKeyword: 'Contact XamOps',
     title: 'Contact XamOps: Cloud Automation & FinOps Platform',
-    description: "Get in touch with the XamOps team. Questions about cloud automation, FinOps, DevOps, or SRE? We're here to help.",
-    keywords: 'contact XamOps, cloud automation support, FinOps platform contact, cloud management support',
+    description: "Contact XamOps for cloud automation, FinOps, DevOps, or SRE questions. Reach our sales or support team in New Delhi — we're here to help.",
+    keywords: 'contact XamOps, XamOps sales contact, XamOps support email, cloud automation enquiries, partnership enquiries, New Delhi cloud company contact, FinOps platform contact',
     canonical: `${BASE}/contact`,
     schemas: [
       wp('/contact', 'Contact XamOps: Cloud Automation & FinOps Platform', 'Reach the XamOps team for cloud automation and FinOps inquiries.'),
+      bc([['Home', '/'], ['Contact', '/contact']]),
       org,
     ],
   },
 };
 
 // ── Capability group pages ──────────────────────────────────────────
+// Primary keyword per group — each distinct from the dedicated feature pages
+// that cover overlapping ground (e.g. /platform/finops = the FinOps capability
+// group vs /solutions/finops = "FinOps Solutions", the business-outcome page).
+const GROUP_PRIMARY_KEYWORD = {
+  'platform': 'Multi-Cloud Management Platform',
+  'finops': 'FinOps Platform',
+  'cost-automation': 'Cloud Cost Automation',
+  'kubernetes': 'Kubernetes Cost Management',
+  'security': 'Cloud Security Posture Management',
+  'observability': 'Cloud Observability Platform',
+  'devops': 'DevOps Automation Platform',
+  'mediaops': 'MediaOps Platform',
+};
+
 // Generated from the catalogue so a new group ships with correct metadata,
 // a SoftwareApplication featureList and a breadcrumb without hand-editing.
 GROUPS.forEach((g) => {
   const path = `/platform/${g.slug}`;
   const faqs = GROUP_FAQS[g.id] || [];
   PAGE_META[path] = {
+    primaryKeyword: GROUP_PRIMARY_KEYWORD[g.id] || g.name,
     title: g.seo.title,
     description: g.seo.description,
     keywords: g.seo.keywords,
@@ -1009,6 +1370,7 @@ GROUPS.forEach((g) => {
           { '@type': 'ListItem', position: 3, name: g.name, item: canonicalUrl(path) },
         ],
       },
+      svc(GROUP_PRIMARY_KEYWORD[g.id] || g.name, g.body, g.name),
       // Mirrors the FAQ block rendered on the page
       ...(faqs.length ? [{
         '@type': 'FAQPage',

@@ -21,7 +21,7 @@ export default function FinOpsPage() {
       <PageHero
         eyebrow="Solutions · FinOps"
         title={[{ text: 'FinOps for Smarter' }, { text: 'Cloud Cost Management', accent: true }]}
-        body="Cloud adoption has transformed the way businesses build and scale applications, but it has also made managing cloud expenses more challenging. Xamops FinOps helps businesses take control of cloud spending by combining financial accountability with intelligent cloud operations."
+        body="Cloud adoption has transformed the way businesses build and scale applications, but it has also made managing cloud expenses more challenging. Xamops FinOps Solutions help businesses take control of cloud spending by combining financial accountability with intelligent cloud operations."
       />
       <CopySection
         paragraphs={[

@@ -70,7 +70,7 @@ export default function SecurityPage() {
       <PageHero
         eyebrow="Security"
         title={[{ text: 'Security is not' }, { text: 'an afterthought.', accent: true }]}
-        body="XamOps operates in your cloud environment. We take that responsibility seriously. Here is exactly how we handle your data, access, and infrastructure."
+        body="XamOps operates in your cloud environment. These are our cloud platform security practices: exactly how we handle your data, access, and infrastructure."
         cta={false}
       />
 

@@ -438,8 +438,134 @@ function FinOpsServicesNoidaThumbnail() {
   );
 }
 
+function EnterpriseFinOpsNoidaThumbnail() {
+  const RINGS = [70, 50, 30];
+  return (
+    <svg viewBox="0 0 380 210" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ width: '100%', height: '100%', display: 'block' }}>
+      <rect width="380" height="210" fill="#141414" />
+      <text x="20" y="24" fontSize="10" fill="#8f8f8f" fontFamily="monospace" fontWeight="600" letterSpacing="1.5">ENTERPRISE FINOPS · NOIDA</text>
+      {RINGS.map((r, i) => (
+        <circle key={r} cx="130" cy="105" r={r} fill="none" stroke="var(--viz-3)" strokeWidth="1.5" opacity={0.35 - i * 0.08} />
+      ))}
+      <circle cx="130" cy="105" r="14" fill="var(--viz-3)" opacity="0.9" />
+      <text x="260" y="80" fontSize="10" fill="#a3a3a3" fontFamily="monospace">24/7 MONITORING</text>
+      <text x="260" y="100" fontSize="10" fill="#a3a3a3" fontFamily="monospace">99.9% AVAILABILITY</text>
+      <text x="260" y="120" fontSize="10" fill="#a3a3a3" fontFamily="monospace">CERTIFIED ENGINEERS</text>
+      <rect x="20" y="178" width="150" height="20" rx="10" fill="var(--viz-3)" opacity="0.12" />
+      <text x="30" y="192" fontSize="10" fill="var(--viz-3)" fontFamily="monospace" fontWeight="700">100% TECH SUPPORT</text>
+    </svg>
+  );
+}
+
+function FinOpsAhmedabadThumbnail() {
+  const BARS = [
+    { x: 40, h: 50, ok: false }, { x: 90, h: 90, ok: false }, { x: 140, h: 40, ok: true },
+    { x: 190, h: 70, ok: false }, { x: 240, h: 55, ok: true },
+  ];
+  return (
+    <svg viewBox="0 0 380 210" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ width: '100%', height: '100%', display: 'block' }}>
+      <rect width="380" height="210" fill="#141414" />
+      <text x="20" y="24" fontSize="10" fill="#8f8f8f" fontFamily="monospace" fontWeight="600" letterSpacing="1.5">CLOUD SPEND · AHMEDABAD</text>
+      <line x1="20" y1="150" x2="300" y2="150" stroke="#2a2a2a" strokeWidth="1.5" />
+      {BARS.map((b, i) => (
+        <rect key={i} x={b.x} y={150 - b.h} width="26" height={b.h} rx="3" fill={b.ok ? 'var(--viz-3)' : 'var(--viz-4)'} opacity={b.ok ? '0.85' : '0.5'} />
+      ))}
+      <circle cx="330" cy="90" r="30" fill="none" stroke="var(--viz-4)" strokeWidth="1.5" opacity="0.3" />
+      <circle cx="330" cy="90" r="10" fill="var(--viz-4)" opacity="0.9" />
+      <rect x="20" y="178" width="150" height="20" rx="10" fill="var(--viz-4)" opacity="0.12" />
+      <text x="30" y="192" fontSize="10" fill="var(--viz-4)" fontFamily="monospace" fontWeight="700">100% TECH SUPPORT</text>
+    </svg>
+  );
+}
+
+function SREBangaloreThumbnail() {
+  const NODES = [
+    { cx: 70, cy: 60 }, { cx: 180, cy: 40 }, { cx: 300, cy: 70 },
+    { cx: 110, cy: 140 }, { cx: 260, cy: 150 },
+  ];
+  return (
+    <svg viewBox="0 0 380 210" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ width: '100%', height: '100%', display: 'block' }}>
+      <rect width="380" height="210" fill="#141414" />
+      <text x="20" y="24" fontSize="10" fill="#8f8f8f" fontFamily="monospace" fontWeight="600" letterSpacing="1.5">SRE UPTIME · BANGALORE</text>
+      <line x1="70" y1="60" x2="180" y2="40" stroke="#2a2a2a" strokeWidth="1.5" />
+      <line x1="180" y1="40" x2="300" y2="70" stroke="#2a2a2a" strokeWidth="1.5" />
+      <line x1="70" y1="60" x2="110" y2="140" stroke="#2a2a2a" strokeWidth="1.5" />
+      <line x1="110" y1="140" x2="260" y2="150" stroke="#2a2a2a" strokeWidth="1.5" />
+      <line x1="260" y1="150" x2="300" y2="70" stroke="#2a2a2a" strokeWidth="1.5" />
+      {NODES.map((n, i) => (
+        <g key={i}>
+          <circle cx={n.cx} cy={n.cy} r="11" fill="var(--viz-5)" opacity="0.18" />
+          <circle cx={n.cx} cy={n.cy} r="5" fill="var(--viz-5)" />
+        </g>
+      ))}
+      <rect x="20" y="178" width="130" height="20" rx="10" fill="var(--viz-5)" opacity="0.12" />
+      <text x="30" y="192" fontSize="10" fill="var(--viz-5)" fontFamily="monospace" fontWeight="700">99.9% AVAILABILITY</text>
+      <rect x="270" y="178" width="90" height="20" rx="10" fill="var(--viz-2)" opacity="0.12" />
+      <text x="280" y="192" fontSize="10" fill="var(--viz-2)" fontFamily="monospace" fontWeight="700">24/7 MONITORED</text>
+    </svg>
+  );
+}
+
+function SREHyderabadThumbnail() {
+  const BARS = [96, 140, 70, 160, 110, 150, 85];
+  return (
+    <svg viewBox="0 0 380 210" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ width: '100%', height: '100%', display: 'block' }}>
+      <rect width="380" height="210" fill="#141414" />
+      <text x="20" y="24" fontSize="10" fill="#8f8f8f" fontFamily="monospace" fontWeight="600" letterSpacing="1.5">RELIABILITY SIGNAL · HYDERABAD</text>
+      <line x1="20" y1="150" x2="360" y2="150" stroke="#2a2a2a" strokeWidth="1.5" />
+      {BARS.map((h, i) => (
+        <rect key={i} x={30 + i * 46} y={150 - h * 0.55} width="28" height={h * 0.55} rx="3" fill="var(--viz-5)" opacity={i % 2 ? '0.5' : '0.85'} />
+      ))}
+      <rect x="20" y="178" width="150" height="20" rx="10" fill="var(--viz-5)" opacity="0.12" />
+      <text x="30" y="192" fontSize="10" fill="var(--viz-5)" fontFamily="monospace" fontWeight="700">CERTIFIED ENGINEERS</text>
+      <rect x="280" y="178" width="80" height="20" rx="10" fill="var(--viz-1)" opacity="0.12" />
+      <text x="290" y="192" fontSize="10" fill="var(--viz-1)" fontFamily="monospace" fontWeight="700">RCA READY</text>
+    </svg>
+  );
+}
+
 export default function BlogPage() {
   const posts = [
+    {
+      provider: 'azure',
+      tag: 'FinOps',
+      title: 'Enterprise FinOps Services in Noida',
+      excerpt: '24/7 Infrastructure Monitoring, 99.9% Availability Focus, and 100% technical support for enterprises building disciplined cloud financial management.',
+      read: '9 min',
+      date: 'September 10, 2026',
+      href: '/blog/enterprise-finops-services-in-noida',
+      thumbEl: <EnterpriseFinOpsNoidaThumbnail />,
+    },
+    {
+      provider: 'gcp',
+      tag: 'FinOps',
+      title: 'FinOps Services in Ahmedabad',
+      excerpt: 'How XamOps helps Ahmedabad businesses control cloud spending without slowing down innovation, backed by 24/7 monitoring and certified technical support.',
+      read: '10 min',
+      date: 'September 10, 2026',
+      href: '/blog/finops-services-in-ahmedabad',
+      thumbEl: <FinOpsAhmedabadThumbnail />,
+    },
+    {
+      provider: 'aws',
+      tag: 'SRE',
+      title: 'Site Reliability Engineering Services in Bangalore',
+      excerpt: '24/7 Monitoring, 99.9% Availability, and certified engineering support for businesses running microservices, containers, and cloud-native applications.',
+      read: '10 min',
+      date: 'September 10, 2026',
+      href: '/blog/site-reliability-engineering-services-in-bangalore',
+      thumbEl: <SREBangaloreThumbnail />,
+    },
+    {
+      provider: 'azure',
+      tag: 'SRE',
+      title: 'Site Reliability Engineering Services in Hyderabad',
+      excerpt: '24/7 Infrastructure Monitoring, 99.9% Availability Focus, and 100% technical support for reliable, scalable, high-performance IT operations.',
+      read: '10 min',
+      date: 'September 10, 2026',
+      href: '/blog/site-reliability-engineering-services-in-hyderabad',
+      thumbEl: <SREHyderabadThumbnail />,
+    },
     {
       provider: 'azure',
       tag: 'FinOps',
@@ -493,7 +619,7 @@ export default function BlogPage() {
     {
       provider: 'aws',
       tag: 'FinOps',
-      title: 'Cloud Cost Optimization in Noida: 10 Proven Strategies for FinOps Teams',
+      title: 'Cloud Cost Optimization Strategies: 10 Proven Tactics for FinOps Teams',
       excerpt: 'Ten actionable strategies to reduce cloud waste and maximize the value of every dollar spent, from resource tagging and rightsizing to predictive analytics and commitment planning.',
       read: '10 min',
       date: 'June 24, 2026',
@@ -553,7 +679,7 @@ export default function BlogPage() {
     {
       provider: 'aws',
       tag: 'FinOps',
-      title: 'Disk Rightsizing: The Cost Saving Everyone Ignores',
+      title: 'EBS Disk Rightsizing: The Cost Saving Everyone Ignores',
       excerpt: 'Three moves that eliminate 30–40% of cloud storage waste: unattached volumes, gp2 migration, and over-provisioned disks. With the discipline to prevent it from coming back.',
       read: '7 min',
       date: 'May 28, 2026',
@@ -567,7 +693,7 @@ export default function BlogPage() {
       <PageHero
         eyebrow="Blog"
         title={[{ text: 'Notes from' }, { text: 'the cognitive layer.', accent: true }]}
-        body="Engineering deep-dives, FinOps math, and the occasional opinion from the people building XamOps."
+        body="The Xamops cloud automation and FinOps blog: engineering deep-dives, FinOps math, and the occasional opinion from the people building XamOps."
         cta={false}
       />
       <section className="sec-light pt-6 pb-14 overflow-x-hidden">

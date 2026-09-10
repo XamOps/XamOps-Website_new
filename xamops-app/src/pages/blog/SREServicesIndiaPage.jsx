@@ -290,6 +290,33 @@ export default function SREServicesIndiaPage() {
                 </div>
               </section>
 
+              {/* Related reading */}
+              <section className="mb-14">
+                <div className="eyebrow mb-4">Related reading</div>
+                <div className="grid sm:grid-cols-2 gap-3">
+                  <Link
+                    to="/blog/site-reliability-engineering-services-in-bangalore"
+                    className="ring-soft rounded-xl p-4 block transition-transform hover:-translate-y-0.5"
+                    style={{ background: 'var(--ivory)', textDecoration: 'none' }}
+                  >
+                    <div className="text-[14px] mb-1" style={{ fontFamily: 'var(--font-med)', color: 'var(--ink)' }}>
+                      Site Reliability Engineering Services in Bangalore
+                    </div>
+                    <div className="text-[13px]" style={{ color: 'var(--olive)' }}>24/7 monitoring and certified engineering support.</div>
+                  </Link>
+                  <Link
+                    to="/blog/site-reliability-engineering-services-in-hyderabad"
+                    className="ring-soft rounded-xl p-4 block transition-transform hover:-translate-y-0.5"
+                    style={{ background: 'var(--ivory)', textDecoration: 'none' }}
+                  >
+                    <div className="text-[14px] mb-1" style={{ fontFamily: 'var(--font-med)', color: 'var(--ink)' }}>
+                      Site Reliability Engineering Services in Hyderabad
+                    </div>
+                    <div className="text-[13px]" style={{ color: 'var(--olive)' }}>A dedicated SRE deep-dive for Hyderabad businesses.</div>
+                  </Link>
+                </div>
+              </section>
+
               {/* FAQ */}
               <section id="faq" style={{ scrollMarginTop: '100px' }}>
                 <div className="eyebrow mb-3">FAQs</div>

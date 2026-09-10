@@ -31,7 +31,7 @@ export const GROUPS = [
     icon: 'Grid',
     name: 'Platform',
     tagline: 'One control plane for three clouds',
-    body: 'A single operational surface across AWS, GCP and Azure, with the access controls and onboarding to roll it out across a whole organisation.',
+    body: 'The Xamops multi-cloud management platform gives you a single operational surface across AWS, GCP and Azure, with the access controls and onboarding to roll it out across a whole organisation.',
     accent: 'var(--viz-1)',
     seo: {
       title: 'Multi-Cloud Management Platform for AWS, Azure & GCP | Xamops',
@@ -60,7 +60,7 @@ export const GROUPS = [
     icon: 'Cost',
     name: 'FinOps',
     tagline: 'Know the bill, then cut it',
-    body: 'Cost visibility, forecasting and rightsizing across every account, with the allocation model finance teams need to actually assign spend.',
+    body: 'The Xamops FinOps platform brings cost visibility, forecasting and rightsizing to every account, with the allocation model finance teams need to actually assign spend.',
     accent: 'var(--viz-3)',
     seo: {
       title: 'FinOps Platform: Cloud Cost Management & Rightsizing | Xamops',
@@ -97,7 +97,7 @@ export const GROUPS = [
     icon: 'Bolt',
     name: 'Cost automation',
     tagline: 'Savings that apply themselves',
-    body: 'The recommendations act on their own. Schedules, spot conversion and autoscaling run continuously instead of waiting for a ticket.',
+    body: 'Cloud cost automation means the recommendations act on their own: schedules, spot conversion and autoscaling run continuously instead of waiting for a ticket.',
     accent: 'var(--viz-2)',
     seo: {
       title: 'Cloud Cost Automation: Instance Scheduling & Spot Instances | Xamops',
@@ -122,7 +122,7 @@ export const GROUPS = [
     icon: 'K8s',
     name: 'Kubernetes',
     tagline: 'Clusters and the databases behind them',
-    body: 'Inventory, cost and health for EKS, GKE and AKS, collected by an in-cluster agent that also reaches into your data layer.',
+    body: 'Kubernetes cost management for EKS, GKE and AKS: inventory, cost and health collected by an in-cluster agent that also reaches into your data layer.',
     accent: 'var(--viz-5)',
     seo: {
       title: 'Kubernetes Cost & Cluster Management for EKS, GKE, AKS | Xamops',
@@ -147,7 +147,7 @@ export const GROUPS = [
     icon: 'Sec',
     name: 'Security and compliance',
     tagline: 'Posture, attack surface, audit evidence',
-    body: 'From misconfiguration findings through to a SOC 2 programme, including the topology view that shows how exposure actually connects.',
+    body: 'Cloud security posture management from misconfiguration findings through to a SOC 2 programme, including the topology view that shows how exposure actually connects.',
     accent: 'var(--viz-4)',
     seo: {
       title: 'Cloud Security Posture & Compliance Automation (CNAPP) | Xamops',
@@ -178,7 +178,7 @@ export const GROUPS = [
     icon: 'Eye',
     name: 'Observability and reliability',
     tagline: 'From signal to root cause',
-    body: 'Logs, metrics, traces and alerts in one module, with AI investigations that turn a detection event into a written RCA timeline.',
+    body: 'The Xamops cloud observability platform brings logs, metrics, traces and alerts into one module, with AI investigations that turn a detection event into a written RCA timeline.',
     accent: 'var(--viz-1)',
     seo: {
       title: 'Cloud Observability & AI SRE Root Cause Analysis | Xamops',
@@ -207,7 +207,7 @@ export const GROUPS = [
     icon: 'Term',
     name: 'DevOps',
     tagline: 'Delivery, code health, database ops',
-    body: 'Pipeline metrics, a reusable Terraform library and a browser shell, sitting next to the infrastructure they deploy to.',
+    body: 'The DevOps automation platform layer: pipeline metrics, a reusable Terraform library and a browser shell, sitting next to the infrastructure they deploy to.',
     accent: 'var(--viz-2)',
     seo: {
       title: 'DevOps Automation Platform: CI/CD, Terraform & CloudShell | Xamops',
@@ -236,13 +236,13 @@ export const GROUPS = [
     icon: 'Media',
     name: 'MediaOps',
     tagline: 'Transcode, stream, store',
-    body: 'Media pipelines treated as first-class infrastructure, with the cost view that transcode and delivery workloads usually lack.',
+    body: 'The MediaOps platform treats media pipelines as first-class infrastructure, with the cost view that transcode and delivery workloads usually lack.',
     accent: 'var(--viz-3)',
     status: 'beta',
     seo: {
       title: 'MediaOps: Transcoding, Live Stream & Media Cost Management | Xamops',
       description: 'FFmpeg-based transcode jobs and batches with presets and live progress, live stream monitoring, media storage tiering and savings specific to transcode and delivery workloads. Currently in beta.',
-      keywords: 'media transcoding platform, ffmpeg transcoding jobs, live stream monitoring, media storage tiering, media workload cost optimization, video pipeline automation, MediaOps',
+      keywords: 'MediaOps platform, media transcoding platform, ffmpeg transcoding jobs, live stream monitoring, media storage tiering, media workload cost optimization, video pipeline automation',
     },
     problem: 'Transcode farms and egress are among the largest line items in a media business, and no general-purpose cloud tool breaks them out.',
     features: [

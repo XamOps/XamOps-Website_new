@@ -82,7 +82,7 @@ export default function DiskRightsizingPage() {
           </div>
 
           <h1 className="serif text-[clamp(34px,5.2vw,66px)] leading-[1.06] tracking-tight max-w-[22ch]" style={{ color: '#ffffff' }}>
-            Disk Rightsizing:{' '}
+            EBS Disk Rightsizing:{' '}
             <span style={{ color: 'var(--viz-1)' }}>
               The Cost Saving Everyone Ignores
             </span>

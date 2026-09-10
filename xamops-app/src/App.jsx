@@ -1,5 +1,5 @@
 import { useRef, useEffect, useLayoutEffect, useState, lazy, Suspense } from 'react';
-import { Routes, Route, useLocation } from 'react-router-dom';
+import { Routes, Route, useLocation, Navigate } from 'react-router-dom';
 import gsap from 'gsap';
 import ScrollTrigger from 'gsap/ScrollTrigger';
 
@@ -38,6 +38,10 @@ const SREAutomationNoidaPage                = lazy(() => import('./pages/blog/SR
 const FinOpsCloudCostOptimizationBenefitsPage = lazy(() => import('./pages/blog/FinOpsCloudCostOptimizationBenefitsPage'));
 const SREServicesIndiaPage                  = lazy(() => import('./pages/blog/SREServicesIndiaPage'));
 const FinOpsServicesNoidaPage                = lazy(() => import('./pages/blog/FinOpsServicesNoidaPage'));
+const EnterpriseFinOpsServicesInNoidaPage              = lazy(() => import('./pages/blog/EnterpriseFinOpsServicesInNoidaPage'));
+const FinOpsServicesInAhmedabadPage            = lazy(() => import('./pages/blog/FinOpsServicesInAhmedabadPage'));
+const SiteReliabilityEngineeringServicesInBangalorePage               = lazy(() => import('./pages/blog/SiteReliabilityEngineeringServicesInBangalorePage'));
+const SiteReliabilityEngineeringServicesInHyderabadPage               = lazy(() => import('./pages/blog/SiteReliabilityEngineeringServicesInHyderabadPage'));
 const CustomersPage         = lazy(() => import('./pages/CustomersPage'));
 const SecurityPage          = lazy(() => import('./pages/SecurityPage'));
 const ContactPage           = lazy(() => import('./pages/ContactPage'));
@@ -98,7 +102,9 @@ export default function App() {
           <Route path="/platform/secops"           element={<SecOpsPage />} />
           <Route path="/platform/cost-analytics"   element={<CostPage />} />
           <Route path="/platform/sre"              element={<SREPage />} />
-          <Route path="/solutions"                 element={<PlatformPage />} />
+          {/* /solutions rendered the same PlatformPage component as /platform with no
+              distinct content — a duplicate-content route. Redirect it instead. */}
+          <Route path="/solutions"                 element={<Navigate to="/platform" replace />} />
           <Route path="/solutions/devops"          element={<DevOpsPage />} />
           <Route path="/solutions/finops"          element={<FinOpsPage />} />
           <Route path="/solutions/sre"             element={<SRESolutionPage />} />
@@ -118,6 +124,10 @@ export default function App() {
           <Route path="/blog/benefits-of-finops-services-cloud-cost-optimization" element={<FinOpsCloudCostOptimizationBenefitsPage />} />
           <Route path="/blog/sre-services-india" element={<SREServicesIndiaPage />} />
           <Route path="/blog/finops-services-in-noida" element={<FinOpsServicesNoidaPage />} />
+          <Route path="/blog/enterprise-finops-services-in-noida" element={<EnterpriseFinOpsServicesInNoidaPage />} />
+          <Route path="/blog/finops-services-in-ahmedabad" element={<FinOpsServicesInAhmedabadPage />} />
+          <Route path="/blog/site-reliability-engineering-services-in-bangalore" element={<SiteReliabilityEngineeringServicesInBangalorePage />} />
+          <Route path="/blog/site-reliability-engineering-services-in-hyderabad" element={<SiteReliabilityEngineeringServicesInHyderabadPage />} />
           <Route path="/customers"                 element={<CustomersPage />} />
           <Route path="/security"                  element={<SecurityPage />} />
           <Route path="/contact"                   element={<ContactPage />} />

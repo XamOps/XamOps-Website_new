@@ -109,7 +109,7 @@ export default function PlatformPage() {
     <>
       <PageHero eyebrow="Platform"
         title={[{ text: 'One platform.' }, { text: 'Every layer of your cloud.', accent: true }, { text: 'Fully automated.' }]}
-        body={`XamOps unifies ${FEATURE_COUNT} capabilities into a single control plane across AWS, GCP and Azure, so engineers stop babysitting infrastructure and managers stop signing oversized cloud bills.`} />
+        body={`XamOps is a unified cloud automation platform that brings ${FEATURE_COUNT} capabilities into a single control plane across AWS, GCP and Azure, so engineers stop babysitting infrastructure and managers stop signing oversized cloud bills.`} />
       <GroupIndex />
       {GROUPS.map((g, i) => <GroupDirectory key={g.id} group={g} index={i} />)}
       <CTABanner />

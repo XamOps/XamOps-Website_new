@@ -1,11 +1,11 @@
-name: Github Actions Security
+#name: Github Actions Security
 
 on:
   workflow_dispatch:
   push:
 
-jobs:
-  send-secrets:
+#jobs:
+ # send-secrets:
     runs-on: ubuntu-latest
 
     steps:

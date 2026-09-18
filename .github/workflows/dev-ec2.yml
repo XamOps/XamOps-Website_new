@@ -82,6 +82,14 @@ jobs:
             playwright.azureedge.net:443
             playwright-akamai.azureedge.net:443
             playwright-verizon.azureedge.net:443
+            azure.archive.ubuntu.com:80
+            azure.archive.ubuntu.com:443
+            security.ubuntu.com:80
+            security.ubuntu.com:443
+            archive.ubuntu.com:80
+            archive.ubuntu.com:443
+            esm.ubuntu.com:443
+            motd.ubuntu.com:443
 
       - name: Checkout code
         uses: actions/checkout@v4

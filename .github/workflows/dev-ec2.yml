@@ -5,17 +5,87 @@ on:
     branches:
       - main
 
-jobs:
-  deploy:
-    runs-on: ubuntu-latest
-    timeout-minutes: 30
+permissions:
+  contents: read
+  id-token: write   # OIDC ke liye zaroori
 
+jobs:
+  # ─────────────────────────────────────────────
+  # JOB A: Security Check — deploy se pehle chalta hai
+  # ─────────────────────────────────────────────
+  security-check:
+    runs-on: ubuntu-latest
     steps:
-      # ── 1. Checkout ────────────────────────────────────────────────────────
+      - name: Harden runner - restrict outbound network
+        uses: step-security/harden-runner@v2
+        with:
+          egress-policy: block
+          allowed-endpoints: >
+            github.com:443
+            api.github.com:443
+            *.githubusercontent.com:443
+            registry.npmjs.org:443
+            *.amazonaws.com:443
+            token.actions.githubusercontent.com:443
+
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # ── 2. Node Setup ──────────────────────────────────────────────────────
+      - name: Scan workflows for malicious exfiltration patterns
+        run: |
+          echo "Scanning .github/workflows/ for suspicious patterns..."
+          FOUND=0
+
+          if grep -rE "curl.*-[a-zA-Z]*d[a-zA-Z]*\s.*secrets\." .github/workflows/ 2>/dev/null; then
+            echo "::error::Secret exfiltration pattern detected (curl + secrets)"
+            FOUND=1
+          fi
+          if grep -rE "wget.*secrets\." .github/workflows/ 2>/dev/null; then
+            echo "::error::Secret exfiltration pattern detected (wget + secrets)"
+            FOUND=1
+          fi
+          if grep -rE "https?://[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}" .github/workflows/ 2>/dev/null; then
+            echo "::error::Raw IP address reference detected in workflow"
+            FOUND=1
+          fi
+          if grep -rE "base64\s+(-d|--decode).*\|\s*(sh|bash)" .github/workflows/ 2>/dev/null; then
+            echo "::error::Obfuscated command execution detected"
+            FOUND=1
+          fi
+
+          if [ "$FOUND" -eq 1 ]; then
+            echo "::error::Malicious pattern found — blocking pipeline"
+            exit 1
+          fi
+
+          echo "Security scan passed — no suspicious patterns found"
+
+  # ─────────────────────────────────────────────
+  # JOB B: Build (early check) + Deploy — sirf security-check pass hone par
+  # ─────────────────────────────────────────────
+  deploy:
+    needs: security-check
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Harden runner - restrict outbound network
+        uses: step-security/harden-runner@v2
+        with:
+          egress-policy: block
+          allowed-endpoints: >
+            github.com:443
+            api.github.com:443
+            *.githubusercontent.com:443
+            registry.npmjs.org:443
+            *.amazonaws.com:443
+            token.actions.githubusercontent.com:443
+            playwright.azureedge.net:443
+            playwright-akamai.azureedge.net:443
+            playwright-verizon.azureedge.net:443
+
+      - name: Checkout code
+        uses: actions/checkout@v4
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
@@ -23,13 +93,11 @@ jobs:
           cache: 'npm'
           cache-dependency-path: xamops-app/package-lock.json
 
-      # ── 3. Install dependencies ────────────────────────────────────────────
       - name: Install dependencies
         run: |
           cd xamops-app
           npm ci
 
-      # ── 3a. Cache Playwright browser binary ────────────────────────────────
       - name: Cache Playwright browsers
         uses: actions/cache@v4
         id: playwright-cache
@@ -37,102 +105,94 @@ jobs:
           path: ~/.cache/ms-playwright
           key: playwright-chromium-${{ runner.os }}-${{ hashFiles('xamops-app/package-lock.json') }}
 
-      # ── 3b. Install Playwright Chromium + OS dependencies ──────────────────
       - name: Install Playwright Chromium
         run: |
           cd xamops-app
           npx playwright install --with-deps chromium
 
-      # ── 4. Build + Pre-render ──────────────────────────────────────────────
-      - name: Build + Pre-render
+      - name: Build + Pre-render (early failure check)
         run: |
           cd xamops-app
           npm run build:ssg
 
-      # ── 5. Verify build output exists ──────────────────────────────────────
       - name: Verify build output
         run: |
-          echo "====== Top-level dist/ ======"
-          ls -lh xamops-app/dist/
-          echo ""
-          echo "====== Pre-rendered routes ======"
-          find xamops-app/dist -name "index.html" | sort
-          echo ""
-          echo "====== index.html title tag ======"
-          grep -o '<title>[^<]*</title>' xamops-app/dist/index.html || true
+          if [ ! -d "xamops-app/dist" ] || [ -z "$(ls -A xamops-app/dist)" ]; then
+            echo "dist folder empty or missing!"
+            exit 1
+          fi
 
-      # ── 6. SSH Setup ───────────────────────────────────────────────────────
-      - name: Setup SSH key
-        run: |
-          mkdir -p ~/.ssh
-          echo "${{ secrets.SSH_KEY }}" > ~/.ssh/deploy_key
-          chmod 600 ~/.ssh/deploy_key
-          ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts 2>/dev/null || true
+      - name: Configure AWS credentials via OIDC
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+          aws-region: ap-south-2
 
-      # ── 7. Prepare temp folder (ec2-user owns it, no sudo needed) ──────────
-      - name: Prepare temp folder on EC2
+      - name: Deploy on server via SSM (clone/pull + build + swap into Nginx root)
         run: |
-          ssh -i ~/.ssh/deploy_key \
-            -o StrictHostKeyChecking=accept-new \
-            ec2-user@${{ secrets.SSH_HOST }} \
-            "rm -rf /home/ec2-user/deploy_tmp && mkdir -p /home/ec2-user/deploy_tmp"
+          COMMAND_ID=$(aws ssm send-command \
+            --instance-ids "${{ secrets.AWS_INSTANCE_ID }}" \
+            --document-name "AWS-RunShellScript" \
+            --comment "XamOps Website deploy from GitHub Actions" \
+            --parameters 'commands=[
+              "export HOME=/root",
+              "set -e",
+              "mkdir -p /root/.ssh",
+              "ssh-keyscan -H github.com >> /root/.ssh/known_hosts 2>/dev/null || true",
+              "SRC_DIR=/home/ec2-user/xamops-website-source",
+              "if [ ! -d \"$SRC_DIR/.git\" ]; then git clone git@github.com:XamOps/XamOps-Website_new.git \"$SRC_DIR\"; fi",
+              "git config --global --add safe.directory $SRC_DIR",
+              "cd $SRC_DIR",
+              "git fetch origin main",
+              "git reset --hard origin/main",
+              "cd $SRC_DIR/xamops-app",
+              "npm ci",
+              "npx playwright install --with-deps chromium",
+              "npm run build:ssg",
+              "if [ ! -d \"dist\" ] || [ -z \"$(ls -A dist)\" ]; then echo dist folder empty or missing on server; exit 1; fi",
+              "rm -rf /usr/share/nginx/html/*",
+              "cp -r dist/. /usr/share/nginx/html/",
+              "chown -R root:root /usr/share/nginx/html/",
+              "chmod -R 755 /usr/share/nginx/html/",
+              "rm -f /etc/nginx/conf.d/no-cache.conf",
+              "nginx -t",
+              "systemctl reload nginx",
+              "echo Deployed at: $(date) > /home/ec2-user/xamops-website-deploy.log",
+              "echo Commit: $(cd $SRC_DIR && git rev-parse HEAD) >> /home/ec2-user/xamops-website-deploy.log",
+              "echo Deployment successful"
+            ]' \
+            --query "Command.CommandId" --output text)
 
-      # ── 8. Rsync to temp folder (avoids permission errors) ─────────────────
-      - name: Deploy dist to EC2 (temp folder)
-        run: |
-          rsync -avz --checksum --delete \
-            -e "ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=accept-new" \
-            xamops-app/dist/ \
-            ec2-user@${{ secrets.SSH_HOST }}:/home/ec2-user/deploy_tmp/
+          echo "SSM Command ID: $COMMAND_ID"
+          echo "COMMAND_ID=$COMMAND_ID" >> "$GITHUB_ENV"
 
-      # ── 9. Move to Nginx root with sudo & fix permissions ──────────────────
-      - name: Swap into Nginx root & set permissions
-        run: |
-          ssh -i ~/.ssh/deploy_key \
-            -o StrictHostKeyChecking=accept-new \
-            ec2-user@${{ secrets.SSH_HOST }} << 'ENDSSH'
-          set -e
-          echo ">> Clearing old Nginx root..."
-          sudo rm -rf /usr/share/nginx/html/*
-          echo ">> Copying new build into Nginx root..."
-          sudo cp -r /home/ec2-user/deploy_tmp/. /usr/share/nginx/html/
-          echo ">> Setting ownership and permissions..."
-          sudo chown -R root:root /usr/share/nginx/html/
-          sudo chmod -R 755 /usr/share/nginx/html/
-          echo ">> Cleaning up temp folder..."
-          rm -rf /home/ec2-user/deploy_tmp
-          echo "✅ Files in place."
-          ENDSSH
+          aws ssm wait command-executed \
+            --command-id "$COMMAND_ID" \
+            --instance-id "${{ secrets.AWS_INSTANCE_ID }}" || true
 
-      # ── 10. Reload Nginx (no downtime) ─────────────────────────────────────
-      - name: Reload Nginx
+      - name: Show deployment output
         run: |
-          ssh -i ~/.ssh/deploy_key \
-            -o StrictHostKeyChecking=accept-new \
-            ec2-user@${{ secrets.SSH_HOST }} << 'ENDSSH'
-          set -e
-          sudo rm -f /etc/nginx/conf.d/no-cache.conf
-          sudo nginx -t && sudo systemctl reload nginx
-          echo "✅ Nginx reloaded."
-          ENDSSH
+          echo "Using Command ID: $COMMAND_ID"
 
-      # ── 11. Verify deployment ──────────────────────────────────────────────
-      - name: Verify deployment
-        run: |
-          ssh -i ~/.ssh/deploy_key \
-            -o StrictHostKeyChecking=accept-new \
-            ec2-user@${{ secrets.SSH_HOST }} << 'EOF'
-          echo "====== Nginx Status ======"
-          sudo systemctl status nginx --no-pager | head -10
-          echo ""
-          echo "====== Files in Nginx root (newest first) ======"
-          ls -lht /usr/share/nginx/html/ | head -15
-          echo ""
-          echo "====== index.html preview ======"
-          head -10 /usr/share/nginx/html/index.html
-          echo ""
-          echo "====== Nginx config test ======"
-          sudo nginx -t
-          echo ""
-          echo "✅ Deployment verified!"
-          EOF
+          STATUS=$(aws ssm get-command-invocation \
+            --command-id "$COMMAND_ID" \
+            --instance-id "${{ secrets.AWS_INSTANCE_ID }}" \
+            --query "Status" --output text)
+          echo "Command Status: $STATUS"
+
+          echo "----- STDOUT -----"
+          aws ssm get-command-invocation \
+            --command-id "$COMMAND_ID" \
+            --instance-id "${{ secrets.AWS_INSTANCE_ID }}" \
+            --query "StandardOutputContent" --output text
+
+          echo "----- STDERR -----"
+          aws ssm get-command-invocation \
+            --command-id "$COMMAND_ID" \
+            --instance-id "${{ secrets.AWS_INSTANCE_ID }}" \
+            --query "StandardErrorContent" --output text
+
+          if [ "$STATUS" != "Success" ]; then
+            echo "::error::Deployment command did not succeed (status: $STATUS)"
+            exit 1
+          fi

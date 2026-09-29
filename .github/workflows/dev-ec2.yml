@@ -83,6 +83,9 @@ jobs:
             playwright-akamai.azureedge.net:443
             playwright-verizon.azureedge.net:443
             cdn.playwright.dev:443
+            *.azurefd.net:443
+            *.tm-azurefd.net:443
+            storage.googleapis.com:443
             playwright.download.prss.microsoft.com:443
             azure.archive.ubuntu.com:80
             azure.archive.ubuntu.com:443

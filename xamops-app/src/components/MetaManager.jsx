@@ -39,6 +39,27 @@ function injectSchemas(schemas) {
   });
 }
 
+// article:* Open Graph tags (and the author meta) for blog posts. Cleared on
+// every route change so they never leak onto non-article pages.
+function injectArticleMeta(article) {
+  document.querySelectorAll('meta[data-meta-article]').forEach(m => m.remove());
+  if (!article) return;
+  const add = (attr, key, content) => {
+    if (!content) return;
+    const m = document.createElement('meta');
+    m.setAttribute(attr, key);
+    m.setAttribute('content', content);
+    m.setAttribute('data-meta-article', 'true');
+    document.head.appendChild(m);
+  };
+  add('property', 'article:published_time', article.publishedTime);
+  add('property', 'article:modified_time',  article.modifiedTime);
+  add('property', 'article:author',         article.author);
+  add('property', 'article:section',        article.section);
+  (article.tags || []).forEach(t => add('property', 'article:tag', t));
+  add('name', 'author', article.author);
+}
+
 export default function MetaManager() {
   const { pathname } = useLocation();
 
@@ -56,19 +77,27 @@ export default function MetaManager() {
     const canonical = normalizeCanonical(meta.canonical || pathname);
     setLink('canonical', canonical);
 
+    // Optional per-page social overrides; fall back to the SEO title/description.
+    const ogTitle = meta.ogTitle || meta.title;
+    const ogDescription = meta.ogDescription || meta.description;
+    const ogImageAlt = meta.ogImageAlt || ogTitle;
+
     setMeta('og:url',         canonical, 'property');
-    setMeta('og:title',       meta.title,       'property');
-    setMeta('og:description', meta.description, 'property');
+    setMeta('og:title',       ogTitle,       'property');
+    setMeta('og:description', ogDescription, 'property');
     setMeta('og:image',       meta.ogImage || OG_IMG, 'property');
-    setMeta('og:type',        'website',        'property');
+    setMeta('og:image:alt',   ogImageAlt,    'property');
+    setMeta('og:type',        meta.ogType || 'website', 'property');
     setMeta('og:site_name',   'XamOps',         'property');
     setMeta('og:locale',      'en_US',          'property');
 
-    setMeta('twitter:title',       meta.title,            'name');
-    setMeta('twitter:description', meta.description,      'name');
+    setMeta('twitter:title',       ogTitle,               'name');
+    setMeta('twitter:description', ogDescription,         'name');
     setMeta('twitter:image',       meta.ogImage || OG_IMG, 'name');
+    setMeta('twitter:image:alt',   ogImageAlt,            'name');
     setMeta('twitter:card',        'summary_large_image', 'name');
 
+    injectArticleMeta(meta.article);
     injectSchemas(meta.schemas);
   }, [pathname]);
 

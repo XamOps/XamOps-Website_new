@@ -42,6 +42,8 @@ const EnterpriseFinOpsServicesInNoidaPage              = lazy(() => import('./pa
 const FinOpsServicesInAhmedabadPage            = lazy(() => import('./pages/blog/FinOpsServicesInAhmedabadPage'));
 const SiteReliabilityEngineeringServicesInBangalorePage               = lazy(() => import('./pages/blog/SiteReliabilityEngineeringServicesInBangalorePage'));
 const SiteReliabilityEngineeringServicesInHyderabadPage               = lazy(() => import('./pages/blog/SiteReliabilityEngineeringServicesInHyderabadPage'));
+const SiteReliabilityEngineeringServicesInNoidaPage                   = lazy(() => import('./pages/blog/SiteReliabilityEngineeringServicesInNoidaPage'));
+const SiteReliabilityEngineeringServicesInGurgaonPage                 = lazy(() => import('./pages/blog/SiteReliabilityEngineeringServicesInGurgaonPage'));
 const CustomersPage         = lazy(() => import('./pages/CustomersPage'));
 const SecurityPage          = lazy(() => import('./pages/SecurityPage'));
 const ContactPage           = lazy(() => import('./pages/ContactPage'));
@@ -128,6 +130,8 @@ export default function App() {
           <Route path="/blog/finops-services-in-ahmedabad" element={<FinOpsServicesInAhmedabadPage />} />
           <Route path="/blog/site-reliability-engineering-services-in-bangalore" element={<SiteReliabilityEngineeringServicesInBangalorePage />} />
           <Route path="/blog/site-reliability-engineering-services-in-hyderabad" element={<SiteReliabilityEngineeringServicesInHyderabadPage />} />
+          <Route path="/blog/site-reliability-engineering-services-in-noida" element={<SiteReliabilityEngineeringServicesInNoidaPage />} />
+          <Route path="/blog/site-reliability-engineering-services-in-gurgaon" element={<SiteReliabilityEngineeringServicesInGurgaonPage />} />
           <Route path="/customers"                 element={<CustomersPage />} />
           <Route path="/security"                  element={<SecurityPage />} />
           <Route path="/contact"                   element={<ContactPage />} />

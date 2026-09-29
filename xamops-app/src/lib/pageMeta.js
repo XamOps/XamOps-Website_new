@@ -67,6 +67,28 @@ const app = (name, desc, features) => ({
   provider: org,
 });
 
+// Standalone author (Person) node. Posts reference it by @id so the author is
+// described once per page and linked from BlogPosting.author.
+const authorAditya = {
+  '@type': 'Person',
+  '@id': `${BASE}/#author-aditya-mehta`,
+  name: 'Aditya Mehta',
+  jobTitle: 'Co-founder, XamOps',
+  url: `${BASE}/about/`,
+  worksFor: { '@id': `${BASE}/#organization` },
+  knowsAbout: ['Site Reliability Engineering', 'DevOps', 'Cloud Reliability Engineering', 'Infrastructure Monitoring', 'FinOps', 'Cloud Automation'],
+};
+
+// Review nodes built from verbatim testimonials shown on /customers and
+// re-rendered on the page that uses them — never invent reviews here.
+const review = (name, jobTitle, body, datePublished) => ({
+  '@type': 'Review',
+  author: { '@type': 'Person', name, jobTitle },
+  reviewRating: { '@type': 'Rating', ratingValue: '5', bestRating: '5', worstRating: '1' },
+  reviewBody: body,
+  ...(datePublished && { datePublished }),
+});
+
 // BreadcrumbList helper: crumbs = [[name, path-or-absolute-url], ...]
 const bc = (crumbs) => ({
   '@type': 'BreadcrumbList',
@@ -1112,6 +1134,184 @@ export const PAGE_META = {
       wp('/blog/site-reliability-engineering-services-in-hyderabad', 'Site Reliability Engineering Services in Hyderabad | Xamops', '24/7 Infrastructure Monitoring, 99.9% Availability Focus, and 100% technical support for reliable cloud operations in Hyderabad.'),
       bc([['Home', '/'], ['Blog', '/blog'], ['Site Reliability Engineering Services in Hyderabad', '/blog/site-reliability-engineering-services-in-hyderabad']]),
       svc('Site Reliability Engineering Services in Hyderabad', 'Reliability engineering for business-critical applications in Hyderabad, with 24/7 infrastructure monitoring, 99.9% availability focus, and certified technical support.', 'Site Reliability Engineering'),
+      org,
+    ],
+  },
+
+  // ── Blog post: SRE Services in Noida ─────────────────────────────
+  '/blog/site-reliability-engineering-services-in-noida': {
+    primaryKeyword: 'Site Reliability Engineering Services in Noida',
+    title: 'Site Reliability Engineering Services in Noida | SRE Consulting | Xamops',
+    description: 'Site Reliability Engineering Services in Noida by XamOps: SRE consulting, cloud reliability, DevOps and SRE, 24/7 monitoring and a 99.9% availability focus.',
+    keywords: 'Site Reliability Engineering Services in Noida, SRE Consulting Services in Noida, Site Reliability Consulting in Noida, Cloud Reliability Engineering Services in Noida, DevOps and SRE Services in Noida, SRE services Noida, 24/7 Infrastructure Monitoring Noida, 99.9% Availability Focus, Technical Support by Certified Engineers',
+    canonical: `${BASE}/blog/site-reliability-engineering-services-in-noida`,
+    ogType: 'article',
+    ogTitle: 'Site Reliability Engineering Services in Noida: 24/7 Monitoring, 99.9% Availability Focus & 100% Technical Support',
+    ogDescription: 'How XamOps helps Noida businesses build dependable, scalable, resilient infrastructure with SRE consulting, cloud reliability engineering, and DevOps and SRE services.',
+    ogImageAlt: 'Site Reliability Engineering Services in Noida by XamOps',
+    article: {
+      publishedTime: '2026-09-29T09:00:00+05:30',
+      modifiedTime: '2026-09-29T09:00:00+05:30',
+      author: 'Aditya Mehta',
+      section: 'SRE',
+      tags: ['Site Reliability Engineering Services in Noida', 'SRE Consulting Services in Noida', 'Site Reliability Consulting in Noida', 'Cloud Reliability Engineering Services in Noida', 'DevOps and SRE Services in Noida'],
+    },
+    schemas: [
+      {
+        '@context': 'https://schema.org',
+        '@type': 'BlogPosting',
+        '@id': `${BASE}/blog/site-reliability-engineering-services-in-noida/#post`,
+        headline: 'Site Reliability Engineering Services in Noida: 24/7 Monitoring, 99.9% Availability Focus & 100% Technical Support',
+        alternativeHeadline: 'Site Reliability Engineering Services in Noida for Reliable, Scalable & High-Performance IT Infrastructure',
+        description: 'Site Reliability Engineering Services in Noida from XamOps help businesses build dependable, scalable, and resilient digital infrastructure with 24/7 Infrastructure Monitoring, a 99.9% Availability Focus, and Technical Support by Certified Engineers.',
+        url: `${BASE}/blog/site-reliability-engineering-services-in-noida/`,
+        image: { '@type': 'ImageObject', url: OG_IMG, width: 1200, height: 630 },
+        datePublished: '2026-09-29T09:00:00+05:30',
+        dateModified: '2026-09-29T09:00:00+05:30',
+        author: { '@id': authorAditya['@id'] },
+        publisher: { '@id': `${BASE}/#organization` },
+        keywords: ['Site Reliability Engineering Services in Noida', 'SRE Consulting Services in Noida', 'Site Reliability Consulting in Noida', 'Cloud Reliability Engineering Services in Noida', 'DevOps and SRE Services in Noida', '24/7 Infrastructure Monitoring'],
+        timeRequired: 'PT9M',
+        wordCount: '1900',
+        inLanguage: 'en-US',
+        articleSection: 'SRE',
+        isPartOf: { '@id': `${BASE}/blog/#blog` },
+        about: [
+          { '@type': 'Thing', name: 'Site Reliability Engineering' },
+          { '@type': 'Thing', name: 'Service Level Objectives' },
+          { '@type': 'Thing', name: 'Cloud Reliability Engineering' },
+        ],
+        spatialCoverage: { '@type': 'City', name: 'Noida', containedInPlace: { '@type': 'State', name: 'Uttar Pradesh' } },
+        mainEntityOfPage: { '@type': 'WebPage', '@id': `${BASE}/blog/site-reliability-engineering-services-in-noida/` },
+      },
+      authorAditya,
+      {
+        '@type': 'FAQPage',
+        '@id': `${BASE}/blog/site-reliability-engineering-services-in-noida/#faq`,
+        mainEntity: [
+          { '@type': 'Question', name: 'What are Site Reliability Engineering Services in Noida?', acceptedAnswer: { '@type': 'Answer', text: 'Site Reliability Engineering Services in Noida from XamOps help businesses build dependable, scalable, and resilient digital infrastructure. They combine engineering practices, automation, observability, cloud technologies, and DevOps principles with 24/7 Infrastructure Monitoring, a 99.9% Availability Focus, and Technical Support by Certified Engineers.' } },
+          { '@type': 'Question', name: 'What do SRE Consulting Services in Noida cover?', acceptedAnswer: { '@type': 'Answer', text: 'SRE Consulting Services in Noida help businesses understand their current reliability maturity and identify areas for improvement. Consulting can cover service-level objectives, monitoring strategy, incident response, observability, automation, deployment practices, infrastructure architecture, and reliability measurement.' } },
+          { '@type': 'Question', name: 'When should a company consider Site Reliability Consulting in Noida?', acceptedAnswer: { '@type': 'Answer', text: 'Site Reliability Consulting in Noida is valuable for companies experiencing recurring incidents, unpredictable infrastructure costs, deployment issues, performance bottlenecks, or growing operational complexity. Consultants examine how applications are deployed, monitored, maintained, and recovered, and why certain incidents keep recurring.' } },
+          { '@type': 'Question', name: 'What is included in Cloud Reliability Engineering Services in Noida?', acceptedAnswer: { '@type': 'Answer', text: 'Cloud Reliability Engineering Services in Noida can include infrastructure monitoring, resource utilization analysis, cloud architecture, automated recovery, deployment reliability, observability, and capacity planning, along with identifying inefficient configurations that affect performance or operational costs.' } },
+          { '@type': 'Question', name: 'How do DevOps and SRE Services in Noida make releases safer?', acceptedAnswer: { '@type': 'Answer', text: 'DevOps and SRE Services in Noida combine continuous integration, continuous delivery, infrastructure automation, observability, testing, and incident management. Automated testing and deployment workflows reduce manual errors, while monitoring provides visibility into application behavior after each release.' } },
+          { '@type': 'Question', name: 'Does the 99.9% Availability Focus guarantee 99.9% uptime?', acceptedAnswer: { '@type': 'Answer', text: 'No. The 99.9% Availability Focus represents an availability-oriented engineering approach rather than a promise that every individual system will achieve a specific uptime percentage. Actual availability depends on architecture, application design, dependencies, maintenance requirements, and the agreed service scope.' } },
+        ],
+      },
+      wp('/blog/site-reliability-engineering-services-in-noida', 'Site Reliability Engineering Services in Noida | SRE Consulting | Xamops', 'SRE consulting, cloud reliability engineering, and DevOps and SRE services for businesses in Noida.'),
+      bc([['Home', '/'], ['Blog', '/blog'], ['Site Reliability Engineering Services in Noida', '/blog/site-reliability-engineering-services-in-noida']]),
+      // Service + Review: reviews mirror the REVIEWS array rendered on the page.
+      {
+        '@type': 'Service',
+        '@id': `${BASE}/blog/site-reliability-engineering-services-in-noida/#service`,
+        name: 'Site Reliability Engineering Services in Noida',
+        serviceType: 'Site Reliability Engineering',
+        description: 'SRE consulting, site reliability consulting, cloud reliability engineering, and DevOps and SRE services in Noida with 24/7 infrastructure monitoring, a 99.9% availability focus, and technical support by certified engineers.',
+        provider: { '@id': `${BASE}/#organization` },
+        areaServed: { '@type': 'City', name: 'Noida' },
+        hasOfferCatalog: {
+          '@type': 'OfferCatalog',
+          name: 'SRE Services in Noida',
+          itemListElement: [
+            { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'SRE Consulting Services in Noida' } },
+            { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Site Reliability Consulting in Noida' } },
+            { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Cloud Reliability Engineering Services in Noida' } },
+            { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'DevOps and SRE Services in Noida' } },
+          ],
+        },
+        review: [
+          review('Anjali Mehta', 'Principal SRE', 'Our SRE team was spending too much time on runbooks. XamOps SecOps caught a misconfiguration in staging before it hit production — that alone saved us from a compliance headache.'),
+          review('Kiran Sharma', 'CTO', 'DBOps took our database maintenance burden from a weekend job to a background process. The team now ships features on Sundays instead of babysitting backups.'),
+        ],
+      },
+      org,
+    ],
+  },
+
+  // ── Blog post: SRE Services in Gurgaon ───────────────────────────
+  '/blog/site-reliability-engineering-services-in-gurgaon': {
+    primaryKeyword: 'Site Reliability Engineering Services in Gurgaon',
+    title: 'Site Reliability Engineering Services in Gurgaon | 24/7 SRE | Xamops',
+    description: 'XamOps Site Reliability Engineering Services in Gurgaon: 24/7 infrastructure monitoring, 99.9% availability focus, SRE consulting and certified engineer support.',
+    keywords: 'Site Reliability Engineering Services in Gurgaon, SRE Consulting Services in Gurgaon, Site Reliability Consulting in Gurgaon, Cloud Reliability Engineering Services in Gurgaon, DevOps and SRE Services in Gurgaon, SRE services Gurugram, 24/7 Infrastructure Monitoring Gurgaon, observability consulting, incident response',
+    canonical: `${BASE}/blog/site-reliability-engineering-services-in-gurgaon`,
+    ogType: 'article',
+    ogTitle: 'Site Reliability Engineering Services in Gurgaon: 24/7 Monitoring, 99.9% Availability Focus & Certified Support',
+    ogDescription: 'How XamOps helps Gurgaon startups, SaaS companies, and enterprises improve observability, incident response, and cloud reliability with SRE consulting and certified support.',
+    ogImageAlt: 'Site Reliability Engineering Services in Gurgaon by XamOps',
+    article: {
+      publishedTime: '2026-09-29T10:00:00+05:30',
+      modifiedTime: '2026-09-29T10:00:00+05:30',
+      author: 'Aditya Mehta',
+      section: 'SRE',
+      tags: ['Site Reliability Engineering Services in Gurgaon', 'SRE Consulting Services in Gurgaon', 'Site Reliability Consulting in Gurgaon', 'Cloud Reliability Engineering Services in Gurgaon', 'DevOps and SRE Services in Gurgaon'],
+    },
+    schemas: [
+      {
+        '@context': 'https://schema.org',
+        '@type': 'BlogPosting',
+        '@id': `${BASE}/blog/site-reliability-engineering-services-in-gurgaon/#post`,
+        headline: 'Site Reliability Engineering Services in Gurgaon: 24/7 Monitoring, 99.9% Availability Focus & Certified Support',
+        alternativeHeadline: 'Site Reliability Engineering Services in Gurgaon for 24/7 Infrastructure Monitoring and 99.9% Availability Focus',
+        description: 'Site Reliability Engineering Services in Gurgaon from XamOps help businesses build, operate, and continuously improve reliable digital infrastructure with 24/7 monitoring, proactive incident management, and certified engineering support.',
+        url: `${BASE}/blog/site-reliability-engineering-services-in-gurgaon/`,
+        image: { '@type': 'ImageObject', url: OG_IMG, width: 1200, height: 630 },
+        datePublished: '2026-09-29T10:00:00+05:30',
+        dateModified: '2026-09-29T10:00:00+05:30',
+        author: { '@id': authorAditya['@id'] },
+        publisher: { '@id': `${BASE}/#organization` },
+        keywords: ['Site Reliability Engineering Services in Gurgaon', 'SRE Consulting Services in Gurgaon', 'Site Reliability Consulting in Gurgaon', 'Cloud Reliability Engineering Services in Gurgaon', 'DevOps and SRE Services in Gurgaon', 'Observability'],
+        timeRequired: 'PT9M',
+        wordCount: '1800',
+        inLanguage: 'en-US',
+        articleSection: 'SRE',
+        isPartOf: { '@id': `${BASE}/blog/#blog` },
+        about: [
+          { '@type': 'Thing', name: 'Site Reliability Engineering' },
+          { '@type': 'Thing', name: 'Observability' },
+          { '@type': 'Thing', name: 'Incident Response' },
+        ],
+        spatialCoverage: { '@type': 'City', name: 'Gurgaon', alternateName: 'Gurugram', containedInPlace: { '@type': 'State', name: 'Haryana' } },
+        mainEntityOfPage: { '@type': 'WebPage', '@id': `${BASE}/blog/site-reliability-engineering-services-in-gurgaon/` },
+      },
+      authorAditya,
+      {
+        '@type': 'FAQPage',
+        '@id': `${BASE}/blog/site-reliability-engineering-services-in-gurgaon/#faq`,
+        mainEntity: [
+          { '@type': 'Question', name: 'What do Site Reliability Engineering Services in Gurgaon include?', acceptedAnswer: { '@type': 'Answer', text: 'Site Reliability Engineering Services in Gurgaon from XamOps help businesses build, operate, and continuously improve reliable digital infrastructure. They include 24/7 Infrastructure Monitoring, a 99.9% Availability Focus, Technical Support by Certified Engineers, 100% technical support, proactive incident management, and performance-focused operations.' } },
+          { '@type': 'Question', name: 'How can SRE Consulting Services in Gurgaon help a growing business scale?', acceptedAnswer: { '@type': 'Answer', text: 'SRE Consulting Services in Gurgaon assess current infrastructure and identify opportunities to improve reliability and scalability by reviewing application architecture, deployment processes, monitoring practices, incident management, and infrastructure configuration, so the environment becomes more predictable, observable, and manageable as workloads grow.' } },
+          { '@type': 'Question', name: 'Why does observability matter in Site Reliability Consulting in Gurgaon?', acceptedAnswer: { '@type': 'Answer', text: 'Without observability, technical teams may know that an application is failing without knowing why. Site Reliability Consulting in Gurgaon helps teams bring together metrics, logs, traces, and alerts so engineers have relevant information about what happened before, during, and after an incident, which shortens troubleshooting.' } },
+          { '@type': 'Question', name: 'How do Cloud Reliability Engineering Services in Gurgaon plan for failures?', acceptedAnswer: { '@type': 'Answer', text: 'Cloud Reliability Engineering Services in Gurgaon design systems with the understanding that individual components can fail. Appropriate redundancy, recovery processes, backups, scaling mechanisms, and structured monitoring help organizations improve resilience across virtual machines, containers, databases, networking, and storage.' } },
+          { '@type': 'Question', name: 'What is the benefit of combined DevOps and SRE Services in Gurgaon?', acceptedAnswer: { '@type': 'Answer', text: 'DevOps and SRE Services in Gurgaon connect development workflows with reliability requirements. CI/CD pipelines, automated testing, deployment automation, infrastructure as code, monitoring, and incident management work together so reliability becomes part of the development and deployment lifecycle rather than an afterthought.' } },
+          { '@type': 'Question', name: 'What happens after an incident is resolved?', acceptedAnswer: { '@type': 'Answer', text: 'After an incident, XamOps uses root-cause analysis to identify what happened and determine how similar problems can be prevented. This turns incidents from isolated technical failures into opportunities to improve the overall reliability of the environment.' } },
+        ],
+      },
+      wp('/blog/site-reliability-engineering-services-in-gurgaon', 'Site Reliability Engineering Services in Gurgaon | 24/7 SRE | Xamops', '24/7 monitoring, observability, incident response, and certified SRE support for businesses in Gurgaon.'),
+      bc([['Home', '/'], ['Blog', '/blog'], ['Site Reliability Engineering Services in Gurgaon', '/blog/site-reliability-engineering-services-in-gurgaon']]),
+      // Service + Review: reviews mirror the REVIEWS array rendered on the page.
+      {
+        '@type': 'Service',
+        '@id': `${BASE}/blog/site-reliability-engineering-services-in-gurgaon/#service`,
+        name: 'Site Reliability Engineering Services in Gurgaon',
+        serviceType: 'Site Reliability Engineering',
+        description: 'Reliability engineering for Gurgaon businesses: 24/7 infrastructure monitoring, incident response and root-cause analysis, observability consulting, cloud reliability engineering, and DevOps and SRE services with certified engineer support.',
+        provider: { '@id': `${BASE}/#organization` },
+        areaServed: { '@type': 'City', name: 'Gurgaon', alternateName: 'Gurugram' },
+        hasOfferCatalog: {
+          '@type': 'OfferCatalog',
+          name: 'SRE Services in Gurgaon',
+          itemListElement: [
+            { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'SRE Consulting Services in Gurgaon' } },
+            { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Site Reliability Consulting in Gurgaon' } },
+            { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Cloud Reliability Engineering Services in Gurgaon' } },
+            { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'DevOps and SRE Services in Gurgaon' } },
+          ],
+        },
+        review: [
+          review('Deepa Krishnan', 'DevOps Lead', 'The onboarding was fast. We connected our AWS accounts, tagged our ASGs, and AutoSpotting was running in under an hour. The savings showed up on the next bill.'),
+          review('Rahul Desai', 'VP Engineering', 'We had visibility problems across three cloud providers. XamOps gave our FinOps team one dashboard for everything. Budget conversations with leadership are completely different now.', '2026-04-02'),
+        ],
+      },
       org,
     ],
   },

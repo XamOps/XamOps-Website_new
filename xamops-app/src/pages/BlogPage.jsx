@@ -524,8 +524,69 @@ function SREHyderabadThumbnail() {
   );
 }
 
+function SRENoidaThumbnail() {
+  const SLO = [92, 96, 94, 99, 97, 99.5, 99.9];
+  return (
+    <svg viewBox="0 0 380 210" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ width: '100%', height: '100%', display: 'block' }}>
+      <rect width="380" height="210" fill="#141414" />
+      <text x="20" y="24" fontSize="10" fill="#8f8f8f" fontFamily="monospace" fontWeight="600" letterSpacing="1.5">SLO TRACKING · NOIDA</text>
+      <line x1="20" y1="60" x2="360" y2="60" stroke="var(--viz-2)" strokeWidth="1" strokeDasharray="4 4" opacity="0.5" />
+      <text x="300" y="54" fontSize="9" fill="var(--viz-2)" fontFamily="monospace">99.9% FOCUS</text>
+      <polyline
+        points={SLO.map((v, i) => `${30 + i * 50},${150 - (v - 90) * 9}`).join(' ')}
+        stroke="var(--viz-2)" strokeWidth="2" fill="none"
+      />
+      {SLO.map((v, i) => (
+        <circle key={i} cx={30 + i * 50} cy={150 - (v - 90) * 9} r="3.5" fill="var(--viz-2)" />
+      ))}
+      <rect x="20" y="178" width="150" height="20" rx="10" fill="var(--viz-2)" opacity="0.12" />
+      <text x="30" y="192" fontSize="10" fill="var(--viz-2)" fontFamily="monospace" fontWeight="700">SRE CONSULTING</text>
+    </svg>
+  );
+}
+
+function SREGurgaonThumbnail() {
+  const SIGNALS = [['METRICS', 120], ['LOGS', 90], ['TRACES', 150], ['ALERTS', 60]];
+  return (
+    <svg viewBox="0 0 380 210" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ width: '100%', height: '100%', display: 'block' }}>
+      <rect width="380" height="210" fill="#141414" />
+      <text x="20" y="24" fontSize="10" fill="#8f8f8f" fontFamily="monospace" fontWeight="600" letterSpacing="1.5">OBSERVABILITY · GURGAON</text>
+      {SIGNALS.map(([label, w], i) => (
+        <g key={label}>
+          <text x="20" y={60 + i * 28} fontSize="9" fill="#a3a3a3" fontFamily="monospace">{label}</text>
+          <rect x="90" y={51 + i * 28} width={w} height="12" rx="3" fill="var(--viz-1)" opacity={0.9 - i * 0.15} />
+        </g>
+      ))}
+      <circle cx="320" cy="95" r="34" fill="none" stroke="var(--viz-1)" strokeWidth="1.5" opacity="0.3" />
+      <circle cx="320" cy="95" r="12" fill="var(--viz-1)" opacity="0.9" />
+      <rect x="20" y="178" width="130" height="20" rx="10" fill="var(--viz-1)" opacity="0.12" />
+      <text x="30" y="192" fontSize="10" fill="var(--viz-1)" fontFamily="monospace" fontWeight="700">24/7 MONITORED</text>
+    </svg>
+  );
+}
+
 export default function BlogPage() {
   const posts = [
+    {
+      provider: 'gcp',
+      tag: 'SRE',
+      title: 'Site Reliability Engineering Services in Noida',
+      excerpt: 'SRE consulting, cloud reliability engineering, and DevOps and SRE services for Noida businesses, backed by 24/7 monitoring and certified engineers.',
+      read: '9 min',
+      date: 'September 29, 2026',
+      href: '/blog/site-reliability-engineering-services-in-noida',
+      thumbEl: <SRENoidaThumbnail />,
+    },
+    {
+      provider: 'aws',
+      tag: 'SRE',
+      title: 'Site Reliability Engineering Services in Gurgaon',
+      excerpt: 'Observability, incident response, and a 99.9% availability focus for Gurgaon startups, SaaS companies, and enterprises scaling their infrastructure.',
+      read: '9 min',
+      date: 'September 29, 2026',
+      href: '/blog/site-reliability-engineering-services-in-gurgaon',
+      thumbEl: <SREGurgaonThumbnail />,
+    },
     {
       provider: 'azure',
       tag: 'FinOps',

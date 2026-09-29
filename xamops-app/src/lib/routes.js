@@ -78,6 +78,8 @@ const BLOG_ROUTES = [
   '/blog/finops-services-in-ahmedabad',
   '/blog/site-reliability-engineering-services-in-bangalore',
   '/blog/site-reliability-engineering-services-in-hyderabad',
+  '/blog/site-reliability-engineering-services-in-noida',
+  '/blog/site-reliability-engineering-services-in-gurgaon',
 ].map((p) => [p, 0.6, 'monthly']);
 
 export const ROUTE_META = [

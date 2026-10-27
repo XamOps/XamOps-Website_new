@@ -44,6 +44,9 @@ const SiteReliabilityEngineeringServicesInBangalorePage               = lazy(() 
 const SiteReliabilityEngineeringServicesInHyderabadPage               = lazy(() => import('./pages/blog/SiteReliabilityEngineeringServicesInHyderabadPage'));
 const SiteReliabilityEngineeringServicesInNoidaPage                   = lazy(() => import('./pages/blog/SiteReliabilityEngineeringServicesInNoidaPage'));
 const SiteReliabilityEngineeringServicesInGurgaonPage                 = lazy(() => import('./pages/blog/SiteReliabilityEngineeringServicesInGurgaonPage'));
+const FinOpsServicesInDelhiPage                = lazy(() => import('./pages/blog/FinOpsServicesInDelhiPage'));
+const FinOpsServicesInGurgaonPage              = lazy(() => import('./pages/blog/FinOpsServicesInGurgaonPage'));
+const FinOpsServicesInBangalorePage            = lazy(() => import('./pages/blog/FinOpsServicesInBangalorePage'));
 const CustomersPage         = lazy(() => import('./pages/CustomersPage'));
 const SecurityPage          = lazy(() => import('./pages/SecurityPage'));
 const ContactPage           = lazy(() => import('./pages/ContactPage'));
@@ -132,6 +135,9 @@ export default function App() {
           <Route path="/blog/site-reliability-engineering-services-in-hyderabad" element={<SiteReliabilityEngineeringServicesInHyderabadPage />} />
           <Route path="/blog/site-reliability-engineering-services-in-noida" element={<SiteReliabilityEngineeringServicesInNoidaPage />} />
           <Route path="/blog/site-reliability-engineering-services-in-gurgaon" element={<SiteReliabilityEngineeringServicesInGurgaonPage />} />
+          <Route path="/blog/finops-services-in-delhi" element={<FinOpsServicesInDelhiPage />} />
+          <Route path="/blog/finops-services-in-gurgaon" element={<FinOpsServicesInGurgaonPage />} />
+          <Route path="/blog/finops-services-in-bangalore" element={<FinOpsServicesInBangalorePage />} />
           <Route path="/customers"                 element={<CustomersPage />} />
           <Route path="/security"                  element={<SecurityPage />} />
           <Route path="/contact"                   element={<ContactPage />} />

@@ -565,8 +565,92 @@ function SREGurgaonThumbnail() {
   );
 }
 
+function FinOpsDelhiThumbnail() {
+  const TEAMS = [['FINANCE', 70], ['ENGINEERING', 140], ['PRODUCT', 100], ['DATA', 55]];
+  return (
+    <svg viewBox="0 0 380 210" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ width: '100%', height: '100%', display: 'block' }}>
+      <rect width="380" height="210" fill="#141414" />
+      <text x="20" y="24" fontSize="10" fill="#8f8f8f" fontFamily="monospace" fontWeight="600" letterSpacing="1.5">COST ALLOCATION · DELHI</text>
+      {TEAMS.map(([label, w], i) => (
+        <g key={label}>
+          <text x="20" y={60 + i * 28} fontSize="9" fill="#a3a3a3" fontFamily="monospace">{label}</text>
+          <rect x="110" y={51 + i * 28} width={w} height="12" rx="3" fill="var(--viz-3)" opacity={0.9 - i * 0.15} />
+        </g>
+      ))}
+      <rect x="20" y="178" width="140" height="20" rx="10" fill="var(--viz-3)" opacity="0.12" />
+      <text x="30" y="192" fontSize="10" fill="var(--viz-3)" fontFamily="monospace" fontWeight="700">24/7 MONITORED</text>
+    </svg>
+  );
+}
+
+function FinOpsGurgaonThumbnail() {
+  const SPEND = [60, 64, 62, 66, 118, 68, 65];
+  return (
+    <svg viewBox="0 0 380 210" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ width: '100%', height: '100%', display: 'block' }}>
+      <rect width="380" height="210" fill="#141414" />
+      <text x="20" y="24" fontSize="10" fill="#8f8f8f" fontFamily="monospace" fontWeight="600" letterSpacing="1.5">COST ANOMALY · GURGAON</text>
+      <polyline
+        points={SPEND.map((v, i) => `${30 + i * 50},${160 - v}`).join(' ')}
+        stroke="var(--viz-4)" strokeWidth="2" fill="none"
+      />
+      {SPEND.map((v, i) => (
+        <circle key={i} cx={30 + i * 50} cy={160 - v} r={i === 4 ? 6 : 3.5} fill="var(--viz-4)" opacity={i === 4 ? 1 : 0.7} />
+      ))}
+      <text x="244" y="34" fontSize="9" fill="var(--viz-4)" fontFamily="monospace">SPIKE FLAGGED</text>
+      <rect x="20" y="178" width="170" height="20" rx="10" fill="var(--viz-4)" opacity="0.12" />
+      <text x="30" y="192" fontSize="10" fill="var(--viz-4)" fontFamily="monospace" fontWeight="700">CERTIFIED ENGINEERS</text>
+    </svg>
+  );
+}
+
+function FinOpsBangaloreThumbnail() {
+  const UNIT = [9.2, 8.6, 8.1, 7.4, 6.9, 6.3];
+  return (
+    <svg viewBox="0 0 380 210" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ width: '100%', height: '100%', display: 'block' }}>
+      <rect width="380" height="210" fill="#141414" />
+      <text x="20" y="24" fontSize="10" fill="#8f8f8f" fontFamily="monospace" fontWeight="600" letterSpacing="1.5">COST PER CUSTOMER · BANGALORE</text>
+      <line x1="20" y1="150" x2="340" y2="150" stroke="#2a2a2a" strokeWidth="1.5" />
+      {UNIT.map((v, i) => (
+        <rect key={i} x={40 + i * 50} y={150 - v * 10} width="26" height={v * 10} rx="3" fill="var(--viz-2)" opacity={0.45 + i * 0.1} />
+      ))}
+      <rect x="20" y="178" width="170" height="20" rx="10" fill="var(--viz-2)" opacity="0.12" />
+      <text x="30" y="192" fontSize="10" fill="var(--viz-2)" fontFamily="monospace" fontWeight="700">99.9% AVAILABILITY</text>
+    </svg>
+  );
+}
+
 export default function BlogPage() {
   const posts = [
+    {
+      provider: 'aws',
+      tag: 'FinOps',
+      title: 'FinOps Services in Delhi',
+      excerpt: 'Cost visibility, FinOps consulting, governance, and metrics that connect cloud spend to business results, with 24/7 monitoring and certified engineers.',
+      read: '10 min',
+      date: 'October 27, 2026',
+      href: '/blog/finops-services-in-delhi',
+      thumbEl: <FinOpsDelhiThumbnail />,
+    },
+    {
+      provider: 'azure',
+      tag: 'FinOps',
+      title: 'FinOps Services in Gurgaon',
+      excerpt: 'Cost allocation, forecasting, and anomaly detection for Gurgaon businesses, backed by a 99.9% availability focus and 100% technical support coverage.',
+      read: '11 min',
+      date: 'October 27, 2026',
+      href: '/blog/finops-services-in-gurgaon',
+      thumbEl: <FinOpsGurgaonThumbnail />,
+    },
+    {
+      provider: 'gcp',
+      tag: 'FinOps',
+      title: 'FinOps Services in Bangalore',
+      excerpt: 'Rightsizing, forecasting, and cost-per-customer tracking for Bangalore SaaS companies, startups, and enterprises with certified engineer support.',
+      read: '10 min',
+      date: 'October 27, 2026',
+      href: '/blog/finops-services-in-bangalore',
+      thumbEl: <FinOpsBangaloreThumbnail />,
+    },
     {
       provider: 'gcp',
       tag: 'SRE',
